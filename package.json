@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "support",
+  "version": "1.0.0",
+  "scripts": {
+    "prod": "grunt --production",
+    "dev": "grunt watch"
+  },
+  "devDependencies": {
+    "grunt": "~0.4",
+    "grunt-contrib-watch": "latest",
+    "grunt-phpcs": "latest",
+    "grunt-phpmd": "^0.1.1",
+    "grunt-phpunit": "^0.3.6",
+    "jshint-stylish": "latest"
+  }
+}
