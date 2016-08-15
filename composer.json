@@ -5,7 +5,8 @@
     "require": {
         "php": ">=5.6",
         "guzzle/guzzle": "^3.9",
-        "symfony/yaml": "^3.1"
+        "symfony/yaml": "^3.1",
+        "vicimus/ymlcollection": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~2",
@@ -21,5 +22,11 @@
         "classmap": [
             "tests/"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@bitbucket.org:vicimus/ymlcollection.git"
+        }
+    ]
 }
