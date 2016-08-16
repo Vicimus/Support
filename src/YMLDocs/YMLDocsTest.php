@@ -5,6 +5,7 @@ namespace Vicimus\Support\YMLDocs;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use Vicimus\YMLCollection\YMLCollection;
+use Vicimus\YMLCollection\Classes\Endpoint;
 
 /**
  * A phpunit test class to easily test your YMLDoc Documentation.
@@ -43,7 +44,7 @@ class YMLDocsTest extends TestCase
      *
      * @var mixed[]
      */
-    protected $collection;
+    protected $yml;
 
     /**
      * Mapping of the parameter keys used for the request
@@ -64,10 +65,10 @@ class YMLDocsTest extends TestCase
     {
         parent::__construct();
 
-        $this->collection = new YMLCollection($path);
+        $this->yml = new YMLCollection($path);
 
         $this->http = new Client([
-            'base_uri' => $this->global['url'],
+            'base_uri' => $this->yml->getGlobal()->url,
         ]);
     }
 
@@ -89,7 +90,66 @@ class YMLDocsTest extends TestCase
      */
     public function testAPI()
     {
-        dd($this->collection);
+        foreach ($this->yml->names() as $name) {
+            echo "\n".'Testing '.$name;
+
+            $endpoints = $this->yml->get($name);
+            foreach ($endpoints as $endpoint) {
+                $this->endpointTest($endpoint);
+            }
+        }
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Test an individual endpoint
+     *
+     * @param Endpoint $endpoint The endpoint to be tested
+     *
+     * @return void
+     */
+    protected function endpointTest(Endpoint $endpoint)
+    {
+        foreach ($endpoint->paths as $path => $data) {
+            $operations = $data['operations'];
+            foreach ($operations as $verb => $info) {
+                if (array_key_exists('security', $info)) {
+                    continue;
+                }
+
+                if ($verb !== 'GET') {
+                    continue;
+                }
+
+                $verb = strtoupper($verb);
+                echo "\n\t".'Testing '.$verb.' '.$endpoint->path.$path;
+                $apiPath = $endpoint->path.$path;
+
+                if (array_key_exists('security', $info)) {
+                    $security = $info['security'];
+                    if (is_array($info['security'])) {
+                        $security = implode(', ', $info['security']);
+                    }
+
+                    echo " with ".$security;
+                }
+
+                $response = $this->send($verb, $apiPath);
+
+                $this->assertResponseOK();
+            }
+        }
+    }
+
+    /**
+     * Ensure the response was a 200
+     *
+     * @return void
+     */
+    protected function assertResponseOk()
+    {
+        $this->assertEquals(200, $this->lastResponse->getStatusCode());
     }
 
     /**
