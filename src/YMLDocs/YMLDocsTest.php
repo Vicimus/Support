@@ -16,7 +16,7 @@ use Vicimus\YMLCollection\Classes\Endpoint;
  *
  * @author Jordan Grieve <jgrieve@vicimus.com>
  */
-class YMLDocsTest extends TestCase
+abstract class YMLDocsTest extends TestCase
 {
     /**
      * Holds the Guzzle client
@@ -47,6 +47,41 @@ class YMLDocsTest extends TestCase
     protected $yml;
 
     /**
+     * Holds any defined security
+     *
+     * @var Closure[]
+     */
+    protected $security = [];
+
+    /**
+     * Holds any defined parameter generators
+     *
+     * @var Closure[]
+     */
+    protected $parameters = [];
+
+    /**
+     * Holds any defined entity generators
+     *
+     * @var Closure[]
+     */
+    protected $entities = [];
+
+    /**
+     * Hold any defined setups
+     *
+     * @var Closure[]
+     */
+    protected $setups = [];
+
+    /**
+     * Hold any defined teardowns
+     *
+     * @var Closure[]
+     */
+    protected $teardowns = [];
+
+    /**
      * Mapping of the parameter keys used for the request
      *
      * @var string[]
@@ -70,6 +105,61 @@ class YMLDocsTest extends TestCase
         $this->http = new Client([
             'base_uri' => $this->yml->getGlobal()->url,
         ]);
+
+        $this->security = $this->security();
+        $this->schemas = $this->yml->schemas();
+        $this->parameters = $this->parameters();
+        $this->entities = $this->entities();
+        $this->setups = $this->setups();
+        $this->teardowns = $this->teardowns();
+    }
+
+    /**
+     * Return an array of closures, where the key is the name of the
+     * security requirement, and the value is a method that injects the
+     * proper values.
+     *
+     * @return array
+     */
+    protected function security()
+    {
+        return [];
+    }
+
+    /**
+     * Return an array of closures, where the key is a combination of
+     * Entity:VERB:path and the value is a closure that will populate
+     * an array with parameters neccessary to test an endpoint.
+     *
+     * @return array
+     */
+    protected function parameters()
+    {
+        return [];
+    }
+
+    /**
+     * Return an array of closures, where the key is a combination of
+     * Entity:VERB:path and the value is a closure that will execute
+     * various actions before a request is tested.
+     *
+     * @return array
+     */
+    protected function setups()
+    {
+        return [];
+    }
+
+    /**
+     * Return an array of closures, where the key is a combination of
+     * Entity:VERB:path and the value is a closure that will execute
+     * various actions after a request is tested.
+     *
+     * @return array
+     */
+    protected function teardowns()
+    {
+        return [];
     }
 
     /**
@@ -111,21 +201,26 @@ class YMLDocsTest extends TestCase
      */
     protected function endpointTest(Endpoint $endpoint)
     {
+        $entity = $endpoint->name;
+        if (substr($entity, -1) === 's') {
+            $entity = substr($entity, 0, -1);
+        }
+
         foreach ($endpoint->paths as $path => $data) {
             $operations = $data['operations'];
             foreach ($operations as $verb => $info) {
-                if (array_key_exists('security', $info)) {
-                    continue;
-                }
-
-                if ($verb !== 'GET') {
+                if (!in_array(strtoupper($verb), [
+                    'GET', 
+                ])) {
                     continue;
                 }
 
                 $verb = strtoupper($verb);
-                echo "\n\t".'Testing '.$verb.' '.$endpoint->path.$path;
                 $apiPath = $endpoint->path.$path;
-
+                $key = $entity.':'.$verb.':'.$apiPath;
+                echo "\n\t".'Testing '.$key;
+                
+                $security = null;
                 if (array_key_exists('security', $info)) {
                     $security = $info['security'];
                     if (is_array($info['security'])) {
@@ -135,9 +230,35 @@ class YMLDocsTest extends TestCase
                     echo " with ".$security;
                 }
 
-                $response = $this->send($verb, $apiPath);
+                $parameters = [];
+                if (array_key_exists('parameters', $info)) {
+                    $parameters = $info['parameters'];
+                }
 
-                $this->assertResponseOK();
+                $params = [];
+                $token = null;
+
+                $this->applySetups($key);
+                $this->applyEntity($apiPath, $verb);
+                $this->applyParameters($entity, $verb, $apiPath, $parameters, $params, $token);
+                $this->applySecurity($security, $params, $token);
+                
+                $response = $this->send($verb, $apiPath, $params, $token);
+
+                $this->applyTeardowns($key, json_decode($response));
+                $code = $this->lastResponse->getStatusCode();
+                $content = (string) $this->lastResponse->getBody();
+                if ($code !== 200) {
+                    $this->fail($key.' failed with response: '.$content);
+                }
+
+                $schema = $info['responses'][200]['schema'];
+
+                $this->schemaTest(
+                    $schema,
+                    json_decode($response, true),
+                    $apiPath
+                );
             }
         }
     }
@@ -150,6 +271,102 @@ class YMLDocsTest extends TestCase
     protected function assertResponseOk()
     {
         $this->assertEquals(200, $this->lastResponse->getStatusCode());
+    }
+
+    /**
+     * Pass the parameters and token value and allow security closures to
+     * modify the values to enable secure access.
+     *
+     * @param string $security The name of the security required
+     * @param array  &$params  The parameters to be sent with the request
+     * @param string &$token   The authentication header token to be used
+     *
+     * @return void
+     */
+    protected function applySecurity($security = null, array &$params, &$token = null)
+    {
+        if (is_null($security)) {
+            return false;
+        }
+
+        if (array_key_exists($security, $this->security)) {
+            $this->security[$security]($params, $token);
+        }
+    }
+
+    /**
+     * Apply any custom setups for any of the endpoints
+     *
+     * @param string $key The setup key used to find setup
+     *
+     * @return void
+     */
+    protected function applySetups($key)
+    {
+        if (array_key_exists($key, $this->setups)) {
+            $this->setups[$key]($this->http);
+        }
+    }
+
+    /**
+     * Apply any custom teardowns for any of the endpoints
+     *
+     * @param string $key      The setup key used to find setup
+     * @param string $response The response from the server
+     *
+     * @return void
+     */
+    protected function applyTeardowns($key, $response = null)
+    {
+        if (array_key_exists($key, $this->teardowns)) {
+            $this->teardowns[$key]($this->http, $response);
+        }
+    }
+
+    /**
+     * Convert special entity markers to valid values that will succeed
+     *
+     * @param string $path The API path
+     * @param string $verb The verb
+     *
+     * @return void
+     */
+    protected function applyEntity(&$path, $verb)
+    {
+        if (stripos($path, '{') !== false) {
+            $matches = [];
+            preg_match_all("/{([a-zA-Z0-9_]*)}/", $path, $matches);
+            $entities = $matches[1];
+
+            foreach ($entities as $entity) {
+                if (!array_key_exists($entity, $this->entities)) {
+                    $this->markTestSkipped(
+                        'Could not find ENTITY to replace '.$entity
+                    );
+                }
+
+                $replacement = $this->entities[$entity]($this->http, $verb, $path);
+                $path = preg_replace("/{([a-zA-Z0-9_]*)}/", $replacement, $path);
+            }
+        }
+    }
+
+    /**
+     * Pass the parameters and token value and allow parameter closures to
+     * modify the values to enable valid parameters
+     *
+     * @param string $parameters The name of the security required
+     * @param array  &$params    The parameters to be sent with the request
+     * @param string &$token     The authentication header token to be used
+     *
+     * @return void
+     */
+    protected function applyParameters($entity, $verb, $path, $parameters, array &$params, &$token = null)
+    {
+        $key = $entity.':'.$verb.':'.$path;
+        if (array_key_exists($key, $this->parameters)) {
+            $this->parameters[$key]($params);
+        }
     }
 
     /**
@@ -220,15 +437,26 @@ class YMLDocsTest extends TestCase
     /**
      * Run through the Schema and ensure its to spec
      *
-     * @param array $schema  The schema specification
-     * @param mixed $inspect The data returned by the API
+     * @param array  $schema   The schema specification
+     * @param mixed  $inspect  The data returned by the API
+     * @param string $path The path that was requested
      *
      * @return void
      */
-    private function schemaTest($schema, array $inspect)
+    private function schemaTest($schema, array $inspect, $path)
     {
-        $schema = $this->schemas[$schema];
+        $array = false;
+        if (!is_array($schema)) {
+            if (stripos($schema, '[]') !== false) {
+                $array = true;
+                $schema = substr($schema, 0, strlen($schema) - 2);
+            }
+        }
 
+        if (!is_array($schema)) {
+            $schema = $this->schemas[$schema];
+        }         
+ 
         /**
          * This line checks to make sure they have the exact same number
          * of properties. However it makes it difficult to know WHICH ONES
@@ -236,24 +464,46 @@ class YMLDocsTest extends TestCase
          */
         //$this->assertEquals(count($schema['properties']), count($inspect));
 
-        if (is_array($inspect)) {
-            foreach ($schema['properties'] as $property => $specs) {
-                $this->assertArrayHasKey($property, $inspect);
-                $type = is_array($specs) ? $specs['type'] : $specs;
-                $this->assertEquals(
-                    $property.' is a '.$this->translateType($type),
-                    $property.' is a '.$this->getReturnType(
-                        $type,
-                        $inspect[$property]
-                    )
-                );
+        if ($array) {
+            if (!count($inspect)) {
+                $this->markTestSkipped('Results returned from the API contained'
+                        .' no content from: '.$path);
+            }
 
-                if ($type == 'object' && array_key_exists(
-                    'properties',
-                    $specs
-                )) {
-                    $this->subSchemaTest($specs, $inspect[$property]);
+            $inspect = $inspect[0];
+        }
+
+        if (is_array($inspect)) {
+            try {
+                foreach ($schema['properties'] as $property => $specs) {
+                    if (!array_key_exists($property, $inspect)) {
+                        var_dump($inspect);
+                        $this->fail('Failed asserting that the schema property'.
+                            ' '.$property.' was present in the API response '.
+                            'from '.$path);
+                    }
+
+                    $type = is_array($specs) ? $specs['type'] : $specs;
+                    $type = strip_tags($type);
+
+                    $this->assertSchemaProperty($property, $type, $inspect[$property]);
+
+                    // $this->assertEquals(
+                    //     $property.' is a '.$this->translateType($type),
+                    //     $property.' is a '.$this->getReturnType(
+                    //         $type,
+                    //         $inspect[$property]
+                    //     )
+                    // );
+                    if ($type == 'object' && array_key_exists(
+                        'properties',
+                        $specs
+                    )) {
+                        $this->subSchemaTest($specs, $inspect[$property]);
+                    }
                 }
+            } catch (\Exception $ex) {
+                throw $ex;
             }
 
             foreach ($inspect as $property => $value) {
@@ -261,9 +511,21 @@ class YMLDocsTest extends TestCase
                     $this->assertNotNull($schema['properties'][$property]);
                 } catch (\Exception $ex) {
                     $this->fail('Object returned by API had '.$property.' but '.
-                         'that property is not part of the Schema!');
+                    'that property is not part of the Schema (from '.$path.')');
                 }
             }
+        }
+    }
+
+    protected function assertSchemaProperty($property, $expected, $actual)
+    {
+        $expected = $this->translateType($expected);
+        $actual = $this->getReturnType($expected, $actual);
+
+        if ($expected !== $actual) {
+            $this->fail('Failed asserting that the API response property \''.
+                $property.'\' is'.
+                        ' of expected type '.$expected.'. '.$property.' was '.$actual);
         }
     }
 
@@ -333,7 +595,15 @@ class YMLDocsTest extends TestCase
             }
         }
 
-        if ($expected == 'object' || $expected == 'array') {
+        if ($expected == 'boolean' && gettype($property) === 'integer') {
+            if (in_array($property, [
+                0, 1
+            ])) {
+                return $expected;
+            }
+        }
+
+        if ($expected == 'object' || $expected == 'array' || $expected == 'object or array') {
             if (in_array(gettype($property), [
                 'object', 'array',
             ])) {
