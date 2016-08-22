@@ -95,6 +95,8 @@ abstract class YMLDocsTest extends TestCase
 
     /**
      * Set up the guzzle client
+     *
+     * @param string $path The path to the YML docs
      */
     public function __construct($path)
     {
@@ -210,7 +212,7 @@ abstract class YMLDocsTest extends TestCase
             $operations = $data['operations'];
             foreach ($operations as $verb => $info) {
                 if (!in_array(strtoupper($verb), [
-                    'GET', 
+                    'GET',
                 ])) {
                     continue;
                 }
@@ -252,7 +254,12 @@ abstract class YMLDocsTest extends TestCase
                     $this->fail($key.' failed with response: '.$content);
                 }
 
-                $schema = $info['responses'][200]['schema'];
+                $code = array_key_exists(200, $info['responses']) ? 200 : 302;
+                if (!array_key_exists('schema', $info['responses'][$code])) {
+                    continue;
+                }
+
+                $schema = $info['responses'][$code]['schema'];
 
                 $this->schemaTest(
                     $schema,
@@ -278,20 +285,30 @@ abstract class YMLDocsTest extends TestCase
      * modify the values to enable secure access.
      *
      * @param string $security The name of the security required
-     * @param array  &$params  The parameters to be sent with the request
-     * @param string &$token   The authentication header token to be used
+     * @param array  $params   The parameters to be sent with the request
+     * @param string $token    The authentication header token to be used
      *
      * @return void
      */
-    protected function applySecurity($security = null, array &$params, &$token = null)
-    {
+    protected function applySecurity(
+        $security = null,
+        array &$params = array(),
+        &$token = null
+    ) {
         if (is_null($security)) {
             return false;
         }
 
-        if (array_key_exists($security, $this->security)) {
-            $this->security[$security]($params, $token);
+        $parts = explode(',', $security);
+
+        foreach ($parts as $part) {
+            if (array_key_exists(trim($part), $this->security)) {
+                $this->security[trim($part)]($params, $token);
+                return true;
+            }
         }
+
+        $this->fail('Unable to match security: '.$security);
     }
 
     /**
@@ -340,12 +357,19 @@ abstract class YMLDocsTest extends TestCase
 
             foreach ($entities as $entity) {
                 if (!array_key_exists($entity, $this->entities)) {
+                    echo "\n\t\t\t".'Could not find ENTITY to replace '.$entity;
+
                     $this->markTestSkipped(
                         'Could not find ENTITY to replace '.$entity
                     );
                 }
 
                 $replacement = $this->entities[$entity]($this->http, $verb, $path);
+                if (!$replacement) {
+                    echo "\n\t\t".'No replacement found for '.$entity;
+                    return false;
+                }
+
                 $path = preg_replace("/{([a-zA-Z0-9_]*)}/", $replacement, $path);
             }
         }
@@ -355,14 +379,23 @@ abstract class YMLDocsTest extends TestCase
      * Pass the parameters and token value and allow parameter closures to
      * modify the values to enable valid parameters
      *
-     * @param string $parameters The name of the security required
-     * @param array  &$params    The parameters to be sent with the request
-     * @param string &$token     The authentication header token to be used
+     * @param string $entity     The name of the entity
+     * @param string $verb       The HTTP verb of the operation
+     * @param string $path       The path being accessed
+     * @param array  $parameters The parameters or something
+     * @param array  $params     The parameters to be sent with the request
+     * @param string $token      The authentication header token to be used
      *
      * @return void
      */
-    protected function applyParameters($entity, $verb, $path, $parameters, array &$params, &$token = null)
-    {
+    protected function applyParameters(
+        $entity,
+        $verb,
+        $path,
+        $parameters,
+        array &$params,
+        &$token = null
+    ) {
         $key = $entity.':'.$verb.':'.$path;
         if (array_key_exists($key, $this->parameters)) {
             $this->parameters[$key]($params);
@@ -381,6 +414,8 @@ abstract class YMLDocsTest extends TestCase
      */
     protected function send($method, $endpoint, array $params = array(), $token = null)
     {
+        //echo "\n\t".$endpoint;
+
         try {
             $response = $this->http->request(
                 $method,
@@ -392,12 +427,16 @@ abstract class YMLDocsTest extends TestCase
             $this->lastResponse = $ex->getResponse();
             $response = $ex->getResponse();
         }
-        
+        // echo "\n\t";
+        // echo (string) $response->getBody();
+
         return (string) $response->getBody();
     }
 
     /**
      * Generates the authorization headers
+     *
+     * @param string $token The token to use with the request
      *
      * @return mixed[]
      */
@@ -415,6 +454,7 @@ abstract class YMLDocsTest extends TestCase
      *
      * @param string $method The method of the request (get/post/patch/del)
      * @param mixed  $params The parameters being sent
+     * @param string $token  The token to use
      *
      * @return mixed[]
      */
@@ -437,9 +477,9 @@ abstract class YMLDocsTest extends TestCase
     /**
      * Run through the Schema and ensure its to spec
      *
-     * @param array  $schema   The schema specification
-     * @param mixed  $inspect  The data returned by the API
-     * @param string $path The path that was requested
+     * @param array  $schema  The schema specification
+     * @param mixed  $inspect The data returned by the API
+     * @param string $path    The path that was requested
      *
      * @return void
      */
@@ -454,8 +494,13 @@ abstract class YMLDocsTest extends TestCase
         }
 
         if (!is_array($schema)) {
+            if (!array_key_exists($schema, $this->schemas)) {
+                echo "\n\t\t\t".'Missing schema: ['.$schema.']';
+                return false;
+            }
+
             $schema = $this->schemas[$schema];
-        }         
+        }
  
         /**
          * This line checks to make sure they have the exact same number
@@ -466,21 +511,25 @@ abstract class YMLDocsTest extends TestCase
 
         if ($array) {
             if (!count($inspect)) {
-                $this->markTestSkipped('Results returned from the API contained'
-                        .' no content from: '.$path);
+                // $this->markTestSkipped('Results returned from the API contained'
+                //         .' no content from: '.$path);
             }
 
             $inspect = $inspect[0];
         }
 
         if (is_array($inspect)) {
+            if (!count($inspect)) {
+                echo "\n\t\t".'Skipped due to empty response';
+                return false;
+            }
+
             try {
                 foreach ($schema['properties'] as $property => $specs) {
                     if (!array_key_exists($property, $inspect)) {
-                        var_dump($inspect);
                         $this->fail('Failed asserting that the schema property'.
                             ' '.$property.' was present in the API response '.
-                            'from '.$path);
+                            'from '.$path.': '.var_dump($inspect));
                     }
 
                     $type = is_array($specs) ? $specs['type'] : $specs;
@@ -517,6 +566,15 @@ abstract class YMLDocsTest extends TestCase
         }
     }
 
+    /**
+     * Assert a schema property
+     *
+     * @param string $property The property to assert
+     * @param string $expected What the property should be
+     * @param string $actual   What the property actually is
+     *
+     * @return void
+     */
     protected function assertSchemaProperty($property, $expected, $actual)
     {
         $expected = $this->translateType($expected);
