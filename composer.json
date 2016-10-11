@@ -6,7 +6,7 @@
         "php": ">=5.6",
         "guzzle/guzzle": "^3.9",
         "symfony/yaml": "^3.1",
-        "vicimus/ymlcollection": "dev-master"
+        "vicimus/ymlcollection": "^1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~2",
