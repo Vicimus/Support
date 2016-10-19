@@ -28,7 +28,9 @@ interface CSVParser
     /**
      * Set the headers to be used with the CSV data
      *
+     * @param array $headers The headers to set the columns to
+     *
      * @return string[]
      */
-    public function headers();
+    public function headers(array $headers);
 }
