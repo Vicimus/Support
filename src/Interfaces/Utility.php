@@ -1,6 +1,6 @@
 <?php
 
-namespace Vicimus\Support\Interfaces\Utility;
+namespace Vicimus\Support\Interfaces;
 
 /**
  * Represents a Utility that can be run
