@@ -29,11 +29,4 @@ interface Utility
      * @return void
      */
     public function call();
-
-    /**
-     * Called once the utility has completed
-     *
-     * @return mixed
-     */
-    public function finish();
 }
