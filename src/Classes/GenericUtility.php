@@ -57,6 +57,18 @@ class GenericUtility implements Utility
     public function call()
     {
         $method = $this->call;
-        return $method();
+        return $this->results($method());
+    }
+
+    /**
+     * To be displayed after a call, to show the results of the call
+     *
+     * @param mixed $payload OPTIONAL Anything needed to construct the results
+     *
+     * @return void
+     */
+    public function results($payload = null)
+    {
+        return $payload;
     }
 }

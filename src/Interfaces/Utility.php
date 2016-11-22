@@ -29,4 +29,13 @@ interface Utility
      * @return void
      */
     public function call();
+
+    /**
+     * To be displayed after a call, to show the results of the call
+     *
+     * @param mixed $payload OPTIONAL Anything needed to construct the results
+     *
+     * @return void
+     */
+    public function results($payload = null);
 }
