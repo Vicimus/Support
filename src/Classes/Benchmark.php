@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Classes;
 
+use Vicimus\Support\Traits\ConsoleOutputter;
+
 /**
  * Easily benchmark various aspects of a PHP script
  *
@@ -9,6 +11,8 @@ namespace Vicimus\Support\Classes;
  */
 class Benchmark
 {
+    use ConsoleOutputter;
+
     /**
      * Track the time the benchmark has started
      *
@@ -45,12 +49,24 @@ class Benchmark
     protected $peak = 0;
 
     /**
+     * Any custom benchmarking
+     *
+     * @var callable[]
+     */
+    protected $customs = [];
+
+    /**
      * Begin the benchmarking
      *
      * @return Benchmark
      */
     public function init()
     {
+        foreach ($this->customs as $custom) {
+            $method = $custom['init'];
+            $method($this);
+        }
+
         $this->start = microtime(true);
         $this->init = memory_get_usage();
         return $this;
@@ -67,6 +83,39 @@ class Benchmark
         $this->dinit = memory_get_usage();
         $this->peak = memory_get_peak_usage();
         return $this;
+    }
+
+    /**
+     * Add a custom benchmark
+     *
+     * @param array 
+     */
+    public function custom(callable $init, callable $stop)
+    {
+        $this->customs[] = [
+            'init' => $init,
+            'stop' => $stop,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Output the benchmark statistics
+     *
+     * @return void
+     */
+    public function output()
+    {
+        $results = $this->get();
+        $this->info('Time: '.$results['time']);
+        $this->info('Memory: '.$results['memory']);
+        $this->info('Peak: '.$results['peak']);
+
+        foreach ($this->customs as $custom) {
+            $method = $custom['stop'];
+            $this->info($method($this));
+        }
     }
 
     /**
