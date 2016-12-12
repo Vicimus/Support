@@ -40,7 +40,7 @@ interface CSVParser
      *
      * @param string $file    The file to parse
      * @param array  $options Any options to set
-     * 
+     *
      * @return CSVParser
      */
     public function make($file, array $options = array());

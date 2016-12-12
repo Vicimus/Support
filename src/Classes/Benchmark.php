@@ -11,6 +11,10 @@ use Vicimus\Support\Traits\ConsoleOutputter;
  */
 class Benchmark
 {
+    /**
+     * This adds support for binding a ConsoleOutput interface and allowing
+     * the instance of Benchmark to output information
+     */
     use ConsoleOutputter;
 
     /**
@@ -88,7 +92,10 @@ class Benchmark
     /**
      * Add a custom benchmark
      *
-     * @param array 
+     * @param callable $init The method to be called on init
+     * @param callable $stop The method to be called on stop
+     *
+     * @return Benchmark
      */
     public function custom(callable $init, callable $stop)
     {
