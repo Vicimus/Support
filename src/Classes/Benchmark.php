@@ -89,7 +89,7 @@ class Benchmark
 
         foreach ($this->customs as &$custom) {
             $method = $custom['stop'];
-            $custom['results'] = $method($this));
+            $custom['results'] = $method($this);
         }
 
         return $this;
