@@ -86,6 +86,12 @@ class Benchmark
         $this->stop = microtime(true);
         $this->dinit = memory_get_usage();
         $this->peak = memory_get_peak_usage();
+
+        foreach ($this->customs as &$custom) {
+            $method = $custom['stop'];
+            $custom['results'] = $method($this));
+        }
+
         return $this;
     }
 
@@ -120,8 +126,7 @@ class Benchmark
         $this->info('Peak: '.$results['peak']);
 
         foreach ($this->customs as $custom) {
-            $method = $custom['stop'];
-            $this->info($method($this));
+            $this->info($custom['results']);
         }
     }
 
@@ -135,11 +140,17 @@ class Benchmark
         $memory = round(($this->dinit - $this->init) / 1024 / 1024).'MB';
         $time = round($this->stop - $this->start, 2).'S';
         $peak = round($this->peak / 1024 / 1024).'MB';
+        $customs = [];
+        
+        foreach ($this->customs as $custom) {
+            $customs[] = $custom['result'];
+        }
 
         return [
             'time'   => $time,
             'memory' => $memory,
             'peak'   => $peak,
+            'customs' => $customs,
         ];
     }
 }
