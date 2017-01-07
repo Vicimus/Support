@@ -143,7 +143,7 @@ class Benchmark
         $customs = [];
         
         foreach ($this->customs as $custom) {
-            $customs[] = $custom['result'];
+            $customs[] = $custom['results'];
         }
 
         return [
