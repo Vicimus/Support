@@ -24,4 +24,11 @@ interface CSVWriter
      * @return $this
      */
     public function withHeaders();
+
+    /**
+     * Set the file to write to
+     *
+     * @return $this
+     */
+    public function file($pathToFile);
 }
