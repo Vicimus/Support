@@ -55,7 +55,11 @@ interface Notifier
      * @return Illuminate\Database\Eloquent\Collection
      */
     public function get(
-        ?int $userid, ?string $product, ?string $tone, bool $expired = false
+        ?int $userid,
+        ?string $product,
+        ?string $package,
+        ?string $tone,
+        bool $expired = false
     );
 
     /**
