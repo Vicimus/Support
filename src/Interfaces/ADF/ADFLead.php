@@ -67,4 +67,11 @@ interface ADFLead
      * @return ADFVehicle
      */
     public function vehicle() : ?ADFVehicle;
+
+    /**
+     * Should return a string indicating the type of lead this is
+     *
+     * @return string
+     */
+    public function leadType(): string;
 }
