@@ -71,7 +71,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function notify(string $title, string $message, array $options);
+    public function notify(string $title, $message, array $options);
 
     /**
      * Mark a notification as read
@@ -89,7 +89,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function basic(string $title, string $message, array $options);
+    public function basic(string $title, $message, array $options);
 
     /**
      * Generate a new notification
@@ -100,7 +100,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function success(string $title, string $message, array $options);
+    public function success(string $title, $message, array $options);
 
     /**
      * Generate a new notification
@@ -111,7 +111,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function warning(string $title, string $message, array $options);
+    public function warning(string $title, $message, array $options);
 
     /**
      * Generate a new notification
@@ -122,7 +122,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function error(string $title, string $message, array $options);
+    public function error(string $title, $message, array $options);
 
     /**
      * Generate a new notification
@@ -133,7 +133,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function info(string $title, string $message, array $options);
+    public function info(string $title, $message, array $options);
 
     /**
      * Generate a new notification
@@ -144,5 +144,5 @@ interface Notifier
      *
      * @return Collection
      */
-    public function question(string $title, string $message, array $options);
+    public function question(string $title, $message, array $options);
 }
