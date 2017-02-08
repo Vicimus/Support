@@ -26,9 +26,11 @@ interface Utility
     /**
      * Called to execute the utility
      *
+     * @param string[] $flags Optional flags to add to the call.
+     *
      * @return void
      */
-    public function call();
+    public function call(array $flags = null)
 
     /**
      * To be displayed after a call, to show the results of the call
