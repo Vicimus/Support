@@ -30,7 +30,7 @@ interface Utility
      *
      * @return void
      */
-    public function call(array $flags = null)
+    public function call(array $flags = null);
 
     /**
      * To be displayed after a call, to show the results of the call
