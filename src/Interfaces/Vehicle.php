@@ -14,4 +14,19 @@ interface Vehicle
      * @return array
      */
     public function toArray();
+
+    /**
+     * Get an Unhaggle/Chrome styleid representing the vehicle. If the styleid
+     * is unknown or unavailable, return null.
+     *
+     * @return ?int
+     */
+    public function styleid() : ?int;
+
+    /**
+     * Get the primary key of this vehicle instance. Of course, if the model
+     * has not yet been saved, it's id will be null so you can return null
+     * from this method but it may cause issues so it's not recommended;
+     */
+    public function id() : ?int;
 }
