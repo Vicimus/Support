@@ -40,4 +40,11 @@ interface Utility
      * @return void
      */
     public function results($payload = null);
+
+    /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt();
 }
