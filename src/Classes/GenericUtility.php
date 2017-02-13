@@ -52,9 +52,11 @@ class GenericUtility implements Utility
     /**
      * Called to execute the utility
      *
+     * @param string[] $flags Optional flags to add to the call.
+     *
      * @return void
      */
-    public function call()
+    public function call(array $flags = null)
     {
         $method = $this->call;
         return $this->results($method());
@@ -70,5 +72,15 @@ class GenericUtility implements Utility
     public function results($payload = null)
     {
         return $payload;
+    }
+
+    /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt()
+    {
+        return null;
     }
 }
