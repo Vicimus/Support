@@ -18,6 +18,7 @@ class StandardOutput implements ConsoleOutput
      */
     public function info($output)
     {
+        $this->line('');
         echo "\033[32m".$output."\033[0m".PHP_EOL;
     }
 
@@ -30,6 +31,7 @@ class StandardOutput implements ConsoleOutput
      */
     public function error($output)
     {
+        $this->line('');
         echo "\033[31m".$output."\033[0m".PHP_EOL;
     }
 
@@ -42,6 +44,7 @@ class StandardOutput implements ConsoleOutput
      */
     public function comment($output)
     {
+        $this->line('');
         echo "\033[1;34m".$output."\033[0m".PHP_EOL;
     }
 

@@ -27,6 +27,23 @@ interface Vehicle
      * Get the primary key of this vehicle instance. Of course, if the model
      * has not yet been saved, it's id will be null so you can return null
      * from this method but it may cause issues so it's not recommended;
+     *
+     * @return ?int
      */
     public function id() : ?int;
+
+    /**
+     * Describe the type of vehicle this is (a new vehicle, used vehicle,
+     * showroom vehicle, etc).
+     *
+     * @return string
+     */
+    public function type() : string;
+
+    /**
+     * Return a string that will describe the vehicle in a sensible way
+     *
+     * @return string
+     */
+    public function __toString() : string;
 }
