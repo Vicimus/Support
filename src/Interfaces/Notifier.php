@@ -56,6 +56,7 @@ interface Notifier
      */
     public function get(
         ?int $userid,
+        ?int $storeid,
         ?string $product,
         ?string $package,
         ?string $tone,
