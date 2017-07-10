@@ -69,7 +69,7 @@ class Setup implements ConsoleOutput
     protected function clean(SplFileInfo $file): void
     {
         $name = $file->getRelativePathname();
-        if (stripos($name, 'Example') !== false) {
+        if (stripos($name, 'Example') !== false && stripos($name, 'User.php') !== false) {
             $this->error('Deleting '.$name);
             unlink($file->getRealPath());
             return;
@@ -83,7 +83,7 @@ class Setup implements ConsoleOutput
         }
 
         $modified = str_replace('@var array', '@var string[]', $modified);
-
+        $modified = str_replace('Customerslication', 'Application', $modified);
         file_put_contents($file->getRealPath(), $modified);
     }
 }
