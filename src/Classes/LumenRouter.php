@@ -22,6 +22,17 @@ class LumenRouter
     }
 
     /**
+     * Bind a delete route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     */
+    public function delete(string $path, $controller): void
+    {
+        $this->app->delete($path, $controller);
+    }
+
+    /**
      * Create a resource binding
      *
      * @param string $resource   The resource to bind
