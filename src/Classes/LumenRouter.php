@@ -33,6 +33,39 @@ class LumenRouter
     }
 
     /**
+     * Bind a get route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     */
+    public function get(string $path, $controller): void
+    {
+        $this->app->get($path, $controller);
+    }
+
+    /**
+     * Bind a patch route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     */
+    public function patch(string $path, $controller): void
+    {
+        $this->app->patch($path, $controller);
+    }
+
+    /**
+     * Bind a post route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     */
+    public function post(string $path, $controller): void
+    {
+        $this->app->post($path, $controller);
+    }
+
+    /**
      * Create a resource binding
      *
      * @param string $resource   The resource to bind
