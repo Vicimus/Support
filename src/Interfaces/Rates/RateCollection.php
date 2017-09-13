@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Rates;
 
@@ -13,21 +13,21 @@ interface RateCollection
      *
      * @return Rate[]
      */
-    public function finances() : array;
+    public function finances(): array;
 
     /**
      * Get the rate for a specific term in financing rates
      *
      * @return float
      */
-    public function finance(int $term) : ?float;
+    public function finance(int $term): ?float;
 
     /**
      * Get all available lease rates
      *
      * @return Rate[]
      */
-    public function leases() : array;
+    public function leases(): array;
 
     /**
      * Get the rate for a specific term in lease rates. This method must
@@ -35,7 +35,7 @@ interface RateCollection
      *
      * @return float
      */
-    public function lease(int $term) : ?float;
+    public function lease(int $term): ?float;
 
     /**
      * Get all available rates, both finance and leases. This method MUST return
@@ -43,5 +43,5 @@ interface RateCollection
      *
      * @return Rate[]
      */
-    public function all() : array;
+    public function all(): array;
 }

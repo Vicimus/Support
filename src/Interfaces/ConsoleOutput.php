@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -16,7 +16,7 @@ interface ConsoleOutput
      *
      * @return void
      */
-    public function info($output);
+    public function info(string $output): void;
 
     /**
      * Output an error (red text)
@@ -25,7 +25,7 @@ interface ConsoleOutput
      *
      * @return void
      */
-    public function error($output);
+    public function error(string $output): void;
 
     /**
      * Output a comment (yellow text)
@@ -34,7 +34,7 @@ interface ConsoleOutput
      *
      * @return void
      */
-    public function comment($output);
+    public function comment(string $output): void;
 
     /**
      * Output text (grey text)
@@ -43,5 +43,5 @@ interface ConsoleOutput
      *
      * @return void
      */
-    public function line($output);
+    public function line(string $output): void;
 }

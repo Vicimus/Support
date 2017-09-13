@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Traits;
 
@@ -26,7 +26,7 @@ trait ConsoleOutputter
      *
      * @return void
      */
-    public function info($output)
+    public function info(string $output): void
     {
         if ($this->output) {
             $this->output->info($output);
@@ -40,7 +40,7 @@ trait ConsoleOutputter
      *
      * @return void
      */
-    public function error($output)
+    public function error(string $output): void
     {
         if ($this->output) {
             $this->output->error($output);
@@ -54,7 +54,7 @@ trait ConsoleOutputter
      *
      * @return void
      */
-    public function comment($output)
+    public function comment(string $output): void
     {
         if ($this->output) {
             $this->output->comment($output);
@@ -68,7 +68,7 @@ trait ConsoleOutputter
      *
      * @return void
      */
-    public function line($output)
+    public function line(string $output): void
     {
         if ($this->output) {
             $this->output->line($output);

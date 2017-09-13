@@ -73,7 +73,7 @@ class LumenRouter
      *
      * @return void
      */
-    public function resource($resource, $controller): void
+    public function resource(string $resource, string $controller): void
     {
         $base = $this->plural($resource);
         $entity = '/{'.$resource.'}';

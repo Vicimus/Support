@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -14,5 +14,5 @@ interface VehicleInjector
      *
      * @return ADFVehicle
      */
-    public function vehicle(array $input) : ?ADF\ADFVehicle;
+    public function vehicle(array $input): ?ADF\ADFVehicle;
 }
