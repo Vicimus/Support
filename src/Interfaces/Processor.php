@@ -8,7 +8,12 @@ namespace Vicimus\Support\Interfaces;
  */
 interface Processor
 {
-    public function info($output): void;
+    /**
+     * Output info
+     *
+     * @param string $output The info to output
+     */
+    public function info(string $output): void;
 
     /**
      * Output an error (red text)
@@ -50,9 +55,9 @@ interface Processor
     /**
      * Init the process
      *
-     * @return void
+     * @return bool
      */
-    public function process(): void;
+    public function process(): bool;
 
     /**
      * Set the options for this service
