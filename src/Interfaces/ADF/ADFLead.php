@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\ADF;
 
@@ -16,7 +16,7 @@ interface ADFLead
      *
      * @return DateTime
      */
-    public function preferredDate() : ?DateTime;
+    public function preferredDate(): ?DateTime;
 
     /**
      * If a service lead, what was their alternate date and time. Return null
@@ -24,14 +24,14 @@ interface ADFLead
      *
      * @return DateTime
      */
-    public function alternateDate() : ?DateTime;
+    public function alternateDate(): ?DateTime;
 
     /**
      * Return an array of comments to be included in the ADF
      *
      * @return array
      */
-    public function comments() : array;
+    public function comments(): array;
 
     /**
      * Return an ADFCustomer describing the customer who submitted this lead.
@@ -42,7 +42,7 @@ interface ADFLead
      *
      * @return ADFCustomer
      */
-    public function customer() : ?ADFCustomer;
+    public function customer(): ?ADFCustomer;
 
     /**
      * Should return the interest of the lead. Should be something like
@@ -50,7 +50,7 @@ interface ADFLead
      *
      * @return string
      */
-    public function interest() : ?string;
+    public function interest(): ?string;
 
     /**
      * This should be a unique identifier for the lead.  Most likely the primary
@@ -58,7 +58,7 @@ interface ADFLead
      *
      * @return int
      */
-    public function identifier() : int;
+    public function identifier(): int;
 
     /**
      * If this lead is related to a vehicle, this method should return an
@@ -66,7 +66,7 @@ interface ADFLead
      *
      * @return ADFVehicle
      */
-    public function vehicle() : ?ADFVehicle;
+    public function vehicle(): ?ADFVehicle;
 
     /**
      * Should return a string indicating the type of lead this is

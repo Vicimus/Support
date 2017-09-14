@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -8,7 +8,12 @@ namespace Vicimus\Support\Interfaces;
  */
 interface Processor
 {
-    public function info($output);
+    /**
+     * Output info
+     *
+     * @param string $output The info to output
+     */
+    public function info(string $output): void;
 
     /**
      * Output an error (red text)
@@ -17,7 +22,7 @@ interface Processor
      *
      * @return void
      */
-    public function error($output);
+    public function error(string $output): void;
 
     /**
      * Output a comment (yellow text)
@@ -26,7 +31,7 @@ interface Processor
      *
      * @return void
      */
-    public function comment($output);
+    public function comment(string $output): void;
 
     /**
      * Output text (grey text)
@@ -35,7 +40,7 @@ interface Processor
      *
      * @return void
      */
-    public function line($output);
+    public function line(string $output): void;
 
     /**
      * Bind a ConsoleOutput interface implementation to this class. This
@@ -50,9 +55,9 @@ interface Processor
     /**
      * Init the process
      *
-     * @return void
+     * @return bool
      */
-    public function process();
+    public function process(): bool;
 
     /**
      * Set the options for this service
@@ -70,7 +75,7 @@ interface Processor
      *
      * @return mixed
      */
-    public function option($name);
+    public function option(string $name);
 
     /**
      * Return an integer describing the priority of the processor. Higher
@@ -79,5 +84,5 @@ interface Processor
      *
      * The scale should be 1 to 10.
      */
-    public function priority() : int;
+    public function priority(): int;
 }

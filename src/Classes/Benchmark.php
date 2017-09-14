@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Classes;
 
@@ -64,7 +64,7 @@ class Benchmark
      *
      * @return Benchmark
      */
-    public function init()
+    public function init(): Benchmark
     {
         foreach ($this->customs as $custom) {
             $method = $custom['init'];
@@ -81,7 +81,7 @@ class Benchmark
      *
      * @return Benchmark
      */
-    public function stop()
+    public function stop(): Benchmark
     {
         $this->stop = microtime(true);
         $this->dinit = memory_get_usage();
@@ -103,7 +103,7 @@ class Benchmark
      *
      * @return Benchmark
      */
-    public function custom(callable $init, callable $stop)
+    public function custom(callable $init, callable $stop): Benchmark
     {
         $this->customs[] = [
             'init' => $init,
@@ -118,7 +118,7 @@ class Benchmark
      *
      * @return void
      */
-    public function output()
+    public function output(): void
     {
         $results = $this->get();
         $this->info('Time: '.$results['time']);
@@ -133,9 +133,9 @@ class Benchmark
     /**
      * Get the statistics
      *
-     * @return array
+     * @return string[]
      */
-    public function get()
+    public function get(): array
     {
         $memory = round(($this->dinit - $this->init) / 1024 / 1024).'MB';
         $time = round($this->stop - $this->start, 2).'S';

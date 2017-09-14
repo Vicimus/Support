@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -17,7 +17,7 @@ interface CSVParser
      *
      * @return CSVParser
      */
-    public function parse($file, array $options = array());
+    public function parse(string $file, array $options = []): CSVParser;
 
     /**
      * The rows that were parsed from the CSV
@@ -43,7 +43,7 @@ interface CSVParser
      *
      * @return CSVParser
      */
-    public function make($file, array $options = array());
+    public function make(string $file, array $options = []): CSVParser;
 
     /**
      * Iterate over each row of the CSV, one at a time
@@ -57,5 +57,5 @@ interface CSVParser
      *
      * @return string
      */
-    public function hash();
+    public function hash(): string;
 }

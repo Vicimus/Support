@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Traits;
 
@@ -34,7 +34,7 @@ trait Processing
      *
      * @return mixed
      */
-    public function option($name)
+    public function option(string $name)
     {
         if (!array_key_exists($name, $this->options)) {
             return null;
@@ -48,7 +48,7 @@ trait Processing
      *
      * @return int
      */
-    public function priority() : int
+    public function priority(): int
     {
         return 5;
     }

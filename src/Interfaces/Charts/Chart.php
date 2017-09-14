@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Charts;
 
@@ -14,7 +14,7 @@ interface Chart
      *
      * @return string
      */
-    public function output();
+    public function output(): string;
 
     /**
      * Add data to the chart
@@ -23,7 +23,7 @@ interface Chart
      *
      * @return Chart
      */
-    public function add(array $parameters);
+    public function add(array $parameters): Chart;
 
     /**
      * Must return a json_encodable structure representing options for the

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Rates;
 
@@ -12,19 +12,19 @@ interface Rate
      *
      * @return int
      */
-    public function term() : int;
+    public function term(): int;
 
     /**
      * The term rate as a decimal
      *
      * @return float
      */
-    public function rate() : float;
+    public function rate(): float;
 
     /**
      * Get the type of rate this is (finance, lease)
      *
      * @return string
      */
-    public function type() : string;
+    public function type(): string;
 }

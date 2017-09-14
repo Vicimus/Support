@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -14,5 +14,5 @@ interface VehicleProvider
      *
      * @return Iterable
      */
-    public function get(...$args) : Collection;
+    public function get(...$args): Collection;
 }
