@@ -3,11 +3,13 @@
 namespace Vicimus\Support\Classes;
 
 use DateTime;
+use function array_keys;
 use function arsort;
 use function count;
 use function getdate;
 use function implode;
 use function key;
+use function preg_match;
 use function substr;
 
 /**
@@ -37,49 +39,59 @@ class Tools
     }
 
     /**
-     * Regex pattern for detecting company names.
+     * Tool for detecting company names.
      *
-     * @return string pattern of company detection in fullname
+     * @param string $name The name to check.
+     *
+     * @return bool Flag for company.
      */
-    public static function patternIsCompany(): string
+    public static function isCompany(string $name): bool
     {
-        $list = [
-            "(and|body|car(s|e)?|data|inc|ll(p|c)|ont?|can?|name|sales|direct?)",
+        $re = [
+            "(and|et|body|car(s|e)?|data|inc|ll(p|c)|ont?|can?|name|sales|ventes|direct?)",
+            "(sons|daughters|fils|filles)",
             "(american?|canad(a|ian)?|usa|nation(al)?|(pacif|atlant)ic)",
             "(auto(mo|body|sport)?(tive|biles?)?|(invest|manage|equip|improve?)?ments?)",
             "(banks?|credit|works?|legal|lawn?|doctor|health|weekly|news|paper|unit|dept)",
-            "int(eriors?|ern?)?(national)?(\'l|l)?",
-            "tele(com|visions?)?(munications?)?",
+            "(banques?|crédit|légal|gazon|docteur|santé|hebdomadaire|nouvelles|journal)",
+            "int(eriors?|ern?)?(nationale?)?(\'l|l)?",
+            "t[eé]l[eé](com|visions?)?(munications?)?",
             "trans(missions?|port(s|ations?)?)?",
-            "(access(ories)?|co(\-)?op(erative)?|(in)?corp(orat)?(ion|ed)?)",
-            "(construct(ion)?|perform(ance)?|janitorial|masonry|windows|doors)",
-            "(dents?|motors?|designs?|graphics?|club|group|(signa|furni)ture)",
+            "(access(ories)?|co(\-)?op([eé]rative)?|(in)?corp(orat)?(ion|ed)?)",
+            "(ltd|limited|limitée?)",
+            "(construct(ion)?|perform(ance)?|janitorial|masonry|windows|doors|portes|fenêtres)",
+            "(dents?|motors?|designs?|graphics?|club|groupe?|(signa|furni)ture)",
             "(com(puters?|pany)?|contract(ing|ors)?|(un)?l(imi)?t(e)?d|tech(nolog)?(y|ies)?)",
             "(info(rmation)?|financ(e|ial|ing)?|serv(ice)?s?|warrant(y|ies)?)",
             "(assoc(iates|iation)?|communicat(e|ions?)|pro(fess)?(io)?(na)?(ls?)?|quality)",
             "(distribut(e|ors|ion)?|innovat(ives?|ions?)?|publi(cations?|shing|shers?)?)",
-            "(sys(tems?)?|rent(als?)?|suppl(y|ies)?|truck(s|ing)?)",
+            "(sys(t[eè]me?s?)?|rent(als?)?|suppl(y|ies)?|truck(s|ing)?)",
             "(consult(ing|ants?)?|enterprises?|offices?|networks?|mechanics?)",
             "(cent(re|er|ral)s?|manheims?|tires?|brothers?|holdings?|brokers?|insurances?)",
             "(industri(al|es)|tint(ing)?|pav(ing|ers)?)",
             "(import(s|ers)?|detail(ers|ing)?|wholesale(rs)?|roof(ing|ers)?)",
-            "(ontario|toronto|ottawa|calgary|montreal|alberta)",
-            "(agenc(y|ies)|engine|parts|repairs?)",
+            "(ontario|toronto|ottawa|calgary|montr[eé]al|alberta)",
+            "(agenc(y|ies)|engine|parts|pièces|repairs?)",
             "(auct|celebrat|collis|installat|educat|solut|promot)ions?",
             "(university|college|school|creative|media|florist|magazine)",
+            "(université|collège|école|média|fleuriste|revue)",
             "(business|marketing|exchange|mechanical|advertising|app(s|lications?)?|secur(e|ity))",
             "((east|west|road|water)side|(downs?|global|water)?views?)",
-            "(home|street|avenue|district|town(ship)?|village|city)",
+            "(home|street|avenue|district|town(ship)?|village|city|ville)",
             "(account(ants?|ing)?|minist(er|ry)|protect(ion)?|graphics?|leas(e|ing))",
             "(cartage|electric|radiator|prestige|express|powertrain)",
-            "(clinic|shop|ca(fe|tering)|restaurant|din(ing|er))",
+            "(clinic|clinique|shop|magasin|ca(fe|tering)|restaurant|din(ing|er))",
             "(spa|inn|hotel|suites|motel|business|tv|cable|garage|(ware)?house|inventory)",
             "(acura|audi|bmw|buick|chevrolet|cadillac|gmc|chrysler|dodge|jeep|ford|honda)",
             "(hyundai|infiniti|jaguar|kia|(land|rover)|lexus|lincoln|mazda|(mercedes|benz))",
             "(mini|mitsubishi|nissan|porsche|smart|subaru|toyota|volkswagen|volvo|vw)",
         ];
 
-        return '/\b(' . implode("|", $list) . ')\b/i';
+        if (preg_match('/\b(' . implode("|", $re) . ')\b/i', $name)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -119,6 +131,153 @@ class Tools
             // Reverse sort array by most occurrences
             arsort($formatOccurs);
             return key($formatOccurs);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected sale class.
+     *
+     * @param string $input The sale class input
+     *
+     * @return string|null
+     */
+    public static function parseVehicleSaleClass(string $input): ?string
+    {
+        foreach (Enums::vehicleSaleClassesPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected payment types.
+     *
+     * @param string $input The payment type input
+     *
+     * @return string|null
+     */
+    public static function parsePaymentType(string $input): ?string
+    {
+        foreach (Enums::paymentTypesPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected country.
+     *
+     * @param string $input The country input
+     *
+     * @return string|null
+     */
+    public static function parseCountry(string $input): ?string
+    {
+        foreach (Enums::countriesPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected language.
+     *
+     * @param string $input The language input
+     *
+     * @return string|null
+     */
+    public static function parseLanguage(string $input): ?string
+    {
+        foreach (Enums::languagesPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected timezone.
+     *
+     * @param string $input The timezone input
+     *
+     * @return string|null
+     */
+    public static function parseTimezone(string $input): ?string
+    {
+        foreach (Enums::timezonesPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected mileage unit.
+     *
+     * @param string $input The mileage unit input
+     *
+     * @return string|null
+     */
+    public static function parseMileageUnit(string $input): ?string
+    {
+        foreach (Enums::mileageUnitsPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string and return detected state.
+     *
+     * @param string $input   The state input
+     * @param string $country In which country
+     *
+     * @return null|string
+     */
+    public static function parseState(string $input, string $country): ?string
+    {
+        foreach (Enums::statesPatterns($country) as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get country from state.
+     *
+     * @param string $input The state input
+     *
+     * @return null|string
+     */
+    public static function getCountryFromState(string $input): ?string
+    {
+        $countries = array_keys(Enums::countries());
+        foreach ($countries as $country) {
+            $state = Tools::parseState($input, $country);
+            if ($state) {
+                return $country;
+            }
         }
 
         return null;
