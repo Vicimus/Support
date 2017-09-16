@@ -176,6 +176,144 @@ class Enums
     }
 
     /**
+     * Return vehicle makes definitions
+     *
+     * @return string[]
+     */
+    public static function vehicleMakes(): array
+    {
+        return [
+            'Acura' => 'Acura',
+            'Alfa Romeo' => 'Alfa Romeo',
+            'Aston Martin' => 'Aston Martin',
+            'Audi' => 'Audi',
+            'Bentley' => 'Bentley',
+            'BMW' => 'BMW',
+            'Bugatti' => 'Bugatti',
+            'Buick' => 'Buick',
+            'Cadillac' => 'Cadillac',
+            'Chevrolet' => 'Chevrolet',
+            'Chrysler' => 'Chrysler',
+            'Dodge' => 'Dodge',
+            'Ferrari' => 'Ferrari',
+            'Fiat' => 'Fiat',
+            'Ford' => 'Ford',
+            'Geo' => 'Geo',
+            'GMC' => 'GMC',
+            'Honda' => 'Honda',
+            'Hummer' => 'Hummer',
+            'Hyundai' => 'Hyundai',
+            'Infiniti' => 'Infiniti',
+            'Isuzu' => 'Isuzu',
+            'Jaguar' => 'Jaguar',
+            'Jeep' => 'Jeep',
+            'Kia' => 'Kia',
+            'Lamborghini' => 'Lamborghini',
+            'Land Rover' => 'Land Rover',
+            'Lexus' => 'Lexus',
+            'Lincoln' => 'Lincoln',
+            'Lotus' => 'Lotus',
+            'Maserati' => 'Maserati',
+            'Maybach' => 'Maybach',
+            'Mazda' => 'Mazda',
+            'McLaren' => 'McLaren',
+            'Mercedes-Benz' => 'Mercedes-Benz',
+            'Mercury' => 'Mercury',
+            'MG' => 'MG',
+            'MINI' => 'MINI',
+            'Mitsubishi' => 'Mitsubishi',
+            'Nissan' => 'Nissan',
+            'Oldsmobile' => 'Oldsmobile',
+            'Peugeot' => 'Peugeot',
+            'Plymouth' => 'Plymouth',
+            'Pontiac' => 'Pontiac',
+            'Porsche' => 'Porsche',
+            'RAM' => 'RAM',
+            'Renault' => 'Renault',
+            'Rolls-Royce' => 'Rolls-Royce',
+            'Saab' => 'Saab',
+            'Saturn' => 'Saturn',
+            'Scion' => 'Scion',
+            'Smart' => 'Smart',
+            'Subaru' => 'Subaru',
+            'Suzuki' => 'Suzuki',
+            'Tesla' => 'Tesla',
+            'Toyota' => 'Toyota',
+            'Volkswagen' => 'Volkswagen',
+            'Volvo' => 'Volvo',
+        ];
+    }
+
+    /**
+     * Return vehicle makes patterns
+     *
+     * @return string[]
+     */
+    public static function vehicleMakesPatterns(): array
+    {
+        return [
+            'Acura' => '/\b(Acura)\b/iu',
+            'Alfa Romeo' => '/\b(Alfa[ -]?Romeo)\b/iu',
+            'Aston Martin' => '/\b(Aston|Martin)\b/iu',
+            'Audi' => '/\b(Audi)\b/iu',
+            'Bentley' => '/\b(Bentley)\b/iu',
+            'BMW' => '/\b(BMW)\b/iu',
+            'Bugatti' => '/\b(Bugatti)\b/iu',
+            'Buick' => '/\b(Buick)\b/iu',
+            'Cadillac' => '/\b(Cadillac)\b/iu',
+            'Chevrolet' => '/\b(Chevrolet|chevy?)\b/iu',
+            'Chrysler' => '/\b(Chrysler)\b/iu',
+            'Dodge' => '/\b(Dodge)\b/iu',
+            'Ferrari' => '/\b(Ferrari|Ferr)\b/iu',
+            'Fiat' => '/\b(Fiat)\b/iu',
+            'Ford' => '/\b(Ford)\b/iu',
+            'Geo' => '/\b(Geo)\b/iu',
+            'GMC' => '/\b(GMC)\b/iu',
+            'Honda' => '/\b(Honda)\b/iu',
+            'Hummer' => '/\b(Hummer)\b/iu',
+            'Hyundai' => '/\b(Hyundai)\b/iu',
+            'Infiniti' => '/\b(Infiniti)\b/iu',
+            'Isuzu' => '/\b(Isuzu)\b/iu',
+            'Jaguar' => '/\b(Jaguar)\b/iu',
+            'Jeep' => '/\b(Jeep)\b/iu',
+            'Kia' => '/\b(Kia)\b/iu',
+            'Lamborghini' => '/\b(Lamborghini|lambo)\b/iu',
+            'Land Rover' => '/\b(Land[ -]?Rover)\b/iu',
+            'Lexus' => '/\b(Lexus)\b/iu',
+            'Lincoln' => '/\b(Lincoln)\b/iu',
+            'Lotus' => '/\b(Lotus)\b/iu',
+            'Maserati' => '/\b(Maserati)\b/iu',
+            'Maybach' => '/\b(Maybach)\b/iu',
+            'Mazda' => '/\b(Mazda)\b/iu',
+            'McLaren' => '/\b(McLaren)\b/iu',
+            'Mercedes-Benz' => '/\b(Mercedes[- ]Benz)\b/iu',
+            'Mercury' => '/\b(Mercury)\b/iu',
+            'MG' => '/\b(MG)\b/iu',
+            'MINI' => '/\b(MINI)\b/iu',
+            'Mitsubishi' => '/\b(Mitsubishi)\b/iu',
+            'Nissan' => '/\b(Nissan)\b/iu',
+            'Oldsmobile' => '/\b(Oldsmobile)\b/iu',
+            'Peugeot' => '/\b(Peugeot)\b/iu',
+            'Plymouth' => '/\b(Plymouth)\b/iu',
+            'Pontiac' => '/\b(Pontiac)\b/iu',
+            'Porsche' => '/\b(Porsche)\b/iu',
+            'RAM' => '/\b(RAM)\b/iu',
+            'Renault' => '/\b(Renault)\b/iu',
+            'Rolls-Royce' => '/\b(Rolls[- ]?Royce)\b/iu',
+            'Saab' => '/\b(Saab)\b/iu',
+            'Saturn' => '/\b(Saturn)\b/iu',
+            'Scion' => '/\b(Scion)\b/iu',
+            'Smart' => '/\b(Smart)\b/iu',
+            'Subaru' => '/\b(Subaru)\b/iu',
+            'Suzuki' => '/\b(Suzuki)\b/iu',
+            'Tesla' => '/\b(Tesla)\b/iu',
+            'Toyota' => '/\b(Toyota)\b/iu',
+            'Volkswagen' => '/\b(Volkswagen)\b/iu',
+            'Volvo' => '/\b(Volvo)\b/iu',
+        ];
+    }
+
+    /**
      * Return states/provinces definitions
      *
      * @param string|null $country The country code to get states

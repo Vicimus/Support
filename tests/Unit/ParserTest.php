@@ -39,6 +39,39 @@ class ParserTest extends TestCase
     }
 
     /**
+     * Test parse makes function.
+     *
+     * @return void
+     */
+    public function testParseVehicleMake(): void
+    {
+        $result = Parser::parseVehicleMake('acura');
+        $this->assertEquals('Acura', $result);
+
+        $result = Parser::parseVehicleMake('bmw');
+        $this->assertEquals('BMW', $result);
+
+        $result = Parser::parseVehicleMake('Rolls Royce');
+        $this->assertEquals('Rolls-Royce', $result);
+
+        $result = Parser::parseVehicleMake('Land Rover');
+        $this->assertEquals('Land Rover', $result);
+
+        $result = Parser::parseVehicleMake('Alfaromeo');
+        $this->assertEquals('Alfa Romeo', $result);
+
+        $result = Parser::parseVehicleMake('lambo');
+        $this->assertEquals('Lamborghini', $result);
+
+        $result = Parser::parseVehicleMake('RAM Truck');
+        $this->assertEquals('RAM', $result);
+
+        $result = Parser::parseVehicleMake('Honda Accord');
+        $this->assertEquals('Honda', $result);
+
+    }
+
+    /**
      * Test parse country function.
      *
      * @return void

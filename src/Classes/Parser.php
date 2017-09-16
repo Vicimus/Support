@@ -28,6 +28,24 @@ class Parser
     }
 
     /**
+     * Parse a string and return detected make.
+     *
+     * @param string $input The make input
+     *
+     * @return string|null
+     */
+    public static function parseVehicleMake(string $input): ?string
+    {
+        foreach (Enums::vehicleMakesPatterns() as $key => $pattern) {
+            if (preg_match($pattern, $input)) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Parse a string and return detected payment types.
      *
      * @param string $input The payment type input
