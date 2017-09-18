@@ -32,6 +32,76 @@ class ToolsTest extends TestCase
     }
 
     /**
+     * Test get country from state function.
+     *
+     * @return void
+     */
+    public function testGetCountryFromState(): void
+    {
+        $result = Tools::getCountryFromState('Québec');
+        $this->assertEquals('CA', $result);
+
+        $result = Tools::getCountryFromState('New York');
+        $this->assertEquals('US', $result);
+
+        $result = Tools::getCountryFromState('California');
+        $this->assertEquals('US', $result);
+
+        $result = Tools::getCountryFromState('CA');
+        $this->assertEquals('US', $result);
+    }
+
+    /**
+     * Test isCompany.
+     *
+     * @return void
+     */
+    public function testIsCompany(): void
+    {
+        $result = Tools::isCompany('John Deere inc.');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Planète Honda');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Parker Chrysler');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Mazda Canada');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Bell ltd');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Jean Gareau ltd');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Videotron corp');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Videotron limitée');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Jack Black and sons');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Jack Black & sons');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Jacques Demers et fils');
+        $this->assertTrue($result);
+
+        $result = Tools::isCompany('Joe Smith');
+        $this->assertFalse($result);
+
+        $result = Tools::isCompany('Jane Doe');
+        $this->assertFalse($result);
+
+        $result = Tools::isCompany('Jane');
+        $this->assertFalse($result);
+    }
+
+    /**
      * Test detecting date format.
      *
      * @return void
