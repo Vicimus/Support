@@ -1,0 +1,135 @@
+<?php declare(strict_types = 1);
+
+namespace Vicimus\Support\Database\Relations;
+
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Collection;
+
+/**
+ * Class HasManyFromAPI
+ *
+ * @package Vicimus\Support\Database\Relations
+ */
+class HasManyFromAPI
+{
+    /**
+     * The collection of associations
+     *
+     * @var Collection
+     */
+    protected $collection;
+
+    /**
+     * Laravel database manager
+     *
+     * @var DatabaseManager
+     */
+    protected $db;
+
+    /**
+     * This is the class consuming this instance
+     *
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * The left side foreign key
+     *
+     * @var string
+     */
+    protected $left;
+
+    /**
+     * The right side foreign key
+     *
+     * @var string
+     */
+    protected $right;
+
+    /**
+     * This is the join table that will be used
+     *
+     * @var string
+     */
+    protected $table;
+
+    /**
+     * HasManyFromAPI constructor.
+     *
+     * @param DatabaseManager $db
+     * @param int     $id
+     * @param string $table
+     * @param string $relation
+     */
+    public function __construct(DatabaseManager $db, int $id, string $table, string $relation)
+    {
+        $this->db = $db;
+        $this->id = $id;
+
+        $elements = [$this->singular($table), $this->singular($relation)];
+        sort($elements);
+
+        $this->left = $this->singular($table) . '_id';
+        $this->right = $this->singular($relation) . '_id';
+
+        $this->table = implode('_', $elements);
+        $this->collection = new Collection;
+    }
+
+    /**
+     * Associate a local model with a remote model
+     *
+     * @param array  $ids      The IDs to associate
+     *
+     * @return void
+     */
+    public function associate(array $ids)
+    {
+        foreach ($ids as $id) {
+            $insertion = [];
+            $insertion[$this->left] = $this->id;
+            $insertion[$this->right] = $id;
+
+            $this->db->table($this->table)
+                ->insert($insertion);
+        }
+    }
+
+    /**
+     * Count the number of items in the relationship
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        $this->populate();
+        return $this->collection->count();
+    }
+
+    /**
+     * Get the relationship collection
+     *
+     * @return Collection
+     */
+    protected function populate()
+    {
+         $this->collection = $this->db->table($this->table)->where($this->left, $this->id)->get();
+    }
+
+    /**
+     * Get the singular form of a string
+     *
+     * @param string $table The table name
+     *
+     * @return string
+     */
+    protected function singular(string $table): string
+    {
+        if (substr($table, -1, 1) === 's') {
+            return substr($table, 0, -1);
+        }
+
+        return $table;
+    }
+}
