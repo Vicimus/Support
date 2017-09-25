@@ -4,6 +4,7 @@ namespace Vicimus\Support\Database\Relations;
 
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 
 /**
  * Class HasManyFromAPI
@@ -86,7 +87,13 @@ class HasManyFromAPI
      */
     public function associate(array $ids): void
     {
-        foreach ($ids as $id) {
+        foreach (array_unique($ids) as $id) {
+            if (!is_int($id)) {
+                throw new InvalidArgumentException(
+                    'Associate requires an array of integers'
+                );
+            }
+
             $insertion = [];
             $insertion[$this->left] = $this->id;
             $insertion[$this->right] = $id;
@@ -116,6 +123,10 @@ class HasManyFromAPI
      */
     public function dissociate(array $ids): void
     {
+        if (!count($ids)) {
+            return;
+        }
+
         $this->db->table($this->table)
             ->whereIn($this->right, $ids)
             ->delete();
