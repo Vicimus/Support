@@ -12,7 +12,9 @@ interface VehicleProvider
     /**
      * Get a collection of vehicle instances
      *
-     * @return Iterable
+     * @param mixed ...$args A variable length of arguments
+     *
+     * @return Collection
      */
     public function get(...$args): Collection;
 }

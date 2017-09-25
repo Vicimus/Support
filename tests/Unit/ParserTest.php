@@ -68,7 +68,6 @@ class ParserTest extends TestCase
 
         $result = Parser::parseVehicleMake('Honda Accord');
         $this->assertEquals('Honda', $result);
-
     }
 
     /**

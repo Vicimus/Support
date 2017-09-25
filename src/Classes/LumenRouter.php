@@ -9,6 +9,11 @@ use Laravel\Lumen\Application;
  */
 class LumenRouter
 {
+    /**
+     * Holds the Lumen application
+     *
+     * @var Application
+     */
     protected $app;
 
     /**
@@ -26,6 +31,8 @@ class LumenRouter
      *
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
      */
     public function delete(string $path, $controller): void
     {
@@ -37,6 +44,8 @@ class LumenRouter
      *
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
      */
     public function get(string $path, $controller): void
     {
@@ -48,6 +57,8 @@ class LumenRouter
      *
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
      */
     public function patch(string $path, $controller): void
     {
@@ -59,6 +70,8 @@ class LumenRouter
      *
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
      */
     public function post(string $path, $controller): void
     {

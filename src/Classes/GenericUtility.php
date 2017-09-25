@@ -11,8 +11,25 @@ use Vicimus\Support\Interfaces\Utility;
  */
 class GenericUtility implements Utility
 {
+    /**
+     * The name of the utility
+     *
+     * @var string
+     */
     protected $name;
+
+    /**
+     * The description for the utility
+     *
+     * @var string
+     */
     protected $desc;
+
+    /**
+     * Holds the callable
+     *
+     * @var callable
+     */
     protected $call;
 
     /**

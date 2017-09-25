@@ -12,7 +12,7 @@ interface Vehicle
      * Return an array of properties that can be used to represent the
      * vehicle
      *
-     * @return array
+     * @return string[]
      */
     public function toArray(): array;
 

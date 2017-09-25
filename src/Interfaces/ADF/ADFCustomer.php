@@ -34,14 +34,14 @@ interface ADFCustomer
      * country, postal code. The ADF generator will loop over these
      * properties and include them.
      *
-     * @return string
+     * @return string[]
      */
     public function address(): array;
 
     /**
      * Include any other properties you wish to have printed in the ADF here.
      *
-     * @return array
+     * @return string[]
      */
     public function toArray(): array;
 }

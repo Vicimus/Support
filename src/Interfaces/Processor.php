@@ -12,6 +12,8 @@ interface Processor
      * Output info
      *
      * @param string $output The info to output
+     *
+     * @return void
      */
     public function info(string $output): void;
 
@@ -50,7 +52,7 @@ interface Processor
      *
      * @return $this
      */
-    public function bind(ConsoleOutput $output);
+    public function bind(ConsoleOutput $output): Processor;
 
     /**
      * Init the process
@@ -62,11 +64,11 @@ interface Processor
     /**
      * Set the options for this service
      *
-     * @param array $options The options to set
+     * @param string[] $options The options to set
      *
      * @return $this
      */
-    public function options(array $options);
+    public function options(array $options): Processor;
 
     /**
      * Get an option
@@ -83,6 +85,8 @@ interface Processor
      * after others.
      *
      * The scale should be 1 to 10.
+     *
+     * @return int
      */
     public function priority(): int;
 }

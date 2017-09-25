@@ -9,5 +9,10 @@ use Exception;
  */
 class RestException extends Exception
 {
+    /**
+     * The default error code
+     *
+     * @var int
+     */
     public $code = 500;
 }

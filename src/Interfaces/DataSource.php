@@ -28,13 +28,13 @@ interface DataSource
      *
      * @return mixed[]
      */
-    public function points();
+    public function points(): array;
 
     /**
      * Handle a data point request
      *
-     * @param string $point      The point requested
-     * @param array  $userParams The parameters to pass along
+     * @param string   $point      The point requested
+     * @param string[] $userParams The parameters to pass along
      *
      * @return mixed
      */
