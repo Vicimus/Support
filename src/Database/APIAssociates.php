@@ -1,6 +1,7 @@
 <?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Database;
+
 use Illuminate\Database\DatabaseManager;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
 
@@ -14,8 +15,8 @@ trait APIAssociates
     /**
      * Get the results of an association
      *
-     * @param DatabaseManager $db
-     * @param string $relation The
+     * @param DatabaseManager $db       Inject the Database Manager `app('db')`
+     * @param string          $relation The relationship to establish
      *
      * @return HasManyFromAPI
      */

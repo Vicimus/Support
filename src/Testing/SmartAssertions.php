@@ -38,7 +38,7 @@ trait SmartAssertions
     /**
      * Generate a user friendly message from an error
      *
-     * @param $mixed $response The response from the server
+     * @param mixed $response The response from the server
      *
      * @return string
      */

@@ -10,14 +10,14 @@ trait Processing
     /**
      * Holds the options for the processor
      *
-     * @var array
+     * @var string[]
      */
     protected $options = [];
 
     /**
      * Set the options for this service
      *
-     * @param array $options The options to set
+     * @param string[] $options The options to set
      *
      * @return $this
      */

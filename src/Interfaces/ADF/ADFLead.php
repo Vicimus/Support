@@ -29,7 +29,7 @@ interface ADFLead
     /**
      * Return an array of comments to be included in the ADF
      *
-     * @return array
+     * @return string[]
      */
     public function comments(): array;
 

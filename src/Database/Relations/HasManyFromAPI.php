@@ -57,10 +57,10 @@ class HasManyFromAPI
     /**
      * HasManyFromAPI constructor.
      *
-     * @param DatabaseManager $db
-     * @param int     $id
-     * @param string $table
-     * @param string $relation
+     * @param DatabaseManager $db       Laravel based Database Manager
+     * @param int             $id       The ID of the model this is on
+     * @param string          $table    The table of the model
+     * @param string          $relation The relation to build
      */
     public function __construct(DatabaseManager $db, int $id, string $table, string $relation)
     {
@@ -80,11 +80,11 @@ class HasManyFromAPI
     /**
      * Associate a local model with a remote model
      *
-     * @param array  $ids      The IDs to associate
+     * @param int[] $ids The IDs to associate
      *
      * @return void
      */
-    public function associate(array $ids)
+    public function associate(array $ids): void
     {
         foreach ($ids as $id) {
             $insertion = [];

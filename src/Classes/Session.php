@@ -12,9 +12,11 @@ class Session
     /**
      * Check if the session has a value
      *
+     * @param string $property The property to get
+     *
      * @return bool
      */
-    public function has($property): bool
+    public function has(string $property): bool
     {
         return array_key_exists($property, $_SESSION);
     }

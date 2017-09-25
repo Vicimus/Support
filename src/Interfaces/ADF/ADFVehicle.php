@@ -45,7 +45,7 @@ interface ADFVehicle
     /**
      * Get an array of meaningful properties about this vehicle
      *
-     * @return array
+     * @return string[]
      */
     public function toArray(): array;
 }

@@ -10,27 +10,27 @@ namespace Vicimus\Support\Interfaces;
 interface ScreenCapturer
 {
     /**
-     * Convert a URL into a JPG representation of that webpage
+     * Convert a URL into a JPG representation of that web-page
      *
-     * @param string $url
+     * @param string $url The URL to capture
      *
      * @return string
      */
     public function jpg(string $url): string;
 
     /**
-     * Convert a URL into a PNG representation of that webpage
+     * Convert a URL into a PNG representation of that web-page
      *
-     * @param string $url
+     * @param string $url The URL to capture
      *
      * @return string
      */
     public function png(string $url): string;
 
     /**
-     * Convert a URL into a PDF representation of that webpage
+     * Convert a URL into a PDF representation of that web-page
      *
-     * @param string $url
+     * @param string $url The URL to capture
      *
      * @return string
      */

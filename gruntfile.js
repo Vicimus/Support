@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     watch: {
 
       files: phpFiles.concat(['tests/**/*.php']),
-      tasks: ['phpmd', 'phpcs', 'phpunit']
+      tasks: ['phpcbf', 'phpcs', 'phpunit']
     }
 
   });
@@ -79,5 +79,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-phpunit');
   grunt.loadNpmTasks('grunt-phpmd');
 
-  grunt.registerTask('default', ['phpmd', 'phpcs', 'phpunit']);
+  grunt.registerTask('default', ['phpcbf', 'phpcs', 'phpunit']);
 };
