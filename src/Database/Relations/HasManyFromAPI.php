@@ -108,6 +108,20 @@ class HasManyFromAPI
     }
 
     /**
+     * Remote associations
+     *
+     * @param int[] $ids The IDs to remove
+     *
+     * @return void
+     */
+    public function dissociate(array $ids): void
+    {
+        $this->db->table($this->table)
+            ->whereIn($this->right, $ids)
+            ->delete();
+    }
+
+    /**
      * Get the relationship collection
      *
      * @return Collection
