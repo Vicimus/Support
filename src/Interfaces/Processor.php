@@ -52,7 +52,7 @@ interface Processor
      *
      * @return $this
      */
-    public function bind(ConsoleOutput $output): Processor;
+    public function bind(ConsoleOutput $output);
 
     /**
      * Init the process
