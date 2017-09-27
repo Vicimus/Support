@@ -133,13 +133,24 @@ class HasManyFromAPI
     }
 
     /**
+     * Get the internal query
+     *
+     * @return Collection
+     */
+    public function get(): Collection
+    {
+        return $this->populate();
+    }
+
+    /**
      * Get the relationship collection
      *
      * @return Collection
      */
-    protected function populate()
+    protected function populate(): Collection
     {
          $this->collection = $this->db->table($this->table)->where($this->left, $this->id)->get();
+         return $this->collection;
     }
 
     /**
