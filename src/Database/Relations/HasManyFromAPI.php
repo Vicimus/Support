@@ -3,8 +3,10 @@
 namespace Vicimus\Support\Database\Relations;
 
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
+use stdClass;
 
 /**
  * Class HasManyFromAPI
@@ -56,6 +58,13 @@ class HasManyFromAPI
     protected $table;
 
     /**
+     * Additional columns on the table
+     *
+     * @var string[]
+     */
+    protected $with = [];
+
+    /**
      * HasManyFromAPI constructor.
      *
      * @param DatabaseManager $db       Laravel based Database Manager
@@ -81,11 +90,12 @@ class HasManyFromAPI
     /**
      * Associate a local model with a remote model
      *
-     * @param int[] $ids The IDs to associate
+     * @param int[]   $ids        The IDs to associate
+     * @param mixed[] $additional Additional columns to insert
      *
      * @return void
      */
-    public function associate(array $ids): void
+    public function associate(array $ids, array $additional = []): void
     {
         foreach (array_unique($ids) as $id) {
             if (!is_int($id)) {
@@ -97,6 +107,9 @@ class HasManyFromAPI
             $insertion = [];
             $insertion[$this->left] = $this->id;
             $insertion[$this->right] = $id;
+
+            $add = $additional[$id] ?? [];
+            $insertion = array_merge($insertion, $add);
 
             $this->db->table($this->table)
                 ->insert($insertion);
@@ -133,13 +146,74 @@ class HasManyFromAPI
     }
 
     /**
+     * Find a join record
+     *
+     * @param int $id The ID of the remote model
+     *
+     * @return mixed
+     */
+    public function find(int $id)
+    {
+        return $this->query()->where($this->right, $id)->first();
+    }
+
+    /**
      * Get the internal query
      *
      * @return Collection
      */
     public function get(): Collection
     {
+        $payload = [];
+
+        $query = $this->populate();
+        foreach ($query as $row) {
+            $payload[] = $this->instance($row);
+        }
+
+        return new Collection($payload);
+    }
+
+    /**
+     * Get the raw join collection
+     *
+     * @return Collection
+     */
+    public function raw(): Collection
+    {
         return $this->populate();
+    }
+
+    /**
+     * Defines other columns on the join table
+     *
+     * @param string[] $columns Additional columns
+     *
+     * @return HasManyFromAPI
+     */
+    public function with(array $columns): HasManyFromAPI
+    {
+        $this->with = array_merge($this->with, $columns);
+        return $this;
+    }
+
+    /**
+     * Convert a row into an instance of the related class, unless not specified
+     * then it'll be an stdClass
+     *
+     * @param mixed $row The row to convert
+     *
+     * @return mixed
+     */
+    protected function instance($row)
+    {
+        $identifier = $this->right;
+        $instance = new stdClass;
+        if (isset($row->$identifier)) {
+            $instance->id = $row->$identifier;
+        }
+
+        return $instance;
     }
 
     /**
@@ -149,8 +223,18 @@ class HasManyFromAPI
      */
     protected function populate(): Collection
     {
-         $this->collection = $this->db->table($this->table)->where($this->left, $this->id)->get();
+         $this->collection = $this->query()->get();
          return $this->collection;
+    }
+
+    /**
+     * Get the query
+     *
+     * @return Builder
+     */
+    protected function query(): Builder
+    {
+        return $this->db->table($this->table)->where($this->left, $this->id);
     }
 
     /**
