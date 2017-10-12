@@ -3,6 +3,7 @@
     "type": "library",
     "require": {
         "php": ">=7.1",
+        "guzzlehttp/guzzle": "~6",
         "illuminate/database": "~5",
         "illuminate/http": "~5",
         "illuminate/validation": "~5"

@@ -45,11 +45,15 @@ class ImmutableObject implements JsonSerializable, WillValidate
     /**
      * ImmutableObject constructor.
      *
-     * @param string[] $original  The original attributes
-     * @param Factory  $validator The validator factory
+     * @param mixed   $original  The original attributes
+     * @param Factory $validator The validator factory
      */
-    public function __construct(array $original, ?Factory $validator = null)
+    public function __construct($original, ?Factory $validator = null)
     {
+        if (!is_array($original)) {
+            $original = json_decode(json_encode($original), true);
+        }
+
         $this->attributes = $original;
         $this->validator = $validator;
     }
