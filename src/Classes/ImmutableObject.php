@@ -4,6 +4,7 @@ namespace Vicimus\Support\Classes;
 
 use Exception;
 use Illuminate\Contracts\Validation\Factory;
+use InvalidArgumentException;
 use JsonSerializable;
 use Vicimus\Support\Interfaces\WillValidate;
 
@@ -50,11 +51,17 @@ class ImmutableObject implements JsonSerializable, WillValidate
      */
     public function __construct($original = [], ?Factory $validator = null)
     {
+        if (!is_array($original) && !is_object($original)) {
+            $type = gettype($original);
+            throw new InvalidArgumentException(
+                'First parameter must be array or object, '.$type.' given'
+            );
+        }
         if (!is_array($original)) {
             $original = json_decode(json_encode($original), true);
         }
 
-        $this->attributes = $original;
+        $this->attributes = $original ?? [];
         $this->validator = $validator;
     }
 

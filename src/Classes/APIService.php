@@ -66,16 +66,20 @@ class APIService
     /**
      * Send a request to the API
      *
-     * @param string   $method  The method to use
-     * @param string   $path    The path to call
-     * @param string[] $payload The payload to send
+     * @param string          $method  The method to use
+     * @param string          $path    The path to call
+     * @param string[]|object $payload The payload to send
      *
      * @throws RestException
      *
      * @return mixed[]|\stdClass
      */
-    protected function request(string $method, string $path, array $payload = [])
+    protected function request(string $method, string $path, $payload = [])
     {
+        if (!is_array($payload)) {
+            $payload = json_decode(json_encode($payload), true);
+        }
+
         $path = str_replace($this->url, '', $path);
         if (substr($path, 0, 1) !== '/') {
             $path = '/'.$path;
