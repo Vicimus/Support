@@ -4,6 +4,7 @@ namespace Vicimus\Support\Classes;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Vicimus\Support\Exceptions\RestException;
 
 /**
@@ -13,6 +14,12 @@ use Vicimus\Support\Exceptions\RestException;
  */
 class APIService
 {
+    /**
+     * These additional parameters will be sent with all requests
+     *
+     * @var string[]
+     */
+    protected $additional = [];
     /**
      * The guzzle client
      *
@@ -28,15 +35,32 @@ class APIService
     protected $url;
 
     /**
+     * Credentials for sending api requests
+     *
+     * @var string
+     */
+    private $cred;
+
+    /**
      * APIService constructor.
      *
-     * @param Client $client The guzzle client
-     * @param string $url    The base url for the api
+     * @param Client   $client     The guzzle client
+     * @param string   $url        The base url for the api
+     * @param string   $id         The ID for the API
+     * @param string   $secret     The Secret for the API
+     * @param string[] $additional Additional parameters to send with all requests
      */
-    public function __construct(Client $client, ?string $url = null)
-    {
+    public function __construct(
+        Client $client,
+        string $url,
+        ?string $id = null,
+        ?string $secret = null,
+        array $additional = []
+    ) {
         $this->client = $client;
-        $this->url = $url ?? 'http://leads.dv-3.com';
+        $this->url = $url;
+        $this->cred = base64_encode($id . ':' . $secret);
+        $this->additional = $additional;
     }
 
     /**
@@ -48,7 +72,7 @@ class APIService
      *
      * @throws RestException
      *
-     * @return array|\stdClass
+     * @return mixed[]|\stdClass
      */
     protected function request(string $method, string $path, array $payload = [])
     {
@@ -57,10 +81,19 @@ class APIService
             $path = '/'.$path;
         }
 
-        try {
-            $response = $this->client->request($method, $this->url . $path, $payload);
+        $query = 'query';
+        if (strtolower($method) !== 'get') {
+            $query = 'form_params';
+        }
 
-        } catch (ClientException $ex) {
+        $payload = array_merge($this->additional, $payload);
+
+        try {
+            $response = $this->client->request($method, $this->url . $path, [
+                'headers' => ['authorization' => $this->cred],
+                $query => $payload,
+            ]);
+        } catch (ClientException|ServerException $ex) {
             $response = $ex->getResponse();
             $code = $response->getStatusCode();
             $message = (string) $response->getBody();
