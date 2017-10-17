@@ -175,6 +175,16 @@ class HasManyFromAPI
     }
 
     /**
+     * Get the query
+     *
+     * @return Builder
+     */
+    public function query(): Builder
+    {
+        return $this->db->table($this->table)->select('*')->where($this->left, $this->id);
+    }
+
+    /**
      * Get the raw join collection
      *
      * @return Collection
@@ -213,6 +223,10 @@ class HasManyFromAPI
             $instance->id = $row->$identifier;
         }
 
+        foreach ($row as $property => $value) {
+            $instance->$property = $value;
+        }
+
         return $instance;
     }
 
@@ -225,16 +239,6 @@ class HasManyFromAPI
     {
          $this->collection = $this->query()->get();
          return $this->collection;
-    }
-
-    /**
-     * Get the query
-     *
-     * @return Builder
-     */
-    protected function query(): Builder
-    {
-        return $this->db->table($this->table)->where($this->left, $this->id);
     }
 
     /**
