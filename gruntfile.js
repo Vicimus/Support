@@ -9,6 +9,8 @@ module.exports = function(grunt) {
     'tests/**/*.php'
   ];
 
+  var standard = 'vendor/vicimus/standard/VicimusStandard,PSR2';
+
   // ===========================================================================
   // CONFIGURE GRUNT ===========================================================
   // ===========================================================================
@@ -24,10 +26,22 @@ module.exports = function(grunt) {
       },
       options: {
             bin: 'vendor/bin/phpcs',
-            standard: 'vendor/vicimus/standard/VicimusStandard,PSR2',
+            standard: standard,
             encoding: 'utf-8',
             verbose: false
+      }
+    },
+
+    phpcbf: {
+      application: {
+        src: phpFiles
       },
+      options: {
+        bin: 'vendor/bin/phpcbf',
+        standard: standard,
+        encoding: 'utf-8',
+        noPatch: false
+      }
     },
 
     phpunit: {
@@ -54,15 +68,16 @@ module.exports = function(grunt) {
     watch: {
 
       files: phpFiles.concat(['tests/**/*.php']),
-      tasks: ['phpmd', 'phpcs', 'phpunit']
-    },
+      tasks: ['phpcbf', 'phpcs', 'phpunit']
+    }
 
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-phpcs');
+  grunt.loadNpmTasks('grunt-phpcbf');
   grunt.loadNpmTasks('grunt-phpunit');
   grunt.loadNpmTasks('grunt-phpmd');
 
-  grunt.registerTask('default', ['phpmd', 'phpcs', 'phpunit']);
+  grunt.registerTask('default', ['phpcbf', 'phpcs', 'phpunit']);
 };

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Classes;
 
@@ -16,7 +16,7 @@ class StandardOutput implements ConsoleOutput
      *
      * @return void
      */
-    public function info($output)
+    public function info(string $output): void
     {
         $this->line('');
         echo "\033[32m".$output."\033[0m".PHP_EOL;
@@ -29,7 +29,7 @@ class StandardOutput implements ConsoleOutput
      *
      * @return void
      */
-    public function error($output)
+    public function error(string $output): void
     {
         $this->line('');
         echo "\033[31m".$output."\033[0m".PHP_EOL;
@@ -42,7 +42,7 @@ class StandardOutput implements ConsoleOutput
      *
      * @return void
      */
-    public function comment($output)
+    public function comment(string $output): void
     {
         $this->line('');
         echo "\033[1;34m".$output."\033[0m".PHP_EOL;
@@ -55,11 +55,11 @@ class StandardOutput implements ConsoleOutput
      *
      * @return void
      */
-    public function line($output)
+    public function line(string $output): void
     {
         echo str_pad("\r".$output, 80);
         if (!$output) {
-            echo "\r";   
+            echo "\r";
         }
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\ADF;
 
@@ -12,14 +12,14 @@ interface ADFCustomer
      *
      * @return string
      */
-    public function firstname() : string;
+    public function firstname(): string;
 
     /**
      * Get the lastname of this customer
      *
      * @return string
      */
-    public function lastname() : string;
+    public function lastname(): string;
 
     /**
      * Get the street address of the customer if available.
@@ -27,21 +27,21 @@ interface ADFCustomer
      *
      * @return string
      */
-    public function street() : ?string;
+    public function street(): ?string;
 
     /**
      * Return an array of address related properties. Things like city,
      * country, postal code. The ADF generator will loop over these
      * properties and include them.
      *
-     * @return string
+     * @return string[]
      */
-    public function address() : array;
+    public function address(): array;
 
     /**
      * Include any other properties you wish to have printed in the ADF here.
      *
-     * @return array
+     * @return string[]
      */
-    public function toArray() : array;
+    public function toArray(): array;
 }

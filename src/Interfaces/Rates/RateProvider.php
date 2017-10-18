@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Rates;
 
@@ -15,5 +15,5 @@ interface RateProvider
      *
      * @return void
      */
-    public function get(int $styleid) : RateCollection;
+    public function get(int $styleid): RateCollection;
 }

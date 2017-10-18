@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Classes;
 
@@ -11,8 +11,25 @@ use Vicimus\Support\Interfaces\Utility;
  */
 class GenericUtility implements Utility
 {
+    /**
+     * The name of the utility
+     *
+     * @var string
+     */
     protected $name;
+
+    /**
+     * The description for the utility
+     *
+     * @var string
+     */
     protected $desc;
+
+    /**
+     * Holds the callable
+     *
+     * @var callable
+     */
     protected $call;
 
     /**
@@ -22,7 +39,7 @@ class GenericUtility implements Utility
      * @param string   $desc Description of the utility
      * @param callable $call The method that is called to run the utility
      */
-    public function __construct($name, $desc, callable $call)
+    public function __construct(string $name, string $desc, callable $call)
     {
         $this->name = $name;
         $this->desc = $desc;
@@ -34,7 +51,7 @@ class GenericUtility implements Utility
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
@@ -44,7 +61,7 @@ class GenericUtility implements Utility
      *
      * @return string
      */
-    public function description()
+    public function description(): string
     {
         return $this->desc;
     }
@@ -52,7 +69,7 @@ class GenericUtility implements Utility
     /**
      * Called to execute the utility
      *
-     * @return void
+     * @return mixed
      */
     public function call()
     {
@@ -65,7 +82,7 @@ class GenericUtility implements Utility
      *
      * @param mixed $payload OPTIONAL Anything needed to construct the results
      *
-     * @return void
+     * @return mixed
      */
     public function results($payload = null)
     {

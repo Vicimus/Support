@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -14,29 +14,29 @@ interface DataSource
      *
      * @return string
      */
-    public function slug();
+    public function slug(): string;
 
     /**
      * Return a wonderful name for your data source
      *
      * @return string
      */
-    public function name();
+    public function name(): string;
 
     /**
      * Return an array of data points
      *
      * @return mixed[]
      */
-    public function points();
+    public function points(): array;
 
     /**
      * Handle a data point request
      *
-     * @param string $point      The point requested
-     * @param array  $userParams The parameters to pass along
+     * @param string   $point      The point requested
+     * @param string[] $userParams The parameters to pass along
      *
      * @return mixed
      */
-    public function handle($point, array $userParams = array());
+    public function handle(string $point, array $userParams = []);
 }

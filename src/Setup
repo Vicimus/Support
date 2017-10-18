@@ -1,0 +1,92 @@
+#!/usr/bin/env php
+<?php declare(strict_types = 1);
+
+namespace Packager;
+
+include __DIR__.'/../../../autoload.php';
+
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+use Vicimus\Support\Classes\StandardOutput;
+use Vicimus\Support\Interfaces\ConsoleOutput;
+use Vicimus\Support\Traits\ConsoleOutputter;
+
+/**
+ * The Command kernel for the setup utility
+ */
+class Setup implements ConsoleOutput
+{
+    use ConsoleOutputter;
+
+    /**
+     * Execute
+     *
+     * @return int
+     */
+    public function run(): int
+    {
+        global $argv;
+
+        if (!isset($argv[1])) {
+            $this->error('Missing required argument for namespace');
+            return 1;
+        }
+
+        $this->namespace = $argv[1];
+
+        $this->base = __DIR__.'/../../../../app';
+        $this->bootstrap = __DIR__.'/../../../../bootstrap';
+        $this->scan();
+        return 0;
+    }
+
+    /**
+     * Scan the files
+     *
+     * @return void
+     */
+    protected function scan(): void
+    {
+        $finder = new Finder;
+        $finder->files()->in($this->base);
+        foreach ($finder as $file) {
+            $this->clean($file);
+        }
+
+        $finder->files()->in($this->bootstrap);
+        foreach ($finder as $file) {
+            $this->clean($file);
+        }
+    }
+
+    /**
+     * Clean the file by either replacing the namespace or deleting the file
+     *
+     * @param string $file The file to clean
+     *
+     * @return void
+     */
+    protected function clean(SplFileInfo $file): void
+    {
+        $name = $file->getRelativePathname();
+        if (stripos($name, 'Example') !== false && stripos($name, 'User.php') !== false) {
+            $this->error('Deleting '.$name);
+            unlink($file->getRealPath());
+            return;
+        }
+
+        $this->comment('Rewriting '.$name);
+        $content = $file->getContents();
+        $modified = str_replace('App', $this->namespace, $content);
+        if (stripos($modified, 'declare(strict_types') === false) {
+            $modified = str_replace('<?php', '<?php declare(strict_types = 1);', $modified);
+        }
+
+        $modified = str_replace('@var array', '@var string[]', $modified);
+        $modified = str_replace('Customerslication', 'Application', $modified);
+        file_put_contents($file->getRealPath(), $modified);
+    }
+}
+
+$setup = (new Setup)->bind(new StandardOutput);
+$setup->run();

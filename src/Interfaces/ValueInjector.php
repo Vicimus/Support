@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -10,9 +10,9 @@ interface ValueInjector
     /**
      * Inject any values into the input array
      *
-     * @param array $input The input values to inspect and add to
+     * @param string[] $input The input values to inspect and add to
      *
-     * @return array
+     * @return string[]
      */
-    public function handle(array $input) : array;
+    public function handle(array $input): array;
 }

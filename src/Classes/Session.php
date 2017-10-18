@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,9 +12,11 @@ class Session
     /**
      * Check if the session has a value
      *
+     * @param string $property The property to get
+     *
      * @return bool
      */
-    public function has($property)
+    public function has(string $property): bool
     {
         return array_key_exists($property, $_SESSION);
     }
@@ -26,7 +28,7 @@ class Session
      *
      * @return mixed
      */
-    public function get($property)
+    public function get(string $property)
     {
         if (!$this->has($property)) {
             return null;
@@ -43,7 +45,7 @@ class Session
      *
      * @return void
      */
-    public function put($property, $value)
+    public function put(string $property, $value): void
     {
         $_SESSION[$property] = $value;
     }
@@ -55,7 +57,7 @@ class Session
      *
      * @return mixed
      */
-    public function pull($property)
+    public function pull(string $property)
     {
         $value = $this->get($property);
         if (is_null($value)) {
@@ -73,7 +75,7 @@ class Session
      *
      * @return void
      */
-    public function forget($property)
+    public function forget(string $property): void
     {
         unset($_SESSION[$property]);
     }

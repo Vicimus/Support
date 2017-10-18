@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
+
+use Vicimus\Support\Interfaces\ADF\ADFVehicle;
 
 /**
  * Offers vehicle injection for ADF purposes
@@ -10,9 +12,9 @@ interface VehicleInjector
     /**
      * Look at an array of input and return an ADFVehicle or null
      *
-     * @param array $input The input to inspect
+     * @param string[] $input The input to inspect
      *
      * @return ADFVehicle
      */
-    public function vehicle(array $input) : ?ADF\ADFVehicle;
+    public function vehicle(array $input): ?ADFVehicle;
 }
