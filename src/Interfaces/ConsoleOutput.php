@@ -10,13 +10,13 @@ namespace Vicimus\Support\Interfaces;
 interface ConsoleOutput
 {
     /**
-     * Output information (green text)
+     * Output a comment (yellow text)
      *
-     * @param string $output The info to output
+     * @param string $output The comment to output
      *
      * @return void
      */
-    public function info(string $output): void;
+    public function comment(string $output): void;
 
     /**
      * Output an error (red text)
@@ -28,13 +28,13 @@ interface ConsoleOutput
     public function error(string $output): void;
 
     /**
-     * Output a comment (yellow text)
+     * Output information (green text)
      *
-     * @param string $output The comment to output
+     * @param string $output The info to output
      *
      * @return void
      */
-    public function comment(string $output): void;
+    public function info(string $output): void;
 
     /**
      * Output text (grey text)

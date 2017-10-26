@@ -48,7 +48,7 @@ class APIService
      *
      * @throws RestException
      *
-     * @return array|\stdClass
+     * @return mixed[]|\stdClass
      */
     protected function request(string $method, string $path, array $payload = [])
     {
@@ -59,7 +59,6 @@ class APIService
 
         try {
             $response = $this->client->request($method, $this->url . $path, $payload);
-
         } catch (ClientException $ex) {
             $response = $ex->getResponse();
             $code = $response->getStatusCode();

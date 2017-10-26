@@ -12,11 +12,11 @@ use Vicimus\Support\Interfaces\Utility;
 class GenericUtility implements Utility
 {
     /**
-     * The name of the utility
+     * Holds the callable
      *
-     * @var string
+     * @var callable
      */
-    protected $name;
+    protected $call;
 
     /**
      * The description for the utility
@@ -26,11 +26,11 @@ class GenericUtility implements Utility
     protected $desc;
 
     /**
-     * Holds the callable
+     * The name of the utility
      *
-     * @var callable
+     * @var string
      */
-    protected $call;
+    protected $name;
 
     /**
      * Construct a generic utility
@@ -47,13 +47,14 @@ class GenericUtility implements Utility
     }
 
     /**
-     * The name of the utility
+     * Called to execute the utility
      *
-     * @return string
+     * @return mixed
      */
-    public function name(): string
+    public function call()
     {
-        return $this->name;
+        $method = $this->call;
+        return $this->results($method());
     }
 
     /**
@@ -67,14 +68,13 @@ class GenericUtility implements Utility
     }
 
     /**
-     * Called to execute the utility
+     * The name of the utility
      *
-     * @return mixed
+     * @return string
      */
-    public function call()
+    public function name(): string
     {
-        $method = $this->call;
-        return $this->results($method());
+        return $this->name;
     }
 
     /**

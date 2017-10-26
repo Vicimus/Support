@@ -8,12 +8,12 @@ namespace Vicimus\Support\Interfaces\Rates;
 interface RateCollection
 {
     /**
-     * Get all available finance rates. This method must return an array
-     * of Rate instances.
+     * Get all available rates, both finance and leases. This method MUST return
+     * an array of Rate instances.
      *
      * @return Rate[]
      */
-    public function finances(): array;
+    public function all(): array;
 
     /**
      * Get the rate for a specific term in financing rates
@@ -25,11 +25,12 @@ interface RateCollection
     public function finance(int $term): ?float;
 
     /**
-     * Get all available lease rates
+     * Get all available finance rates. This method must return an array
+     * of Rate instances.
      *
      * @return Rate[]
      */
-    public function leases(): array;
+    public function finances(): array;
 
     /**
      * Get the rate for a specific term in lease rates. This method must
@@ -42,10 +43,9 @@ interface RateCollection
     public function lease(int $term): ?float;
 
     /**
-     * Get all available rates, both finance and leases. This method MUST return
-     * an array of Rate instances.
+     * Get all available lease rates
      *
      * @return Rate[]
      */
-    public function all(): array;
+    public function leases(): array;
 }

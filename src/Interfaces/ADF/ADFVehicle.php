@@ -8,20 +8,6 @@ namespace Vicimus\Support\Interfaces\ADF;
 interface ADFVehicle
 {
     /**
-     * Get the number of kilometres on the odometer
-     *
-     * @return int
-     */
-    public function odometer(): int;
-
-    /**
-     * Get the price of the vehicle
-     *
-     * @return int
-     */
-    public function price(): int;
-
-    /**
      * Returns the exterior color of the vehicle
      *
      * @return string
@@ -36,11 +22,18 @@ interface ADFVehicle
     public function interior(): string;
 
     /**
-     * Should return the type of vehicle. Things like showroom, new, used, etc
+     * Get the number of kilometres on the odometer
      *
-     * @return string
+     * @return int
      */
-    public function type(): string;
+    public function odometer(): int;
+
+    /**
+     * Get the price of the vehicle
+     *
+     * @return int
+     */
+    public function price(): int;
 
     /**
      * Get an array of meaningful properties about this vehicle
@@ -48,4 +41,11 @@ interface ADFVehicle
      * @return string[]
      */
     public function toArray(): array;
+
+    /**
+     * Should return the type of vehicle. Things like showroom, new, used, etc
+     *
+     * @return string
+     */
+    public function type(): string;
 }

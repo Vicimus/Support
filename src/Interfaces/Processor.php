@@ -9,22 +9,14 @@ namespace Vicimus\Support\Interfaces;
 interface Processor
 {
     /**
-     * Output info
+     * Bind a ConsoleOutput interface implementation to this class. This
+     * enables the output.
      *
-     * @param string $output The info to output
+     * @param ConsoleOutput $output An object implementing ConsoleOutput
      *
-     * @return void
+     * @return $this
      */
-    public function info(string $output): void;
-
-    /**
-     * Output an error (red text)
-     *
-     * @param string $output The error to output
-     *
-     * @return void
-     */
-    public function error(string $output): void;
+    public function bind(ConsoleOutput $output);
 
     /**
      * Output a comment (yellow text)
@@ -36,6 +28,24 @@ interface Processor
     public function comment(string $output): void;
 
     /**
+     * Output an error (red text)
+     *
+     * @param string $output The error to output
+     *
+     * @return void
+     */
+    public function error(string $output): void;
+
+    /**
+     * Output info
+     *
+     * @param string $output The info to output
+     *
+     * @return void
+     */
+    public function info(string $output): void;
+
+    /**
      * Output text (grey text)
      *
      * @param string $output The text to output
@@ -43,32 +53,6 @@ interface Processor
      * @return void
      */
     public function line(string $output): void;
-
-    /**
-     * Bind a ConsoleOutput interface implementation to this class. This
-     * enables the output.
-     *
-     * @param ConsoleOutput $output An object implementing ConsoleOutput
-     *
-     * @return $this
-     */
-    public function bind(ConsoleOutput $output);
-
-    /**
-     * Init the process
-     *
-     * @return bool
-     */
-    public function process(): bool;
-
-    /**
-     * Set the options for this service
-     *
-     * @param string[] $options The options to set
-     *
-     * @return $this
-     */
-    public function options(array $options): Processor;
 
     /**
      * Get an option
@@ -80,6 +64,15 @@ interface Processor
     public function option(string $name);
 
     /**
+     * Set the options for this service
+     *
+     * @param string[] $options The options to set
+     *
+     * @return $this
+     */
+    public function options(array $options): Processor;
+
+    /**
      * Return an integer describing the priority of the processor. Higher
      * number means it will be run first, lower number means it will be run
      * after others.
@@ -89,4 +82,11 @@ interface Processor
      * @return int
      */
     public function priority(): int;
+
+    /**
+     * Init the process
+     *
+     * @return bool
+     */
+    public function process(): bool;
 }

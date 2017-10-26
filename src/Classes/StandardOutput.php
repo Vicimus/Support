@@ -10,16 +10,16 @@ use Vicimus\Support\Interfaces\ConsoleOutput;
 class StandardOutput implements ConsoleOutput
 {
     /**
-     * Output information (green text)
+     * Output a comment (yellow text)
      *
-     * @param string $output The info to output
+     * @param string $output The comment to output
      *
      * @return void
      */
-    public function info(string $output): void
+    public function comment(string $output): void
     {
         $this->line('');
-        echo "\033[32m".$output."\033[0m".PHP_EOL;
+        echo "\033[1;34m".$output."\033[0m".PHP_EOL;
     }
 
     /**
@@ -36,16 +36,16 @@ class StandardOutput implements ConsoleOutput
     }
 
     /**
-     * Output a comment (yellow text)
+     * Output information (green text)
      *
-     * @param string $output The comment to output
+     * @param string $output The info to output
      *
      * @return void
      */
-    public function comment(string $output): void
+    public function info(string $output): void
     {
         $this->line('');
-        echo "\033[1;34m".$output."\033[0m".PHP_EOL;
+        echo "\033[32m".$output."\033[0m".PHP_EOL;
     }
 
     /**

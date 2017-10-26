@@ -10,15 +10,15 @@ namespace Vicimus\Support\Classes;
 class Session
 {
     /**
-     * Check if the session has a value
+     * Forget a session value
      *
-     * @param string $property The property to get
+     * @param string $property The property to forget
      *
-     * @return bool
+     * @return void
      */
-    public function has(string $property): bool
+    public function forget(string $property): void
     {
-        return array_key_exists($property, $_SESSION);
+        unset($_SESSION[$property]);
     }
 
     /**
@@ -38,16 +38,15 @@ class Session
     }
 
     /**
-     * Put a session value
+     * Check if the session has a value
      *
-     * @param string $property The property to put
-     * @param mixed  $value    The value to put
+     * @param string $property The property to get
      *
-     * @return void
+     * @return bool
      */
-    public function put(string $property, $value): void
+    public function has(string $property): bool
     {
-        $_SESSION[$property] = $value;
+        return array_key_exists($property, $_SESSION);
     }
 
     /**
@@ -69,14 +68,15 @@ class Session
     }
 
     /**
-     * Forget a session value
+     * Put a session value
      *
-     * @param string $property The property to forget
+     * @param string $property The property to put
+     * @param mixed  $value    The value to put
      *
      * @return void
      */
-    public function forget(string $property): void
+    public function put(string $property, $value): void
     {
-        unset($_SESSION[$property]);
+        $_SESSION[$property] = $value;
     }
 }

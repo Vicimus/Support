@@ -8,6 +8,15 @@ namespace Vicimus\Support\Interfaces\ADF;
 interface ADFCustomer
 {
     /**
+     * Return an array of address related properties. Things like city,
+     * country, postal code. The ADF generator will loop over these
+     * properties and include them.
+     *
+     * @return string[]
+     */
+    public function address(): array;
+
+    /**
      * Get the firstname of this customer
      *
      * @return string
@@ -28,15 +37,6 @@ interface ADFCustomer
      * @return string
      */
     public function street(): ?string;
-
-    /**
-     * Return an array of address related properties. Things like city,
-     * country, postal code. The ADF generator will loop over these
-     * properties and include them.
-     *
-     * @return string[]
-     */
-    public function address(): array;
 
     /**
      * Include any other properties you wish to have printed in the ADF here.

@@ -10,21 +10,25 @@ namespace Vicimus\Support\Interfaces;
 interface CSVParser
 {
     /**
-     * Parse a CSV file
-     *
-     * @param string   $file    The file to parse
-     * @param string[] $options Any options to set
-     *
-     * @return CSVParser
-     */
-    public function parse(string $file, array $options = []): CSVParser;
-
-    /**
      * The rows that were parsed from the CSV
      *
      * @return mixed[]
      */
     public function content(): array;
+
+    /**
+     * Iterate over each row of the CSV, one at a time
+     *
+     * @return iterable|string[]
+     */
+    public function each(): iterable;
+
+    /**
+     * Get the hash value of the file specified in the parser
+     *
+     * @return string
+     */
+    public function hash(): string;
 
     /**
      * Set the headers to be used with the CSV data
@@ -46,16 +50,12 @@ interface CSVParser
     public function make(string $file, array $options = []): CSVParser;
 
     /**
-     * Iterate over each row of the CSV, one at a time
+     * Parse a CSV file
      *
-     * @return string[]
-     */
-    public function each(): array;
-
-    /**
-     * Get the hash value of the file specified in the parser
+     * @param string   $file    The file to parse
+     * @param string[] $options Any options to set
      *
-     * @return string
+     * @return CSVParser
      */
-    public function hash(): string;
+    public function parse(string $file, array $options = []): CSVParser;
 }

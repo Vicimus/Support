@@ -17,25 +17,11 @@ interface Notifier
     public const TONE_BASIC = 'basic';
 
     /**
-     * Indicates a success tone
-     *
-     * @var string
-     */
-    public const TONE_SUCCESS = 'success';
-
-    /**
      * Indicates a error tone
      *
      * @var string
      */
     public const TONE_ERROR = 'error';
-
-    /**
-     * Indicates a warning tone
-     *
-     * @var string
-     */
-    public const TONE_WARNING = 'warning';
 
     /**
      * Indicates a info tone
@@ -50,6 +36,42 @@ interface Notifier
      * @var string
      */
     public const TONE_QUESTION = 'question';
+
+    /**
+     * Indicates a success tone
+     *
+     * @var string
+     */
+    public const TONE_SUCCESS = 'success';
+
+    /**
+     * Indicates a warning tone
+     *
+     * @var string
+     */
+    public const TONE_WARNING = 'warning';
+
+    /**
+     * Generate a new notification
+     *
+     * @param string   $title   The title of the notification
+     * @param string   $message The message body of the notification
+     * @param string[] $options Any other advanced options for the notification
+     *
+     * @return Collection
+     */
+    public function basic(string $title, string $message, array $options): Collection;
+
+    /**
+     * Generate a new notification
+     *
+     * @param string   $title   The title of the notification
+     * @param string   $message The message body of the notification
+     * @param string[] $options Any other advanced options for the notification
+     *
+     * @return Collection
+     */
+    public function error(string $title, string $message, array $options): Collection;
 
     /**
      * Return all notifications
@@ -81,16 +103,7 @@ interface Notifier
      *
      * @return Collection
      */
-    public function notify(string $title, string $message, array $options): Collection;
-
-    /**
-     * Mark a notification as read
-     *
-     * @param int $id The ID to mark as read
-     *
-     * @return bool
-     */
-    public function read(int $id): bool;
+    public function info(string $title, string $message, array $options): Collection;
 
     /**
      * Generate a new notification
@@ -101,7 +114,27 @@ interface Notifier
      *
      * @return Collection
      */
-    public function basic(string $title, string $message, array $options): Collection;
+    public function notify(string $title, string $message, array $options): Collection;
+
+    /**
+     * Generate a new notification
+     *
+     * @param string   $title   The title of the notification
+     * @param string   $message The message body of the notification
+     * @param string[] $options Any other advanced options for the notification
+     *
+     * @return Collection
+     */
+    public function question(string $title, string $message, array $options): Collection;
+
+    /**
+     * Mark a notification as read
+     *
+     * @param int $id The ID to mark as read
+     *
+     * @return bool
+     */
+    public function read(int $id): bool;
 
     /**
      * Generate a new notification
@@ -124,37 +157,4 @@ interface Notifier
      * @return Collection
      */
     public function warning(string $title, string $message, array $options): Collection;
-
-    /**
-     * Generate a new notification
-     *
-     * @param string   $title   The title of the notification
-     * @param string   $message The message body of the notification
-     * @param string[] $options Any other advanced options for the notification
-     *
-     * @return Collection
-     */
-    public function error(string $title, string $message, array $options): Collection;
-
-    /**
-     * Generate a new notification
-     *
-     * @param string   $title   The title of the notification
-     * @param string   $message The message body of the notification
-     * @param string[] $options Any other advanced options for the notification
-     *
-     * @return Collection
-     */
-    public function info(string $title, string $message, array $options): Collection;
-
-    /**
-     * Generate a new notification
-     *
-     * @param string   $title   The title of the notification
-     * @param string   $message The message body of the notification
-     * @param string[] $options Any other advanced options for the notification
-     *
-     * @return Collection
-     */
-    public function question(string $title, string $message, array $options): Collection;
 }
