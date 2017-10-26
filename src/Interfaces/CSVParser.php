@@ -35,9 +35,9 @@ interface CSVParser
      *
      * @param string[] $headers The headers to set the columns to
      *
-     * @return string[]
+     * @return CSVParser
      */
-    public function headers(array $headers): array;
+    public function headers(array $headers): CSVParser;
 
     /**
      * Make an instance of the parser but dont parse

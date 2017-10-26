@@ -12,16 +12,16 @@ interface CSVWriter
     /**
      * Set the file to write to
      *
-     * @param mixed $pathToFile The path to the file
+     * @param string $pathToFile The path to the file
      *
-     * @return $this
+     * @return CSVWriter
      */
-    public function file($pathToFile): CSVWriter;
+    public function file(string $pathToFile): CSVWriter;
 
     /**
      * Writes the headers to the file
      *
-     * @return $this
+     * @return CSVWriter
      */
     public function withHeaders(): CSVWriter;
 
@@ -30,7 +30,7 @@ interface CSVWriter
      *
      * @param string[] $rows The rows to write
      *
-     * @return $this
+     * @return CSVWriter
      */
     public function write(array $rows): CSVWriter;
 }
