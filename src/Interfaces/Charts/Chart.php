@@ -10,13 +10,6 @@ namespace Vicimus\Support\Interfaces\Charts;
 interface Chart
 {
     /**
-     * Get all markup required to make the chart show up on a page
-     *
-     * @return string
-     */
-    public function output(): string;
-
-    /**
      * Add data to the chart
      *
      * @param string[] $parameters The data to use to add a new data-point
@@ -32,4 +25,11 @@ interface Chart
      * @return \stdClass|string[]
      */
     public function options();
+
+    /**
+     * Get all markup required to make the chart show up on a page
+     *
+     * @return string
+     */
+    public function output(): string;
 }
