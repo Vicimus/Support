@@ -10,11 +10,13 @@ namespace Vicimus\Support\Interfaces;
 interface Utility
 {
     /**
-     * The name of the utility
+     * Called to execute the utility
      *
-     * @return string
+     * @param mixed[] $flags The flags to use
+     *
+     * @return mixed
      */
-    public function name(): string;
+    public function call(?array $flags = null);
 
     /**
      * A description of what this utility does
@@ -24,11 +26,11 @@ interface Utility
     public function description(): string;
 
     /**
-     * Called to execute the utility
+     * The name of the utility
      *
-     * @return mixed
+     * @return string
      */
-    public function call();
+    public function name(): string;
 
     /**
      * To be displayed after a call, to show the results of the call
