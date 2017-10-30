@@ -17,11 +17,12 @@ trait APIAssociates
      *
      * @param DatabaseManager $db       Inject the Database Manager `app('db')`
      * @param string          $relation The relationship to establish
+     * @param callable|null   $loader   Optional callable to use on the retrieved collection
      *
      * @return HasManyFromAPI
      */
-    public function hasManyFromAPI(DatabaseManager $db, string $relation): HasManyFromAPI
+    public function hasManyFromAPI(DatabaseManager $db, string $relation, ?callable $loader = null): HasManyFromAPI
     {
-        return new HasManyFromAPI($db, $this->id, $this->table, $relation);
+        return new HasManyFromAPI($db, $this->id, $this->table, $relation, $loader);
     }
 }
