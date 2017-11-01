@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Database\Relations;
 
+use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -44,6 +45,13 @@ class HasManyFromAPI
     protected $left;
 
     /**
+     * Callable loader to use with the query
+     *
+     * @var
+     */
+    protected $loader;
+
+    /**
      * The right side foreign key
      *
      * @var string
@@ -71,8 +79,9 @@ class HasManyFromAPI
      * @param int             $id       The ID of the model this is on
      * @param string          $table    The table of the model
      * @param string          $relation The relation to build
+     * @param callable|null   $loader   Callable function to call on the query
      */
-    public function __construct(DatabaseManager $db, int $id, string $table, string $relation)
+    public function __construct(DatabaseManager $db, int $id, string $table, string $relation, ?callable $loader = null)
     {
         $this->db = $db;
         $this->id = $id;
@@ -85,6 +94,7 @@ class HasManyFromAPI
 
         $this->table = implode('_', $elements);
         $this->collection = new Collection;
+        $this->loader = $loader;
     }
 
     /**
@@ -173,6 +183,23 @@ class HasManyFromAPI
 
         return new Collection($payload);
     }
+
+    /**
+     * Call the loader method on the collection
+     *
+     * @return mixed
+     */
+    public function load()
+    {
+        $method = $this->loader;
+
+        if (!$method) {
+            throw new Exception('No loader provided', 422);
+        }
+
+        return $method($this->get());
+    }
+
 
     /**
      * Get the query
