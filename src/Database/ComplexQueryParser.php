@@ -1,7 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Vault\Services;
+namespace Vicimus\Support\Database;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
@@ -27,6 +28,9 @@ class ComplexQueryParser
         $complex = [
             'in:',
             'like:',
+            'gt:',
+            'lt:',
+            'or:',
         ];
 
         foreach ($complex as $pattern) {
@@ -53,6 +57,24 @@ class ComplexQueryParser
         list($type, $statement) = explode(':', $value);
 
         return $this->$type($query, $property, $statement);
+    }
+
+    /**
+     * Build a complex query based off of a 'gt' query
+     *
+     * @param Builder|Relation $query     The query to add on to
+     * @param string           $property  The property being manipulated
+     * @param string           $statement The complex query string
+     *
+     * @return Builder|Relation
+     */
+    protected function gt($query, string $property, string $statement)
+    {
+        if ($statement === 'now') {
+            $statement = new DateTime;
+        }
+
+        return $query->where($property, '>', $statement);
     }
 
     /**
@@ -99,6 +121,24 @@ class ComplexQueryParser
     {
         $query->where($property, 'LIKE', $statement);
         return $query;
+    }
+
+    /**
+     * Build a complex query based off of a 'gt' query
+     *
+     * @param Builder|Relation $query     The query to add on to
+     * @param string           $property  The property being manipulated
+     * @param string           $statement The complex query string
+     *
+     * @return Builder|Relation
+     */
+    protected function lt($query, string $property, string $statement)
+    {
+        if ($statement === 'now') {
+            $statement = new DateTime;
+        }
+
+        return $query->where($property, '<', $statement);
     }
 
     /**
