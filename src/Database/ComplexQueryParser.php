@@ -124,7 +124,7 @@ class ComplexQueryParser
     }
 
     /**
-     * Build a complex query based off of a 'gt' query
+     * Build a complex query based off of a 'lt' query
      *
      * @param Builder|Relation $query     The query to add on to
      * @param string           $property  The property being manipulated
