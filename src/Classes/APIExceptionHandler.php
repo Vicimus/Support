@@ -4,6 +4,7 @@ namespace Vicimus\Support\Classes;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Vicimus\Support\Exceptions\RestException;
 
@@ -37,6 +38,10 @@ class APIExceptionHandler
             return response()->json([
                 'error' => $exception->getMessage(),
             ], $exception->code);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            $code = 404;
         }
 
         return response()->json([
