@@ -68,6 +68,23 @@ class APIService
     }
 
     /**
+     * Take in an array of multipart payloads and format them into
+     * a structure that Guzzle can take and send
+     *
+     * @param MultipartPayload[] $payload The payload to format
+     *
+     * @return mixed[]
+     */
+    protected function format(array $payload): array
+    {
+        $formatted = [];
+        foreach ($payload as $item) {
+            $formatted[] = $item->format();
+        }
+
+        return $formatted;
+    }
+    /**
      * Make a multi-part request to the vault
      *
      * @param string             $path    The path to post to
@@ -81,18 +98,7 @@ class APIService
      */
     protected function multipart(string $path, array $payload, string $verb = 'POST')
     {
-        foreach ($payload as $row) {
-            if (!$row instanceof MultipartPayload) {
-                $type = is_object($row) ? get_class($row) : gettype($row);
-                throw new InvalidArgumentException(
-                    sprintf(
-                        '$payload must be an array of %s, got [%s]',
-                        MultipartPayload::class,
-                        $type
-                    )
-                );
-            }
-        }
+        $this->validate($payload);
 
         if ($verb === 'PATCH') {
             $payload[] = new MultipartPayload('_method', $verb);
@@ -100,11 +106,22 @@ class APIService
         }
 
         $response = null;
+        $multipart = $this->format($payload);
+
+        $path = str_replace($this->url, '', $path);
+        if (substr($path, 0, 1) !== '/') {
+            $path = '/' . $path;
+        }
+
         try {
             $response = $this->client->$verb($this->url . $path, [
-                'headers' => ['authorization' => $this->cred],
-                'multipart' => $payload,
+                'headers' => [
+                    'authorization' => $this->cred,
+                ],
+                'multipart' => $multipart,
             ]);
+
+            return json_decode((string) $response->getBody());
         } catch (ClientException $ex) {
             if ($ex->getCode()) {
                 $response = array_values(
@@ -117,7 +134,7 @@ class APIService
             throw new ServerException($response, $ex->getResponse()->getStatusCode());
         }
 
-        return json_decode((string) $response->getBody());
+        return $response;
     }
 
     /**
@@ -167,6 +184,29 @@ class APIService
         }
 
         return json_decode((string) $response->getBody());
+    }
+
+    /**
+     * Validates multipart payloads
+     *
+     * @param MultipartPayload[] $payload The payload to validate
+     *
+     * @return void
+     */
+    protected function validate(array $payload): void
+    {
+        foreach ($payload as $row) {
+            if (!$row instanceof MultipartPayload) {
+                $type = is_object($row) ? get_class($row) : gettype($row);
+                throw new InvalidArgumentException(
+                    sprintf(
+                        '$payload must be an array of %s, got [%s]',
+                        MultipartPayload::class,
+                        $type
+                    )
+                );
+            }
+        }
     }
 
 }
