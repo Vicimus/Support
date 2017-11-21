@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder where($column, $value = null, $value = null, $boolean = 'and')
  * @method static \Illuminate\Database\Eloquent\Model create($attributes)
  * @method static \Illuminate\Database\Eloquent\Model find($id)
+ * @method static \Illuminate\Database\Eloquent\Builder whereHas($relation, $closure)
  */
 class Model extends LaravelModel
 {
