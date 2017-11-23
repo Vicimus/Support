@@ -187,6 +187,8 @@ class HasManyFromAPI
     /**
      * Call the loader method on the collection
      *
+     * @throws Exception
+     *
      * @return mixed
      */
     public function load()
@@ -194,7 +196,7 @@ class HasManyFromAPI
         $method = $this->loader;
 
         if (!$method) {
-            throw new Exception('No loader provided', 422);
+            throw new Exception('No loader provided', 500);
         }
 
         return $method($this->get());
