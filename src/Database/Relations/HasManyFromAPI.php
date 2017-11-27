@@ -2,12 +2,14 @@
 
 namespace Vicimus\Support\Database\Relations;
 
+use DateTime;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use stdClass;
+use Vicimus\Support\Database\ApiModel;
 
 /**
  * Class HasManyFromAPI
@@ -121,6 +123,11 @@ class HasManyFromAPI
             $add = $additional[$id] ?? [];
             $insertion = array_merge($insertion, $add);
 
+            $insertion = array_merge($insertion, [
+                'created_at' => new DateTime,
+                'updated_at' => new DateTime,
+            ]);
+
             $this->db->table($this->table)
                 ->insert($insertion);
         }
@@ -160,11 +167,11 @@ class HasManyFromAPI
      *
      * @param int $id The ID of the remote model
      *
-     * @return mixed
+     * @return ApiModel
      */
-    public function find(int $id)
+    public function find(int $id): ApiModel
     {
-        return $this->query()->where($this->right, $id)->first();
+        return new ApiModel($this, $this->query()->where($this->right, $id)->first());
     }
 
     /**
@@ -221,6 +228,21 @@ class HasManyFromAPI
     public function raw(): Collection
     {
         return $this->populate();
+    }
+
+    /**
+     * Update a join row with some new data
+     *
+     * @param int     $id     The id of the join
+     * @param mixed[] $params Params to update
+     *
+     * @return bool
+     */
+    public function update(int $id, array $params): bool
+    {
+        return $this->db->table($this->table)
+                ->where('id', $id)
+                ->update($params) === 0;
     }
 
     /**
@@ -285,4 +307,6 @@ class HasManyFromAPI
 
         return $table;
     }
+
+
 }
