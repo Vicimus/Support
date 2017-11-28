@@ -187,7 +187,7 @@ class APIService
     }
 
     /**
-     * Validates multipart payloads
+     * Result multipart payloads
      *
      * @param MultipartPayload[] $payload The payload to validate
      *

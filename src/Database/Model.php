@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * Base class we can use in most of our projects
  *
  * @method static \Illuminate\Database\Eloquent\Builder where($column, $value = null, $value = null, $boolean = 'and')
- * @method static \Illuminate\Database\Eloquent\Model create($attributes)
+ * @method static \Illuminate\Database\Eloquent\Model|static create($attributes)
  * @method static \Illuminate\Database\Eloquent\Model find($id)
  * @method static \Illuminate\Database\Eloquent\Builder whereHas($relation, $closure)
  */
