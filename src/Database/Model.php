@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder where($column, $value = null, $value = null, $boolean = 'and')
  * @method static \Illuminate\Database\Eloquent\Model create($attributes)
  * @method static \Illuminate\Database\Eloquent\Builder orderBy($column, $ascending)
- * @method static \Illuminate\Database\Eloquent\Model find($id)
+ * @method static \Illuminate\Database\Eloquent\Model|static find($id)
  * @method static \Illuminate\Database\Eloquent\Builder whereHas($relation, $closure)
+ * @method static \Illuminate\Database\Eloquent\Builder whereIn($column, $items)
+ * @method static \Illuminate\Database\Eloquent\Builder whereNotIn($column, $items)
  */
 class Model extends LaravelModel
 {
