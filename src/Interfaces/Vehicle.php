@@ -21,7 +21,7 @@ interface Vehicle
      *
      * @return ?int
      */
-    public function id(): ?int;
+    public function getIdentifier(): ?int;
 
     /**
      * Get an Unhaggle/Chrome styleid representing the vehicle. If the styleid
@@ -29,7 +29,7 @@ interface Vehicle
      *
      * @return ?int
      */
-    public function styleid(): ?int;
+    public function getStyleId(): ?int;
 
     /**
      * Return an array of properties that can be used to represent the
@@ -45,5 +45,5 @@ interface Vehicle
      *
      * @return string
      */
-    public function type(): string;
+    public function getType(): string;
 }
