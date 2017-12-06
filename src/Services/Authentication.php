@@ -2,8 +2,8 @@
 
 namespace Vicimus\Support\Services;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Support\Facades\Auth;
 use Vicimus\Onyx\User;
 
 /**
@@ -29,9 +29,9 @@ class Authentication
     }
 
     /**
-     * Get the currently authenticated user
+     * Get the current user
      *
-     * @return User
+     * @return User|\Illuminate\Contracts\Auth\Authenticatable
      */
     public function user(): ?User
     {
