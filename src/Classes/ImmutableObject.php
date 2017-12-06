@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;
+use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
 
 /**
@@ -80,7 +81,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
     /**
      * Get the last validation message
      *
-     * @throws Exception
+     * @throws ImmutableObjectException
      *
      * @return null|string
      */
@@ -88,7 +89,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
     {
         if (!$this->validator) {
             $class = Factory::class;
-            throw new Exception(
+            throw new ImmutableObjectException(
                 'Cannot use getValidationMessage without passing a '.$class.' to the constructor'
             );
         }
@@ -99,7 +100,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
     /**
      * Is the object valid?
      *
-     * @throws Exception
+     * @throws ImmutableObjectException
      *
      * @return bool
      */
@@ -107,7 +108,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
     {
         if (!$this->validator) {
             $class = Factory::class;
-            throw new Exception(
+            throw new ImmutableObjectException(
                 'Cannot use isValid without passing a '.$class.' to the constructor'
             );
         }
