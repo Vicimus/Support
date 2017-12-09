@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
 /**
  * Base class we can use in most of our projects
  *
- * @method static \Illuminate\Database\Eloquent\Builder where($column, $value = null, $value = null, $boolean = 'and')
- * @method static \Illuminate\Database\Eloquent\Model create($attributes)
  * @method static \Illuminate\Database\Eloquent\Builder orderBy($column, $ascending)
- * @method static \Illuminate\Database\Eloquent\Model find($id)
+ * @method static \Illuminate\Database\Eloquent\Model|static find($id)
+ * @method static \Illuminate\Database\Eloquent\Model|static findOrFail($id)
+ * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
+ * @method static \Illuminate\Database\Eloquent\Model|static create($attributes)
  * @method static \Illuminate\Database\Eloquent\Builder whereHas($relation, $closure)
+ * @method static \Illuminate\Database\Eloquent\Builder whereIn($column, $items)
+ * @method static \Illuminate\Database\Eloquent\Builder whereNotIn($column, $items)
  */
 class Model extends LaravelModel
 {
