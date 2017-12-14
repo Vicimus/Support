@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder whereHas($relation, $closure)
  * @method static \Illuminate\Database\Eloquent\Builder whereIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder whereNotIn($column, $items)
+ * @method static bool truncate()
  */
 class Model extends LaravelModel
 {
