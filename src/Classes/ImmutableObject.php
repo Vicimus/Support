@@ -79,6 +79,16 @@ class ImmutableObject implements JsonSerializable, WillValidate
     }
 
     /**
+     * Convert to a string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return json_encode($this->jsonSerialize());
+    }
+
+    /**
      * Get the last validation message
      *
      * @throws ImmutableObjectException
