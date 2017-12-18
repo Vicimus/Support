@@ -86,7 +86,7 @@ class LoggerOutput implements ConsoleOutput
     {
         file_put_contents(
             $this->path,
-            sprintf('%s: %s', strtoupper($type), $message),
+            sprintf('%s: %s' . PHP_EOL, strtoupper($type), $message),
             FILE_APPEND
         );
     }
