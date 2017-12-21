@@ -171,7 +171,7 @@ class APIService
                 'headers' => ['authorization' => $this->cred],
                 $query => $payload,
             ]);
-        } catch (ClientException|ServerException $ex) {
+        } catch (ClientException | ServerException $ex) {
             $response = $ex->getResponse();
             $code = $response->getStatusCode();
             $message = (string) $response->getBody();
