@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use stdClass;
 use Vicimus\Support\Database\ApiModel;
+use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Class HasManyFromAPI
@@ -18,6 +19,13 @@ use Vicimus\Support\Database\ApiModel;
  */
 class HasManyFromAPI
 {
+    /**
+     * Cast columns
+     *
+     * @var string[]
+     */
+    protected $casts = [];
+
     /**
      * The collection of associations
      *
@@ -134,6 +142,19 @@ class HasManyFromAPI
     }
 
     /**
+     * Casts properties of the model
+     *
+     * @param string[] $casts Cast certain columns of the join
+     *
+     * @return HasManyFromAPI
+     */
+    public function casts(array $casts): self
+    {
+        $this->casts = $casts;
+        return $this;
+    }
+
+    /**
      * Count the number of items in the relationship
      *
      * @return int
@@ -242,7 +263,23 @@ class HasManyFromAPI
     {
         return $this->db->table($this->table)
                 ->where('id', $id)
-                ->update($params) === 0;
+                ->update($params) !== 0;
+    }
+
+    /**
+     * Update a row based on a search
+     *
+     * @param string   $column     The column to search through
+     * @param mixed    $identifier The value to search for
+     * @param string[] $params     The parameters to use with the update
+     *
+     * @return bool
+     */
+    public function updateByColumn(string $column, $identifier, array $params): bool
+    {
+        return $this->db->table($this->table)
+            ->where($column, $identifier)
+            ->update($params) !== 0;
     }
 
     /**
@@ -259,10 +296,47 @@ class HasManyFromAPI
     }
 
     /**
+     * Apply any casts defined
+     *
+     * @param string $property The property
+     * @param mixed  $value    The value to assign
+     *
+     * @throws ApiRelationException
+     *
+     * @return mixed
+     */
+    protected function applyCasts(string $property, $value)
+    {
+        if (!array_key_exists($property, $this->casts)) {
+            return $value;
+        }
+
+        $cast = $this->casts[$property];
+        if (!in_array($cast, [
+            'int', 'bool', 'array',
+        ])) {
+            throw new ApiRelationException('Invalid cast term ' . $cast);
+        }
+
+        switch ($cast) {
+            case 'bool':
+                return (bool) $value;
+            case 'int':
+                return (int) $value;
+            case 'array':
+                return json_decode($value, true);
+            default:
+                return $value;
+        }
+    }
+
+    /**
      * Convert a row into an instance of the related class, unless not specified
      * then it'll be an stdClass
      *
      * @param mixed $row The row to convert
+     *
+     * @throws ApiRelationException
      *
      * @return mixed
      */
@@ -275,7 +349,7 @@ class HasManyFromAPI
         }
 
         foreach ($row as $property => $value) {
-            $instance->$property = $value;
+            $instance->$property = $this->applyCasts($property, $value);
         }
 
         return $instance;

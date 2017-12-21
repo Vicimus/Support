@@ -5,6 +5,7 @@ namespace Vicimus\Support\Classes;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
+use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\RestException;
@@ -114,6 +115,7 @@ class APIService
         }
 
         try {
+            /* @var Response $response */
             $response = $this->client->$verb($this->url . $path, [
                 'headers' => [
                     'authorization' => $this->cred,
