@@ -12,9 +12,10 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Model|static findOrFail($id)
  * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
  * @method static \Illuminate\Database\Eloquent\Model|static create($attributes)
- * @method static \Illuminate\Database\Eloquent\Builder whereHas($relation, $closure)
- * @method static \Illuminate\Database\Eloquent\Builder whereIn($column, $items)
- * @method static \Illuminate\Database\Eloquent\Builder whereNotIn($column, $items)
+ * @method static \Illuminate\Database\Eloquent\Model|static find($id)
+ * @method static \Illuminate\Database\Eloquent\Builder|static whereHas($relation, $closure)
+ * @method static \Illuminate\Database\Eloquent\Builder|static whereIn($column, $items)
+ * @method static \Illuminate\Database\Eloquent\Builder|static whereNotIn($column, $items)
  * @method static bool truncate()
  */
 class Model extends LaravelModel
