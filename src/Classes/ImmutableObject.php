@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Classes;
 
-use Exception;
 use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;

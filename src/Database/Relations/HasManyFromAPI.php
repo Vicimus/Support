@@ -381,6 +381,4 @@ class HasManyFromAPI
 
         return $table;
     }
-
-
 }
