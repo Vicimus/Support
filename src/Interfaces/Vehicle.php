@@ -32,18 +32,18 @@ interface Vehicle
     public function getStyleId(): ?int;
 
     /**
-     * Return an array of properties that can be used to represent the
-     * vehicle
-     *
-     * @return string[]
-     */
-    public function toArray(): array;
-
-    /**
      * Describe the type of vehicle this is (a new vehicle, used vehicle,
      * showroom vehicle, etc).
      *
      * @return string
      */
     public function getType(): string;
+
+    /**
+     * Return an array of properties that can be used to represent the
+     * vehicle
+     *
+     * @return string[]
+     */
+    public function toArray(): array;
 }

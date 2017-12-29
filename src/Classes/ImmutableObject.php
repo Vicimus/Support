@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Classes;
 
-use Exception;
 use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;
@@ -135,6 +134,16 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @return mixed[]
      */
     public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Get the array representation
+     *
+     * @return mixed[]
+     */
+    public function toArray(): array
     {
         return $this->attributes;
     }
