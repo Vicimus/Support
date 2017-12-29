@@ -136,6 +136,16 @@ class ImmutableObject implements JsonSerializable, WillValidate
      */
     public function jsonSerialize(): array
     {
+        return $this->toArray();
+    }
+
+    /**
+     * Get the array representation
+     *
+     * @return mixed[]
+     */
+    public function toArray(): array
+    {
         return $this->attributes;
     }
 }
