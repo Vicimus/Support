@@ -32,6 +32,13 @@ interface Vehicle
     public function getStyleId(): ?int;
 
     /**
+     * Get the stock number of the vehicle, if available
+     *
+     * @return null|string
+     */
+    public function getStockNumber(): ?string;
+
+    /**
      * Return an array of properties that can be used to represent the
      * vehicle
      *

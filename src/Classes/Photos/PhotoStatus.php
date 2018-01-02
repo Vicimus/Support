@@ -79,6 +79,10 @@ class PhotoStatus
      */
     public function isOutdated(): bool
     {
+        if (!$this->headers->get('etag')) {
+            return true;
+        }
+
         return $this->photo->etag() !== $this->headers->get('etag');
     }
 }
