@@ -5,18 +5,17 @@ namespace Vicimus\Support\Classes\Photos;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
-class ProcessProgress implements ConsoleOutput
+class DownloadProgress implements ConsoleOutput
 {
     use ConsoleOutputter, PersistsOutput;
 
-    protected $created = 0;
-    protected $updated = 0;
+    protected $successes = 0;
     protected $total = 0;
-    protected $skipped = 0;
     protected $errors = 0;
-
+    protected $bytes = 0;
     protected $autoIncrement = false;
     protected $previous = '';
+
     public function __construct(int $total)
     {
         $this->total = $total;
@@ -25,21 +24,15 @@ class ProcessProgress implements ConsoleOutput
         }
     }
 
-    public function created(): self
+    public function bytes(int $amount): self
     {
-        $this->created++;
+        $this->bytes += $amount;
         return $this->output();
     }
 
-    public function updated(): self
+    public function incSuccess(): self
     {
-        $this->updated++;
-        return $this->output();
-    }
-
-    public function skipped(): self
-    {
-        $this->skipped++;
+        $this->successes++;
         return $this->output();
     }
 
@@ -56,23 +49,26 @@ class ProcessProgress implements ConsoleOutput
         }
 
         $output = sprintf(
-            '%4d Created%s%4d Updated%s%4d Skipped%s%4d Errors  | %5d Total',
-            $this->created,
-            ' ',
-            $this->updated,
-            ' ',
-            $this->skipped,
+            '%4d Success%s%4d Errors  | %5d Total | %s MB',
+            $this->successes,
             ' ',
             $this->errors,
-            $this->total
+            $this->total,
+            number_format($this->calculateBytes(), 2)
         );
 
         $this->previous = $output;
+        $this->line($output);
         return $this;
+    }
+
+    protected function calculateBytes(): float
+    {
+        return round($this->bytes / 1024 / 1024, 2);
     }
 
     protected function autoIncrement(): void
     {
-        $this->total = $this->created + $this->updated + $this->errors + $this->skipped;
+        $this->total = $this->successes + $this->errors;
     }
 }
