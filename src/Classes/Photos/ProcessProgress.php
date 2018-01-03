@@ -15,6 +15,8 @@ class ProcessProgress implements ConsoleOutput
     protected $skipped = 0;
     protected $errors = 0;
 
+    protected $previous = '';
+
     protected $autoIncrement = false;
 
     public function __construct(int $total)
@@ -25,37 +27,37 @@ class ProcessProgress implements ConsoleOutput
         }
     }
 
-    public function created()
+    public function created(): self
     {
         $this->created++;
-        $this->output();
+        return $this->output();
     }
 
-    public function updated()
+    public function updated(): self
     {
         $this->updated++;
-        $this->output();
+        return $this->output();
     }
 
-    public function skipped()
+    public function skipped(): self
     {
         $this->skipped++;
-        $this->output();
+        return $this->output();
     }
 
-    public function incError()
+    public function incError(): self
     {
         $this->errors++;
-        $this->output();
+        return $this->output();
     }
 
-    public function output(): void
+    public function output(): self
     {
         if ($this->autoIncrement) {
             $this->autoIncrement();
         }
 
-        $this->line(
+       $output = sprintf(
             '%4d Created%s%4d Updated%s%4d Skipped%s%4d Errors  | %5d Total',
             $this->created,
             ' ',
@@ -66,6 +68,15 @@ class ProcessProgress implements ConsoleOutput
             $this->errors,
             $this->total
         );
+
+        $this->previous = $output;
+        $this->line($output);
+        return $this;
+    }
+
+    public function persist($method = 'comment'): void
+    {
+        $this->$method($this->previous);
     }
 
     protected function autoIncrement(): void

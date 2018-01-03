@@ -14,6 +14,7 @@ class ScannerProgress implements ConsoleOutput
     protected $errors = 0;
 
     protected $autoIncrement = false;
+    protected $previous = '';
 
     public function __construct(int $total)
     {
@@ -23,31 +24,39 @@ class ScannerProgress implements ConsoleOutput
         }
     }
 
-    public function incSuccess()
+    public function incSuccess(): self
     {
         $this->successes++;
-        $this->output();
+        return $this->output();
     }
 
-    public function incError()
+    public function incError(): self
     {
         $this->errors++;
-        $this->output();
+        return $this->output();
     }
 
-    public function output(): void
+    public function output(): self
     {
         if ($this->autoIncrement) {
             $this->autoIncrement();
         }
 
-        $this->line(
+        $output = sprintf(
             '%4d Success%s%4d Errors  | %5d Total',
             $this->successes,
             ' ',
             $this->errors,
             $this->total
         );
+
+        $this->previous = $output;
+        return $this;
+    }
+
+    public function persist($method = 'comment'): void
+    {
+        $this->$method($this->previous);
     }
 
     protected function autoIncrement(): void
