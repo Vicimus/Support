@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder|static whereIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Model|static firstOrCreate($attributes)
  * @method static bool truncate()
  * @method static int count()
  */
