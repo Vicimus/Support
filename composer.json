@@ -6,11 +6,11 @@
         "guzzlehttp/guzzle": "~6",
         "illuminate/database": "~5",
         "illuminate/http": "~5",
-        "illuminate/validation": "~5"
+        "illuminate/validation": "~5",
+        "illuminate/auth": "~5"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "~3",
-        "vicimus/standard": "~2",
+        "vicimus/standard": "~3",
         "phpunit/phpunit":"~6"
     },
     "autoload": {
@@ -24,9 +24,6 @@
         ]
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "git@bitbucket.org:vicimus/ymlcollection.git"
-        }
+      { "type": "composer", "url": "https://repo.packages.vicimus.com" }
     ]
 }

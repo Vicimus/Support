@@ -48,6 +48,18 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     }
 
     /**
+     * Check if the bag contains a property
+     *
+     * @param string $property The property to check existence of
+     *
+     * @return bool
+     */
+    public function has(string $property): bool
+    {
+        return array_key_exists($property, $this->attributes);
+    }
+
+    /**
      * Whether a offset exists
      *
      * @param mixed $offset The offset to check if it exists
@@ -56,7 +68,7 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        return array_key_exists($this->attributes, $offset);
+        return array_key_exists($offset, $this->attributes);
     }
 
     /**
