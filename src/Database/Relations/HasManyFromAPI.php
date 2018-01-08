@@ -113,6 +113,8 @@ class HasManyFromAPI
      * @param int[]   $ids        The IDs to associate
      * @param mixed[] $additional Additional columns to insert
      *
+     * @throws InvalidArgumentException
+     *
      * @return void
      */
     public function associate(array $ids, array $additional = []): void
@@ -197,6 +199,8 @@ class HasManyFromAPI
 
     /**
      * Get the internal query
+     *
+     * @throws ApiRelationException
      *
      * @return Collection
      */

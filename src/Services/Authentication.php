@@ -2,11 +2,9 @@
 
 namespace Vicimus\Support\Services;
 
-use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Support\Facades\Auth;
-use Vicimus\Onyx\User;
 
 /**
  * Class Authentication

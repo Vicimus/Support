@@ -102,7 +102,7 @@ class ComplexQueryParser
             return $query->whereIn($property, $possibilities);
         }
 
-        return $query->where(function (Builder $sub) use ($property, $possibilities) {
+        return $query->where(function (Builder $sub) use ($property, $possibilities): void {
             $sub->whereIn($property, $possibilities)
                 ->orWhereNull($property);
         });
