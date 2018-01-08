@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Tests\Unit\Classes;
 
 use Laravel\Lumen\Application;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vicimus\Support\Classes\LumenRouter;
 
