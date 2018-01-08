@@ -172,7 +172,7 @@ class APIService
                 'headers' => ['authorization' => $this->cred],
                 $query => $payload,
             ]);
-        } catch (ClientException | ServerException $ex) {
+        } catch (ClientException | GuzzleServerException $ex) {
             $response = $ex->getResponse();
             $code = $response->getStatusCode();
             $message = (string) $response->getBody();
@@ -191,6 +191,8 @@ class APIService
      * Result multipart payloads
      *
      * @param MultipartPayload[] $payload The payload to validate
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
