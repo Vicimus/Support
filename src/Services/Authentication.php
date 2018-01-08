@@ -29,6 +29,16 @@ class Authentication
     }
 
     /**
+     * Forward the request on to the facade
+     *
+     * @return bool
+     */
+    public function check(): bool
+    {
+        return Auth::check();
+    }
+
+    /**
      * Get the current user
      *
      * @return User|\Illuminate\Contracts\Auth\Authenticatable
