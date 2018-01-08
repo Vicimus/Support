@@ -77,7 +77,7 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     /**
      * Whether a offset exists
      *
-     * @link  http://php.net/manual/en/arrayaccess.offsetexists.php
+     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      *
      * @param mixed $offset <p>
      *                      An offset to check for.
@@ -87,9 +87,9 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
-     * @since 5.0.0
+     * @since  5.0.0
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($this->attributes, $offset);
     }
@@ -97,14 +97,14 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     /**
      * Offset to retrieve
      *
-     * @link  http://php.net/manual/en/arrayaccess.offsetget.php
+     * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
      * @param mixed $offset <p>
      *                      The offset to retrieve.
      *                      </p>
      *
      * @return mixed Can return all value types.
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function offsetGet($offset)
     {
@@ -114,7 +114,7 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     /**
      * Offset to set
      *
-     * @link  http://php.net/manual/en/arrayaccess.offsetset.php
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset <p>
      *                      The offset to assign the value to.
@@ -124,9 +124,9 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      *                      </p>
      *
      * @return void
-     * @since 5.0.0
+     * @since  5.0.0
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->attributes[$offset] = $value;
     }
@@ -134,16 +134,17 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     /**
      * Offset to unset
      *
-     * @link  http://php.net/manual/en/arrayaccess.offsetunset.php
+     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
      * @param mixed $offset <p>
      *                      The offset to unset.
      *                      </p>
      *
      * @return void
-     * @since 5.0.0
+     * @since  5.0.0
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset): void
+    {
         unset($this->attributes[$offset]);
     }
 }

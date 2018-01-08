@@ -7,10 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
-use Throwable;
 use Vicimus\Support\Classes\API\AsyncRequestPool;
-use Vicimus\Support\Interfaces\ConsoleOutput;
-use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**

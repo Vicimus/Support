@@ -53,11 +53,6 @@ class AsyncRequestPool
         $this->requests[] = $request;
     }
 
-    /**
-     * @param int $index
-     *
-     * @return AsyncRequest
-     */
     public function at(int $index): AsyncRequest
     {
         return $this->requests[$index];
