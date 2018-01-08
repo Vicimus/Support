@@ -49,6 +49,9 @@ class ToolsTest extends TestCase
 
         $result = Tools::getCountryFromState('CA');
         $this->assertEquals('US', $result);
+
+        $result = Tools::getCountryFromState('BANANA');
+        $this->assertNull($result);
     }
 
     /**
