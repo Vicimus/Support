@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Classes\Photos;
 
-use Glovebox\Inventory\Models\Stock;
 use Vicimus\Support\Classes\ImmutableObject;
 use Vicimus\Support\Interfaces\Vehicle;
 

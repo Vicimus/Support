@@ -3,13 +3,15 @@
 namespace Vicimus\Support\Database;
 
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\Model;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
 use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Trait APIAssociates
  *
- * @package Vicimus\Support\Database
+ * @property int $id
+ * @property string $table
  */
 trait APIAssociates
 {
@@ -24,14 +26,47 @@ trait APIAssociates
      *
      * @return HasManyFromAPI
      */
-    public function hasManyFromAPI(DatabaseManager $db, string $relation, ?callable $loader = null): HasManyFromAPI
+    public function hasManyFromApi(DatabaseManager $db, string $relation, ?callable $loader = null): HasManyFromAPI
     {
-        if (!$this->id) {
-            throw new ApiRelationException(
-                'Local model must have an id (must be saved) before attempting to collect it\'s relations'
-            );
+        $this->isCapableOfCreatingRelation();
+        return new HasManyFromAPI($db, $this->id, $this->table, $relation, $loader);
+    }
+
+    /**
+     * Check if the essential properties are available
+     *
+     * @return void
+     *
+     * @throws ApiRelationException
+     */
+    private function isCapableOfCreatingRelation(): void
+    {
+        $noId = new ApiRelationException(
+            'Local model must have an id (must be saved) before attempting to collect it\'s relations'
+        );
+
+        if ($this instanceof Model && !$this->id) {
+            throw $noId;
         }
 
-        return new HasManyFromAPI($db, $this->id, $this->table, $relation, $loader);
+        if (!$this instanceof Model) {
+            if (!property_exists($this, 'id') || !$this->id) {
+                throw $noId;
+            }
+        }
+
+        $noTable = new ApiRelationException(
+            'Local model must have a table property before attempting to collect it\'s relations'
+        );
+
+        if ($this instanceof Model && !$this->table) {
+            throw $noTable;
+        }
+
+        if (!$this instanceof Model) {
+            if (!property_exists($this, 'table') || !$this->table) {
+                throw $noTable;
+            }
+        }
     }
 }

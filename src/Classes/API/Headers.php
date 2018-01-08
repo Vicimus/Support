@@ -23,7 +23,11 @@ class Headers extends ImmutableObject
         $headers = $response->getHeaders();
         $payload = [];
         foreach ($headers as $header => $contents) {
-            $payload[strtolower($header)] = implode("\n", $contents);
+            if (is_array($contents)) {
+                $contents = implode("\n", $contents);
+            }
+
+            $payload[strtolower($header)] = $contents;
         }
 
         parent::__construct($payload);

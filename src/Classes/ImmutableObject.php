@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Classes;
 
-use Exception;
 use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;
@@ -49,6 +48,8 @@ class ImmutableObject implements JsonSerializable, WillValidate
      *
      * @param mixed   $original  The original attributes
      * @param Factory $validator The validator factory
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct($original = [], ?Factory $validator = null)
     {
@@ -125,7 +126,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
 
         $validator = $this->validator->make($this->attributes, $this->rules);
         $result = !$validator->fails();
-        $this->errors = $validator->errors()->all();
+        $this->errors = implode(' ', $validator->errors()->all());
         return $result;
     }
 

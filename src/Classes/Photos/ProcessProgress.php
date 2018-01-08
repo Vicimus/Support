@@ -7,7 +7,7 @@ use Vicimus\Support\Traits\ConsoleOutputter;
 
 class ProcessProgress implements ConsoleOutput
 {
-    use ConsoleOutputter;
+    use ConsoleOutputter, PersistsOutput;
 
     protected $created = 0;
     protected $updated = 0;
@@ -18,7 +18,6 @@ class ProcessProgress implements ConsoleOutput
     protected $previous = '';
 
     protected $autoIncrement = false;
-
     public function __construct(int $total)
     {
         $this->total = $total;
@@ -57,7 +56,7 @@ class ProcessProgress implements ConsoleOutput
             $this->autoIncrement();
         }
 
-       $output = sprintf(
+        $output = sprintf(
             '%4d Created%s%4d Updated%s%4d Skipped%s%4d Errors  | %5d Total',
             $this->created,
             ' ',
@@ -77,6 +76,7 @@ class ProcessProgress implements ConsoleOutput
     public function persist($method = 'comment'): void
     {
         $this->$method($this->previous);
+        return $this;
     }
 
     protected function autoIncrement(): void

@@ -5,12 +5,11 @@ namespace Vicimus\Support\Classes\Photos;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
-class ScannerProgress implements ConsoleOutput
+class DownloadProgress implements ConsoleOutput
 {
     use ConsoleOutputter, PersistsOutput;
 
-    protected $outdated = 0;
-    protected $upToDate = 0;
+    protected $successes = 0;
     protected $total = 0;
     protected $errors = 0;
     protected $bytes = 0;
@@ -25,28 +24,15 @@ class ScannerProgress implements ConsoleOutput
         }
     }
 
-
-    public function incSuccess(): self
-    {
-        $this->successes++;
-        return $this->output();
-    }
-
     public function bytes(int $amount): self
     {
         $this->bytes += $amount;
         return $this->output();
     }
 
-    public function incOutdated(): self
+    public function incSuccess(): self
     {
-        $this->outdated++;
-        return $this->output();
-    }
-
-    public function incUpToDate(): self
-    {
-        $this->upToDate++;
+        $this->successes++;
         return $this->output();
     }
 
@@ -63,10 +49,8 @@ class ScannerProgress implements ConsoleOutput
         }
 
         $output = sprintf(
-            '%4d Outdated%s%4d Up To Date%s%4d Errors  | %5d Total | %s MB',
-            $this->outdated,
-            ' ',
-            $this->upToDate,
+            '%4d Success%s%4d Errors  | %5d Total | %s MB',
+            $this->successes,
             ' ',
             $this->errors,
             $this->total,
@@ -75,12 +59,6 @@ class ScannerProgress implements ConsoleOutput
 
         $this->previous = $output;
         $this->line($output);
-        return $this;
-    }
-
-    public function persist($method = 'comment'): void
-    {
-        $this->$method($this->previous);
         return $this;
     }
 

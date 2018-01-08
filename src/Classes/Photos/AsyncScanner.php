@@ -6,11 +6,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
-use Throwable;
 use Vicimus\Support\Classes\API\AsyncRequestPool;
-use Vicimus\Support\Interfaces\ConsoleOutput;
-use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**
@@ -37,6 +35,8 @@ class AsyncScanner implements Scanner
     protected $client;
 
     /**
+     * Track progress and output it to the screen
+     *
      * @var ScannerProgress
      */
     protected $progress;
@@ -66,12 +66,18 @@ class AsyncScanner implements Scanner
         $status = new Collection();
         $pool = new Pool($client, $this->async->requests(), [
             'concurrency' => 5,
-            'fulfilled' => function ($response, $index) use ($status): void {
-                $this->progress->incSuccess();
+            'fulfilled' => function (Response $response, $index) use ($status): void {
+
+                $bytes = (int) $response->getHeader('Content-Length')[0] ?? 0;
+
                 $request = $this->async->at($index);
                 $payload = $request->process($response);
                 if ($payload) {
                     $status->push($payload);
+                    $this->progress->incOutdated();
+                    $this->progress->bytes($bytes);
+                } else {
+                    $this->progress->incUpToDate();
                 }
             },
             'rejected' => function (RequestException $reason, $index): void {

@@ -24,6 +24,13 @@ interface Vehicle
     public function getIdentifier(): ?int;
 
     /**
+     * Get the stock number of the vehicle, if available
+     *
+     * @return null|string
+     */
+    public function getStockNumber(): ?string;
+
+    /**
      * Get an Unhaggle/Chrome styleid representing the vehicle. If the styleid
      * is unknown or unavailable, return null.
      *
@@ -32,11 +39,12 @@ interface Vehicle
     public function getStyleId(): ?int;
 
     /**
-     * Get the stock number of the vehicle, if available
+     * Describe the type of vehicle this is (a new vehicle, used vehicle,
+     * showroom vehicle, etc).
      *
-     * @return null|string
+     * @return string
      */
-    public function getStockNumber(): ?string;
+    public function getType(): string;
 
     /**
      * Return an array of properties that can be used to represent the
@@ -45,12 +53,4 @@ interface Vehicle
      * @return string[]
      */
     public function toArray(): array;
-
-    /**
-     * Describe the type of vehicle this is (a new vehicle, used vehicle,
-     * showroom vehicle, etc).
-     *
-     * @return string
-     */
-    public function getType(): string;
 }

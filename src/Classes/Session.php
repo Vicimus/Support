@@ -4,8 +4,6 @@ namespace Vicimus\Support\Classes;
 
 /**
  * Allows easy interaction with the session
- *
- * @author Jordan
  */
 class Session
 {
@@ -59,7 +57,7 @@ class Session
     public function pull(string $property)
     {
         $value = $this->get($property);
-        if (is_null($value)) {
+        if ($value === null) {
             return $value;
         }
 

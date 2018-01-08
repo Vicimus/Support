@@ -4,9 +4,6 @@ namespace Vicimus\Support\Classes\API;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Vicimus\Support\Classes\ImmutableObject;
-use Vicimus\Support\Interfaces\Photo;
-use Vicimus\Support\Interfaces\Vehicle;
 
 /**
  * Interface AsyncRequest

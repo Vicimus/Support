@@ -5,7 +5,6 @@ namespace Vicimus\Support\Classes;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
-use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\RestException;
@@ -173,7 +172,7 @@ class APIService
                 'headers' => ['authorization' => $this->cred],
                 $query => $payload,
             ]);
-        } catch (ClientException | ServerException $ex) {
+        } catch (ClientException | GuzzleServerException $ex) {
             $response = $ex->getResponse();
             $code = $response->getStatusCode();
             $message = (string) $response->getBody();
@@ -193,6 +192,8 @@ class APIService
      *
      * @param MultipartPayload[] $payload The payload to validate
      *
+     * @throws InvalidArgumentException
+     *
      * @return void
      */
     protected function validate(array $payload): void
@@ -210,5 +211,4 @@ class APIService
             }
         }
     }
-
 }
