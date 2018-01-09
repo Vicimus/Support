@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Throwable;
 use Vicimus\Support\Database\ApiModel;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
@@ -25,7 +26,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testAssociate(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -62,7 +63,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testAssociateFail(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -101,7 +102,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testCount(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -141,7 +142,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testDisassociate(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -181,7 +182,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testFind(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -220,7 +221,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testGet(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -230,7 +231,7 @@ class HasManyFromAPITest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $builder->expects($this->exactly(2))
+        $builder->expects($this->exactly(1))
             ->method('where')
             ->will($this->returnSelf());
 
@@ -239,9 +240,9 @@ class HasManyFromAPITest extends TestCase
             ->will($this->returnSelf());
 
         $builder->method('get')
-            ->willReturn(new Collection([1, 2, 3]));
+            ->willReturn(new Collection([['id' => 1], ['id' => 2], ['id' => 3]]));
 
-        /* @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
+        /** @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
         $connection = $this->getMockBuilder(ConnectionInterface::class)
             ->getMock();
 
@@ -251,6 +252,7 @@ class HasManyFromAPITest extends TestCase
         $db->method('connection')
             ->willReturn($connection);
 
+        $match = new Collection();
         $has = new HasManyFromAPI($db, 1, 'bananas', 'strawberries');
         try {
             $match = $has->get();
@@ -258,6 +260,6 @@ class HasManyFromAPITest extends TestCase
             $this->fail($ex->__toString());
         }
 
-        $this->assertInstanceOf(ApiModel::class, $match);
+        $this->assertInstanceOf(stdClass::class, $match->first());
     }
 }

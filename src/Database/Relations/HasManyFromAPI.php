@@ -352,6 +352,10 @@ class HasManyFromAPI
             $instance->id = $row->$identifier;
         }
 
+        if (!is_array($row) && !is_object($row)) {
+            throw new ApiRelationException(sprintf('Expected array or object, received %s', var_export($row, true)));
+        }
+
         foreach ($row as $property => $value) {
             $instance->$property = $this->applyCasts($property, $value);
         }
