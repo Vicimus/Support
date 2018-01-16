@@ -32,4 +32,18 @@ class Model extends LaravelModel
     protected $guarded = [
         'id', 'updated_at', 'created_at',
     ];
+
+    /**
+     * Get a relative
+     *
+     * Mainly used for mocks
+     *
+     * @param string $relative The relative to get
+     *
+     * @return mixed
+     */
+    public function relation(string $relative)
+    {
+        return $this->$relative;
+    }
 }
