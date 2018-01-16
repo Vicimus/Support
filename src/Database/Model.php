@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed()
  * @method static \Illuminate\Database\Eloquent\Model|static firstOrCreate($attributes)
  * @method static \Illuminate\database\Eloquent\Model|static firstOrFail()
+ * @method static \Illuminate\Database\Eloquent\Model|static first()
  * @method static bool truncate()
  * @method static int count()
  */
