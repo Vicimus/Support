@@ -23,6 +23,13 @@ class ImmutableObject implements JsonSerializable, WillValidate
     protected $attributes = [];
 
     /**
+     * Properties to hide from json encoding and toArray calls
+     *
+     * @var string[]
+     */
+    protected $hidden = [];
+
+    /**
      * Validation rules
      *
      * @var string[]
@@ -147,6 +154,12 @@ class ImmutableObject implements JsonSerializable, WillValidate
      */
     public function toArray(): array
     {
-        return $this->attributes;
+        if (!count($this->hidden)) {
+            return $this->attributes;
+        }
+
+        return array_filter($this->attributes, function ($key) {
+            return !in_array($key, $this->hidden);
+        }, ARRAY_FILTER_USE_KEY);
     }
 }
