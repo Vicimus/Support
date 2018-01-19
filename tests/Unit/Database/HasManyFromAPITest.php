@@ -230,7 +230,7 @@ class HasManyFromAPITest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $builder->expects($this->exactly(2))
+        $builder->expects($this->exactly(1))
             ->method('where')
             ->will($this->returnSelf());
 
@@ -239,7 +239,11 @@ class HasManyFromAPITest extends TestCase
             ->will($this->returnSelf());
 
         $builder->method('get')
-            ->willReturn(new Collection([1, 2, 3]));
+            ->willReturn(new Collection([
+                ['id' => 1],
+                ['id' => 2],
+                ['id' => 3],
+            ]));
 
         /* @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
         $connection = $this->getMockBuilder(ConnectionInterface::class)
@@ -252,12 +256,14 @@ class HasManyFromAPITest extends TestCase
             ->willReturn($connection);
 
         $has = new HasManyFromAPI($db, 1, 'bananas', 'strawberries');
+
+        $match = null;
         try {
             $match = $has->get();
         } catch (Throwable $ex) {
             $this->fail($ex->__toString());
         }
 
-        $this->assertInstanceOf(ApiModel::class, $match);
+        $this->assertInstanceOf(Collection::class, $match);
     }
 }
