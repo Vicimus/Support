@@ -171,7 +171,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
     }
 
     /**
-     * Takes in the original data and converts it according to the proptected
+     * Takes in the original data and converts it according to the protected
      * local property $this->casts
      *
      * @param mixed[] $attributes The attributes to transform
@@ -214,7 +214,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
         $transformed = [];
         foreach ($value as $individual) {
             $transform = $this->casts[$property];
-            if ($this->isScaler($transform)) {
+            if ($this->isScalar($transform)) {
                 settype($individual, $transform);
                 $transformed[] = $individual;
                 continue;
@@ -231,7 +231,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
     }
 
     /**
-     * Check if a value is both an array and likely just a numberic array,
+     * Check if a value is both an array and likely just a numeric array,
      * as opposed to an object structure converted into an array
      *
      * @param mixed $value The value to inspect
@@ -256,7 +256,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      *
      * @return bool
      */
-    private function isScaler(string $value): bool
+    private function isScalar(string $value): bool
     {
         return in_array($value, [
             'int', 'bool', 'string', 'float',
