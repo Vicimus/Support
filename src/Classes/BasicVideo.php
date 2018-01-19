@@ -10,7 +10,7 @@ use Vicimus\Support\Interfaces\Video;
 class BasicVideo implements Video
 {
     /**
-     * The type of video ie/ youtube, flickfusion, etc.
+     * The type of video ie/ youtube, flick-fusion, etc.
      *
      * @var string
      */
@@ -36,7 +36,7 @@ class BasicVideo implements Video
     }
 
     /**
-     * Get the type of video ie/ youtube, flickfusion, etc.
+     * Get the type of video ie/ youtube, flick-fusion, etc.
      *
      * @return string
      */

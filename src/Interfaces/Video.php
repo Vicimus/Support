@@ -8,7 +8,7 @@ namespace Vicimus\Support\Interfaces;
 interface Video
 {
     /**
-     * Get the type of video ie/ youtube, flickfusion, etc.
+     * Get the type of video ie/ youtube, flick-fusion, etc.
      *
      * @return string
      */
