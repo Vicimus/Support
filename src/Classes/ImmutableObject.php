@@ -23,6 +23,13 @@ class ImmutableObject implements JsonSerializable, WillValidate
     protected $attributes = [];
 
     /**
+     * Any properties to convert into other types
+     *
+     * @var string[]
+     */
+    protected $casts = [];
+  
+    /**
      * Properties to hide from json encoding and toArray calls
      *
      * @var string[]
@@ -70,7 +77,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
             $original = json_decode(json_encode($original), true);
         }
 
-        $this->attributes = $original ?? [];
+        $this->attributes = $this->castAttributes($original ?? []);
         $this->validator = $validator;
     }
 
@@ -161,5 +168,98 @@ class ImmutableObject implements JsonSerializable, WillValidate
         return array_filter($this->attributes, function ($key) {
             return !in_array($key, $this->hidden);
         }, ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
+     * Takes in the original data and converts it according to the protected
+     * local property $this->casts
+     *
+     * @param mixed[] $attributes The attributes to transform
+     *
+     * @return mixed[]
+     */
+    private function castAttributes(array $attributes): array
+    {
+        if (!count($this->casts)) {
+            return $attributes;
+        }
+
+        $transformed = [];
+        foreach ($attributes as $property => $value) {
+            $transformed[$property] = $this->doAttributeCast($property, $value);
+        }
+
+        return $transformed;
+    }
+
+    /**
+     * Cast a specific value
+     *
+     * @param string $property The property being cast
+     * @param mixed  $value    The current value
+     *
+     * @return mixed
+     */
+    private function doAttributeCast(string $property, $value)
+    {
+        if (!array_key_exists($property, $this->casts)) {
+            return $value;
+        }
+
+        $arrayMode = $this->isNumericArray($value);
+        if (!$arrayMode) {
+            $value = [$value];
+        }
+
+        $transformed = [];
+        foreach ($value as $individual) {
+            $transform = $this->casts[$property];
+            if ($this->isScalar($transform)) {
+                settype($individual, $transform);
+                $transformed[] = $individual;
+                continue;
+            }
+
+            $transformed[] = new $transform($individual);
+        }
+
+        if (!$arrayMode) {
+            return $transformed[0];
+        }
+
+        return $transformed;
+    }
+
+    /**
+     * Check if a value is both an array and likely just a numeric array,
+     * as opposed to an object structure converted into an array
+     *
+     * @param mixed $value The value to inspect
+     *
+     * @return bool
+     */
+    private function isNumericArray($value): bool
+    {
+        if (!is_array($value)) {
+            return false;
+        }
+
+        $keys = array_keys($value);
+        $last = count($value) - 1;
+        return $keys[0] === 0 && $keys[$last] === $last;
+    }
+
+    /**
+     * Check if a type is scalar or not
+     *
+     * @param string $value The value to inspect
+     *
+     * @return bool
+     */
+    private function isScalar(string $value): bool
+    {
+        return in_array($value, [
+            'int', 'bool', 'string', 'float',
+        ]);
     }
 }
