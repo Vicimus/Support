@@ -202,7 +202,8 @@ class ImmutableObject implements JsonSerializable, WillValidate
         foreach ($value as $individual) {
             $transform = $this->casts[$property];
             if ($this->isScaler($transform)) {
-                $transformed[] = settype($individual, $transform);
+                settype($individual, $transform);
+                $transformed[] = $individual;
                 continue;
             }
 
@@ -214,7 +215,6 @@ class ImmutableObject implements JsonSerializable, WillValidate
         }
 
         return $transformed;
-
     }
 
     /**
