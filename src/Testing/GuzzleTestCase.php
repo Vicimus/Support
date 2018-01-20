@@ -1,0 +1,29 @@
+<?php declare(strict_types = 1);
+
+namespace Vicimus\Support\Testing;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+
+/**
+ * Class GuzzleTestCase
+ */
+abstract class GuzzleTestCase extends TestCase
+{
+    /**
+     * Get a mock guzzle client
+     *
+     * @param Response[] $responses The responses you want
+     *
+     * @return Client
+     */
+    protected function guzzle(array $responses = []): Client
+    {
+        $mock = new MockHandler($responses);
+
+        $handler = HandlerStack::create($mock);
+        return new Client(['handler' => $handler, 'base_uri' => 'http://www.banana.com']);
+    }
+}
