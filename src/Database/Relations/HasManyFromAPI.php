@@ -219,7 +219,7 @@ class HasManyFromAPI
     /**
      * Call the loader method on the collection
      *
-     * @throws Exception
+     * @throws ApiRelationException
      *
      * @return mixed
      */
@@ -228,7 +228,7 @@ class HasManyFromAPI
         $method = $this->loader;
 
         if (!$method) {
-            throw new Exception('No loader provided', 500);
+            throw new ApiRelationException('No loader provided', 500);
         }
 
         return $method($this->get());

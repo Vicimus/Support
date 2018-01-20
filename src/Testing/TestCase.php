@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Testing;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
@@ -16,10 +17,16 @@ abstract class TestCase extends PHPUnitTestCase
      *
      * @param string $exception The exception that was expected
      *
+     * @throws InvalidArgumentException
+     *
      * @return void
      */
     public function wasExpectingException(string $exception): void
     {
-        $this->fail(sprintf('%s not thrown in %s', $exception, __METHOD__));
+        if (class_exists($exception)) {
+            $this->fail(sprintf('%s not thrown in %s', $exception, __METHOD__));
+        }
+
+        throw new InvalidArgumentException('Argument must be a valid class');
     }
 }

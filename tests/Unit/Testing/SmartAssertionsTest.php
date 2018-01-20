@@ -78,6 +78,11 @@ class SmartAssertionsTest extends TestCase
         $this->assertContains(json_encode(['id' => 1]), $result);
     }
 
+    /**
+     * Test filtering
+     *
+     * @return void
+     */
     public function testFiltering(): void
     {
         /** @var TestCase|SmartAssertions|MockObject $test */
