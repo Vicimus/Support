@@ -26,7 +26,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testAssociate(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -63,7 +63,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testAssociateFail(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -102,7 +102,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testCount(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -142,7 +142,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testDisassociate(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -182,7 +182,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testFind(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -221,7 +221,7 @@ class HasManyFromAPITest extends TestCase
      */
     public function testGet(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
@@ -277,13 +277,13 @@ class HasManyFromAPITest extends TestCase
      */
     public function testLoad(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
             ->getMock();
 
-        /* @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
+        /** @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
         $connection = $this->getMockBuilder(ConnectionInterface::class)
             ->getMock();
 
@@ -333,13 +333,13 @@ class HasManyFromAPITest extends TestCase
      */
     public function testRaw(): void
     {
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['connection'])
             ->getMock();
 
-        /* @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
+        /** @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
         $connection = $this->getMockBuilder(ConnectionInterface::class)
             ->getMock();
 
