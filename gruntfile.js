@@ -28,22 +28,11 @@ module.exports = function(grunt) {
             bin: 'vendor/bin/phpcs',
             standard: standard,
             encoding: 'utf-8',
-            verbose: false
+            verbose: false,
+            warningSeverity: 999,
+
       }
     },
-
-    phpcbf: {
-      application: {
-        src: phpFiles
-      },
-      options: {
-        bin: 'vendor/bin/phpcbf',
-        standard: standard,
-        encoding: 'utf-8',
-        noPatch: false
-      }
-    },
-
     phpunit: {
         classes: {
             dir: ''
@@ -68,16 +57,15 @@ module.exports = function(grunt) {
     watch: {
 
       files: phpFiles.concat(['tests/**/*.php']),
-      tasks: ['phpcbf', 'phpcs', 'phpunit']
+      tasks: ['phpcs', 'phpunit']
     }
 
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-phpcs');
-  grunt.loadNpmTasks('grunt-phpcbf');
   grunt.loadNpmTasks('grunt-phpunit');
   grunt.loadNpmTasks('grunt-phpmd');
 
-  grunt.registerTask('default', ['phpcbf', 'phpcs', 'phpunit']);
+  grunt.registerTask('default', ['phpcs', 'phpunit']);
 };

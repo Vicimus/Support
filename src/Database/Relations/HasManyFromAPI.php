@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Database\Relations;
 
 use DateTime;
-use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;

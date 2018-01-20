@@ -2,8 +2,6 @@
 
 namespace Vicimus\Support\Testing;
 
-use RMS\Models\Campaign;
-
 /**
  * Trait TestSqliteDatabase
  */

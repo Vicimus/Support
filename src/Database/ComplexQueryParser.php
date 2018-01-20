@@ -3,8 +3,8 @@
 namespace Vicimus\Support\Database;
 
 use DateTime;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Query\Builder;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
 
 /**

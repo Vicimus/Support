@@ -98,7 +98,7 @@ class APIService
         }
 
         try {
-            /* @var Response $response */
+            /** @var Response $response */
             $response = $this->client->$verb($this->url . $path, [
                 'headers' => [
                     'authorization' => $this->cred,
