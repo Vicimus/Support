@@ -2,24 +2,44 @@
 
 namespace Vicimus\Support\Testing;
 
-use RMS\Models\Campaign;
-
 /**
  * Trait TestSqliteDatabase
  */
 trait TestSqliteDatabase
 {
     /**
+     * How we migrate
+     *
+     * @var callable
+     */
+    protected $migrate;
+
+    /**
+     * Set how we migrate the databases
+     *
+     * @param callable $migrate The migration callable
+     *
+     * @return self
+     */
+    public function setMigration(callable $migrate): self
+    {
+        $this->migrate = $migrate;
+        return $this;
+    }
+
+    /**
      * Set up the databases
+     *
+     * @param string $path The path to your database storage
      *
      * @return void
      */
-    public function setupDatabases(): void
+    public function setupDatabases(string $path): void
     {
-        $stub = database_path('stub.sqlite');
-        $secondStub = database_path('unsullied.sqlite');
+        $stub = $path . '/stub.sqlite';
+        $secondStub = $path . '/unsullied.sqlite';
 
-        $test = database_path('testing.sqlite');
+        $test = $path . '/testing.sqlite';
 
         if (!($GLOBALS['setupDatabase'] ?? false)) {
             @unlink($secondStub);
@@ -28,9 +48,7 @@ trait TestSqliteDatabase
             @unlink($test);
             touch($test);
 
-            $this->artisan('migrate', [
-                '--database' => 'stub',
-            ]);
+            $this->doMigration();
 
             copy($stub, $secondStub);
 
@@ -38,5 +56,16 @@ trait TestSqliteDatabase
         }
 
         copy($secondStub, $test);
+    }
+
+    /**
+     * Execute the migration
+     *
+     * @return void
+     */
+    protected function doMigration(): void
+    {
+        $callable = $this->migrate;
+        $callable($this);
     }
 }
