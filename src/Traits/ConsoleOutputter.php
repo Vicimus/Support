@@ -12,6 +12,13 @@ use Vicimus\Support\Interfaces\ConsoleOutput;
 trait ConsoleOutputter
 {
     /**
+     * Callable on-bind event
+     *
+     * @var callable
+     */
+    protected $onBind;
+
+    /**
      * This stores the ConsoleOutput interface implementation to which the
      * output will be referred. If one is not set, the output is just ignored.
      *
@@ -20,24 +27,36 @@ trait ConsoleOutputter
     protected $output = null;
 
     /**
-     * Callable on-bind event
+     * Bind a ConsoleOutput interface implementation to this class. This
+     * enables the output.
      *
-     * @var callable
+     * @param ConsoleOutput $output An object implementing ConsoleOutput
+     *
+     * @return $this
      */
-    protected $onBind;
+    public function bind(?ConsoleOutput $output)
+    {
+        $this->output = $output;
+        if ($this->onBind) {
+            $method = $this->onBind;
+            $method($output);
+        }
+
+        return $this;
+    }
 
     /**
-     * Output information (green text)
+     * Output a comment (yellow text)
      *
-     * @param string $output  The info to output
-     * @param mixed  ...$args Additional arguments for vsprint
+     * @param string $output  The comment to output
+     * @param mixed  ...$args Additional arguments for output
      *
      * @return void
      */
-    public function info(string $output, ...$args): void
+    public function comment(string $output, ...$args): void
     {
         if ($this->output) {
-            $this->output->info(vsprintf($output, $args));
+            $this->output->comment(vsprintf($output, $args));
         }
     }
 
@@ -57,17 +76,17 @@ trait ConsoleOutputter
     }
 
     /**
-     * Output a comment (yellow text)
+     * Output information (green text)
      *
-     * @param string $output  The comment to output
-     * @param mixed  ...$args Additional arguments for output
+     * @param string $output  The info to output
+     * @param mixed  ...$args Additional arguments for vsprint
      *
      * @return void
      */
-    public function comment(string $output, ...$args): void
+    public function info(string $output, ...$args): void
     {
         if ($this->output) {
-            $this->output->comment(vsprintf($output, $args));
+            $this->output->info(vsprintf($output, $args));
         }
     }
 
@@ -87,31 +106,13 @@ trait ConsoleOutputter
     }
 
     /**
-     * Bind a ConsoleOutput interface implementation to this class. This
-     * enables the output.
-     *
-     * @param ConsoleOutput $output An object implementing ConsoleOutput
-     *
-     * @return $this
-     */
-    public function bind(?ConsoleOutput $output)
-    {
-        $this->output = $output;
-        if ($this->onBind) {
-            $method = $this->onBind;
-            $method();
-        }
-        return $this;
-    }
-
-    /**
      * Set a method to be called on bind
      *
      * @param callable $action The action to take
      *
      * @return $this
      */
-    protected function onBind(callable $action): self
+    public function onBind(callable $action): self
     {
         $this->onBind = $action;
         return $this;

@@ -14,7 +14,17 @@ class StandardOutput implements ConsoleOutput
      *
      * @var int
      */
-    protected const LINE_LENGTH = 80;
+    protected $lineLength;
+
+    /**
+     * StandardOutput constructor
+     *
+     * @param int $lineLength Keep lines this length
+     */
+    public function __construct(int $lineLength = 80)
+    {
+        $this->lineLength = $lineLength;
+    }
 
     /**
      * Output a comment (yellow text)
@@ -41,11 +51,11 @@ class StandardOutput implements ConsoleOutput
         $this->line('');
         $output = explode("\n", $output);
         $output = array_map(function (string $value): string {
-            return str_pad($value, self::LINE_LENGTH);
+            return str_pad($value, $this->lineLength);
         }, $output);
 
         $output = implode("\n", $output);
-        echo "\033[41m".$output."\033[0m".PHP_EOL.PHP_EOL;
+        echo "\033[41m".$this->pad($output)."\033[0m".PHP_EOL.PHP_EOL;
     }
 
     /**
@@ -58,7 +68,7 @@ class StandardOutput implements ConsoleOutput
     public function info(string $output): void
     {
         $this->line('');
-        echo "\033[32m".$output."\033[0m".PHP_EOL;
+        echo "\033[32m".$this->pad($output)."\033[0m".PHP_EOL;
     }
 
     /**
@@ -70,9 +80,21 @@ class StandardOutput implements ConsoleOutput
      */
     public function line(string $output): void
     {
-        echo str_pad("\r".$output, self::LINE_LENGTH);
+        echo str_pad("\r".$output, $this->lineLength);
         if (!$output) {
             echo "\r";
         }
+    }
+
+    /**
+     * Make a line a specific length
+     *
+     * @param string $line The line
+     *
+     * @return string
+     */
+    protected function pad(string $line): string
+    {
+        return str_pad($line, $this->lineLength);
     }
 }
