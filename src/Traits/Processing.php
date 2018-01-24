@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Traits;
 
+use Vicimus\Support\Interfaces\Processor;
+
 /**
  * Adds some common methods to processors
  */
@@ -19,9 +21,9 @@ trait Processing
      *
      * @param string[] $options The options to set
      *
-     * @return $this
+     * @return Processor|Processing
      */
-    public function options(array $options): self
+    public function options(array $options): Processor
     {
         $this->options = array_merge($this->options, $options);
         return $this;
