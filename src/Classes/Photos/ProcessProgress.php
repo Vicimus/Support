@@ -73,7 +73,7 @@ class ProcessProgress implements ConsoleOutput
         return $this;
     }
 
-    public function persist($method = 'comment'): void
+    public function persist($method = 'comment'): self
     {
         $this->$method($this->previous);
         return $this;

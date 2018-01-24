@@ -2,20 +2,23 @@
 
 namespace Vicimus\Support\Classes\Photos;
 
-use Glovebox\Inventory\Exceptions\Photos\PhotoException;
-use Glovebox\Inventory\Exceptions\Photos\UnauthorizedPhotoException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use Vicimus\Support\Classes\API\Headers;
+use Vicimus\Support\Exceptions\PhotoException;
+use Vicimus\Support\Exceptions\UnauthorizedPhotoException;
 use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Interfaces\Vehicle;
+use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**
  * Scan a single photo for its status
  */
 class SingleScanner implements Scanner
 {
+    use ConsoleOutputter;
+
     /**
      * The photo to scan
      *
