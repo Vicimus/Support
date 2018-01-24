@@ -24,6 +24,13 @@ interface Vehicle
     public function getIdentifier(): ?int;
 
     /**
+     * Get the stock number of the vehicle, if available
+     *
+     * @return null|string
+     */
+    public function getStockNumber(): ?string;
+
+    /**
      * Get an Unhaggle/Chrome styleid representing the vehicle. If the styleid
      * is unknown or unavailable, return null.
      *
