@@ -28,7 +28,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @var string[]
      */
     protected $casts = [];
-  
+
     /**
      * Properties to hide from json encoding and toArray calls
      *
@@ -240,11 +240,15 @@ class ImmutableObject implements JsonSerializable, WillValidate
      */
     private function isNumericArray($value): bool
     {
-        if (!is_array($value)) {
+        if (!is_array($value) || !count($value)) {
             return false;
         }
 
         $keys = array_keys($value);
+        if (!count($keys)) {
+            return false;
+        }
+
         $last = count($value) - 1;
         return $keys[0] === 0 && $keys[$last] === $last;
     }
