@@ -240,13 +240,13 @@ class ImmutableObject implements JsonSerializable, WillValidate
      */
     private function isNumericArray($value): bool
     {
-        if (!is_array($value) || !count($value)) {
+        if (!is_array($value)) {
             return false;
         }
 
         $keys = array_keys($value);
         if (!count($keys)) {
-            return false;
+            return true;
         }
 
         $last = count($value) - 1;
