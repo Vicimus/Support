@@ -245,6 +245,10 @@ class ImmutableObject implements JsonSerializable, WillValidate
         }
 
         $keys = array_keys($value);
+        if (!count($keys)) {
+            return false;
+        }
+
         $last = count($value) - 1;
         return $keys[0] === 0 && $keys[$last] === $last;
     }
