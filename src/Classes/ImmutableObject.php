@@ -28,7 +28,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @var string[]
      */
     protected $casts = [];
-  
+
     /**
      * Properties to hide from json encoding and toArray calls
      *
