@@ -28,7 +28,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @var string[]
      */
     protected $casts = [];
-  
+
     /**
      * Properties to hide from json encoding and toArray calls
      *
@@ -245,6 +245,10 @@ class ImmutableObject implements JsonSerializable, WillValidate
         }
 
         $keys = array_keys($value);
+        if (!count($keys)) {
+            return true;
+        }
+
         $last = count($value) - 1;
         return $keys[0] === 0 && $keys[$last] === $last;
     }
