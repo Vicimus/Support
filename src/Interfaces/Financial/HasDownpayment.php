@@ -1,7 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Vicimus\Support\Interfaces;
+namespace Vicimus\Support\Interfaces\Financial;
 
+/**
+ * Interface HasDownpayment
+ */
 interface HasDownpayment
 {
     /**
