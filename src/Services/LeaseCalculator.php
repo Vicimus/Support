@@ -17,26 +17,33 @@ class Calculator
     /**
      * Calculate a payment
      *
-     * @param float|LeaseVehicle $rate
-     * @param     $nper
-     * @param     $pv
-     * @param     $fv
-     * @param int $type
+     * @param float|LeaseItem $rate      A lease rate per payment or a LeaseItem instance
+     * @param int             $frequency The number of payments per year
+     * @param int             $nper      Number of payment periods (can be blank if LeaseItem provided)
+     * @param float           $pValue    The Present Value of the item (can be blank if LeaseItem provided)
+     * @param float           $fValue    The Future Value of the item (can be blank if LeaseItem provided)
+     * @param int             $type      Payments made at the start or end of period
      *
      * @return float
      */
-    public function payment($rate, int $frequency = 12, ?int $nper = null, ?float $pv = null, ?float $fv = null, ?int $type = 1): float
-    {
+    public function payment(
+        $rate,
+        int $frequency = 12,
+        ?int $nper = null,
+        ?float $pValue = null,
+        ?float $fValue = null,
+        ?int $type = 1
+    ): float {
         if ($rate instanceof LeaseItem) {
             $vehicle = $rate;
             $rate = $this->rate($vehicle, $frequency);
             $nper = $this->nper($vehicle, $frequency);
-            $pv = $this->presentValue($vehicle);
-            $fv = $this->futureValue($vehicle, $vehicle);
+            $pValue = $this->presentValue($vehicle);
+            $fValue = $this->futureValue($vehicle, $vehicle);
         }
 
         $power = pow((1 + $rate), $nper);
-        $leftSide = $pv - $fv / ($power);
+        $leftSide = $pValue - $fValue / ($power);
         $rightSide = ((1 - (1 / $power)) / $rate);
 
         return round($leftSide / $rightSide, 2);
@@ -44,14 +51,14 @@ class Calculator
 
 
     /**
-     * Get the future value of a leaseable item
+     * Get the future value of a lease item
      *
-     * @param $price
-     * @param $residual
+     * @param float|HasPrice     $price    The price or a HasPrice instance
+     * @param float|HasLeaseRate $residual The residual or HasLeaseRate instance
      *
      * @return float
      */
-    public function futureValue($price, $residual): float
+    protected function futureValue($price, $residual): float
     {
         if ($price instanceof HasPrice) {
             $price = $price->msrp();
@@ -72,7 +79,7 @@ class Calculator
      *
      * @return int
      */
-    public function nper($term, int $frequency): int
+    protected function nper($term, int $frequency): int
     {
         if ($term instanceof HasTerm) {
             $term = $term->term();
@@ -87,7 +94,7 @@ class Calculator
      *
      * @return float
      */
-    public function presentValue($price, $down = 0): float
+    protected function presentValue($price, $down = 0.0): float
     {
         $total = $price;
         if ($price instanceof HasPrice) {
@@ -113,7 +120,7 @@ class Calculator
      *
      * @return float
      */
-    public function rate($rate, int $frequency = 12): float
+    protected function rate($rate, int $frequency = 12): float
     {
         if ($rate instanceof HasRate) {
             $rate = $rate->rate();
