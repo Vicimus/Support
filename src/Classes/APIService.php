@@ -6,6 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Cache\CacheManager;
+use Illuminate\Contracts\Cache\Repository;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
@@ -25,6 +27,13 @@ class APIService
      * @var string[]
      */
     protected $additional = [];
+    /**
+     * Cache repository
+     *
+     * @var Repository
+     */
+    protected $cache;
+
     /**
      * The guzzle client
      *
@@ -66,6 +75,18 @@ class APIService
         $this->url = $url;
         $this->cred = base64_encode($id . ':' . $secret);
         $this->additional = $additional;
+    }
+
+    /**
+     * Bind a cache repository
+     *
+     * @param Repository $cache The cache repository
+     *
+     * @return void
+     */
+    public function bindCache(Repository $cache)
+    {
+        $this->cache = $cache;
     }
 
     /**
@@ -145,6 +166,15 @@ class APIService
             $query = 'form_params';
         }
 
+        $hash = md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
+
+        if ($this->cache) {
+            $match = $this->findCacheMatch($hash);
+            if ($match) {
+                return json_decode($match);
+            }
+        }
+
         try {
             $response = $this->client->request($method, $this->url . $path, [
                 'headers' => ['authorization' => $this->cred],
@@ -162,7 +192,24 @@ class APIService
             throw new RestException($message, $code);
         }
 
-        return json_decode((string) $response->getBody());
+        $result = (string) $response->getBody();
+        if ($this->cache) {
+            $this->cache->add($hash, $result, 15);
+        }
+
+        return json_decode($result);
+    }
+
+    /**
+     * Try to find a cache match
+     *
+     * @param string $hash The hash
+     *
+     * @return mixed
+     */
+    protected function findCacheMatch(string $hash)
+    {
+        return $this->cache->get($hash);
     }
 
     /**
