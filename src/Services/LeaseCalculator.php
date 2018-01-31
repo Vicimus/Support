@@ -12,7 +12,7 @@ use Vicimus\Support\Interfaces\Financial\LeaseItem;
 /**
  * Class Calculator
  */
-class Calculator
+class LeaseCalculator
 {
     /**
      * Calculate a payment
