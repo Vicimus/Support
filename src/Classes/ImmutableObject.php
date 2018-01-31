@@ -28,7 +28,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @var string[]
      */
     protected $casts = [];
-  
+
     /**
      * Properties to hide from json encoding and toArray calls
      *
@@ -125,12 +125,17 @@ class ImmutableObject implements JsonSerializable, WillValidate
     /**
      * Is the object valid?
      *
-     * @throws ImmutableObjectException
+     * @param Factory|null $validator A validator factory
      *
      * @return bool
+     * @throws ImmutableObjectException
      */
-    public function isValid(): bool
+    public function isValid(?Factory $validator = null): bool
     {
+        if (!$this->validator && $validator) {
+            $this->validator = $validator;
+        }
+
         if (!$this->validator) {
             $class = Factory::class;
             throw new ImmutableObjectException(
@@ -245,6 +250,10 @@ class ImmutableObject implements JsonSerializable, WillValidate
         }
 
         $keys = array_keys($value);
+        if (!count($keys)) {
+            return true;
+        }
+
         $last = count($value) - 1;
         return $keys[0] === 0 && $keys[$last] === $last;
     }

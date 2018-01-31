@@ -8,6 +8,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
+use stdClass;
+
 use Throwable;
 use Vicimus\Support\Database\ApiModel;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
@@ -246,7 +248,8 @@ class HasManyFromAPITest extends TestCase
                 ['id' => 3],
             ]));
 
-        /* @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
+
+        /** @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
         $connection = $this->getMockBuilder(ConnectionInterface::class)
             ->getMock();
 
@@ -256,6 +259,7 @@ class HasManyFromAPITest extends TestCase
         $db->method('connection')
             ->willReturn($connection);
 
+        $match = new Collection();
         $has = new HasManyFromAPI($db, 1, 'bananas', 'strawberries');
 
         $match = null;
@@ -265,6 +269,8 @@ class HasManyFromAPITest extends TestCase
             $this->fail($ex->__toString());
         }
 
+
+        $this->assertInstanceOf(stdClass::class, $match->first());
         $this->assertInstanceOf(Collection::class, $match);
     }
 
