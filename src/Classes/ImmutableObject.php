@@ -125,12 +125,17 @@ class ImmutableObject implements JsonSerializable, WillValidate
     /**
      * Is the object valid?
      *
-     * @throws ImmutableObjectException
+     * @param Factory|null $validator A validator factory
      *
      * @return bool
+     * @throws ImmutableObjectException
      */
-    public function isValid(): bool
+    public function isValid(?Factory $validator = null): bool
     {
+        if (!$this->validator && $validator) {
+            $this->validator = $validator;
+        }
+
         if (!$this->validator) {
             $class = Factory::class;
             throw new ImmutableObjectException(
