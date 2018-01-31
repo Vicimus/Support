@@ -1,8 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Vicimus\Support\Interfaces;
+namespace Vicimus\Support\Interfaces\Financial;
 
-interface HasRates
+/**
+ * Interface HasRate
+ */
+interface HasRate
 {
     /**
      * Get the rate
