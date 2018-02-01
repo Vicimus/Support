@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Testing;
 
+use Vicimus\Support\Exceptions\TestException;
+
 /**
  * Trait TestSqliteDatabase
  */
@@ -32,6 +34,8 @@ trait TestSqliteDatabase
      *
      * @param string $path The path to your database storage
      *
+     * @throws TestException
+     *
      * @return void
      */
     public function setupDatabases(string $path): void
@@ -51,6 +55,9 @@ trait TestSqliteDatabase
             $this->doMigration();
 
             copy($stub, $secondStub);
+            if (!filesize($secondStub)) {
+                throw new TestException('Database is 0 bytes, this is 99% an error');
+            }
 
             $GLOBALS['setupDatabase'] = true;
         }

@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Database;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
@@ -151,8 +152,8 @@ class ComplexQueryParser
      */
     private function typeCheck($object): void
     {
-        if (!$object instanceof Builder && !$object instanceof Relation) {
-            throw new InvalidArgumentException($object, Builder::class, Relation::class);
+        if (!$object instanceof Builder && !$object instanceof Relation && !$object instanceof EloquentBuilder) {
+            throw new InvalidArgumentException($object, EloquentBuilder::class, Builder::class, Relation::class);
         }
     }
 }
