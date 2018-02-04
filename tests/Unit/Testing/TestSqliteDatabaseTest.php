@@ -4,6 +4,7 @@ namespace Vicimus\Support\Unit\Testing;
 
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\MockObject\MockObject;
+use Vicimus\Support\Exceptions\TestException;
 use Vicimus\Support\Testing\TestCase;
 use Vicimus\Support\Testing\TestSqliteDatabase;
 
@@ -34,7 +35,11 @@ class TestSqliteDatabaseTest extends TestCase
             //
         });
 
-        $mock->setupDatabases(vfsStream::url('root'));
+        try {
+            $mock->setupDatabases(vfsStream::url('root'));
+        } catch (TestException $ex) {
+            // This is just for testing
+        }
 
         $this->assertFileExists(vfsStream::url('root/testing.sqlite'));
     }
