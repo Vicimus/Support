@@ -4,7 +4,7 @@ namespace Vicimus\Support\Tests\Unit\Services;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Vicimus\Support\Interfaces\Financial\LeaseItem;
-use Vicimus\Support\Services\Calculator;
+use Vicimus\Support\Services\LeaseCalculator;
 use Vicimus\Support\Testing\TestCase;
 
 /**
@@ -19,7 +19,7 @@ class LeaseCalculatorTest extends TestCase
      */
     public function testPayments(): void
     {
-        $calc = new Calculator();
+        $calc = new LeaseCalculator();
         $payment = $calc->payment(
             0.004158333,
             12,
@@ -66,7 +66,7 @@ class LeaseCalculatorTest extends TestCase
             ->method('term')
             ->willReturn(40);
 
-        $calc = new Calculator();
+        $calc = new LeaseCalculator();
         $payment = $calc->payment($vehicle);
 
         $this->assertEquals(412.19, $payment);
