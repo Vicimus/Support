@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Services;
 
 use Vicimus\Support\Interfaces\Financial\HasDownpayment;
+use Vicimus\Support\Interfaces\Financial\HasIncentive;
 use Vicimus\Support\Interfaces\Financial\HasLeaseRate;
 use Vicimus\Support\Interfaces\Financial\HasPrice;
 use Vicimus\Support\Interfaces\Financial\HasRate;
@@ -104,6 +105,10 @@ class LeaseCalculator
 
         if ($price instanceof HasDownpayment) {
             $down = $price->downpayment();
+        }
+
+        if ($price instanceof HasIncentive) {
+            $incentive = $price->incentive();
         }
 
         if ($down instanceof HasDownpayment) {

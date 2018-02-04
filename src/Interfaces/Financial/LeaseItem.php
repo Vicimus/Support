@@ -5,7 +5,7 @@ namespace Vicimus\Support\Interfaces\Financial;
 /**
  * Interface LeaseVehicle
  */
-interface LeaseItem extends HasDownpayment, HasPrice, HasTerm, HasLeaseRate
+interface LeaseItem extends HasDownpayment, HasIncentive, HasPrice, HasTerm, HasLeaseRate
 {
     //
 }
