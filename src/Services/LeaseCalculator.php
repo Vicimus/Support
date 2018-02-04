@@ -89,12 +89,13 @@ class LeaseCalculator
     }
 
     /**
-     * @param float|HasPrice       $price The price
-     * @param float|HasDownpayment $down  The downpayment amount
+     * @param float|HasPrice       $price     The price
+     * @param float|HasDownpayment $down      The downpayment amount
+     * @param float|HasIncentive   $incentive The incentive amount
      *
      * @return float
      */
-    protected function presentValue($price, $down = 0.0): float
+    protected function presentValue($price, $down = 0.0, $incentive = 0.0): float
     {
         $total = $price;
         if ($price instanceof HasPrice) {
@@ -109,7 +110,11 @@ class LeaseCalculator
             $down = $down->downpayment();
         }
 
-        return $total - $down;
+        if ($incentive instanceof HasIncentive) {
+            $incentive = $incentive->incentive();
+        }
+
+        return $total - $down - $incentive;
     }
 
     /**
