@@ -3,12 +3,17 @@
 namespace Vicimus\Support\Tests\Unit\Classes;
 
 use PHPUnit\Framework\TestCase;
+use Vicimus\Support\Classes\ProgressBar;
 
+/**
+ * Class ProgressBarTest
+ */
 class ProgressBarTest extends TestCase
 {
     public function testProgressBar(): void
     {
         $bar = new ProgressBar();
+        $this->assertInstanceOf(ProgressBar::class, $bar);
     }
 
 }
