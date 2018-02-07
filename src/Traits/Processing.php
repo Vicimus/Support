@@ -23,7 +23,7 @@ trait Processing
      *
      * @return Processor|Processing
      */
-    public function options(array $options): self
+    public function options(array $options): Processor
     {
         $this->options = array_merge($this->options, $options);
         return $this;
