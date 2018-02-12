@@ -6,8 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Cache\CacheManager;
-use Illuminate\Contracts\Cache\Repository;
+use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
@@ -21,18 +20,14 @@ use Vicimus\Support\Exceptions\UnauthorizedException;
  */
 class APIService
 {
+    use CachesRequests;
+
     /**
      * These additional parameters will be sent with all requests
      *
      * @var string[]
      */
     protected $additional = [];
-    /**
-     * Cache repository
-     *
-     * @var Repository
-     */
-    protected $cache;
 
     /**
      * The guzzle client
@@ -75,38 +70,6 @@ class APIService
         $this->url = $url;
         $this->cred = base64_encode($id . ':' . $secret);
         $this->additional = $additional;
-    }
-
-    /**
-     * Bind a cache repository
-     *
-     * @param Repository $cache The cache repository
-     *
-     * @return void
-     */
-    public function bindCache(Repository $cache)
-    {
-        $this->cache = $cache;
-    }
-
-    /**
-     * Clear the cache
-     *
-     * @param string $method  The method used
-     * @param string $path    The path used
-     * @param array  $payload The payload sent
-     *
-     * @return bool
-     * @throws RestException
-     */
-    public function clearCache(string $method, string $path, array $payload): bool
-    {
-        $hash = $this->generateCacheHash($method, $path, $payload);
-        if (!$this->cache) {
-            throw new RestException('Must bind a cache service before clearing cache');
-        }
-
-        return $this->cache->forget($hash);
     }
 
     /**
@@ -186,14 +149,9 @@ class APIService
             $query = 'form_params';
         }
 
-        $hash = $this->generateCacheHash($method, $path, $payload);
-        $cacheHash = $hash;
-
-        if ($this->cache) {
-            $match = $this->findCacheMatch($hash);
-            if ($match) {
-                return json_decode($match);
-            }
+        $match = $this->cacheMatch($method, $path, $payload);
+        if ($match) {
+            return $match;
         }
 
         try {
@@ -215,22 +173,14 @@ class APIService
 
         $result = (string) $response->getBody();
         if ($this->cache) {
-            $this->cache->add($hash, $result, 15);
+            $this->cache->add(
+                $this->generateCacheHash($method, $path, $payload),
+                $result,
+                $this->cacheTime()
+            );
         }
 
         return json_decode($result);
-    }
-
-    /**
-     * Try to find a cache match
-     *
-     * @param string $hash The hash
-     *
-     * @return mixed
-     */
-    protected function findCacheMatch(string $hash)
-    {
-        return $this->cache->get($hash);
     }
 
     /**
@@ -249,16 +199,6 @@ class APIService
         }
 
         return $formatted;
-    }
-
-    /**
-     * Generate a hash to use as a key
-     *
-     * @return string
-     */
-    protected function generateCacheHash(string $method, string $path, array $payload): string
-    {
-        return md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
     }
 
     /**

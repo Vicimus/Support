@@ -10,10 +10,14 @@ use Vicimus\Support\Classes\ProgressBar;
  */
 class ProgressBarTest extends TestCase
 {
+    /**
+     * Progress bar test
+     *
+     * @return void
+     */
     public function testProgressBar(): void
     {
         $bar = new ProgressBar();
         $this->assertInstanceOf(ProgressBar::class, $bar);
     }
-
 }

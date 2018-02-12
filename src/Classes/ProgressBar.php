@@ -2,7 +2,10 @@
 
 namespace Vicimus\Support\Classes;
 
+/**
+ * Class ProgressBar
+ */
 class ProgressBar
 {
-
+    //
 }

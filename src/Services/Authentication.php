@@ -5,6 +5,7 @@ namespace Vicimus\Support\Services;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Support\Facades\Auth;
+use Vicimus\Onyx\User;
 
 /**
  * Class Authentication
@@ -14,14 +15,14 @@ class Authentication
     /**
      * The auth manager
      *
-     * @var AuthManager
+     * @var Factory
      */
     protected $manager;
 
     /**
      * Authentication constructor.
      *
-     * @param AuthManager $manager The auth manager
+     * @param Factory $manager The auth manager
      */
     public function __construct(Factory $manager)
     {
@@ -41,7 +42,7 @@ class Authentication
     /**
      * Get the current user
      *
-     * @return Authenticatable
+     * @return Authenticatable|User
      */
     public function user(): ?Authenticatable
     {
