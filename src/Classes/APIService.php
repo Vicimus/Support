@@ -90,6 +90,26 @@ class APIService
     }
 
     /**
+     * Clear the cache
+     *
+     * @param string $method  The method used
+     * @param string $path    The path used
+     * @param array  $payload The payload sent
+     *
+     * @return bool
+     * @throws RestException
+     */
+    public function clearCache(string $method, string $path, array $payload): bool
+    {
+        $hash = $this->generateCacheHash($method, $path, $payload);
+        if (!$this->cache) {
+            throw new RestException('Must bind a cache service before clearing cache');
+        }
+
+        return $this->cache->forget($hash);
+    }
+
+    /**
      * Make a multi-part request to the vault
      *
      * @param string             $path    The path to post to
@@ -166,7 +186,8 @@ class APIService
             $query = 'form_params';
         }
 
-        $hash = md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
+        $hash = $this->generateCacheHash($method, $path, $payload);
+        $cacheHash = $hash;
 
         if ($this->cache) {
             $match = $this->findCacheMatch($hash);
@@ -228,6 +249,16 @@ class APIService
         }
 
         return $formatted;
+    }
+
+    /**
+     * Generate a hash to use as a key
+     *
+     * @return string
+     */
+    protected function generateCacheHash(string $method, string $path, array $payload): string
+    {
+        return md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
     }
 
     /**
