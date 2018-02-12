@@ -11,6 +11,13 @@ use Illuminate\Http\Request as IllRequest;
 class Request
 {
     /**
+     * Handlers to execute against different operations
+     *
+     * @var callable[]
+     */
+    protected $handlers = [];
+
+    /**
      * An instance of the Illuminate Request which is where we'll
      * get most of our information from
      *
@@ -39,6 +46,24 @@ class Request
     }
 
     /**
+     * Add some special behaviour to a specific request
+     *
+     * @param string   $operation The operation
+     * @param callable $modifier  The modifier
+     *
+     * @return Request
+     */
+    public function bind(string $operation, callable $modifier): self
+    {
+        if (!array_key_exists($operation, $this->handlers)) {
+            $this->handlers[$operation] = [];
+        }
+
+        $this->handlers[$operation][] = $modifier;
+        return $this;
+    }
+
+    /**
      * Get a specific property
      *
      * @param string $property The property to get
@@ -64,6 +89,21 @@ class Request
     }
 
     /**
+     * Order by which column
+     *
+     * @return string[]
+     */
+    public function orderBy(): array
+    {
+        $parts = explode(':', $this->request->get('orderBy'));
+        if (count($parts) >= 2) {
+            return $parts;
+        }
+
+        return [$parts[0], 'asc'];
+    }
+
+    /**
      * Build a query based on the request
      *
      * @param Builder $builder The builder object
@@ -72,8 +112,15 @@ class Request
      */
     public function query(Builder $builder): Builder
     {
-        return $builder->select($this->select())
+        $query = $builder->select($this->select())
             ->with($this->with());
+
+        if ($this->has('orderBy')) {
+            $order = $this->orderBy();
+            $query->orderBy($order[0], $order[1]);
+        }
+
+        return $query;
     }
 
     /**
@@ -90,7 +137,7 @@ class Request
     /**
      * Get the with values
      *
-     * @return string[]
+     * @return mixed[]
      */
     public function with(): array
     {
