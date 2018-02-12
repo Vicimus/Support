@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Interfaces\Financial;
 
+/**
+ * Interface HasIncentive
+ */
 interface HasIncentive
 {
     /**
