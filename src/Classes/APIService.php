@@ -6,8 +6,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Cache\CacheManager;
-use Illuminate\Contracts\Cache\Repository;
 use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
@@ -151,13 +149,9 @@ class APIService
             $query = 'form_params';
         }
 
-        $hash = md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
-
-        if ($this->cache) {
-            $match = $this->findCacheMatch($hash);
-            if ($match) {
-                return json_decode($match);
-            }
+        $match = $this->cacheMatch($method, $path, $payload);
+        if ($match) {
+            return $match;
         }
 
         try {
@@ -179,22 +173,14 @@ class APIService
 
         $result = (string) $response->getBody();
         if ($this->cache) {
-            $this->cache->add($hash, $result, 15);
+            $this->cache->add(
+                $this->generateCacheHash($method, $path, $payload),
+                $result,
+                $this->cacheTime()
+            );
         }
 
         return json_decode($result);
-    }
-
-    /**
-     * Try to find a cache match
-     *
-     * @param string $hash The hash
-     *
-     * @return mixed
-     */
-    protected function findCacheMatch(string $hash)
-    {
-        return $this->cache->get($hash);
     }
 
     /**
