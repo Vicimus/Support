@@ -130,18 +130,24 @@ class Request
      */
     public function select(): array
     {
-        $fields = explode(',', $this->request->get('fields', '*'));
+        $fields = explode(',', $this->request->get('fields', '*') ?? '*');
         return $fields;
     }
 
     /**
      * Get the with values
      *
+     * @param mixed ...$default The default with
+     *
      * @return mixed[]
      */
-    public function with(): array
+    public function with(...$default): array
     {
-        $with = explode(',', $this->request->get('with', ''));
+        if (!$this->request->has('with')) {
+            return $default;
+        }
+
+        $with = explode(',', $this->request->get('with', '') ?? '*');
         return $with;
     }
 }

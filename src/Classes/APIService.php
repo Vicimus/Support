@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Contracts\Cache\Repository;
+use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
@@ -21,18 +22,14 @@ use Vicimus\Support\Exceptions\UnauthorizedException;
  */
 class APIService
 {
+    use CachesRequests;
+
     /**
      * These additional parameters will be sent with all requests
      *
      * @var string[]
      */
     protected $additional = [];
-    /**
-     * Cache repository
-     *
-     * @var Repository
-     */
-    protected $cache;
 
     /**
      * The guzzle client
@@ -75,18 +72,6 @@ class APIService
         $this->url = $url;
         $this->cred = base64_encode($id . ':' . $secret);
         $this->additional = $additional;
-    }
-
-    /**
-     * Bind a cache repository
-     *
-     * @param Repository $cache The cache repository
-     *
-     * @return void
-     */
-    public function bindCache(Repository $cache)
-    {
-        $this->cache = $cache;
     }
 
     /**
