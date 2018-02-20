@@ -32,13 +32,13 @@ trait CachesRequests
     /**
      * Try to find a cache match
      *
-     * @param string   $method  The method being used
-     * @param string   $path    The path being requested
-     * @param string[] $payload The payload being sent
+     * @param string $method  The method being used
+     * @param string $path    The path being requested
+     * @param mixed  $payload The payload being sent
      *
      * @return mixed|null
      */
-    public function cacheMatch(string $method, string $path, array $payload)
+    public function cacheMatch(string $method, string $path, $payload)
     {
         if (!$this->cache) {
             return null;
@@ -53,6 +53,7 @@ trait CachesRequests
         if (is_string($match)) {
             return json_decode($match);
         }
+
 
         return $match;
     }
@@ -103,13 +104,13 @@ trait CachesRequests
     /**
      * Generate a hash to use as a key
      *
-     * @param string   $method  The HTTP method
-     * @param string   $path    The path that was requested
-     * @param string[] $payload The payload of data being sent
+     * @param string $method  The HTTP method
+     * @param string $path    The path that was requested
+     * @param mixed  $payload The payload of data being sent
      *
      * @return string
      */
-    protected function generateCacheHash(string $method, string $path, array $payload): string
+    protected function generateCacheHash(string $method, string $path, $payload): string
     {
         return md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
     }
