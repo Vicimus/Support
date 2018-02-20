@@ -4,6 +4,7 @@ namespace Vicimus\Support\Database\Relations;
 
 use DateTime;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
@@ -194,6 +195,16 @@ class HasManyFromAPI
     public function find(int $id): ApiModel
     {
         return new ApiModel($this, $this->query()->where($this->right, $id)->first());
+    }
+
+    public function findOrFail(int $id): ApiModel
+    {
+        $result = $this->query()->where($this->right, $id)->first();
+        if (!$result) {
+            throw new ModelNotFoundException('No match found for id ' . $id);
+        }
+
+        return new ApiModel($this, $result);
     }
 
     /**

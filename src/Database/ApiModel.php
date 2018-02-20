@@ -24,18 +24,18 @@ class ApiModel
      *
      * @var HasManyFromAPI
      */
-    protected $db;
+    protected $database;
 
     /**
      * ApiModel constructor.
      *
-     * @param HasManyFromAPI $db      Access to db functions
-     * @param mixed          $payload An array of data from an API call
+     * @param HasManyFromAPI $database Access to db functions
+     * @param mixed          $payload  An array of data from an API call
      */
-    public function __construct(HasManyFromAPI $db, $payload)
+    public function __construct(HasManyFromAPI $database, $payload)
     {
         $this->attributes = (array) $payload;
-        $this->db = $db;
+        $this->database = $database;
     }
 
     /**
@@ -75,10 +75,10 @@ class ApiModel
     public function update(array $params): ApiModel
     {
         if (!($this->attributes['id'] ?? false)) {
-            throw new ApiRelationException('Cannot update with an id attribute set');
+            throw new ApiRelationException('Cannot update without an id attribute set');
         }
 
-        $this->db->update((int) $this->attributes['id'], $params);
+        $this->database->update((int) $this->attributes['id'], $params);
         return $this;
     }
 }
