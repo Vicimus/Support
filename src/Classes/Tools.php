@@ -53,7 +53,10 @@ class Tools
         if (count($formatOccurs)) {
             // Reverse sort array by most occurrences
             arsort($formatOccurs);
-            return key($formatOccurs);
+            $value = key($formatOccurs);
+            if ($formatOccurs[$value]) {
+                return $value;
+            }
         }
 
         return null;

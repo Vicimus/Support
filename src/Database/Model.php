@@ -18,8 +18,9 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed()
  * @method static \Illuminate\Database\Eloquent\Model|static firstOrCreate($attributes)
- * @method static \Illuminate\Database\Eloquent\Model|static firstOrFail()
  * @method static \Illuminate\Database\Eloquent\Builder|static query()
+ * @method static \Illuminate\database\Eloquent\Model|static firstOrFail()
+ * @method static \Illuminate\Database\Eloquent\Model|static first()
  * @method static bool truncate()
  * @method static int count()
  */
@@ -33,4 +34,18 @@ class Model extends LaravelModel
     protected $guarded = [
         'id', 'updated_at', 'created_at',
     ];
+
+    /**
+     * Get a relative
+     *
+     * Mainly used for mocks
+     *
+     * @param string $relative The relative to get
+     *
+     * @return mixed
+     */
+    public function relation(string $relative)
+    {
+        return $this->$relative;
+    }
 }

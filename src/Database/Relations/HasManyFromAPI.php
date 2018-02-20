@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Database\Relations;
 
 use DateTime;
-use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -219,7 +218,7 @@ class HasManyFromAPI
     /**
      * Call the loader method on the collection
      *
-     * @throws Exception
+     * @throws ApiRelationException
      *
      * @return mixed
      */
@@ -228,7 +227,7 @@ class HasManyFromAPI
         $method = $this->loader;
 
         if (!$method) {
-            throw new Exception('No loader provided', 500);
+            throw new ApiRelationException('No loader provided', 500);
         }
 
         return $method($this->get());
@@ -350,6 +349,10 @@ class HasManyFromAPI
         $instance = new stdClass;
         if (isset($row->$identifier)) {
             $instance->id = $row->$identifier;
+        }
+
+        if (!is_array($row) && !is_object($row)) {
+            throw new ApiRelationException(sprintf('Expected array or object, received %s', var_export($row, true)));
         }
 
         foreach ($row as $property => $value) {

@@ -158,5 +158,7 @@ class ToolsTest extends TestCase
 
         $format = Tools::detectDateFormat($dates);
         $this->assertEquals('Y-m-d', $format);
+
+        $this->assertNull(Tools::detectDateFormat([]));
     }
 }

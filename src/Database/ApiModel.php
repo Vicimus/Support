@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Database;
 
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
+use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Class ApiModel
@@ -67,10 +68,16 @@ class ApiModel
      *
      * @param string[] $params The parameters to update locally
      *
+     * @throws ApiRelationException
+     *
      * @return ApiModel
      */
     public function update(array $params): ApiModel
     {
+        if (!($this->attributes['id'] ?? false)) {
+            throw new ApiRelationException('Cannot update with an id attribute set');
+        }
+
         $this->db->update((int) $this->attributes['id'], $params);
         return $this;
     }
