@@ -157,6 +157,19 @@ class HasManyFromAPI
     }
 
     /**
+     * Clear the relationship
+     * @param int $leftSide The left side id
+     *
+     * @return void
+     */
+    public function clear(int $leftSide): void
+    {
+        $this->db->table($this->table)
+            ->where($this->left, $leftSide)
+            ->delete();
+    }
+
+    /**
      * Count the number of items in the relationship
      *
      * @return int
