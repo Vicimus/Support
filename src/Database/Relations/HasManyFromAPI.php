@@ -210,16 +210,6 @@ class HasManyFromAPI
         return new ApiModel($this, $this->query()->where($this->right, $id)->first());
     }
 
-    public function findOrFail(int $id): ApiModel
-    {
-        $result = $this->query()->where($this->right, $id)->first();
-        if (!$result) {
-            throw new ModelNotFoundException('No match found for id ' . $id);
-        }
-
-        return new ApiModel($this, $result);
-    }
-
     /**
      * Find a join record
      *
@@ -232,7 +222,7 @@ class HasManyFromAPI
     {
         $result = $this->query()->where($this->right, $id)->first();
         if (!$result) {
-            throw new ModelNotFoundException();
+            throw new ModelNotFoundException('No match found for id ' . $id);
         }
 
         return new ApiModel($this, $result);
