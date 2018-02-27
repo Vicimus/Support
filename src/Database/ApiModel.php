@@ -64,6 +64,28 @@ class ApiModel
     }
 
     /**
+     * Get a property
+     *
+     * @param string $property The property to get
+     *
+     * @return mixed|null
+     */
+    public function property(string $property)
+    {
+        return $this->attributes[$property] ?? null;
+    }
+
+    /**
+     * Convert into an array
+     *
+     * @return mixed[]
+     */
+    public function toArray(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Update a model
      *
      * @param string[] $params The parameters to update locally
@@ -78,7 +100,10 @@ class ApiModel
             throw new ApiRelationException('Cannot update without an id attribute set');
         }
 
-        $this->database->update((int) $this->attributes['id'], $params);
+        if (!$this->database->update((int) $this->attributes['id'], $params)) {
+            throw new ApiRelationException('Update failed');
+        }
+
         return $this;
     }
 }

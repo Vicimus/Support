@@ -296,9 +296,11 @@ class HasManyFromAPI
      */
     public function update(int $id, array $params): bool
     {
-        return $this->db->table($this->table)
-                ->where('id', $id)
-                ->update($params) !== 0;
+        $this->db->table($this->table)
+            ->where('id', $id)
+            ->update($params);
+
+        return true;
     }
 
     /**
