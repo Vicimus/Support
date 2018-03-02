@@ -222,7 +222,13 @@ class HasManyFromAPI
     {
         $result = $this->query()->where($this->right, $id)->first();
         if (!$result) {
-            throw new ModelNotFoundException('No match found for id ' . $id);
+            throw new ModelNotFoundException(sprintf(
+                'No match found for join between %s #%s -> %s #%s',
+                $this->left,
+                $this->id,
+                $this->right,
+                $id
+            ));
         }
 
         return new ApiModel($this, $result);

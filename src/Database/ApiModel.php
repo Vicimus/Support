@@ -8,7 +8,7 @@ use Vicimus\Support\Exceptions\ApiRelationException;
 /**
  * Class ApiModel
  *
- * @package Vicimus\Support\Database
+ * @property int $id
  */
 class ApiModel
 {
