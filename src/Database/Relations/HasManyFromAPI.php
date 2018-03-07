@@ -223,7 +223,11 @@ class HasManyFromAPI
      */
     public function findOrFail(int $id): ApiModel
     {
-        $result = $this->query()->where($this->right, $id)->first();
+        $result = $this->query()
+            ->where($this->left, $this->id)
+            ->where($this->right, $id)
+            ->first();
+
         if (!$result) {
             throw new ModelNotFoundException(sprintf(
                 'No match found for join between %s #%s -> %s #%s',
