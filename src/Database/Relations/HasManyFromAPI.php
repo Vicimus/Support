@@ -207,7 +207,10 @@ class HasManyFromAPI
      */
     public function find(int $id): ApiModel
     {
-        return new ApiModel($this, $this->query()->where($this->right, $id)->first());
+        return new ApiModel($this, $this->query()
+            ->where($this->left, $this->id)
+            ->where($this->right, $id)
+            ->first());
     }
 
     /**
