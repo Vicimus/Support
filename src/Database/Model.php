@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\database\Eloquent\Model|static firstOrFail()
  * @method static \Illuminate\Database\Eloquent\Model|static first()
  * @method static \Illuminate\Database\Eloquent\Model|static select($fields)
+ * @method static \Illuminate\Database\Eloquent\Builder|static whereDoesntHave($relation, $closure = null)
  * @method static bool truncate()
  * @method static int count()
  */
