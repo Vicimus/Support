@@ -147,6 +147,10 @@ class Request
             return $default;
         }
 
+        if ($this->request->get('with') === 'null') {
+            return [];
+        }
+
         $with = explode(',', $this->request->get('with', '') ?? '*');
         return $with;
     }
