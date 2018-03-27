@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Classes;
 
 use Laravel\Lumen\Application;
+use Laravel\Lumen\Routing\Router;
 
 /**
  * Adds a bit of flavour to the boring ass Lumen router
@@ -19,9 +20,9 @@ class LumenRouter
     /**
      * Pass in the application instance
      *
-     * @param Application $app The application instance
+     * @param Router $app The application router
      */
-    public function __construct(Application $app)
+    public function __construct(Router $app)
     {
         $this->app = $app;
     }
