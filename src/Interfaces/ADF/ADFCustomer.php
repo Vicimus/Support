@@ -43,5 +43,5 @@ interface ADFCustomer
      *
      * @return string[]
      */
-    public function toArray(): array;
+    public function toAdfArray(): array;
 }
