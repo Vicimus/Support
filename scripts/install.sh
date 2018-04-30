@@ -22,6 +22,8 @@ sudo chmod -R 777 ~/bin
 echo 'Creating: ~/bin/2pac.sh'
 sudo cp -rf 2pac.sh ~/bin/2pac.sh
 
+sudo chmod +x ~/bin/2pac.sh
+
 if [ -f ~/.zshrc ]
 then
     # Remove any existing 2pac alias
