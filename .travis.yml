@@ -3,7 +3,7 @@ php:
   - '7.1'
 
 before_script:
-  - composer global require "squizlabs/php_codesniffer=*"
+  - pear install pear/PHP_CodeSniffer
   - phpenv rehash
   - composer update --no-interaction
 
