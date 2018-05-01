@@ -3,10 +3,10 @@ php:
   - '7.1'
 
 before_script:
- - which phpcs
  - composer update --no-interaction
+ - cp -rf vendor/vicimus/standard/VicimusStandard vendor/squizlabs/php_codesniffer/src/Standards
 
 
 script:
-  - vendor/bin/phpcs "src" "tests" --standard=PSR2
+  - vendor/bin/phpcs "src" "tests" --standard=VicimusStandard --report=full
   - vendor/bin/phpunit --no-coverage
