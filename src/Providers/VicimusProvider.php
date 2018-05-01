@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Providers;
 
-use Vicimus\Support\Provider;
+use Vicimus\Support\Classes\Provider;
 
 /**
  * Declares information about this package

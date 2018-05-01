@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vicimus\Support;
+namespace Vicimus\Support\Classes;
 
 /**
  * Defines various aspects about the providers offered by the Vicimus packages

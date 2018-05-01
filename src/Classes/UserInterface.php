@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vicimus\Support;
+namespace Vicimus\Support\Classes;
 
 /**
  * Declares information about a UI package
