@@ -29,7 +29,8 @@ class ApiModelTest extends TestCase
             ->getMock();
 
         $db->expects($this->once())
-            ->method('update');
+            ->method('update')
+            ->willReturn(true);
 
         $model = new ApiModel($db, [
             'id' => 1,
