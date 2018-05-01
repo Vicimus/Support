@@ -2,7 +2,8 @@
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
-use Laravel\Lumen\Application;
+use Laravel\Lumen\Routing\Router;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vicimus\Support\Classes\LumenRouter;
 
@@ -25,8 +26,8 @@ class LumenRouterTest extends TestCase
      */
     public function testDelete(): void
     {
-        /* @var Application|MockObject $app */
-        $app = $this->getMockBuilder(Application::class)
+        /** @var Router|MockObject $app */
+        $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['delete'])
             ->getMock();
@@ -46,8 +47,8 @@ class LumenRouterTest extends TestCase
      */
     public function testPost(): void
     {
-        /* @var Application|MockObject $app */
-        $app = $this->getMockBuilder(Application::class)
+        /* @var Router|MockObject $app */
+        $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['post'])
             ->getMock();
@@ -67,8 +68,8 @@ class LumenRouterTest extends TestCase
      */
     public function testPatch(): void
     {
-        /* @var Application|MockObject $app */
-        $app = $this->getMockBuilder(Application::class)
+        /* @var Router|MockObject $app */
+        $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['patch'])
             ->getMock();
@@ -88,8 +89,8 @@ class LumenRouterTest extends TestCase
      */
     public function testGet(): void
     {
-        /* @var Application|MockObject $app */
-        $app = $this->getMockBuilder(Application::class)
+        /* @var Router|MockObject $app */
+        $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['get'])
             ->getMock();
@@ -110,8 +111,8 @@ class LumenRouterTest extends TestCase
     public function testResource(): void
     {
         /* Plural */
-        /* @var Application|MockObject $app */
-        $app = $this->getMockBuilder(Application::class)
+        /* @var Router|MockObject $app */
+        $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'patch', 'post', 'delete'])
             ->getMock();
@@ -136,8 +137,8 @@ class LumenRouterTest extends TestCase
         $this->router->resource('bananas', 'BananaController');
 
         /* Non-Plural */
-        /* @var Application|MockObject $app */
-        $app = $this->getMockBuilder(Application::class)
+        /* @var Router|MockObject $app */
+        $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'patch', 'post', 'delete'])
             ->getMock();
