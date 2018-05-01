@@ -4,6 +4,7 @@ php:
 
 before_script:
   - composer global require "squizlabs/php_codesniffer=*"
+  - phpenv rehash
   - composer update --no-interaction
 
 script:
