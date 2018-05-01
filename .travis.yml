@@ -4,9 +4,8 @@ php:
   - '7.2'
 
 before_script:
+  - composer global require "squizlabs/php_codesniffer=*"
   - composer update --no-interaction
-  - pyrus install pear/PHP_CodeSniffer
-  - phpenv rehash
 
 script:
   - phpcs --config-set installed_path ./vendor/vicimus/standard/VicimusStandard,./vendor/escapestudios/symfony2-coding-standard/slevomat/coding-standard
