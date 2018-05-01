@@ -5,7 +5,10 @@ php:
 
 before_script:
   - composer update --no-interaction
+  - pyrus install pear/PHP_CodeSniffer
+  - phpenv rehash
 
 script:
-  - vendor/bin/phpcs --standard=vendor/vicimus/standard/VicimusStandard,PSR2 --warning-severity=999 --config-set installed_paths ./vendor/slevomat/coding-standard,./vendor/escapestudios/symfony2-coding-standard "src" "tests"
+  - phpcs --config-set installed_path ./vendor/vicimus/standard/VicimusStandard,./vendor/escapestudios/symfony2-coding-standard/slevomat/coding-standard
+  - phpcs -i
   - vendor/bin/phpunit --no-coverage
