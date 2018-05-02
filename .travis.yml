@@ -6,7 +6,8 @@ php:
 dist: xenial
 
 before_script:
- - composer update --no-interaction
+  - phpenv config-rm xdebug.ini
+  - composer update --no-interaction
 
 
 script:
