@@ -1,15 +1,14 @@
 language: php
 php:
   - '7.1'
+  - '7.2'
 
 dist: xenial
 
 before_script:
  - composer update --no-interaction
- - cp -rf vendor/vicimus/standard/VicimusStandard vendor/squizlabs/php_codesniffer/src/Standards
 
 
 script:
-  - vendor/bin/phpcs --version
-  - vendor/bin/phpcs "src" "tests" --standard=VicimusStandard --report=full
+  - vendor/bin/phpcs "src" "tests" --standard=vendor/vicimus/standard/VicimusStandard --report=full
   - vendor/bin/phpunit --no-coverage
