@@ -2,10 +2,12 @@
 
 namespace Vicimus\Support\Providers;
 
+use Vicimus\Support\Classes\Provider;
+
 /**
  * Declares information about this package
  */
-class VicimusProvider
+class VicimusProvider extends Provider
 {
     /**
      * Define which service providers this package offers

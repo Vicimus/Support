@@ -53,16 +53,33 @@ class AsyncRequestPool
         $this->requests[] = $request;
     }
 
+    /**
+     * Get request at
+     *
+     * @param int $index The index to get
+     *
+     * @return AsyncRequest
+     */
     public function at(int $index): AsyncRequest
     {
         return $this->requests[$index];
     }
 
+    /**
+     * Counter
+     *
+     * @return int
+     */
     public function counter(): int
     {
         return ++$this->counter;
     }
 
+    /**
+     * Get requests
+     *
+     * @return Generator
+     */
     public function requests(): Generator
     {
         foreach ($this->requests as $index => $request) {

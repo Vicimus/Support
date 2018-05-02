@@ -2,10 +2,7 @@
 
 namespace Vicimus\Support\Tests\Unit\Http;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request as IllRequest;
-use PHPUnit\Framework\MockObject\MockObject;
 use Vicimus\Support\Http\Request;
 use Vicimus\Support\Testing\TestCase;
 

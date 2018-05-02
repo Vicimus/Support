@@ -159,7 +159,7 @@ Most import of those settings are the top sqlite configurations.
 
 In the `<php>` section of the phpunit.xml, add the following line:
 
-`<env name="APP_ENV" value="testing"/>`
+`<env name="DB_CONNECTION" value="testing"/>`
 
 ##### TestCase #
 
