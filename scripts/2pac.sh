@@ -4,6 +4,7 @@ YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 
 changedDirs=()
+tagDirs=()
 
 crawl () {
     for dir in $1
@@ -29,6 +30,12 @@ crawl () {
             changedDirs+=(${dir})
         fi
 
+        tags="$(git describe --tags | grep '-')"
+        if [ ! -z "$tags" ]
+        then
+            tagDirs+=(${dir})
+        fi
+
         cd ../../..
     done
 }
@@ -49,4 +56,16 @@ then
     done
 else
     echo -e "${GREEN}I see no changes!"
+fi
+
+
+if [ "${#tagDirs[@]}" -gt 0 ]
+then
+    echo -e "${YELLOW}Can't a brother get a little peace!"
+    for dir in ${tagDirs[*]}
+    do
+        echo -e "${RED}${dir} needs a tag"
+    done
+else
+    echo -e "${GREEN}Flippin' on foes, puttin' tags on toes."
 fi
