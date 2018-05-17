@@ -18,6 +18,7 @@ class VicimusProvider extends Provider
     {
         return [
             RequestServiceProvider::class,
+            QueueReporterProvider::class,
         ];
     }
 }

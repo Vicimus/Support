@@ -21,10 +21,10 @@ class APIAssociatesTest extends TestCase
      */
     public function testHasMany(): void
     {
-        /* @var APIAssociates|MockObject $mock */
+        /** @var APIAssociates|MockObject $mock */
         $mock = $this->getMockForTrait(APIAssociates::class);
 
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -49,10 +49,10 @@ class APIAssociatesTest extends TestCase
      */
     public function testHasManyFails(): void
     {
-        /* @var APIAssociates|MockObject $mock */
+        /** @var APIAssociates|MockObject $mock */
         $mock = $this->getMockForTrait(APIAssociates::class);
 
-        /* @var DatabaseManager|MockObject $db */
+        /** @var DatabaseManager|MockObject $db */
         $db = $this->getMockBuilder(DatabaseManager::class)
             ->disableOriginalConstructor()
             ->getMock();

@@ -47,7 +47,7 @@ class LumenRouterTest extends TestCase
      */
     public function testPost(): void
     {
-        /* @var Router|MockObject $app */
+        /** @var Router|MockObject $app */
         $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['post'])
@@ -68,7 +68,7 @@ class LumenRouterTest extends TestCase
      */
     public function testPatch(): void
     {
-        /* @var Router|MockObject $app */
+        /** @var Router|MockObject $app */
         $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['patch'])
@@ -89,7 +89,7 @@ class LumenRouterTest extends TestCase
      */
     public function testGet(): void
     {
-        /* @var Router|MockObject $app */
+        /** @var Router|MockObject $app */
         $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['get'])
@@ -111,7 +111,7 @@ class LumenRouterTest extends TestCase
     public function testResource(): void
     {
         /* Plural */
-        /* @var Router|MockObject $app */
+        /** @var Router|MockObject $app */
         $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'patch', 'post', 'delete'])
@@ -137,7 +137,7 @@ class LumenRouterTest extends TestCase
         $this->router->resource('bananas', 'BananaController');
 
         /* Non-Plural */
-        /* @var Router|MockObject $app */
+        /** @var Router|MockObject $app */
         $app = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'patch', 'post', 'delete'])

@@ -9,7 +9,6 @@ before_script:
   - phpenv config-rm xdebug.ini
   - composer update --no-interaction
 
-
 script:
   - vendor/bin/phpcs --warning-severity=999 "src" "tests" --standard=vendor/vicimus/standard/VicimusStandard --report=full
   - vendor/bin/phpunit --no-coverage

@@ -62,7 +62,7 @@ class AsyncScanner implements Scanner
     {
         $this->progress = (new ScannerProgress($this->async->total()))->bind($this->output);
 
-        /* @var Collection|PhotoStatus[] $status */
+        /** @var Collection|PhotoStatus[] $status */
         $status = new Collection();
         $pool = new Pool($client, $this->async->requests(), [
             'concurrency' => 5,
