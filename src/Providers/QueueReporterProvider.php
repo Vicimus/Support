@@ -2,10 +2,9 @@
 
 namespace Vicimus\Support\Providers;
 
-use GuzzleHttp\Client;
 use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use Vicimus\Slack\Channel;
 
 /**
  * Class QueueReporterProvider
@@ -26,13 +25,7 @@ class QueueReporterProvider extends ServiceProvider
             return;
         }
 
-        $channel = new Channel(
-            $this->app->make(Client::class),
-            'https://hooks.slack.com/services/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',
-            '33c01757-5f50-2d06-ecd9-502b11de8ab7'
-        );
-
-        app('queue')->failing(function (JobFailed $event) use ($channel): void {
+        app('queue')->failing(function (JobFailed $event): void {
             $message = sprintf(
                 '%s in file %s on line %s',
                 $event->exception->getMessage(),
@@ -40,7 +33,8 @@ class QueueReporterProvider extends ServiceProvider
                 $event->exception->getLine()
             );
 
-            $channel->error($event->job->resolveName() . ' failed', 'Job Failure', $message);
+            $errorMessage = sprintf('%s failed. %s', $event->job->resolveName(), $message);
+            Log::critical($errorMessage);
         });
     }
 }

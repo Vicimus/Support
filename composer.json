@@ -3,7 +3,6 @@
   "type": "library",
   "require": {
     "php": ">=7.1",
-    "vicimus/slack": "^1.0"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "~6",
