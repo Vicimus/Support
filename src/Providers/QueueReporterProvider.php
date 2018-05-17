@@ -2,7 +2,10 @@
 
 namespace Vicimus\Support\Providers;
 
+use GuzzleHttp\Client;
+use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
+use Vicimus\Slack\Channel;
 
 /**
  * Class QueueReporterProvider
@@ -29,7 +32,7 @@ class QueueReporterProvider extends ServiceProvider
             '33c01757-5f50-2d06-ecd9-502b11de8ab7'
         );
 
-        Queue::failing(function (JobFailed $event) use ($channel): void {
+        app('queue')->failing(function (JobFailed $event) use ($channel): void {
             $message = sprintf(
                 '%s in file %s on line %s',
                 $event->exception->getMessage(),
