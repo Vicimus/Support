@@ -3,8 +3,8 @@
 namespace Vicimus\Support\Providers;
 
 use Illuminate\Queue\Events\JobFailed;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class QueueReporterProvider
@@ -17,15 +17,17 @@ class QueueReporterProvider extends ServiceProvider
     /**
      * Boot
      *
+     * @param LoggerInterface $logger The application logger
+     *
      * @return void
      */
-    public function boot(): void
+    public function boot(LoggerInterface $logger): void
     {
         if (app()->environment() !== 'production') {
             return;
         }
 
-        app('queue')->failing(function (JobFailed $event): void {
+        app('queue')->failing(function (JobFailed $event) use ($logger): void {
             $message = sprintf(
                 '%s in file %s on line %s',
                 $event->exception->getMessage(),
@@ -34,7 +36,7 @@ class QueueReporterProvider extends ServiceProvider
             );
 
             $errorMessage = sprintf('%s failed. %s', $event->job->resolveName(), $message);
-            Log::critical($errorMessage);
+            $logger->critical($errorMessage);
         });
     }
 }
