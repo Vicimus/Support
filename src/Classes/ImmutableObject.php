@@ -69,10 +69,13 @@ class ImmutableObject implements JsonSerializable, WillValidate
     {
         if (!is_array($original) && !is_object($original)) {
             $type = gettype($original);
-            throw new InvalidArgumentException(
-                'First parameter must be array or object, '.$type.' given'
-            );
+            throw new InvalidArgumentException(sprintf(
+                'First parameter must be array or object, %s given with value `%s`',
+                $type,
+                var_export($original, true)
+            ));
         }
+
         if (!is_array($original)) {
             $original = json_decode(json_encode($original), true);
         }
