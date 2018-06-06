@@ -16,8 +16,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseCountry(string $input): ?string
+    public static function parseCountry(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::countriesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
