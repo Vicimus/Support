@@ -38,7 +38,10 @@ crawl () {
 
         if [ "$2" == "--chillin-in-cuba" ]
         then
-            tags="$(git checkout master &> /dev/null && git pull origin master &> /dev/null && git describe | grep '-')"
+            git checkout master &> /dev/null
+            git pull &> /dev/null
+
+            tags="$(git describe | grep '-')"
             if [ ! -z "$tags" ]
             then
                 tagDirs+=(${dir})
@@ -55,11 +58,17 @@ crawl () {
     done
 }
 
-crawl 'vendor/vicimus/*' $1
 
 if [ "$1" == "--dealer" ]
 then
     crawl 'vendor/dealer-live/*'
+fi
+
+if [ "$2" == "--ui" ]
+then
+    crawl 'node_modules/@vicimus/*' $1
+else
+    crawl 'vendor/vicimus/*' $1
 fi
 
 if [ "${#changedDirs[@]}" -gt 0  ]
