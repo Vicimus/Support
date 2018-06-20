@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# A script to check in vendor/vicimus packages for changes
+# and tags that need to be pushed
+# Apply the --chillin-in-cuba flag to determine which
+# packages need a new tag
+
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
@@ -30,21 +36,39 @@ crawl () {
             changedDirs+=(${dir})
         fi
 
-        tags="$(git describe --tags | grep '-')"
-        if [ ! -z "$tags" ]
+        if [ "$2" == "--chillin-in-cuba" ]
         then
-            tagDirs+=(${dir})
+            git checkout master &> /dev/null
+            git pull &> /dev/null
+
+            tags="$(git describe | grep '-')"
+            if [ ! -z "$tags" ]
+            then
+                tagDirs+=(${dir})
+            fi
+        else
+            tags="$(git describe --tags | grep '-')"
+            if [ ! -z "$tags" ]
+            then
+                tagDirs+=(${dir})
+            fi
         fi
 
         cd ../../..
     done
 }
 
-crawl 'vendor/vicimus/*'
 
 if [ "$1" == "--dealer" ]
 then
     crawl 'vendor/dealer-live/*'
+fi
+
+if [ "$2" == "--ui" ]
+then
+    crawl 'node_modules/@vicimus/*' $1
+else
+    crawl 'vendor/vicimus/*' $1
 fi
 
 if [ "${#changedDirs[@]}" -gt 0  ]
