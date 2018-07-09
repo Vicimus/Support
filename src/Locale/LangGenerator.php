@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Locale;
 
+use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Vicimus\Support\Exceptions\DuplicateTranslationException;
 use Vicimus\Support\Interfaces\ConsoleOutput;
@@ -17,7 +18,12 @@ class LangGenerator implements ConsoleOutput
     /**
      * Generate lang files
      *
+     * @param string   $path       The path to scan
+     * @param string   $localePath The path to write locale files
+     * @param string[] $locales    The locales to generate
+     *
      * @return void
+     * @throws DuplicateTranslationException
      */
     public function fire(string $path, string $localePath, array $locales): void
     {
@@ -36,8 +42,13 @@ class LangGenerator implements ConsoleOutput
     }
 
     /**
-     * @param string $path
-     * @param array  $dictionary
+     * Process a path
+     *
+     * @param string   $path       The path to process
+     * @param string[] $dictionary The dictionary of keys and values
+     *
+     * @throws DuplicateTranslationException
+     * @return void
      */
     private function process(string $path, array &$dictionary): void
     {
@@ -67,8 +78,12 @@ class LangGenerator implements ConsoleOutput
      * Write a locale file
      *
      * @param string   $localePath The locale path
-     * @param string[] $locale     The locale
+     * @param string[] $locales    The locales
      * @param string[] $dictionary The dictionary
+     *
+     * @return void
+     *
+     * @throws RuntimeException
      */
     private function writeFiles(string $localePath, array $locales, array $dictionary): void
     {
@@ -89,8 +104,8 @@ class LangGenerator implements ConsoleOutput
         foreach ($locales as $locale) {
             foreach ($files as $file => $values) {
                 $path = sprintf('%s/%s', $localePath, $locale);
-                if (!file_exists($path)) {
-                    mkdir($path);
+                if (!file_exists($path) && !mkdir($path) && !is_dir($path)) {
+                    throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
                 }
 
                 $target = sprintf('%s/%s/%s.php', $localePath, $locale, $file);

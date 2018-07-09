@@ -21,6 +21,9 @@ class GenerateLangFiles extends Command
      * Generate lang files
      *
      * @param LangGenerator $generator The generator
+     *
+     * @return void
+     * @throws \Vicimus\Support\Exceptions\DuplicateTranslationException
      */
     public function handle(LangGenerator $generator): void
     {
