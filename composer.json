@@ -24,6 +24,7 @@
     "guzzlehttp/guzzle": "Required for API Service class"
   },
   "autoload": {
+    "files": ["src/helpers.php"],
     "psr-4": {
       "Vicimus\\Support\\": "src/"
     }
