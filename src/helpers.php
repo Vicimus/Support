@@ -10,7 +10,7 @@
  *
  * @return string|array|null
  */
-function ___($key, $default, $replace = [], $locale = null)
+function ___(string $key, string $default, array $replace = [], string $locale = null)
 {
     $result = __($key, $replace, $locale);
     if ($result === $key) {
