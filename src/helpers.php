@@ -3,14 +3,16 @@
 /**
  * Translate the given message.
  *
- * @param  string  $key     The translation file key
- * @param  string  $default The default value
- * @param  array   $replace The array of variables
- * @param  string  $locale  The locale
+ * @param string   $key     The translation file key
+ * @param string   $default The default value
+ * @param string[] $replace The array of variables
+ * @param string   $locale  The locale
  *
- * @return string|array|null
+ * @return string|string[]|null
+ *
+ * phpcs:disable
  */
-function ___(string $key, string $default, array $replace = [], string $locale = null)
+function ___(string $key, string $default, array $replace = [], ?string $locale = null)
 {
     $result = __($key, $replace, $locale);
     if ($result === $key) {
