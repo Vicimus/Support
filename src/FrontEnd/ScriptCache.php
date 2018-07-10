@@ -15,6 +15,12 @@ use function array_search;
 class ScriptCache
 {
     /**
+     * The app name
+     * @var null|string
+     */
+    private $appName;
+
+    /**
      * The cache repository
      *
      * @var Repository
@@ -22,13 +28,25 @@ class ScriptCache
     private $cache;
 
     /**
+     * Path to the front end files
+     *
+     * @var string
+     */
+    private $pathToFrontEnd;
+
+    /**
      * ScriptCache constructor.
      *
-     * @param Repository $cache The cache repository
+     * @param Repository  $cache          The cache repository
+     * @param string      $pathToFrontEnd The path to where front end locales are (Must be public)
+     * @param null|string $appName        Optionally provide a name for the app
      */
-    public function __construct(Repository $cache)
+    public function __construct(Repository $cache, string $pathToFrontEnd, ?string $appName = null)
     {
+        $this->appName = $appName ?? md5($pathToFrontEnd);
         $this->cache = $cache;
+        $this->pathToFrontEnd = $pathToFrontEnd;
+        $this->relativeFrontEnd = '';
     }
 
     /**
@@ -57,7 +75,7 @@ class ScriptCache
         ];
 
         $finder = new Finder();
-        foreach ($finder->directories()->in(public_path('rms-ui'))->depth(0) as $locale) {
+        foreach ($finder->directories()->in($this->pathToFrontEnd)->depth(0) as $locale) {
             $names = [];
             $paths = [];
 
@@ -111,7 +129,7 @@ class ScriptCache
             });
 
 
-            $this->cache->forever('rms-ui-cache-' . $localeName, [$scripts, $styles]);
+            $this->cache->forever(sprintf('%s-cache-%s', $this->appName, $localeName), [$scripts, $styles]);
         }
     }
 
@@ -123,11 +141,11 @@ class ScriptCache
     public function forget(): void
     {
         $finder = new Finder();
-        foreach ($finder->directories()->in(public_path('rms-ui'))->depth(0) as $locale) {
+        foreach ($finder->directories()->in($this->pathToFrontEnd)->depth(0) as $locale) {
             /** @var SplFileInfo $locale */
             $localeName = $locale->getRelativePathname();
 
-            $this->cache->forget('rms-ui-cache-' . $localeName);
+            $this->cache->forget(sprintf('%s-cache-%s', $this->appName, $localeName));
         }
     }
 
