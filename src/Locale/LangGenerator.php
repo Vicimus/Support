@@ -54,7 +54,8 @@ class LangGenerator implements ConsoleOutput
     {
         $contents = file_get_contents($path);
         $matches = [];
-        preg_match_all('/___\(.*?\)/', $contents, $matches);
+        preg_match_all('/___\(.*?\)/s', $contents, $matches);
+        var_dump($matches);
         foreach ($matches ?? [] as $matchRow) {
             foreach ($matchRow as $match) {
                 if (strpos($match, '\'') === false) {
