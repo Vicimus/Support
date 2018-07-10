@@ -29,5 +29,8 @@ class GenerateLangFiles extends Command
     {
         $locales = explode(',', $this->argument('locales'));
         $generator->bind(new StandardOutput())->fire(app_path(), resource_path('lang'), $locales);
+
+        $generator = new LangGenerator();
+        $generator->bind(new StandardOutput())->fire(resource_path('views'), resource_path('lang'), $locales);
     }
 }
