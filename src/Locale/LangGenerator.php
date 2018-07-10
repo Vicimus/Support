@@ -56,6 +56,11 @@ class LangGenerator implements ConsoleOutput
         $matches = [];
         preg_match_all('/___\(.*\)/', $contents, $matches);
         foreach ($matches[0] ?? [] as $match) {
+            if (strpos($match, '\'') === false) {
+                $this->comment('Unprocessed key due to being programmatic: ' . $match);
+                continue;
+            }
+
             $line = str_replace(['___(\'', '\'))', '\')',], '', $match);
             [$key, $value] = explode(',', $line, 2);
             $key = substr(trim($key), 0, -1);
