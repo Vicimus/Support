@@ -35,6 +35,13 @@ class ScriptCache
     private $pathToFrontEnd;
 
     /**
+     * Relative path
+     *
+     * @var string
+     */
+    private $relativeFrontEnd;
+
+    /**
      * ScriptCache constructor.
      *
      * @param Repository  $cache          The cache repository
@@ -46,7 +53,7 @@ class ScriptCache
         $this->appName = $appName ?? md5($pathToFrontEnd);
         $this->cache = $cache;
         $this->pathToFrontEnd = $pathToFrontEnd;
-        $this->relativeFrontEnd = '';
+        $this->relativeFrontEnd = str_replace(public_path() . '/', '', $pathToFrontEnd);
     }
 
     /**
@@ -88,7 +95,12 @@ class ScriptCache
                 $name = 'js_' . $localeName . '_' . $name;
                 $names[] = $name;
 
-                $paths[$name] = url('rms-ui/' . $localeName .'/' . $file->getRelativePathname());
+                $paths[$name] = url(sprintf(
+                    '%s/%s/%s',
+                    $this->relativeFrontEnd,
+                    $localeName,
+                    $file->getRelativePathname()
+                ));
             }
 
             $fileFinder = new Finder();
@@ -97,7 +109,12 @@ class ScriptCache
                 $name = $this->extract($file->getRelativePathname());
                 $name = 'css_' . $localeName . '_' . $name;
                 $names[] = $name;
-                $paths[$name] = url('rms-ui/' . $localeName . '/' . $file->getRelativePathname());
+                $paths[$name] = url(sprintf(
+                    '%s/%s/%s',
+                    $this->relativeFrontEnd,
+                    $localeName,
+                    $file->getRelativePathname()
+                ));
             }
 
             $cached = [];
