@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Locale;
 
+use DateTime;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Vicimus\Support\Exceptions\DuplicateTranslationException;
@@ -14,6 +15,51 @@ use Vicimus\Support\Traits\ConsoleOutputter;
 class LangGenerator implements ConsoleOutput
 {
     use ConsoleOutputter;
+
+    /**
+     * Export the crap out of the lang files
+     *
+     * @param string $locale         The locale to export
+     * @param string $localePath     Locale path
+     * @param string $target         The target to save the export
+     * @param string $compareAgainst Compare against
+     *
+     * @return void
+     */
+    public function export(
+        string $locale,
+        string $localePath,
+        string $target,
+        string $compareAgainst = 'en'
+    ): void {
+        $path = sprintf('%s/%s', $localePath, $locale);
+
+        $finder = new Finder();
+        $finder->files()->in($path)->name('*.php');
+        $batch = [];
+        foreach ($finder as $file) {
+            $key = str_replace('.php', '', $file->getFilename());
+            $batch[$key] = include $file;
+        }
+
+        $compare = [];
+        $finder = new Finder();
+        $comparePath = sprintf('%s/%s', $localePath, $compareAgainst);
+        $finder->files()->in($comparePath)->name('*.php');
+        foreach ($finder as $file) {
+            $key = str_replace('.php', '', $file->getFilename());
+            $compare[$key] = include $file;
+        }
+
+        $final = [];
+        foreach ($batch as $key => $section) {
+            $section = array_merge($compare[$key], $section);
+            $diff = array_intersect($compare[$key], $section);
+            $final[$key] = $diff;
+        }
+
+        $this->writeExport($final, $target, $locale, $compareAgainst);
+    }
 
     /**
      * Generate lang files
@@ -42,6 +88,27 @@ class LangGenerator implements ConsoleOutput
     }
 
     /**
+     * Import a translated master file and break it into it's parts
+     *
+     * @param string $path       The path of the master file to read
+     * @param string $locale     The locale this is
+     * @param string $localePath The path to the locale files
+     *
+     * @return void
+     */
+    public function import(string $path, string $locale, string $localePath): void
+    {
+        $master = include $path;
+        foreach ($master as $pack => $section) {
+            $originalPath = sprintf('%s/%s/%s.php', $localePath, $locale, $pack);
+            $original = include $originalPath;
+            $merged = array_merge($original, $section);
+
+            $this->writeMerged($merged, $originalPath, $locale);
+        }
+    }
+
+    /**
      * Process a path
      *
      * @param string   $path       The path to process
@@ -55,7 +122,7 @@ class LangGenerator implements ConsoleOutput
         $contents = file_get_contents($path);
         $matches = [];
         preg_match_all('/___\(.*?\)/s', $contents, $matches);
-        var_dump($matches);
+
         foreach ($matches ?? [] as $matchRow) {
             foreach ($matchRow as $match) {
                 if (strpos($match, '\'') === false) {
@@ -80,6 +147,33 @@ class LangGenerator implements ConsoleOutput
                 $dictionary[$key] = $value;
             }
         }
+    }
+
+    /**
+     * Write the export file
+     *
+     * @param mixed[] $final    The final array to write
+     * @param string  $target   The target path
+     * @param string  $locale   The locale
+     * @param string  $compared The compared locale
+     *
+     * @return void
+     */
+    private function writeExport(array $final, string $target, string $locale, string $compared): void
+    {
+        $export = ' ' . var_export($final, true);
+        $export = str_replace([' array (', '),', "=> \n"], ['[', "],\n", '=>'], $export);
+        $export = substr($export, 0, -1) . '];';
+        $export = 'return ' . $export;
+
+        $contents = file_get_contents(__DIR__.'/../../resources/views/locale-export.php');
+        $contents = str_replace([
+            '{{LOCALE}}', '{{COMPARED}}', '{{DATE}}', '/*{{EXPORT}}*/',
+        ], [
+            $locale, $compared, '[' . (new DateTime())->format('F d, Y \a\t h:i A') . ']', $export,
+        ], $contents);
+
+        file_put_contents($target, $contents);
     }
 
     /**
@@ -134,5 +228,30 @@ class LangGenerator implements ConsoleOutput
                 file_put_contents($target, $output);
             }
         }
+    }
+
+    /**
+     * Write the export file
+     *
+     * @param mixed[] $final  The final array to write
+     * @param string  $target The target path
+     *
+     * @return void
+     */
+    private function writeMerged(array $final, string $target): void
+    {
+        $export = ' ' . var_export($final, true);
+        $export = str_replace([' array (', '),', "=> \n"], ['[', "],\n", '=>'], $export);
+        $export = substr($export, 0, -1) . '];';
+        $export = 'return ' . $export;
+
+        $contents = file_get_contents(__DIR__.'/../../resources/views/locale-import.php');
+        $contents = str_replace([
+            '{{DATE}}', '/*{{IMPORT}}*/',
+        ], [
+            '[' . (new DateTime())->format('F d, Y \a\t h:i A') . ']', $export,
+        ], $contents);
+
+        file_put_contents($target, $contents);
     }
 }
