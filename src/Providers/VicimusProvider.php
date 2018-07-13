@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Providers;
 
-use Vicimus\Provider\Provider;
+use Vicimus\Support\Classes\Provider;
 
 /**
  * Declares information about this package
@@ -18,6 +18,7 @@ class VicimusProvider extends Provider
     {
         return [
             RequestServiceProvider::class,
+            QueueReporterProvider::class,
         ];
     }
 }

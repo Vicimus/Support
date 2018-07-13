@@ -194,7 +194,7 @@ class HasManyFromAPITest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $builder->expects($this->exactly(2))
+        $builder->expects($this->atLeast(2))
             ->method('where')
             ->will($this->returnSelf());
 

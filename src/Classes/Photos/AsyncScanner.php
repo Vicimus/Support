@@ -3,12 +3,12 @@
 namespace Vicimus\Support\Classes\Photos;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\API\AsyncRequestPool;
+use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**
@@ -62,7 +62,7 @@ class AsyncScanner implements Scanner
     {
         $this->progress = (new ScannerProgress($this->async->total()))->bind($this->output);
 
-        /* @var Collection|PhotoStatus[] $status */
+        /** @var Collection|PhotoStatus[] $status */
         $status = new Collection();
         $pool = new Pool($client, $this->async->requests(), [
             'concurrency' => 5,
@@ -89,7 +89,7 @@ class AsyncScanner implements Scanner
                 }
 
                 $request = $this->async->at($index);
-                /* @var Photo $photo */
+                /** @var Photo $photo */
                 $photo = $request->get('photo');
                 $photo->update([
                     'etag' => null,

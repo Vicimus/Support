@@ -18,7 +18,7 @@ class HeadersTest extends TestCase
      */
     public function testHeadersGet(): void
     {
-        /* @var Response|\PHPUnit\Framework\MockObject\MockObject $response */
+        /** @var Response|\PHPUnit\Framework\MockObject\MockObject $response */
         $response = $this->getMockBuilder(Response::class)
             ->getMock();
 

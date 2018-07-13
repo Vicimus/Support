@@ -13,7 +13,7 @@
     "laravel/lumen": "~5",
     "mikey179/vfsStream": "^1.6",
     "phpunit/phpunit": "~6",
-    "vicimus/standard": "~3"
+    "vicimus/standard": ">=3.0.3"
   },
   "suggest": {
     "laravel/lumen": "Required to use LumenRouter",
@@ -24,6 +24,7 @@
     "guzzlehttp/guzzle": "Required for API Service class"
   },
   "autoload": {
+    "files": ["src/helpers.php"],
     "psr-4": {
       "Vicimus\\Support\\": "src/"
     }
