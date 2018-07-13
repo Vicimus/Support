@@ -139,7 +139,7 @@ class Tools
     }
 
     /**
-     * Return list of lastest years starting from current + extra to max size
+     * Return list of latest years starting from current + extra to max size
      * in descending order.
      *
      * @param int $overCurrent The extra years to get over current year.
