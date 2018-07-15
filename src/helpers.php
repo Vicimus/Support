@@ -12,7 +12,7 @@
  *
  * phpcs:disable
  */
-function ___(string $key, string $default, array $replace = [], ?string $locale = null)
+function ___(string $key, ?string $default = null, array $replace = [], ?string $locale = null)
 {
     $result = __($key, $replace, $locale);
     if ($result === $key) {
