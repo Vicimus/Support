@@ -22,9 +22,9 @@ if ($params) {
     $params = ' -d ' . $params;
 }
 
-$command = sprintf('blackfire curl %s%s%s', $url, $method, $params);
+$command = sprintf('blackfire curl %s%s%s -o lastresponse.log', $url, $method, $params);
 $std = new \Vicimus\Support\Classes\StandardOutput();
 $std->info(sprintf('Executing %s', $command));
 
 $output = [];
-$this->info(shell_exec($command));
+$std->info(shell_exec($command));
