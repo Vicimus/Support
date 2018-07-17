@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php declare(strict_types = 1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+$args = $argv;
+$verb = $argv[1];
+$url = $argv[2];
+$params = $argv[3] ?? '';
+
+$method = '';
+
+switch (strtolower($verb)) {
+    case 'post':
+        $method = ' -X POST ';
+        break;
+    default:
+        $method = '';
+}
+
+if ($params) {
+    $params = ' -d ' . $params;
+}
+
+$command = sprintf('blackfire curl %s%s%s', $url, $method, $params);
+$std = new \Vicimus\Support\Classes\StandardOutput();
+$std->info(sprintf('Executing %s', $command));
+
+$output = [];
+$this->info(shell_exec($command));
