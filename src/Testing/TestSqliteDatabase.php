@@ -59,6 +59,10 @@ trait TestSqliteDatabase
                     touch($stub);
                 }
 
+                if ($database) {
+                    copy($secondStub, $stub);
+                }
+
                 @unlink($test);
                 touch($test);
 
