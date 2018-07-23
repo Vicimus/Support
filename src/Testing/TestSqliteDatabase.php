@@ -38,31 +38,44 @@ trait TestSqliteDatabase
      *
      * @return void
      */
-    public function setupDatabases(string $path): void
+    public function setupDatabases(string $path, array $external = []): void
     {
-        $stub = $path . '/stub.sqlite';
-        $secondStub = $path . '/unsullied.sqlite';
+        $external['null'] = '';
 
-        $test = $path . '/testing.sqlite';
-
-        if (!($GLOBALS['setupDatabase'] ?? false)) {
-            @unlink($secondStub);
-            @unlink($stub);
-            touch($stub);
-            @unlink($test);
-            touch($test);
-
-            $this->doMigration();
-
-            copy($stub, $secondStub);
-            if (!filesize($secondStub)) {
-                throw new TestException('Database is 0 bytes, this is 99% an error');
+        foreach ($external as $code => $database) {
+            if ($database) {
+                $database .= '_';
             }
 
-            $GLOBALS['setupDatabase'] = true;
-        }
+            $stub = sprintf('%s/%sstub.sqlite', $path, $database);
+            $secondStub = sprintf('%s/%sunsullied.sqlite', $path, $database);
+            $test = sprintf('%s/%stesting.sqlite', $path, $database);
+            config()->set('database.connections.'. $code .'.database', $test);
 
-        copy($secondStub, $test);
+            if (!($GLOBALS['setupDatabase'] ?? false)) {
+                if (!$database) {
+                    @unlink($secondStub);
+                    @unlink($stub);
+                    touch($stub);
+                }
+
+                @unlink($test);
+                touch($test);
+
+                if (!$database) {
+                    $this->doMigration();
+                }
+
+                copy($stub, $secondStub);
+                if (!filesize($secondStub)) {
+                    throw new TestException('Database is 0 bytes, this is 99% an error');
+                }
+
+                $GLOBALS['setupDatabase'] = true;
+            }
+
+            copy($secondStub, $test);
+        }
     }
 
     /**
