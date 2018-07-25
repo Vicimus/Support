@@ -50,7 +50,9 @@ trait TestSqliteDatabase
             $stub = sprintf('%s/%sstub.sqlite', $path, $database);
             $secondStub = sprintf('%s/%sunsullied.sqlite', $path, $database);
             $test = sprintf('%s/%stesting.sqlite', $path, $database);
-            config()->set('database.connections.'. $code .'.database', $test);
+            if ($database) {
+                config()->set('database.connections.'. $code .'.database', $test);
+            }
 
             if (!($GLOBALS['setupDatabase'] ?? false)) {
                 if (!$database) {
