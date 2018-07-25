@@ -42,7 +42,7 @@ class Request
      */
     public function all(): array
     {
-        return $this->request->except(['with', 'fields']);
+        return $this->request->except(['with', 'fields', 'limit', 'page']);
     }
 
     /**
