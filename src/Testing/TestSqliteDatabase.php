@@ -41,6 +41,7 @@ trait TestSqliteDatabase
     public function setupDatabases(string $path, array $external = []): void
     {
         $external['null'] = '';
+        $external = array_reverse($external);
 
         foreach ($external as $code => $database) {
             if ($database) {
@@ -75,7 +76,9 @@ trait TestSqliteDatabase
                     throw new TestException('Database is 0 bytes, this is 99% an error');
                 }
 
-                $GLOBALS['setupDatabase'] = true;
+                if (!$database) {
+                    $GLOBALS['setupDatabase'] = true;
+                }
             }
 
             copy($secondStub, $test);
