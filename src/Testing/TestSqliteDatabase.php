@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Testing;
 
+use Illuminate\Support\Facades\DB;
 use Vicimus\Support\Exceptions\TestException;
 
 /**
@@ -15,6 +16,11 @@ trait TestSqliteDatabase
      * @var callable
      */
     protected $migrate;
+
+    /**
+     * @var bool[]
+     */
+    private $attached = [];
 
     /**
      * Set how we migrate the databases
@@ -32,7 +38,8 @@ trait TestSqliteDatabase
     /**
      * Set up the databases
      *
-     * @param string $path The path to your database storage
+     * @param string   $path     The path to your database storage
+     * @param string[] $external A list of external databases
      *
      * @throws TestException
      *
@@ -84,6 +91,13 @@ trait TestSqliteDatabase
             }
 
             copy($secondStub, $test);
+
+            if ($database && !isset($this->attached[$database])) {
+                $attachment = sprintf('attach \'%s/%stesting.sqlite\' as %s', database_path(), $database, $code);
+                DB::select($attachment);
+
+                $this->attached[$database] = true;
+            }
         }
     }
 
