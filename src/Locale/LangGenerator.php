@@ -55,6 +55,7 @@ class LangGenerator implements ConsoleOutput
         foreach ($batch as $key => $section) {
             $section = array_merge($compare[$key], $section);
             $diff = array_intersect($compare[$key], $section);
+
             $final[$key] = $diff;
         }
 
