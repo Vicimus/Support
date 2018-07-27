@@ -3,7 +3,6 @@
 namespace Vicimus\Support\FrontEnd;
 
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Support\Facades\Cache;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
