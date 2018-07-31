@@ -9,9 +9,6 @@ use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Trait APIAssociates
- *
- * @property int $id
- * @property string $table
  */
 trait APIAssociates
 {

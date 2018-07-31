@@ -5,14 +5,18 @@ namespace Vicimus\Support\FrontEnd;
 use Illuminate\Contracts\Cache\Repository;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Vicimus\Support\Interfaces\ConsoleOutput;
+use Vicimus\Support\Traits\ConsoleOutputter;
 
 use function array_search;
 
 /**
  * Class ScriptCache
  */
-class ScriptCache
+class ScriptCache implements ConsoleOutput
 {
+    use ConsoleOutputter;
+
     /**
      * The app name
      * @var null|string
@@ -64,7 +68,7 @@ class ScriptCache
      */
     public function areUnhealthy(string $locale = 'en'): bool
     {
-        return !$this->cache->has('rms-ui-cache-' . $locale);
+        return !$this->cache->has(sprintf('%s-cache-%s', $this->appName, $locale));
     }
 
     /**
@@ -145,6 +149,7 @@ class ScriptCache
             });
 
 
+            $this->comment('Cached %s-cache-%s', $this->appName, $localeName);
             $this->cache->forever(sprintf('%s-cache-%s', $this->appName, $localeName), [$scripts, $styles]);
         }
     }
@@ -161,6 +166,7 @@ class ScriptCache
             /** @var SplFileInfo $locale */
             $localeName = $locale->getRelativePathname();
 
+            $this->line('Forgetting %s-cache-%s', $this->appName, $localeName);
             $this->cache->forget(sprintf('%s-cache-%s', $this->appName, $localeName));
         }
     }
