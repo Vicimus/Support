@@ -5,10 +5,10 @@ namespace Vicimus\Support\FrontEnd;
 use Illuminate\Contracts\Cache\Repository;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-
-use function array_search;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
+
+use function array_search;
 
 /**
  * Class ScriptCache
