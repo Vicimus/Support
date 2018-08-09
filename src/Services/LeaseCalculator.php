@@ -43,9 +43,14 @@ class LeaseCalculator
             $fValue = $this->futureValue($vehicle, $vehicle);
         }
 
+        if (!$rate) {
+            return round($pValue / $nper, 2);
+        }
+
         $power = (1 + $rate) ** $nper;
-        $leftSide = $pValue - $fValue / ($power);
-        dd($power, $rate, $leftSide);
+
+        $leftSide = $pValue - $fValue / $power;
+
         $rightSide = ((1 - (1 / $power)) / $rate);
 
         return round($leftSide / $rightSide, 2);
@@ -76,7 +81,7 @@ class LeaseCalculator
     /**
      * Number of periods calculation (part of PMT)
      *
-     * @param int|HasTerm|float $term      The term
+     * @param float|int|HasTerm $term      The term
      * @param int               $frequency The number of payments per year
      *
      * @return int

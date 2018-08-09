@@ -71,4 +71,23 @@ class LeaseCalculatorTest extends TestCase
 
         $this->assertEquals(412.19, $payment);
     }
+
+    /**
+     * This is breaking get your toyota
+     *
+     * @return void
+     */
+    public function testDivisionByZeroIssues(): void
+    {
+        $calc = new LeaseCalculator();
+        $payment = $calc->payment(
+            0.000,
+            52,
+            169,
+            47604.17,
+            25107.5
+        );
+
+        $this->assertGreaterThan(0, $payment);
+    }
 }
