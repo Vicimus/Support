@@ -68,7 +68,7 @@ class AsyncScanner implements Scanner
             'concurrency' => 5,
             'fulfilled' => function (Response $response, $index) use ($status): void {
 
-                $bytes = (int) $response->getHeader('Content-Length')[0] ?? 0;
+                $bytes = (int) ($response->getHeader('Content-Length')[0] ?? 0);
 
                 $request = $this->async->at($index);
                 $payload = $request->process($response);
