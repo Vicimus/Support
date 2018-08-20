@@ -44,7 +44,7 @@ class LeaseCalculator
         }
 
         if (!$rate) {
-            return round($pValue / $nper, 2);
+            return round(($pValue - $fValue) / $nper, 2);
         }
 
         $power = (1 + $rate) ** $nper;
