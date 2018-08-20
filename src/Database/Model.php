@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Model|static findOrFail($id)
  * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotNull($c)
+ * @method static \Illuminate\Database\Eloquent\Builder|static whereNull($c)
  * @method static \Illuminate\Database\Eloquent\Model|static create($attributes)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereHas($relation, $closure)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereIn($column, $items)
