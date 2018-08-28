@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -6,22 +6,13 @@ namespace Vicimus\Support\Interfaces;
  * Enforces common methods among vehicle classes
  */
 interface Vehicle
-{   
+{
     /**
-     * Return an array of properties that can be used to represent the
-     * vehicle
+     * Return a string that will describe the vehicle in a sensible way
      *
-     * @return array
+     * @return string
      */
-    public function toArray();
-
-    /**
-     * Get an Unhaggle/Chrome styleid representing the vehicle. If the styleid
-     * is unknown or unavailable, return null.
-     *
-     * @return ?int
-     */
-    public function styleid() : ?int;
+    public function __toString(): string;
 
     /**
      * Get the primary key of this vehicle instance. Of course, if the model
@@ -30,7 +21,22 @@ interface Vehicle
      *
      * @return ?int
      */
-    public function id() : ?int;
+    public function getIdentifier(): ?int;
+
+    /**
+     * Get the stock number of the vehicle, if available
+     *
+     * @return null|string
+     */
+    public function getStockNumber(): ?string;
+
+    /**
+     * Get an Unhaggle/Chrome styleid representing the vehicle. If the styleid
+     * is unknown or unavailable, return null.
+     *
+     * @return ?int
+     */
+    public function getStyleId(): ?int;
 
     /**
      * Describe the type of vehicle this is (a new vehicle, used vehicle,
@@ -38,12 +44,13 @@ interface Vehicle
      *
      * @return string
      */
-    public function type() : string;
+    public function getType(): string;
 
     /**
-     * Return a string that will describe the vehicle in a sensible way
+     * Return an array of properties that can be used to represent the
+     * vehicle
      *
-     * @return string
+     * @return string[]
      */
-    public function __toString() : string;
+    public function toArray(): array;
 }

@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Traits;
+
+use Vicimus\Support\Interfaces\Processor;
 
 /**
  * Adds some common methods to processors
@@ -10,18 +12,18 @@ trait Processing
     /**
      * Holds the options for the processor
      *
-     * @var array
+     * @var string[]
      */
     protected $options = [];
 
     /**
      * Set the options for this service
      *
-     * @param array $options The options to set
+     * @param string[] $options The options to set
      *
-     * @return $this
+     * @return Processor|Processing
      */
-    public function options(array $options)
+    public function options(array $options): Processor
     {
         $this->options = array_merge($this->options, $options);
         return $this;
@@ -34,7 +36,7 @@ trait Processing
      *
      * @return mixed
      */
-    public function option($name)
+    public function option(string $name)
     {
         if (!array_key_exists($name, $this->options)) {
             return null;
@@ -44,11 +46,11 @@ trait Processing
     }
 
     /**
-     * Return the priortiy of your processor
+     * Return the priority of your processor
      *
      * @return int
      */
-    public function priority() : int
+    public function priority(): int
     {
         return 5;
     }

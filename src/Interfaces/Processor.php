@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -8,35 +8,6 @@ namespace Vicimus\Support\Interfaces;
  */
 interface Processor
 {
-    public function info($output);
-
-    /**
-     * Output an error (red text)
-     *
-     * @param string $output The error to output
-     *
-     * @return void
-     */
-    public function error($output);
-
-    /**
-     * Output a comment (yellow text)
-     *
-     * @param string $output The comment to output
-     *
-     * @return void
-     */
-    public function comment($output);
-
-    /**
-     * Output text (grey text)
-     *
-     * @param string $output The text to output
-     *
-     * @return void
-     */
-    public function line($output);
-
     /**
      * Bind a ConsoleOutput interface implementation to this class. This
      * enables the output.
@@ -48,20 +19,40 @@ interface Processor
     public function bind(ConsoleOutput $output);
 
     /**
-     * Init the process
+     * Output a comment (yellow text)
+     *
+     * @param string $output The comment to output
      *
      * @return void
      */
-    public function process();
+    public function comment(string $output): void;
 
     /**
-     * Set the options for this service
+     * Output an error (red text)
      *
-     * @param array $options The options to set
+     * @param string $output The error to output
      *
-     * @return $this
+     * @return void
      */
-    public function options(array $options);
+    public function error(string $output): void;
+
+    /**
+     * Output info
+     *
+     * @param string $output The info to output
+     *
+     * @return void
+     */
+    public function info(string $output): void;
+
+    /**
+     * Output text (grey text)
+     *
+     * @param string $output The text to output
+     *
+     * @return void
+     */
+    public function line(string $output): void;
 
     /**
      * Get an option
@@ -70,7 +61,16 @@ interface Processor
      *
      * @return mixed
      */
-    public function option($name);
+    public function option(string $name);
+
+    /**
+     * Set the options for this service
+     *
+     * @param string[] $options The options to set
+     *
+     * @return $this
+     */
+    public function options(array $options): Processor;
 
     /**
      * Return an integer describing the priority of the processor. Higher
@@ -78,6 +78,15 @@ interface Processor
      * after others.
      *
      * The scale should be 1 to 10.
+     *
+     * @return int
      */
-    public function priority() : int;
+    public function priority(): int;
+
+    /**
+     * Init the process
+     *
+     * @return bool
+     */
+    public function process(): bool;
 }

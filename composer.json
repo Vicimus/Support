@@ -1,31 +1,46 @@
 {
-    "name": "vicimus/support",
-    "license": "MIT",
-    "type": "library",
-    "require": {
-        "php": ">=7.1",
-        "illuminate/database": "~5",
-        "illuminate/http": "~5"
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "~2",
-        "vicimus/standard": "~1",
-        "phpunit/phpunit":"~5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Vicimus\\Support\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/"
-        ]
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@bitbucket.org:vicimus/ymlcollection.git"
-        }
+  "name": "vicimus/support",
+  "type": "library",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "guzzlehttp/guzzle": "~6",
+    "illuminate/auth": "~5",
+    "illuminate/database": "~5",
+    "illuminate/http": "~5",
+    "illuminate/validation": "~5",
+    "laravel/lumen": "~5",
+    "mikey179/vfsStream": "^1.6",
+    "phpunit/phpunit": "~6",
+    "vicimus/standard": ">=3.0.3"
+  },
+  "suggest": {
+    "laravel/lumen": "Required to use LumenRouter",
+    "illuminate/database": "Required to use Vicimus Model",
+    "illuminate/http": "Required for use with many classes",
+    "illuminate/validation": "Required for ImmutableObject and others",
+    "illuminate/auth": "Required for Authentication service",
+    "guzzlehttp/guzzle": "Required for API Service class"
+  },
+  "autoload": {
+    "files": ["src/helpers.php"],
+    "psr-4": {
+      "Vicimus\\Support\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/"
     ]
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.packages.vicimus.com"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  }
 }

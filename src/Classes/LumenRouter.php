@@ -3,20 +3,26 @@
 namespace Vicimus\Support\Classes;
 
 use Laravel\Lumen\Application;
+use Laravel\Lumen\Routing\Router;
 
 /**
  * Adds a bit of flavour to the boring ass Lumen router
  */
 class LumenRouter
 {
+    /**
+     * Holds the Lumen application
+     *
+     * @var Application
+     */
     protected $app;
 
     /**
      * Pass in the application instance
      *
-     * @param Application $app The application instance
+     * @param Router $app The application router
      */
-    public function __construct(Application $app)
+    public function __construct(Router $app)
     {
         $this->app = $app;
     }
@@ -26,10 +32,51 @@ class LumenRouter
      *
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
      */
     public function delete(string $path, $controller): void
     {
         $this->app->delete($path, $controller);
+    }
+
+    /**
+     * Bind a get route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
+     */
+    public function get(string $path, $controller): void
+    {
+        $this->app->get($path, $controller);
+    }
+
+    /**
+     * Bind a patch route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
+     */
+    public function patch(string $path, $controller): void
+    {
+        $this->app->patch($path, $controller);
+    }
+
+    /**
+     * Bind a post route
+     *
+     * @param string $path       The path
+     * @param mixed  $controller The controller and method to handle it
+     *
+     * @return void
+     */
+    public function post(string $path, $controller): void
+    {
+        $this->app->post($path, $controller);
     }
 
     /**
@@ -40,7 +87,7 @@ class LumenRouter
      *
      * @return void
      */
-    public function resource($resource, $controller): void
+    public function resource(string $resource, string $controller): void
     {
         $base = $this->plural($resource);
         $entity = '/{'.$resource.'}';
