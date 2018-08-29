@@ -106,13 +106,14 @@ class Request
     /**
      * Build a query based on the request
      *
-     * @param Builder $builder The builder object
+     * @param Builder  $builder         The builder object
+     * @param string[] $mandatorySelect Things we have to select no matter what
      *
      * @return Builder
      */
-    public function query(Builder $builder): Builder
+    public function query(Builder $builder, array $mandatorySelect = []): Builder
     {
-        $query = $builder->select($this->select())
+        $query = $builder->select(array_merge($this->select(), $mandatorySelect))
             ->with($this->with());
 
         if ($this->has('orderBy')) {
@@ -130,8 +131,7 @@ class Request
      */
     public function select(): array
     {
-        $fields = explode(',', $this->request->get('fields', '*') ?? '*');
-        return $fields;
+        return explode(',', $this->request->get('fields', '*') ?? '*');
     }
 
     /**
@@ -151,7 +151,6 @@ class Request
             return [];
         }
 
-        $with = explode(',', $this->request->get('with', '') ?? '*');
-        return $with;
+        return explode(',', $this->request->get('with', '') ?? '');
     }
 }
