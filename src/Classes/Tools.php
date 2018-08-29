@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Classes;
 
 use DateTime;
+
 use function array_keys;
 use function arsort;
 use function count;
@@ -10,7 +11,6 @@ use function getdate;
 use function implode;
 use function key;
 use function preg_match;
-use function substr;
 
 /**
  * Generic util tools.
