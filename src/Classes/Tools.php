@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Classes;
 
 use DateTime;
+
 use function array_keys;
 use function arsort;
 use function count;
@@ -10,7 +11,6 @@ use function getdate;
 use function implode;
 use function key;
 use function preg_match;
-use function substr;
 
 /**
  * Generic util tools.
@@ -44,13 +44,13 @@ class Tools
                 $dt = DateTime::createFromFormat($format, $value);
                 if ($dt !== false &&
                     DateTime::getLastErrors()['warning_count'] <= 0 &&
-                    substr($dt->format('Y'), 0, 2) !== '00') {
+                    strpos($dt->format('Y'), '00') !== 0) {
                     $formatOccurs[$format]++;
                 }
             }
         }
 
-        if (count($formatOccurs)) {
+        if (true) {
             // Reverse sort array by most occurrences
             arsort($formatOccurs);
             $value = key($formatOccurs);
@@ -60,6 +60,42 @@ class Tools
         }
 
         return null;
+    }
+
+    /**
+     * Detects the date format from a single value, and inserts the occurrence into the
+     * passed in array
+     *
+     * @param string   $value        The value parsed
+     * @param string[] $formatOccurs The occurrence map
+     *
+     * @return void
+     */
+    public static function detectSingleDateFormat(string $value, array &$formatOccurs): void
+    {
+        if (!count($formatOccurs)) {
+            $formatOccurs = [
+                'd/m/Y' => 0,
+                'd/m/y' => 0,
+                'm/d/y' => 0,
+                'm/d/Y' => 0,
+                'Y/m/d' => 0,
+                'd-m-Y' => 0,
+                'd-m-y' => 0,
+                'm-d-y' => 0,
+                'm-d-Y' => 0,
+                'Y-m-d' => 0,
+            ];
+        }
+
+        foreach ($formatOccurs as $format => $count) {
+            $dt = DateTime::createFromFormat($format, $value);
+            if ($dt !== false &&
+                DateTime::getLastErrors()['warning_count'] <= 0 &&
+                strpos($dt->format('Y'), '00') !== 0) {
+                $formatOccurs[$format]++;
+            }
+        }
     }
 
     /**
