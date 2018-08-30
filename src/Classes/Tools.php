@@ -50,13 +50,11 @@ class Tools
             }
         }
 
-        if (true) {
-            // Reverse sort array by most occurrences
-            arsort($formatOccurs);
-            $value = key($formatOccurs);
-            if ($formatOccurs[$value]) {
-                return $value;
-            }
+        // Reverse sort array by most occurrences
+        arsort($formatOccurs);
+        $value = key($formatOccurs);
+        if ($formatOccurs[$value]) {
+            return $value;
         }
 
         return null;
@@ -127,7 +125,7 @@ class Tools
      */
     public static function isCompany(string $name): bool
     {
-        $re = [
+        $reg = [
             '(and|et|body|car(s|e)?|data|inc|ll(p|c)|ont?|can?|name|sales|ventes|direct?)',
             '(sons|daughters|fils|filles)',
             '(american?|canad(a|ian)?|usa|nation(al)?|(pacif|atlant)ic)',
@@ -167,7 +165,7 @@ class Tools
             '(mini|mitsubishi|nissan|porsche|smart|subaru|toyota|volkswagen|volvo|vw)',
         ];
 
-        if (preg_match('/\b(' . implode('|', $re) . ')\b/i', $name)) {
+        if (preg_match('/\b(' . implode('|', $reg) . ')\b/i', $name)) {
             return true;
         }
 
