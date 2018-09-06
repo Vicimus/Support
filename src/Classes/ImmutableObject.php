@@ -11,8 +11,6 @@ use Vicimus\Support\Interfaces\WillValidate;
 
 /**
  * Class ImmutableObject
- *
- * @package Vicimus\Support\Classes
  */
 class ImmutableObject implements JsonSerializable, WillValidate
 {
@@ -104,6 +102,8 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @param mixed  $value    The value to set it to
      *
      * @return void
+     *
+     * @throws RuntimeException
      */
     public function __set(string $property, $value): void
     {

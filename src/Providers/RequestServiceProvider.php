@@ -19,7 +19,7 @@ class RequestServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(Request::class, function (Application $app): Request {
+        $this->app->singleton(Request::class, static function (Application $app): Request {
             return new Request($app->make(IllRequest::class));
         });
     }

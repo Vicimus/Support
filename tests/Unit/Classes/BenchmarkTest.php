@@ -18,9 +18,9 @@ class BenchmarkTest extends TestCase
     public function testCustomSetting(): void
     {
         $bench = new Benchmark();
-        $bench->custom(function ($bench): void {
+        $bench->custom(static function ($bench): void {
             //
-        }, function (): string {
+        }, static function (): string {
             return 'banana';
         });
 

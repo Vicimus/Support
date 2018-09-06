@@ -21,7 +21,7 @@ class IterableArrayTest extends TestCase
             'one', 'two', 'three',
         ]);
 
-        foreach ($array as $index => $item) {
+        foreach ($array as $item) {
             $this->assertNotNull($item);
         }
     }

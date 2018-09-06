@@ -12,42 +12,36 @@ interface Notifier
     /**
      * Indicates a basic tone
      *
-     * @var string
      */
     public const TONE_BASIC = 'basic';
 
     /**
      * Indicates a error tone
      *
-     * @var string
      */
     public const TONE_ERROR = 'error';
 
     /**
      * Indicates a info tone
      *
-     * @var string
      */
     public const TONE_INFO = 'info';
 
     /**
      * Indicates a question tone
      *
-     * @var string
      */
     public const TONE_QUESTION = 'question';
 
     /**
      * Indicates a success tone
      *
-     * @var string
      */
     public const TONE_SUCCESS = 'success';
 
     /**
      * Indicates a warning tone
      *
-     * @var string
      */
     public const TONE_WARNING = 'warning';
 

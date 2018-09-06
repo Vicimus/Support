@@ -324,7 +324,7 @@ class HasManyFromAPITest extends TestCase
             $this->assertContains('loader', $ex->getMessage());
         }
 
-        $hasMany = new HasManyFromAPI($db, 1, 'bananas', 'strawberries', function ($results) {
+        $hasMany = new HasManyFromAPI($db, 1, 'bananas', 'strawberries', static function ($results) {
             return $results;
         });
 
@@ -383,7 +383,7 @@ class HasManyFromAPITest extends TestCase
             $this->assertContains('loader', $ex->getMessage());
         }
 
-        $hasMany = new HasManyFromAPI($db, 1, 'bananas', 'strawberries', function ($results) {
+        $hasMany = new HasManyFromAPI($db, 1, 'bananas', 'strawberries', static function ($results) {
             return $results;
         });
 

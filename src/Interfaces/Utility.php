@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Represents a Utility that can be run
- *
- * @author Jordan
  */
 interface Utility
 {

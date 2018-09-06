@@ -7,8 +7,6 @@ use Vicimus\Support\Classes\Enums;
 
 /**
  * Class ToolsTest
- *
- * @package Vicimus\Support\Tests\Unit
  */
 class EnumsTest extends TestCase
 {
