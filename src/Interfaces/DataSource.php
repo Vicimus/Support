@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Forces specific behaviour from data sources
- *
- * @author Jordan
  */
 interface DataSource
 {

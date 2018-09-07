@@ -27,7 +27,7 @@ class QueueReporterProvider extends ServiceProvider
             return;
         }
 
-        app('queue')->failing(function (JobFailed $event) use ($logger): void {
+        app('queue')->failing(static function (JobFailed $event) use ($logger): void {
             $message = sprintf(
                 '%s in file %s on line %s',
                 $event->exception->getMessage(),

@@ -33,6 +33,18 @@ module.exports = function(grunt) {
 
       }
     },
+
+      phpcbf: {
+          application: {
+              src: phpFiles
+          },
+          options: {
+              bin: "vendor/bin/phpcbf",
+              standard: standard,
+              encoding: "utf-8",
+              noPatch: false
+          }
+      },
     phpunit: {
         classes: {
             dir: ''
@@ -64,6 +76,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-phpcs');
+  grunt.loadNpmTasks('grunt-phpcbf');
   grunt.loadNpmTasks('grunt-phpunit');
   grunt.loadNpmTasks('grunt-phpmd');
 

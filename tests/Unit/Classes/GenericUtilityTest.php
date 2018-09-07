@@ -22,7 +22,7 @@ class GenericUtilityTest extends TestCase
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            function (?array $flags): string {
+            static function (?array $flags): string {
                 return $flags['fruit'] ?? 'banana';
             }
         );
@@ -41,7 +41,7 @@ class GenericUtilityTest extends TestCase
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            function (?array $flags): string {
+            static function (?array $flags): string {
                 return $flags['fruit'] ?? 'banana';
             }
         );
@@ -59,7 +59,7 @@ class GenericUtilityTest extends TestCase
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            function (?array $flags): string {
+            static function (?array $flags): string {
                 return $flags['fruit'] ?? 'banana';
             }
         );
@@ -77,7 +77,7 @@ class GenericUtilityTest extends TestCase
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            function (?array $flags): void {
+            static function (?array $flags): void {
                 throw new Exception('Something bad happened');
             }
         );

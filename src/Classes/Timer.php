@@ -84,9 +84,11 @@ class Timer
     public function invoke(): void
     {
         $now = (int) round(microtime(true));
-        if ($now > $this->lastCall + $this->seconds) {
-            call_user_func($this->closure);
-            $this->lastCall = $now;
+        if ($now <= $this->lastCall + $this->seconds) {
+            return;
         }
+
+        call_user_func($this->closure);
+        $this->lastCall = $now;
     }
 }

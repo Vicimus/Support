@@ -47,7 +47,7 @@ class AsyncDownload implements DownloadRequest
     public function getSinglePhotoStatus(): PhotoStatus
     {
         throw new DownloadException(
-            sprintf('Cannot call %s from %s', __METHOD__, get_class($this))
+            sprintf('Cannot call %s from %s', __METHOD__, static::class)
         );
     }
 
@@ -61,7 +61,7 @@ class AsyncDownload implements DownloadRequest
     public function getSingleVehicle(): Vehicle
     {
         throw new DownloadException(
-            sprintf('Cannot call %s from %s', __METHOD__, get_class($this))
+            sprintf('Cannot call %s from %s', __METHOD__, static::class)
         );
     }
 

@@ -14,8 +14,6 @@ use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Class HasManyFromAPI
- *
- * @package Vicimus\Support\Database\Relations
  */
 class HasManyFromAPI
 {
@@ -103,7 +101,7 @@ class HasManyFromAPI
         $this->right = $this->singular($relation) . '_id';
 
         $this->table = implode('_', $elements);
-        $this->collection = new Collection;
+        $this->collection = new Collection();
         $this->loader = $loader;
     }
 
@@ -134,8 +132,8 @@ class HasManyFromAPI
             $insertion = array_merge($insertion, $add);
 
             $insertion = array_merge($insertion, [
-                'created_at' => new DateTime,
-                'updated_at' => new DateTime,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ]);
 
             $this->db->table($this->table)
@@ -393,7 +391,7 @@ class HasManyFromAPI
     protected function instance($row)
     {
         $identifier = $this->right;
-        $instance = new stdClass;
+        $instance = new stdClass();
         if (isset($row->$identifier)) {
             $instance->id = $row->$identifier;
         }

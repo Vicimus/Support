@@ -10,8 +10,6 @@ use function key;
 
 /**
  * Class ToolsTest
- *
- * @package Vicimus\Support\Tests\Unit
  */
 class ToolsTest extends TestCase
 {

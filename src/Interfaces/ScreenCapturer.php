@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Interface ScreenCapturer
- *
- * @package Vicimus\Support\Interfaces
  */
 interface ScreenCapturer
 {

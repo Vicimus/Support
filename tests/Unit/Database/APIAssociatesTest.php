@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Tests\Unit\Database;
 
 use Illuminate\Database\DatabaseManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use Vicimus\Support\Database\APIAssociates;
@@ -57,7 +58,6 @@ class APIAssociatesTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $result = null;
         $mock->id = 1;
 
         try {

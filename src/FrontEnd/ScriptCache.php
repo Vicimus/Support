@@ -126,11 +126,11 @@ class ScriptCache implements ConsoleOutput
             }
 
             // Split up the scripts and styles
-            $scripts = array_filter($cached, function ($name): bool {
+            $scripts = array_filter($cached, static function ($name): bool {
                 return substr($name, -2) === 'js';
             });
 
-            $styles = array_filter($cached, function ($name): bool {
+            $styles = array_filter($cached, static function ($name): bool {
                 return substr($name, -3) === 'css';
             });
 

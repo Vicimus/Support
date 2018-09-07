@@ -6,8 +6,6 @@ use Vicimus\Support\Interfaces\ConsoleOutput;
 
 /**
  * Adds the ability to output to a ConsoleOutput interface easily
- *
- * @author Jordan
  */
 trait ConsoleOutputter
 {
@@ -55,9 +53,11 @@ trait ConsoleOutputter
      */
     public function comment(string $output, ...$args): void
     {
-        if ($this->output) {
-            $this->output->comment(vsprintf($output, $args));
+        if (!$this->output) {
+            return;
         }
+
+        $this->output->comment(vsprintf($output, $args));
     }
 
     /**
@@ -70,9 +70,11 @@ trait ConsoleOutputter
      */
     public function error(string $output, ...$args): void
     {
-        if ($this->output) {
-            $this->output->error(vsprintf($output, $args));
+        if (!$this->output) {
+            return;
         }
+
+        $this->output->error(vsprintf($output, $args));
     }
 
     /**
@@ -85,9 +87,11 @@ trait ConsoleOutputter
      */
     public function info(string $output, ...$args): void
     {
-        if ($this->output) {
-            $this->output->info(vsprintf($output, $args));
+        if (!$this->output) {
+            return;
         }
+
+        $this->output->info(vsprintf($output, $args));
     }
 
     /**
@@ -100,9 +104,11 @@ trait ConsoleOutputter
      */
     public function line(string $output, ...$args): void
     {
-        if ($this->output) {
-            $this->output->line(vsprintf($output, $args));
+        if (!$this->output) {
+            return;
         }
+
+        $this->output->line(vsprintf($output, $args));
     }
 
     /**

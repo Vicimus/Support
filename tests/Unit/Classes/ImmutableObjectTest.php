@@ -24,7 +24,7 @@ class ImmutableObjectTest extends TestCase
      */
     public function testConstructor(): void
     {
-        $std = new stdClass;
+        $std = new stdClass();
         $std->id = 5;
 
         $obj = new ImmutableObject(['id' => 5]);

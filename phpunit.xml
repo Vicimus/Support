@@ -8,7 +8,6 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
 >
     <testsuites>
         <testsuite name="Main">
@@ -21,8 +20,7 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="./report" charset="UTF-8"
-             yui="true" highlight="true"
+        <log type="coverage-html" target="./report"
              lowUpperBound="50" highLowerBound="80" />
         <log type="coverage-text" target="php://stdout" showOnlySummary="true" showUncoveredFiles="false"/>
     </logging>

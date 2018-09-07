@@ -15,8 +15,6 @@ use Vicimus\Support\Exceptions\UnauthorizedException;
 
 /**
  * Class APIService
- *
- * @package Vicimus\Support\Classes
  */
 class APIService
 {

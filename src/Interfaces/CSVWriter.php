@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Establishes a contact for parsing CSVs
- *
- * @author Jordan Grieve
  */
 interface CSVWriter
 {

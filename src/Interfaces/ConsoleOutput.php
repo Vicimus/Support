@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Ensures a set of methods to output in different formats
- *
- * @author Jordan
  */
 interface ConsoleOutput
 {
