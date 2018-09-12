@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Locale;
 
 use Illuminate\Contracts\Cache\Repository;
+use Shared\Exceptions\LocaleException;
 
 /**
  * Class Compiler
@@ -59,6 +60,8 @@ class Compiler
      * @param string $locale The locale you want to get
      *
      * @return string[]
+     *
+     * @throws LocaleException
      */
     public function get(string $locale): array
     {
@@ -78,10 +81,16 @@ class Compiler
      * @param string $locale The locale to get
      *
      * @return string[]
+     *
+     * @throws LocaleException
      */
     private function getLocale(string $locale): array
     {
         $path = sprintf('%s/%s/%s', $this->pathToLang, $locale, $this->file);
+        if (!file_exists($path)) {
+            throw new LocaleException(sprintf('Locale [%s] is not supported at this time', $locale));
+        }
+
         return include $path;
     }
 }
