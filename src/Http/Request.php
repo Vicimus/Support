@@ -4,9 +4,9 @@ namespace Vicimus\Support\Http;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as IllRequest;
+use Throwable;
 
 use function is_array;
-use Throwable;
 
 /**
  * Class Request
