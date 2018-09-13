@@ -60,10 +60,12 @@ trait APIAssociates
             throw $noTable;
         }
 
-        if (!$this instanceof Model) {
-            if (!property_exists($this, 'table') || !$this->table) {
-                throw $noTable;
-            }
+        if ($this instanceof Model) {
+            return;
+        }
+
+        if (!property_exists($this, 'table') || !$this->table) {
+            throw $noTable;
         }
     }
 }

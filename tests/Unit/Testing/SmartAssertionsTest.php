@@ -88,7 +88,7 @@ class SmartAssertionsTest extends TestCase
         /** @var TestCase|SmartAssertions|MockObject $test */
         $test = $this->getMockForAbstractClass(TestCase::class);
 
-        $test->filterFilePath(function (string $file): string {
+        $test->filterFilePath(static function (string $file): string {
             return str_replace('banana', 'strawberry', $file);
         });
 

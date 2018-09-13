@@ -81,9 +81,11 @@ class StandardOutput implements ConsoleOutput
     public function line(string $output): void
     {
         echo str_pad("\r".$output, $this->lineLength);
-        if (!$output) {
-            echo "\r";
+        if ($output) {
+            return;
         }
+
+        echo "\r";
     }
 
     /**

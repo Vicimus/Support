@@ -8,8 +8,6 @@ use Vicimus\Support\Interfaces\Utility;
 
 /**
  * Represents a generic utility
- *
- * @author Jordan
  */
 class GenericUtility implements Utility
 {

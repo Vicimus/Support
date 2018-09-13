@@ -92,12 +92,14 @@ trait TestSqliteDatabase
 
             copy($secondStub, $test);
 
-            if ($database && !isset($this->attached[$database])) {
-                $attachment = sprintf('attach \'%s/%stesting.sqlite\' as %s', database_path(), $database, $code);
-                DB::select($attachment);
-
-                $this->attached[$database] = true;
+            if (!$database || isset($this->attached[$database])) {
+                continue;
             }
+
+            $attachment = sprintf('attach \'%s/%stesting.sqlite\' as %s', database_path(), $database, $code);
+            DB::select($attachment);
+
+            $this->attached[$database] = true;
         }
     }
 

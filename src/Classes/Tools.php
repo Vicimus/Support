@@ -41,12 +41,15 @@ class Tools
 
         foreach ($values as $value) {
             foreach ($formatOccurs as $format => $count) {
+                unset($count);
                 $dt = DateTime::createFromFormat($format, $value);
-                if ($dt !== false &&
-                    DateTime::getLastErrors()['warning_count'] <= 0 &&
-                    strpos($dt->format('Y'), '00') !== 0) {
-                    $formatOccurs[$format]++;
+                if ($dt === false ||
+                    DateTime::getLastErrors()['warning_count'] > 0 ||
+                    strpos($dt->format('Y'), '00') === 0) {
+                    continue;
                 }
+
+                $formatOccurs[$format]++;
             }
         }
 
@@ -87,12 +90,16 @@ class Tools
         }
 
         foreach ($formatOccurs as $format => $count) {
+            unset($count);
+
             $dt = DateTime::createFromFormat($format, $value);
-            if ($dt !== false &&
-                DateTime::getLastErrors()['warning_count'] <= 0 &&
-                strpos($dt->format('Y'), '00') !== 0) {
-                $formatOccurs[$format]++;
+            if ($dt === false ||
+                DateTime::getLastErrors()['warning_count'] > 0 ||
+                strpos($dt->format('Y'), '00') === 0) {
+                continue;
             }
+
+            $formatOccurs[$format]++;
         }
     }
 

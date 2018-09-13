@@ -6,8 +6,6 @@ use Exception;
 
 /**
  * Class ApiRelationException
- *
- * @package Vicimus\Support\Exceptions
  */
 class ApiRelationException extends Exception
 {

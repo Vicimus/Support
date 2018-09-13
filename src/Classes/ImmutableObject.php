@@ -5,13 +5,12 @@ namespace Vicimus\Support\Classes;
 use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;
+use RuntimeException;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
 
 /**
  * Class ImmutableObject
- *
- * @package Vicimus\Support\Classes
  */
 class ImmutableObject implements JsonSerializable, WillValidate
 {
@@ -94,6 +93,21 @@ class ImmutableObject implements JsonSerializable, WillValidate
     public function __get(string $property)
     {
         return $this->attributes[$property] ?? null;
+    }
+
+    /**
+     * Handle set
+     *
+     * @param string $property The property to set
+     * @param mixed  $value    The value to set it to
+     *
+     * @return void
+     *
+     * @throws RuntimeException
+     */
+    public function __set(string $property, $value): void
+    {
+        throw new RuntimeException('Cannot set the value of an ImmutableObject');
     }
 
     /**

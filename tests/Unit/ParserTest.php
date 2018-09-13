@@ -7,8 +7,6 @@ use Vicimus\Support\Classes\Parser;
 
 /**
  * Class ParserTest
- *
- * @package Vicimus\Support\Tests\Unit
  */
 class ParserTest extends TestCase
 {

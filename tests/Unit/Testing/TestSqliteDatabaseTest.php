@@ -31,7 +31,7 @@ class TestSqliteDatabaseTest extends TestCase
     {
         /** @var TestSqliteDatabase|MockObject $mock */
         $mock = $this->getMockForTrait(TestSqliteDatabase::class);
-        $mock->setMigration(function ($reference): void {
+        $mock->setMigration(static function ($reference): void {
             //
         });
 
