@@ -2,12 +2,14 @@
 
 namespace Vicimus\Support\Classes\Files;
 
+use Vicimus\Support\Interfaces\FileResolver;
+
 /**
  * Class ResourceResolver
  *
  * This class was created to make things using fopen more testable
  */
-class ResourceResolver
+class ResourceResolver implements FileResolver
 {
     /**
      * Resolve a file stream resource
@@ -20,5 +22,18 @@ class ResourceResolver
     public function file(string $path, string $mode = 'r')
     {
         return fopen($path, $mode);
+    }
+
+    /**
+     * Alias for file
+     *
+     * @param string $path The path
+     * @param string $mode The mode
+     *
+     * @return resource
+     */
+    public function open(string $path, string $mode = 'rb')
+    {
+        return $this->file($path, $mode);
     }
 }
