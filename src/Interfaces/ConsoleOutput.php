@@ -42,4 +42,13 @@ interface ConsoleOutput
      * @return void
      */
     public function line(string $output): void;
+
+    /**
+     * Output text (grey text)
+     *
+     * @param string $output The text to output
+     *
+     * @return void
+     */
+    public function linePermanent(string $output): void;
 }

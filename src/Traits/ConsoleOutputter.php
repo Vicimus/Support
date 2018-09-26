@@ -112,6 +112,23 @@ trait ConsoleOutputter
     }
 
     /**
+     * Output text (grey text) that persists
+     *
+     * @param string $output  The output to send
+     * @param mixed  ...$args The args
+     *
+     * @return void
+     */
+    public function linePermanent(string $output, ...$args): void
+    {
+        if (!$this->output) {
+            return;
+        }
+
+        $this->output->linePermanent(vsprintf($output, $args));
+    }
+
+    /**
      * Set a method to be called on bind
      *
      * @param callable $action The action to take
