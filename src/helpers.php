@@ -16,6 +16,14 @@ function ___(string $key, ?string $default = null, array $replace = [], ?string 
 {
     $result = __($key, $replace, $locale);
     if ($result === $key) {
+        if (strpos($default, ':') === false) {
+            return $default;
+        }
+
+        foreach ($replace as $search => $instance) {
+            $default = str_replace(':' . $search, $instance, $default);
+        }
+
         return $default;
     }
 
