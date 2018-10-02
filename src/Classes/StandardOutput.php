@@ -89,18 +89,6 @@ class StandardOutput implements ConsoleOutput
     }
 
     /**
-     * Make a line a specific length
-     *
-     * @param string $line The line
-     *
-     * @return string
-     */
-    protected function pad(string $line): string
-    {
-        return str_pad($line, $this->lineLength);
-    }
-
-    /**
      * Output text (grey text)
      *
      * @param string $output The text to output
@@ -111,5 +99,17 @@ class StandardOutput implements ConsoleOutput
     {
         $this->line('');
         echo $this->pad($output).PHP_EOL;
+    }
+
+    /**
+     * Make a line a specific length
+     *
+     * @param string $line The line
+     *
+     * @return string
+     */
+    protected function pad(string $line): string
+    {
+        return str_pad($line, $this->lineLength);
     }
 }
