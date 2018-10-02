@@ -26,6 +26,7 @@ class RestException extends Exception implements JsonSerializable
     {
         return [
             'error' => $this->getMessage(),
+            'code' => $this->code,
         ];
     }
 }
