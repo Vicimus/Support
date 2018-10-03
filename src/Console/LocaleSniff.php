@@ -15,7 +15,7 @@ class LocaleSniff extends Command
      *
      * @var string
      */
-    protected $signature = 'locale:sniff {path} {messages}';
+    protected $signature = 'locale:sniff {path?} {--count}';
 
     /**
      * Handle the command being fired
@@ -26,10 +26,19 @@ class LocaleSniff extends Command
      */
     public function handle(NgLocaleSniffer $sniffer): void
     {
-        $sniffer->use($this->argument('messages'));
-        $path = $this->argument('path');
+        $path = $sniffer->path();
+        if (!$sniffer->path()) {
+            $path = $this->argument('path');
+        }
 
-        $keys = $sniffer->parseKeysFromContent($path);
-        $context = $sniffer->find($keys);
+        $missing = $sniffer->missing($path);
+        if ($this->option('count')) {
+            $this->info(count($missing) . ' missing translations');
+            return;
+        }
+
+        foreach ($missing as $row) {
+            $this->info($row->original);
+        }
     }
 }

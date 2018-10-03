@@ -2,11 +2,23 @@
 
 namespace Vicimus\Support\Locale;
 
+use DOMElement;
+use Symfony\Component\DomCrawler\Crawler;
+
+use function in_array;
+
 /**
  * Class NgLocaleSniffer
  */
 class NgLocaleSniffer
 {
+    /**
+     * Words that are the same in ALL languages
+     */
+    private const BLACKLIST = [
+        'Bumper',
+    ];
+
     /**
      * The messages file
      *
@@ -15,17 +27,54 @@ class NgLocaleSniffer
     private $messages;
 
     /**
-     * Find context for specific keys
+     * NgLocaleSniffer constructor.
      *
-     * @param string[] $keys The keys to look for
-     *
-     * @return string[]
+     * @param null|string $path The path to the file to use
      */
-    public function find(array $keys): array
+    public function __construct(?string $path)
     {
-        $context = [];
+        $this->messages = $path;
+    }
 
-        return $context;
+    /**
+     * Get missing keys
+     *
+     * @param string $path The path
+     *
+     * @return MissingTranslation[]
+     */
+    public function missing(string $path): array
+    {
+        $xml = file_get_contents($path);
+        $crawler = new Crawler($xml);
+
+        $missing = [];
+        foreach ($crawler->filter('trans-unit') as $domElement) {
+            /** @var DOMElement $sourceNode */
+            $sourceNode = $domElement->getElementsByTagName('source')[0];
+            /** @var DOMElement $targetNode */
+            $targetNode = $domElement->getElementsByTagName('target')[0];
+
+            $source = $sourceNode->nodeValue;
+            $target = $targetNode->nodeValue;
+
+            if ($this->shouldSkip($source, $target)) {
+                continue;
+            }
+
+            /** @var DOMElement[] $noteNodes */
+            $noteNodes = $domElement->getElementsByTagName('note');
+            $notes = [];
+            foreach ($noteNodes as $note) {
+                $from = $note->getAttribute('from');
+                $notes[$from] = $note->nodeValue;
+            }
+
+            $notes['original'] = trim($source);
+            $missing[] = new MissingTranslation($notes);
+        }
+
+        return $missing;
     }
 
     /**
@@ -48,14 +97,37 @@ class NgLocaleSniffer
     }
 
     /**
-     * Set the path to the messages file
+     * The path to the messages file
      *
-     * @param string $path The path to the messages file
-     *
-     * @return void
+     * @return string
      */
-    public function messages(string $path): void
+    public function path(): string
     {
-        $this->messages = $path;
+        return $this->messages;
+    }
+
+    /**
+     * Should skip
+     *
+     * @param string $source The source value
+     * @param string $target The target value
+     *
+     * @return bool
+     */
+    private function shouldSkip(string $source, string $target): bool
+    {
+        if ($source !== $target) {
+            return true;
+        }
+
+        if (in_array($source, self::BLACKLIST, false)) {
+            return true;
+        }
+
+        if (is_numeric($source)) {
+            return true;
+        }
+
+        return false;
     }
 }
