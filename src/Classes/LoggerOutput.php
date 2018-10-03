@@ -75,6 +75,18 @@ class LoggerOutput implements ConsoleOutput
     }
 
     /**
+     * Output text (grey text)
+     *
+     * @param string $output The text to output
+     *
+     * @return void
+     */
+    public function linePermanent(string $output): void
+    {
+        $this->write('linePermanent', $output);
+    }
+
+    /**
      * Append to the log file
      *
      * @param string $type    The type of message
