@@ -10,6 +10,7 @@ use Vicimus\Support\Classes\ImmutableObject;
  * @property string $description
  * @property string $meaning
  * @property string $original
+ * @property string $id
  */
 class MissingTranslation extends ImmutableObject
 {

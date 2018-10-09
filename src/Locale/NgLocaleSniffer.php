@@ -50,6 +50,8 @@ class NgLocaleSniffer
 
         $missing = [];
         foreach ($crawler->filter('trans-unit') as $domElement) {
+            $id = $domElement->getAttribute('id');
+
             /** @var DOMElement $sourceNode */
             $sourceNode = $domElement->getElementsByTagName('source')[0];
             /** @var DOMElement $targetNode */
@@ -71,7 +73,9 @@ class NgLocaleSniffer
             }
 
             $notes['original'] = trim($source);
-            $missing[] = new MissingTranslation($notes);
+            $notes['id'] = $id;
+            $instance = new MissingTranslation($notes);
+            $missing[$instance->id] = $instance;
         }
 
         return $missing;

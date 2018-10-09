@@ -11,6 +11,13 @@ use Vicimus\Support\Locale\NgLocaleSniffer;
 class LocaleSniff extends Command
 {
     /**
+     * Description
+     * @var string
+     */
+    protected $description = 'Sniffs the angular i18n messages file for missing ' .
+        'translation keys';
+
+    /**
      * The signature for the command
      *
      * @var string
@@ -37,8 +44,12 @@ class LocaleSniff extends Command
             return;
         }
 
+        $array = [];
         foreach ($missing as $row) {
-            $this->info($row->original);
+            $array[$row->id] = $row->original;
         }
+
+        $this->info('<?php declare(strict_types = 1)' . PHP_EOL);
+        $this->info(var_export($array, true));
     }
 }
