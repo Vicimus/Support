@@ -9,5 +9,9 @@ use JsonSerializable;
  */
 interface Stats extends JsonSerializable
 {
-    //
+    /**
+     * Return all stats as an array of data
+     * @return mixed[]
+     */
+    public function toArray(): array;
 }
