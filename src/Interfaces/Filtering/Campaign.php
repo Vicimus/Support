@@ -3,7 +3,10 @@
 namespace Vicimus\Support\Interfaces\Filtering;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Vicimus\Support\Database\Model;
+use Vicimus\Support\Database\Relations\HasManyFromAPI;
+use Vicimus\Support\Interfaces\Eloquent;
 
 /**
  * Campaign Model
@@ -36,7 +39,7 @@ use Vicimus\Support\Database\Model;
  * @property string $sign_off_name
  * @property string $sign_off_title
  * @property DateTime $launched_at
- * @property DateTime $printed_at
+ * @property DateTime $printed_atd
  * @property DateTime $emailed_at
  * @property DateTime $previewed_at
  * @property DateTime $expired_at
@@ -47,7 +50,26 @@ use Vicimus\Support\Database\Model;
  * @property DateTime $generated_at
  * @property bool $subject_customized
  */
-interface Campaign
+interface Campaign extends Eloquent
 {
-    //
+    /**
+     * A campaign can have many batches
+     *
+     * @return HasMany
+     */
+    public function batches(): HasMany;
+
+    /**
+     * Customers
+     *
+     * @return HasManyFromAPI
+     */
+    public function customers(): HasManyFromAPI;
+
+    /**
+     * The logs method
+     *
+     * @return HasMany
+     */
+    public function logs(): HasMany;
 }
