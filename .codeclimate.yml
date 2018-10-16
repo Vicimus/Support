@@ -1,0 +1,20 @@
+version: 2
+
+exclude_patterns:
+- "config/"
+- "db/"
+- "dist/"
+- "features/"
+- "**/node_modules/"
+- "script/"
+- "**/spec/"
+- "**/test/"
+- "**/tests/"
+- "**/vendor/"
+- "**/*.d.ts"
+- "**/angular/build/"
+- "**/angular/src/assets/js/"
+- "**/database/"
+- "**/scripts/"
+- "**/storage/"
+- "**/.*"
