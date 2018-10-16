@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Interface WillValidate
- *
- * @package Vicimus\Support\Interfaces
  */
 interface WillValidate
 {

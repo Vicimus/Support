@@ -7,8 +7,6 @@ use Vicimus\Support\Classes\ImmutableObject;
 
 /**
  * Class MultipartPayload
- *
- * @package Vicimus\Support\Classes\API
  */
 class MultipartPayload extends ImmutableObject
 {

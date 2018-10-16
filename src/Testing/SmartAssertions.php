@@ -4,8 +4,6 @@ namespace Vicimus\Support\Testing;
 
 /**
  * Trait SmartAssertions
- *
- * @package Vicimus\Support\Testing
  */
 trait SmartAssertions
 {

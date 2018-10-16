@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Classes;
 
 use DateTime;
+
 use function array_keys;
 use function arsort;
 use function count;
@@ -10,7 +11,6 @@ use function getdate;
 use function implode;
 use function key;
 use function preg_match;
-use function substr;
 
 /**
  * Generic util tools.
@@ -41,25 +41,66 @@ class Tools
 
         foreach ($values as $value) {
             foreach ($formatOccurs as $format => $count) {
+                unset($count);
                 $dt = DateTime::createFromFormat($format, $value);
-                if ($dt !== false &&
-                    DateTime::getLastErrors()['warning_count'] <= 0 &&
-                    substr($dt->format('Y'), 0, 2) !== '00') {
-                    $formatOccurs[$format]++;
+                if ($dt === false ||
+                    DateTime::getLastErrors()['warning_count'] > 0 ||
+                    strpos($dt->format('Y'), '00') === 0) {
+                    continue;
                 }
+
+                $formatOccurs[$format]++;
             }
         }
 
-        if (count($formatOccurs)) {
-            // Reverse sort array by most occurrences
-            arsort($formatOccurs);
-            $value = key($formatOccurs);
-            if ($formatOccurs[$value]) {
-                return $value;
-            }
+        // Reverse sort array by most occurrences
+        arsort($formatOccurs);
+        $value = key($formatOccurs);
+        if ($formatOccurs[$value]) {
+            return $value;
         }
 
         return null;
+    }
+
+    /**
+     * Detects the date format from a single value, and inserts the occurrence into the
+     * passed in array
+     *
+     * @param string   $value        The value parsed
+     * @param string[] $formatOccurs The occurrence map
+     *
+     * @return void
+     */
+    public static function detectSingleDateFormat(string $value, array &$formatOccurs): void
+    {
+        if (!count($formatOccurs)) {
+            $formatOccurs = [
+                'd/m/Y' => 0,
+                'd/m/y' => 0,
+                'm/d/y' => 0,
+                'm/d/Y' => 0,
+                'Y/m/d' => 0,
+                'd-m-Y' => 0,
+                'd-m-y' => 0,
+                'm-d-y' => 0,
+                'm-d-Y' => 0,
+                'Y-m-d' => 0,
+            ];
+        }
+
+        foreach ($formatOccurs as $format => $count) {
+            unset($count);
+
+            $dt = DateTime::createFromFormat($format, $value);
+            if ($dt === false ||
+                DateTime::getLastErrors()['warning_count'] > 0 ||
+                strpos($dt->format('Y'), '00') === 0) {
+                continue;
+            }
+
+            $formatOccurs[$format]++;
+        }
     }
 
     /**
@@ -91,7 +132,7 @@ class Tools
      */
     public static function isCompany(string $name): bool
     {
-        $re = [
+        $reg = [
             '(and|et|body|car(s|e)?|data|inc|ll(p|c)|ont?|can?|name|sales|ventes|direct?)',
             '(sons|daughters|fils|filles)',
             '(american?|canad(a|ian)?|usa|nation(al)?|(pacif|atlant)ic)',
@@ -131,7 +172,7 @@ class Tools
             '(mini|mitsubishi|nissan|porsche|smart|subaru|toyota|volkswagen|volvo|vw)',
         ];
 
-        if (preg_match('/\b(' . implode('|', $re) . ')\b/i', $name)) {
+        if (preg_match('/\b(' . implode('|', $reg) . ')\b/i', $name)) {
             return true;
         }
 

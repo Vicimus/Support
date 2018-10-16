@@ -117,7 +117,7 @@ class ConsoleOutputterTest extends TestCase
         $output->expects($this->once())
             ->method('info');
 
-        $std->onBind(function (ConsoleOutput $output): void {
+        $std->onBind(static function (ConsoleOutput $output): void {
             $output->info('I\'m Bound!');
         });
 

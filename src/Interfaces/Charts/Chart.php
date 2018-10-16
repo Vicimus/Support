@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces\Charts;
 
 /**
  * Ensures basic implementation of charts
- *
- * @author Jordan Grieve <jgrieve@vicimus.com>
  */
 interface Chart
 {

@@ -6,8 +6,6 @@ use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**
  * Easily benchmark various aspects of a PHP script
- *
- * @author Jordan
  */
 class Benchmark
 {

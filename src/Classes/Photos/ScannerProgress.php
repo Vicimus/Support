@@ -69,9 +69,11 @@ class ScannerProgress implements ConsoleOutput
     public function __construct(int $total)
     {
         $this->total = $total;
-        if (!$this->total) {
-            $this->autoIncrement = true;
+        if ($this->total) {
+            return;
         }
+
+        $this->autoIncrement = true;
     }
 
     /**

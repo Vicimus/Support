@@ -12,16 +12,17 @@
     "illuminate/validation": "~5",
     "laravel/lumen": "~5",
     "mikey179/vfsStream": "^1.6",
-    "phpunit/phpunit": "~6",
-    "vicimus/standard": ">=3.0.3"
+    "phpunit/phpunit": "~7",
+    "vicimus/standard": "~4"
   },
   "suggest": {
-    "laravel/lumen": "Required to use LumenRouter",
-    "illuminate/database": "Required to use Vicimus Model",
-    "illuminate/http": "Required for use with many classes",
-    "illuminate/validation": "Required for ImmutableObject and others",
-    "illuminate/auth": "Required for Authentication service",
-    "guzzlehttp/guzzle": "Required for API Service class"
+      "laravel/lumen": "Required to use LumenRouter",
+      "illuminate/database": "Required to use Vicimus Model",
+      "illuminate/http": "Required for use with many classes",
+      "illuminate/validation": "Required for ImmutableObject and others",
+      "illuminate/auth": "Required for Authentication service",
+      "guzzlehttp/guzzle": "Required for API Service class",
+      "symfony/dom-crawler": "Required for using the locale sniffer"
   },
   "autoload": {
     "files": ["src/helpers.php"],

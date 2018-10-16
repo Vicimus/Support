@@ -4,6 +4,9 @@ namespace Vicimus\Support\Http;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as IllRequest;
+use Throwable;
+
+use function is_array;
 
 /**
  * Class Request
@@ -28,10 +31,14 @@ class Request
     /**
      * Request constructor
      *
-     * @param IllRequest $request Illuminate request instance
+     * @param IllRequest|mixed[] $request Illuminate request instance
      */
-    public function __construct(IllRequest $request)
+    public function __construct($request)
     {
+        if (is_array($request)) {
+            $request = new IllRequest($request);
+        }
+
         $this->request = $request;
     }
 
@@ -68,12 +75,18 @@ class Request
      *
      * @param string $property The property to get
      * @param mixed  $default  The default
+     * @param string $cast     The type to cast to
      *
      * @return mixed
      */
-    public function get(string $property, $default = null)
+    public function get(string $property, $default = null, ?string $cast = null)
     {
-        return $this->request->get($property, $default);
+        $value = $this->request->get($property, $default);
+        if ($cast === null || $value === null) {
+            return $value;
+        }
+
+        return $this->cast($value, $cast);
     }
 
     /**
@@ -106,13 +119,14 @@ class Request
     /**
      * Build a query based on the request
      *
-     * @param Builder $builder The builder object
+     * @param Builder  $builder         The builder object
+     * @param string[] $mandatorySelect Things we have to select no matter what
      *
      * @return Builder
      */
-    public function query(Builder $builder): Builder
+    public function query(Builder $builder, array $mandatorySelect = []): Builder
     {
-        $query = $builder->select($this->select())
+        $query = $builder->select(array_merge($this->select(), $mandatorySelect))
             ->with($this->with());
 
         if ($this->has('orderBy')) {
@@ -130,8 +144,7 @@ class Request
      */
     public function select(): array
     {
-        $fields = explode(',', $this->request->get('fields', '*') ?? '*');
-        return $fields;
+        return explode(',', $this->request->get('fields', '*') ?? '*');
     }
 
     /**
@@ -151,7 +164,25 @@ class Request
             return [];
         }
 
-        $with = explode(',', $this->request->get('with', '') ?? '*');
-        return $with;
+        return explode(',', $this->request->get('with', '') ?? '');
+    }
+
+    /**
+     * Cast the provided property to its type
+     *
+     * @param mixed  $value The value to cast
+     * @param string $cast  The type to cast to
+     *
+     * @return mixed
+     */
+    private function cast($value, string $cast)
+    {
+        try {
+            settype($value, $cast);
+        } catch (Throwable $ex) {
+            return $value;
+        }
+
+        return $value;
     }
 }

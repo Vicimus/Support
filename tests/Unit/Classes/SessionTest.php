@@ -18,7 +18,6 @@ class SessionTest extends TestCase
     public function setup(): void
     {
         $GLOBALS['_SESSION'] = [];
-        $_SESSION = [];
     }
 
     /**

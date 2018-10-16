@@ -72,7 +72,7 @@ class ComplexQueryParser
     protected function gt($query, string $property, string $statement)
     {
         if ($statement === 'now') {
-            $statement = new DateTime;
+            $statement = new DateTime();
         }
 
         return $query->where($property, '>', $statement);
@@ -90,7 +90,7 @@ class ComplexQueryParser
     protected function in($query, string $property, string $statement)
     {
         $hasNull = false;
-        $possibilities = array_map(function ($value) use (&$hasNull) {
+        $possibilities = array_map(static function ($value) use (&$hasNull) {
             if ($value === 'null') {
                 $value = null;
                 $hasNull = true;
@@ -103,7 +103,7 @@ class ComplexQueryParser
             return $query->whereIn($property, $possibilities);
         }
 
-        return $query->where(function (Builder $sub) use ($property, $possibilities): void {
+        return $query->where(static function (Builder $sub) use ($property, $possibilities): void {
             $sub->whereIn($property, $possibilities)
                 ->orWhereNull($property);
         });
@@ -136,7 +136,7 @@ class ComplexQueryParser
     protected function lt($query, string $property, string $statement)
     {
         if ($statement === 'now') {
-            $statement = new DateTime;
+            $statement = new DateTime();
         }
 
         return $query->where($property, '<', $statement);

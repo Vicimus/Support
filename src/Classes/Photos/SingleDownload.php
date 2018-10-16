@@ -45,7 +45,7 @@ class SingleDownload implements DownloadRequest
      */
     public function getAsyncPool(): AsyncRequestPool
     {
-        throw new DownloadException('Cannot request async pool from ' . get_class($this));
+        throw new DownloadException('Cannot request async pool from ' . static::class);
     }
 
     /**
