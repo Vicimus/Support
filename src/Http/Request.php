@@ -4,6 +4,9 @@ namespace Vicimus\Support\Http;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as IllRequest;
+use Throwable;
+
+use function is_array;
 
 /**
  * Class Request
@@ -28,10 +31,14 @@ class Request
     /**
      * Request constructor
      *
-     * @param IllRequest $request Illuminate request instance
+     * @param IllRequest|mixed[] $request Illuminate request instance
      */
-    public function __construct(IllRequest $request)
+    public function __construct($request)
     {
+        if (is_array($request)) {
+            $request = new IllRequest($request);
+        }
+
         $this->request = $request;
     }
 
@@ -68,12 +75,18 @@ class Request
      *
      * @param string $property The property to get
      * @param mixed  $default  The default
+     * @param string $cast     The type to cast to
      *
      * @return mixed
      */
-    public function get(string $property, $default = null)
+    public function get(string $property, $default = null, ?string $cast = null)
     {
-        return $this->request->get($property, $default);
+        $value = $this->request->get($property, $default);
+        if ($cast === null || $value === null) {
+            return $value;
+        }
+
+        return $this->cast($value, $cast);
     }
 
     /**
@@ -152,5 +165,24 @@ class Request
         }
 
         return explode(',', $this->request->get('with', '') ?? '');
+    }
+
+    /**
+     * Cast the provided property to its type
+     *
+     * @param mixed  $value The value to cast
+     * @param string $cast  The type to cast to
+     *
+     * @return mixed
+     */
+    private function cast($value, string $cast)
+    {
+        try {
+            settype($value, $cast);
+        } catch (Throwable $ex) {
+            return $value;
+        }
+
+        return $value;
     }
 }

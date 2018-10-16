@@ -224,6 +224,10 @@ class ImmutableObject implements JsonSerializable, WillValidate
      */
     private function doAttributeCast(string $property, $value)
     {
+        if ($value === null) {
+            return $value;
+        }
+
         if (!array_key_exists($property, $this->casts)) {
             return $value;
         }

@@ -89,6 +89,19 @@ class StandardOutput implements ConsoleOutput
     }
 
     /**
+     * Output text (grey text)
+     *
+     * @param string $output The text to output
+     *
+     * @return void
+     */
+    public function linePermanent(string $output): void
+    {
+        $this->line('');
+        echo $this->pad($output).PHP_EOL;
+    }
+
+    /**
      * Make a line a specific length
      *
      * @param string $line The line

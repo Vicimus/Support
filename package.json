@@ -7,8 +7,8 @@
     "dev": "grunt watch"
   },
   "devDependencies": {
-    "grunt": "~0.4",
-    "grunt-contrib-watch": "latest",
+    "grunt": "^1.0.3",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-phpcbf": "^0.1.1",
     "grunt-phpcs": "latest",
     "grunt-phpmd": "^0.1.1",
