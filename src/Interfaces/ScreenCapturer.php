@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Interfaces;
 
+use Vicimus\Support\Classes\RenderSpecs;
+
 /**
  * Interface ScreenCapturer
  */
@@ -19,15 +21,12 @@ interface ScreenCapturer
     /**
      * Convert a URL into a PDF representation of that web-page
      *
-     * @param string $url    The URL to capture
-     * @param int    $width  The width of the entity or screen
-     * @param int    $height The height of the entity or screen
-     * @param int    $scale  The value to scale to
-     * @param int    $pages  The number of pages to limit to
+     * @param string      $url   The URL to capture
+     * @param RenderSpecs $specs Specifications for how to render
      *
      * @return string
      */
-    public function pdf(string $url, ?int $width, ?int $height, ?int $scale, ?int $pages): string;
+    public function pdf(string $url, RenderSpecs $specs): string;
 
     /**
      * Convert a URL into a PNG representation of that web-page
