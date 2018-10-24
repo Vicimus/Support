@@ -4,6 +4,10 @@ namespace Vicimus\Support\Classes;
 
 /**
  * Class RenderSpecs
+ * @property int $width
+ * @property int $height
+ * @property int $scale
+ * @property int $pages
  */
 class RenderSpecs extends ImmutableObject
 {
