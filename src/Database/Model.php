@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder|static select($fields)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereDoesntHave($relation, $closure = null)
  * @method static \Illuminate\Database\Eloquent\Builder|static take(int $number)
+ * @method static \Illuminate\Database\Eloquent\Builder|static has(string $relationship)
  * @method static bool truncate()
  * @method static int count()
  */
