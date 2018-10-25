@@ -43,5 +43,6 @@
   ],
   "config": {
     "sort-packages": true
-  }
+  },
+    "description": "Many support classes and interfaces"
 }
