@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Interfaces;
 
+use ErrorException;
+
 /**
  * Interface FileResolver
  */
@@ -14,6 +16,8 @@ interface FileResolver
      * @param string $mode The mode to use
      *
      * @return resource
+     *
+     * @throws ErrorException
      */
     public function open(string $path, string $mode);
 }

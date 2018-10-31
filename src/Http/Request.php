@@ -102,6 +102,26 @@ class Request
     }
 
     /**
+     * Checks for key aspects that may indicate this is a 'complex query'
+     *
+     * @return bool
+     */
+    public function isComplexQuery(): bool
+    {
+        $indicators = ['gt:', 'in:', 'lt:'];
+
+        foreach ($this->request->all() as $value) {
+            foreach ($indicators as $check) {
+                if (strpos((string) $value, $check) !== false) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Order by which column
      *
      * @return string[]
