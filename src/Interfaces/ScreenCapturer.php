@@ -12,11 +12,12 @@ interface ScreenCapturer
     /**
      * Convert a URL into a JPG representation of that web-page
      *
-     * @param string $url The URL to capture
+     * @param string      $url   The URL to capture
+     * @param RenderSpecs $specs The render specs
      *
      * @return string
      */
-    public function jpg(string $url): string;
+    public function jpg(string $url, ?RenderSpecs $specs = null): string;
 
     /**
      * Convert a URL into a PDF representation of that web-page
@@ -31,9 +32,10 @@ interface ScreenCapturer
     /**
      * Convert a URL into a PNG representation of that web-page
      *
-     * @param string $url The URL to capture
+     * @param string      $url   The URL to capture
+     * @param RenderSpecs $specs The specs
      *
      * @return string
      */
-    public function png(string $url): string;
+    public function png(string $url, ?RenderSpecs $specs = null): string;
 }
