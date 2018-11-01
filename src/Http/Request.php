@@ -13,6 +13,9 @@ use function is_array;
  */
 class Request
 {
+    /** Used to detect complex queries */
+    private const COMPLEX_INDICATORS = ['gt:', 'in:', 'lt:'];
+
     /**
      * Handlers to execute against different operations
      *
@@ -102,12 +105,32 @@ class Request
     }
 
     /**
+     * Checks for key aspects that may indicate this is a 'complex query'
+     *
+     * @return bool
+     */
+    public function isComplexQuery(): bool
+    {
+        foreach ($this->request->all() as $value) {
+            if ($this->checkForComplex($value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Order by which column
      *
      * @return string[]
      */
     public function orderBy(): array
     {
+        if (!$this->request->has('orderBy')) {
+            return ['id', 'asc'];
+        }
+
         $parts = explode(':', $this->request->get('orderBy'));
         if (count($parts) >= 2) {
             return $parts;
@@ -184,5 +207,23 @@ class Request
         }
 
         return $value;
+    }
+
+    /**
+     * Check for a complex string
+     *
+     * @param string|int|mixed $value The value to check
+     *
+     * @return bool
+     */
+    private function checkForComplex($value): bool
+    {
+        foreach (self::COMPLEX_INDICATORS as $check) {
+            if (strpos((string) $value, $check) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
