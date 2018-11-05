@@ -2,15 +2,18 @@
 
 namespace Vicimus\Support\Classes\Photos;
 
+use Glovebox\Inventory\Exceptions\Photos\PhotoException;
+use Glovebox\Inventory\Exceptions\Photos\UnauthorizedPhotoException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use Vicimus\Support\Classes\API\Headers;
-use Vicimus\Support\Exceptions\PhotoException;
-use Vicimus\Support\Exceptions\UnauthorizedPhotoException;
 use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Interfaces\Vehicle;
 use Vicimus\Support\Traits\ConsoleOutputter;
+
+use function strlen;
 
 /**
  * Scan a single photo for its status
@@ -54,6 +57,7 @@ class SingleScanner implements Scanner
      *
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
+     * @throws GuzzleException
      */
     public function scan(Client $client)
     {
@@ -72,13 +76,20 @@ class SingleScanner implements Scanner
      *
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
+     * @throws GuzzleException
+     * @throws ClientException
      */
     protected function headers(Client $client, Vehicle $stock, Photo $photo): Headers
     {
         try {
             $response = $client->request('HEAD', $photo->origin());
         } catch (ClientException $ex) {
-            $response = $ex->getResponse()->getStatusCode();
+            $response = $ex->getResponse();
+            if (!$response) {
+                throw $ex;
+            }
+
+            $response = $response->getStatusCode();
             if ($response === 401) {
                 throw new UnauthorizedPhotoException($stock, $photo->origin(), '401 Unauthorized');
             }
@@ -117,7 +128,7 @@ class SingleScanner implements Scanner
             return $message;
         }
 
-        $start = stripos($message, $subNeedle, $start) + strlen($subNeedle);
+        $start = strpos($message, $subNeedle, $start) + strlen($subNeedle);
         $message = substr($message, $start, $end - $start);
         return trim($message);
     }
