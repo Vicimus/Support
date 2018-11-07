@@ -139,7 +139,7 @@ class Application extends Container implements LaravelApp
      */
     public function runningInConsole()
     {
-        return true;
+        return false;
     }
 
     /**
