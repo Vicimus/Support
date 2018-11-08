@@ -171,6 +171,16 @@ class Request
     }
 
     /**
+     * Retrieve the illuminate request object
+     *
+     * @return IllRequest
+     */
+    public function toRequest(): IllRequest
+    {
+        return $this->request;
+    }
+
+    /**
      * Get the with values
      *
      * @param mixed ...$default The default with
