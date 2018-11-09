@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Tests\Unit\Http;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as IllRequest;
 use Vicimus\Support\Http\Request;
 use Vicimus\Support\Testing\TestCase;
@@ -135,5 +136,56 @@ class RequestTest extends TestCase
         ]);
 
         $this->assertEquals(['vehicle', 'owner.status'], $request->orderBy());
+    }
+
+    /**
+     * Test except excludes
+     *
+     * @return void
+     */
+    public function testExcept(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+            'status' => '3',
+        ]);
+
+        $this->assertEquals(['status' => 3], $request->except('banana'));
+
+        $request = new Request([
+            'banana' => 'strawberry',
+            'status' => '3',
+            'juju' => 'smithschuster',
+        ]);
+
+        $this->assertEquals(['juju' => 'smithschuster'], $request->except(['banana', 'status']));
+    }
+
+    /**
+     * Test has
+     *
+     * @return void
+     */
+    public function testHas(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+        ]);
+
+        $this->assertTrue($request->has('banana'));
+        $this->assertFalse($request->has('strawberry'));
+    }
+
+    /**
+     * Test receiving the illuminate request
+     *
+     * @return void
+     */
+    public function testToRequest(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+        ]);
+        $this->assertInstanceOf(IllRequest::class, $request->toRequest());
     }
 }
