@@ -18,5 +18,4 @@ class ViewServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'support');
     }
-
 }
