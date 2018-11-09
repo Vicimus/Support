@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Tests\Unit\Http;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as IllRequest;
 use Vicimus\Support\Http\Request;
 use Vicimus\Support\Testing\TestCase;
