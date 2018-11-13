@@ -72,6 +72,7 @@ class SingleScanner implements Scanner
      *
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function headers(Client $client, Vehicle $stock, Photo $photo): Headers
     {
