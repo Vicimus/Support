@@ -3,6 +3,8 @@
 namespace Vicimus\Support\Classes\Photos;
 
 use GuzzleHttp\Client;
+use Vicimus\Support\Exceptions\PhotoException;
+use Vicimus\Support\Exceptions\UnauthorizedPhotoException;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 
 /**
@@ -16,6 +18,9 @@ interface Scanner extends ConsoleOutput
      * @param Client $client A client to use for scanning
      *
      * @return PhotoStatus|PhotoStatus[]
+     *
+     * @throws PhotoException
+     * @throws UnauthorizedPhotoException
      */
     public function scan(Client $client);
 }
