@@ -6,6 +6,15 @@ use JsonSerializable;
 
 /**
  * Interface Stats
+ *
+ * @property int $invites
+ * @property int $emails
+ * @property int $letters
+ * @property int $excluded
+ * @property int $total
+ * @property float $cost
+ * @property mixed[] $breakdown
+ * @property Campaign $campaign
  */
 interface Stats extends JsonSerializable
 {
