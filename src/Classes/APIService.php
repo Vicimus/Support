@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Classes;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
@@ -51,14 +51,14 @@ class APIService
     /**
      * APIService constructor.
      *
-     * @param Client   $client     The guzzle client
-     * @param string   $url        The base url for the api
-     * @param string   $id         The ID for the API
-     * @param string   $secret     The Secret for the API
-     * @param string[] $additional Additional parameters to send with all requests
+     * @param ClientInterface $client     The guzzle client
+     * @param string          $url        The base url for the api
+     * @param string          $id         The ID for the API
+     * @param string          $secret     The Secret for the API
+     * @param string[]        $additional Additional parameters to send with all requests
      */
     public function __construct(
-        Client $client,
+        ClientInterface $client,
         string $url,
         ?string $id = null,
         ?string $secret = null,
