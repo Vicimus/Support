@@ -67,6 +67,27 @@ interface Campaign extends Eloquent
     public function customers(): HasManyFromAPI;
 
     /**
+     * Check if an campaign is email only
+     *
+     * @return bool
+     */
+    public function isEmailOnly(): bool;
+
+    /**
+     * Is the campaign letter only
+     *
+     * @return bool
+     */
+    public function isLetterOnly(): bool;
+
+    /**
+     * Is the campaign voice only
+     *
+     * @return bool
+     */
+    public function isVoiceOnly(): bool;
+
+    /**
      * The logs method
      *
      * @return HasMany
