@@ -10,6 +10,7 @@ use DateTimeZone;
  */
 class DateTime extends Date
 {
+    /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * DateTime constructor.
      *
@@ -18,7 +19,10 @@ class DateTime extends Date
      */
     public function __construct(string $time = 'now', ?DateTimeZone $timezone = null)
     {
-        $time = $this->replace($time);
+        if ($time !== 'now') {
+            $time = $this->replace($time);
+        }
+
         parent::__construct($time, $timezone);
     }
 
