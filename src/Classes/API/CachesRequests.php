@@ -32,19 +32,20 @@ trait CachesRequests
     /**
      * Try to find a cache match
      *
-     * @param string $method  The method being used
-     * @param string $path    The path being requested
-     * @param mixed  $payload The payload being sent
+     * @param string      $method  The method being used
+     * @param string      $path    The path being requested
+     * @param mixed       $payload The payload being sent
+     * @param string|null $tag     A special tag to use
      *
      * @return mixed|null
      */
-    public function cacheMatch(string $method, string $path, $payload)
+    public function cacheMatch(string $method, string $path, $payload, ?string $tag = null)
     {
         if (!$this->cache) {
             return null;
         }
 
-        $hash = $this->generateCacheHash($method, $path, $payload);
+        $hash = $this->generateCacheHash($method, $path, $payload, $tag);
         $match = $this->findCacheMatch($hash);
         if (!$match) {
             return null;
@@ -72,16 +73,17 @@ trait CachesRequests
     /**
      * Clear the cache
      *
-     * @param string   $method  The method used
-     * @param string   $path    The path used
-     * @param string[] $payload The payload sent
+     * @param string      $method  The method used
+     * @param string      $path    The path used
+     * @param string[]    $payload The payload sent
+     * @param string|null $tag     Special tag to use
      *
      * @return bool
      * @throws RestException
      */
-    public function clearCache(string $method, string $path, array $payload): bool
+    public function clearCache(string $method, string $path, array $payload, ?string $tag = null): bool
     {
-        $hash = $this->generateCacheHash($method, $path, $payload);
+        $hash = $this->generateCacheHash($method, $path, $payload, $tag);
         if (!$this->cache) {
             throw new RestException('Must bind a cache repository before clearing cache');
         }
@@ -104,14 +106,19 @@ trait CachesRequests
     /**
      * Generate a hash to use as a key
      *
-     * @param string $method  The HTTP method
-     * @param string $path    The path that was requested
-     * @param mixed  $payload The payload of data being sent
+     * @param string      $method  The HTTP method
+     * @param string      $path    The path that was requested
+     * @param mixed       $payload The payload of data being sent
+     * @param string|null $tag     A special tag to use
      *
      * @return string
      */
-    protected function generateCacheHash(string $method, string $path, $payload): string
+    protected function generateCacheHash(string $method, string $path, $payload, ?string $tag = null): string
     {
+        if ($tag) {
+            return md5(sprintf('%s:%s', 'onyx', $tag));
+        }
+
         return md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
     }
 }
