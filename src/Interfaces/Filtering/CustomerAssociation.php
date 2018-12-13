@@ -14,7 +14,6 @@ use Vicimus\Support\Interfaces\Eloquent;
  */
 interface CustomerAssociation extends Eloquent
 {
-
     /**
      * The campaign the job is for
      *
