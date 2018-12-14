@@ -47,4 +47,17 @@ class CachesRequestsTest extends TestCase
         $this->instance->bindCache(null);
         $this->assertNull($this->instance->cacheMatch('GET', '/api', ['id' => 1]));
     }
+
+    /**
+     * Test clearing the cache
+     *
+     * @return void
+     * @throws \Throwable
+     */
+    public function testClearCache(): void
+    {
+        $this->assertNotNull($this->instance->cacheMatch('', '', [], 'banana'));
+        $this->instance->clearCache('', '', [], 'banana');
+        $this->assertNull($this->instance->cacheMatch('', '', [], 'banana'));
+    }
 }

@@ -99,7 +99,8 @@ class BasicCache implements Repository
      */
     public function forget($key)
     {
-        // TODO: Implement forget() method.
+        unset($this->cache[$key]);
+        return !array_key_exists($key, $this->cache);
     }
 
     /**
