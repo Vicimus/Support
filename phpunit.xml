@@ -19,6 +19,7 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <file>./src/Testing/Application.php</file>
+                <file>./src/Testing/BasicCache.php</file>
             </exclude>
         </whitelist>
     </filter>
