@@ -5,6 +5,8 @@ namespace Vicimus\Support\Classes\API;
 use Illuminate\Contracts\Cache\Repository;
 use Vicimus\Support\Exceptions\RestException;
 
+use function is_string;
+
 /**
  * Trait CachesRequests
  */
@@ -24,7 +26,7 @@ trait CachesRequests
      *
      * @return void
      */
-    public function bindCache(Repository $cache): void
+    public function bindCache(?Repository $cache): void
     {
         $this->cache = $cache;
     }
@@ -52,7 +54,7 @@ trait CachesRequests
         }
 
         if (is_string($match)) {
-            return json_decode($match);
+            return json_decode($match) ?? $match;
         }
 
 
@@ -116,7 +118,7 @@ trait CachesRequests
     protected function generateCacheHash(string $method, string $path, $payload, ?string $tag = null): string
     {
         if ($tag) {
-            return md5(sprintf('%s:%s', 'onyx', $tag));
+            return md5(sprintf('%s:%s', CachesRequests::class, $tag));
         }
 
         return md5(sprintf('%s:%s:%s', $path, json_encode($payload), $method));
