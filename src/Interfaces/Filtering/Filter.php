@@ -55,6 +55,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $vehicle_rate_max
  * @property int $vehicle_value_min
  * @property int $vehicle_value_max
+ * @property boolean $exclusion_days_override
  */
 interface Filter extends Eloquent
 {
