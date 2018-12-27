@@ -37,7 +37,7 @@ class Timer
     /**
      * The seconds between calls
      *
-     * @var int
+     * @var float
      */
     private $seconds;
 
