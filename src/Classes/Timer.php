@@ -46,9 +46,9 @@ class Timer
      *
      * @param string   $invoker The invoker label
      * @param callable $closure The closure to execute
-     * @param int      $seconds The seconds delay
+     * @param float    $seconds The seconds delay
      */
-    public function __construct(string $invoker, callable $closure, int $seconds)
+    public function __construct(string $invoker, callable $closure, float $seconds)
     {
         $this->invoker = $invoker;
         $this->closure = $closure;
