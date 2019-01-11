@@ -9,6 +9,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use stdClass;
+use Throwable;
 use Vicimus\Support\Database\ApiModel;
 use Vicimus\Support\Exceptions\ApiRelationException;
 
@@ -17,6 +18,11 @@ use Vicimus\Support\Exceptions\ApiRelationException;
  */
 class HasManyFromAPI
 {
+    /**
+     * Insert threshold
+     */
+    private const THRESHOLD = 1000;
+
     /**
      * Cast columns
      *
@@ -117,6 +123,8 @@ class HasManyFromAPI
      */
     public function associate(array $ids, array $additional = []): void
     {
+        $records = [];
+
         foreach (array_unique($ids) as $id) {
             if (!is_int($id)) {
                 throw new InvalidArgumentException(
@@ -136,9 +144,27 @@ class HasManyFromAPI
                 'updated_at' => new DateTime(),
             ]);
 
-            $this->db->table($this->table)
-                ->insert($insertion);
+            $records[] = $insertion;
+
+            if (count($records) < self::THRESHOLD) {
+                continue;
+            }
+
+            try {
+                $this->db->table($this->table)
+                    ->insert($records);
+            } catch (Throwable $ex) {
+                dd($records);
+            }
+            $records = [];
         }
+
+        if (!count($records)) {
+            return;
+        }
+
+        $this->db->table($this->table)
+            ->insert($records);
     }
 
     /**
