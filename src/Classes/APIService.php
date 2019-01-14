@@ -144,7 +144,7 @@ class APIService
 
         $query = 'query';
         if (strtolower($method) !== 'get') {
-            $query = 'form_params';
+            $query = 'json';
         }
 
         $match = $this->cacheMatch($method, $path, $payload);
