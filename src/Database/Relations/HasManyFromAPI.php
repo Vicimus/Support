@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Database\Relations;
 
-use DateTime;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Query\Builder;
@@ -10,6 +9,7 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use stdClass;
 use Throwable;
+use Vicimus\Support\Classes\DateTime;
 use Vicimus\Support\Database\ApiModel;
 use Vicimus\Support\Exceptions\ApiRelationException;
 
@@ -137,12 +137,7 @@ class HasManyFromAPI
             $insertion[$this->right] = $id;
 
             $add = $additional[$id] ?? [];
-            $insertion = array_merge($insertion, $add);
-
-            $insertion = array_merge($insertion, [
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ]);
+            $insertion = $this->buildInsertion($insertion, $add);
 
             $records[] = $insertion;
 
@@ -453,10 +448,26 @@ class HasManyFromAPI
      */
     protected function singular(string $table): string
     {
-        if (substr($table, -1, 1) === 's') {
+        if ($table[strlen($table) - 1] === 's') {
             return substr($table, 0, -1);
         }
 
         return $table;
+    }
+
+    /**
+     * Build the array that will be inserted into the array
+     *
+     * @param mixed[] $insertion Basic insertion details
+     * @param mixed[] $add       Additional data
+     *
+     * @return mixed[]
+     */
+    private function buildInsertion(array $insertion, array $add): array
+    {
+        return array_merge($insertion, $add, [
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+        ]);
     }
 }
