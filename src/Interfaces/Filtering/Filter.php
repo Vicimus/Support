@@ -50,6 +50,13 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $displayed_lettered
  * @property string $languages
  * @property bool $customers_locked
+ * @property string $pay_types
+ * @property int vehicle_rate_min
+ * @property int $vehicle_rate_max
+ * @property int $vehicle_value_min
+ * @property int $vehicle_value_max
+ * @property boolean $exclusion_days_override
+ * @property int $id
  */
 interface Filter extends Eloquent
 {

@@ -15,6 +15,7 @@ use JsonSerializable;
  * @property float $cost
  * @property mixed[] $breakdown
  * @property Campaign $campaign
+ * @property OptOuts $optOuts
  */
 interface Stats extends JsonSerializable
 {
