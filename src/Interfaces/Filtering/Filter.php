@@ -8,6 +8,7 @@ use Vicimus\Support\Interfaces\Eloquent;
 /**
  * The Filter model
  *
+ * @property int $id
  * @property string $name
  * @property bool $global
  * @property bool $preset
@@ -49,14 +50,18 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $displayed_emailed
  * @property int $displayed_lettered
  * @property string $languages
- * @property bool $customers_locked
  * @property string $pay_types
- * @property int vehicle_rate_min
- * @property int $vehicle_rate_max
  * @property int $vehicle_value_min
  * @property int $vehicle_value_max
- * @property boolean $exclusion_days_override
- * @property int $id
+ * @property int $vehicle_rate_min
+ * @property int $vehicle_rate_max
+ * @property string $update_hash
+ * @property string $equity_position_finance
+ * @property string $equity_position_lease
+ * @property int $equity_position_finance_min
+ * @property int $equity_position_finance_max
+ * @property int $equity_position_lease_min
+ * @property int $equity_position_lease_max
  */
 interface Filter extends Eloquent
 {
