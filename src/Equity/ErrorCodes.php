@@ -4,6 +4,7 @@ namespace Vicimus\Support\Equity;
 
 abstract class ErrorCodes
 {
+    public const SUCCESS = 0;
     public const UNSPECIFIED_RESULT = 2;
     public const RETURNED_MULTIPLE = 3;
     public const INVALID_PARAMS = 4;
