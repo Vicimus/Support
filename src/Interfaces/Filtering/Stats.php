@@ -20,6 +20,13 @@ use JsonSerializable;
 interface Stats extends JsonSerializable
 {
     /**
+     * Delete the model
+     *
+     * @return bool
+     */
+    public function delete(): bool;
+
+    /**
      * Return all stats as an array of data
      * @return mixed[]
      */
