@@ -41,6 +41,16 @@ class Model extends LaravelModel
     ];
 
     /**
+     * Get a list of the columns
+     *
+     * @return string[]
+     */
+    public function getTableColumns(): array
+    {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->table);
+    }
+
+    /**
      * Get a relative
      *
      * Mainly used for mocks
