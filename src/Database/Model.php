@@ -48,30 +48,6 @@ class Model extends LaravelModel
     ];
 
     /**
-     * Get a list of the columns
-     *
-     * @return string[]
-     */
-    public function getTableColumns(): array
-    {
-        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->table);
-    }
-
-    /**
-     * Get a relative
-     *
-     * Mainly used for mocks
-     *
-     * @param string $relative The relative to get
-     *
-     * @return mixed
-     */
-    public function relation(string $relative)
-    {
-        return $this->$relative;
-    }
-  
-    /**
      * Get an attribute from the model.
      *
      * @param string|mixed $key The key to get
@@ -100,6 +76,40 @@ class Model extends LaravelModel
         }
 
         return $this->getRelationValue($key);
+    }
+
+    /**
+     * Get a list of the columns
+     *
+     * @return string[]
+     */
+    public function getTableColumns(): array
+    {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->table);
+    }
+
+    /**
+     * Get a relative
+     *
+     * Mainly used for mocks
+     *
+     * @param string $relative The relative to get
+     *
+     * @return mixed
+     */
+    public function relation(string $relative)
+    {
+        return $this->$relative;
+    }
+
+    /**
+     * Reset all
+     *
+     * @return void
+     */
+    public static function resetAll(): void
+    {
+        self::$noCasts = [];
     }
 
     /**
