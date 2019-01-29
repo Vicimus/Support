@@ -65,6 +65,8 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $target_sold
  * @property bool $target_sold_exclude
  * @property bool $exclusion_days_override
+ * @property int $birthday
+ * @property int $warranty_expiration
  */
 interface Filter extends Eloquent
 {
