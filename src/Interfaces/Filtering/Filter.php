@@ -62,6 +62,9 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $equity_position_finance_max
  * @property int $equity_position_lease_min
  * @property int $equity_position_lease_max
+ * @property int $target_sold
+ * @property bool $target_sold_exclude
+ * @property bool $exclusion_days_override
  */
 interface Filter extends Eloquent
 {
