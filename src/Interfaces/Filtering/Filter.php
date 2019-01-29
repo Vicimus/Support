@@ -67,6 +67,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $exclusion_days_override
  * @property int $birthday
  * @property int $warranty_expiration
+ * @property bool $exclude_bounced
  */
 interface Filter extends Eloquent
 {
