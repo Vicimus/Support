@@ -7,8 +7,6 @@ use Vicimus\Support\Classes\ImmutableObject;
 
 /**
  * Class MultipartPayload
- *
- * @package Vicimus\Support\Classes\API
  */
 class MultipartPayload extends ImmutableObject
 {
@@ -16,7 +14,7 @@ class MultipartPayload extends ImmutableObject
      * MultipartPayload constructor.
      *
      * @param string      $name     The name of this payload line
-     * @param string|File $contents The content (string or file resource)
+     * @param File|mixed  $contents The content (string or file resource)
      * @param null|string $filename The filename (Optional)
      * @param null|string $mime     The mime type
      */

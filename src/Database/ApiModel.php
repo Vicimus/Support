@@ -3,11 +3,12 @@
 namespace Vicimus\Support\Database;
 
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
+use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Class ApiModel
  *
- * @package Vicimus\Support\Database
+ * @property int $id
  */
 class ApiModel
 {
@@ -23,18 +24,18 @@ class ApiModel
      *
      * @var HasManyFromAPI
      */
-    protected $db;
+    protected $database;
 
     /**
      * ApiModel constructor.
      *
-     * @param HasManyFromAPI $db      Access to db functions
-     * @param mixed          $payload An array of data from an API call
+     * @param HasManyFromAPI $database Access to db functions
+     * @param mixed          $payload  An array of data from an API call
      */
-    public function __construct(HasManyFromAPI $db, $payload)
+    public function __construct(HasManyFromAPI $database, $payload)
     {
         $this->attributes = (array) $payload;
-        $this->db = $db;
+        $this->database = $database;
     }
 
     /**
@@ -63,15 +64,46 @@ class ApiModel
     }
 
     /**
+     * Get a property
+     *
+     * @param string $property The property to get
+     *
+     * @return mixed|null
+     */
+    public function property(string $property)
+    {
+        return $this->attributes[$property] ?? null;
+    }
+
+    /**
+     * Convert into an array
+     *
+     * @return mixed[]
+     */
+    public function toArray(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Update a model
      *
      * @param string[] $params The parameters to update locally
+     *
+     * @throws ApiRelationException
      *
      * @return ApiModel
      */
     public function update(array $params): ApiModel
     {
-        $this->db->update((int) $this->attributes['id'], $params);
+        if (!($this->attributes['id'] ?? false)) {
+            throw new ApiRelationException('Cannot update without an id attribute set');
+        }
+
+        if (!$this->database->update((int) $this->attributes['id'], $params)) {
+            throw new ApiRelationException('Update failed');
+        }
+
         return $this;
     }
 }

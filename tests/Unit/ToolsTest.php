@@ -10,8 +10,6 @@ use function key;
 
 /**
  * Class ToolsTest
- *
- * @package Vicimus\Support\Tests\Unit
  */
 class ToolsTest extends TestCase
 {
@@ -49,6 +47,9 @@ class ToolsTest extends TestCase
 
         $result = Tools::getCountryFromState('CA');
         $this->assertEquals('US', $result);
+
+        $result = Tools::getCountryFromState('BANANA');
+        $this->assertNull($result);
     }
 
     /**
@@ -155,5 +156,7 @@ class ToolsTest extends TestCase
 
         $format = Tools::detectDateFormat($dates);
         $this->assertEquals('Y-m-d', $format);
+
+        $this->assertNull(Tools::detectDateFormat([]));
     }
 }

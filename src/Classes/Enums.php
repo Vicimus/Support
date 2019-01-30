@@ -291,7 +291,7 @@ class Enums
         }
 
         if (!key_exists($country, $states)) {
-            return null;
+            return [];
         }
 
         return $states[$country];

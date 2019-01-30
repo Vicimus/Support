@@ -21,7 +21,7 @@ trait Processing
      *
      * @param string[] $options The options to set
      *
-     * @return Processor
+     * @return Processor|Processing
      */
     public function options(array $options): Processor
     {
@@ -46,7 +46,7 @@ trait Processing
     }
 
     /**
-     * Return the priortiy of your processor
+     * Return the priority of your processor
      *
      * @return int
      */

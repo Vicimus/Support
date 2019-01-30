@@ -2,32 +2,35 @@
 
 namespace Vicimus\Support\Classes;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
-use InvalidArgumentException;
+use GuzzleHttp\Psr7\Response;
+use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Classes\API\MultipartPayload;
+use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Exceptions\ServerException;
 use Vicimus\Support\Exceptions\UnauthorizedException;
 
 /**
  * Class APIService
- *
- * @package Vicimus\Support\Classes
  */
 class APIService
 {
+    use CachesRequests;
+
     /**
      * These additional parameters will be sent with all requests
      *
      * @var string[]
      */
     protected $additional = [];
+
     /**
      * The guzzle client
      *
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
@@ -48,14 +51,14 @@ class APIService
     /**
      * APIService constructor.
      *
-     * @param Client   $client     The guzzle client
-     * @param string   $url        The base url for the api
-     * @param string   $id         The ID for the API
-     * @param string   $secret     The Secret for the API
-     * @param string[] $additional Additional parameters to send with all requests
+     * @param ClientInterface $client     The guzzle client
+     * @param string          $url        The base url for the api
+     * @param string          $id         The ID for the API
+     * @param string          $secret     The Secret for the API
+     * @param string[]        $additional Additional parameters to send with all requests
      */
     public function __construct(
-        Client $client,
+        ClientInterface $client,
         string $url,
         ?string $id = null,
         ?string $secret = null,
@@ -65,6 +68,122 @@ class APIService
         $this->url = $url;
         $this->cred = base64_encode($id . ':' . $secret);
         $this->additional = $additional;
+    }
+
+    /**
+     * Make a multi-part request to the vault
+     *
+     * @param string             $path    The path to post to
+     * @param MultipartPayload[] $payload The payload to send
+     * @param string             $verb    The http verb to use
+     *
+     * @throws UnauthorizedException on 401
+     * @throws ServerException on 500
+     *
+     * @return mixed
+     */
+    public function multipart(string $path, array $payload, string $verb = 'POST')
+    {
+        $this->validate($payload);
+
+        if (strtoupper($verb) === 'PATCH') {
+            $payload[] = new MultipartPayload('_method', $verb);
+            $verb = 'POST';
+        }
+
+        $response = null;
+        $multipart = $this->format($payload);
+
+        $path = str_replace($this->url, '', $path);
+        if (strpos($path, '/') !== 0) {
+            $path = '/' . $path;
+        }
+
+        try {
+            /** @var Response $response */
+            $response = $this->client->$verb($this->url . $path, [
+                'headers' => [
+                    'authorization' => $this->cred,
+                ],
+                'multipart' => $multipart,
+            ]);
+
+            $response = json_decode((string) $response->getBody());
+        } catch (ClientException $ex) {
+            /** @var Response $rawResponse */
+            $rawResponse = $ex->getResponse();
+            if ($ex->getCode()) {
+                $response = array_values(
+                    json_decode((string) $rawResponse->getBody(), true)
+                )[0];
+                throw new UnauthorizedException($response, $rawResponse->getStatusCode());
+            }
+        } catch (GuzzleServerException $ex) {
+            /** @var Response $rawResponse */
+            $rawResponse = $ex->getResponse();
+            $response = (string) $rawResponse->getBody();
+            throw new ServerException($response, $rawResponse->getStatusCode());
+        }
+
+        return $response;
+    }
+
+    /**
+     * Send a request to the API
+     *
+     * @param string          $method  The method to use
+     * @param string          $path    The path to call
+     * @param string[]|object $payload The payload to send
+     *
+     * @throws RestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return mixed[]|\stdClass
+     */
+    public function request(string $method, string $path, $payload = [])
+    {
+        $path = str_replace($this->url, '', $path);
+        if (strpos($path, '/') !== 0) {
+            $path = '/' . $path;
+        }
+
+        $query = 'query';
+        if (strtolower($method) !== 'get') {
+            $query = 'json';
+        }
+
+        $match = $this->cacheMatch($method, $path, $payload);
+        if ($match) {
+            return $match;
+        }
+
+        try {
+            $response = $this->client->request($method, $this->url . $path, [
+                'headers' => ['authorization' => $this->cred],
+                $query => $this->payload($payload),
+            ]);
+        } catch (ClientException | GuzzleServerException $ex) {
+            $response = $ex->getResponse();
+            $code = $response->getStatusCode();
+            $message = (string) $response->getBody();
+            $decoded = json_decode($message, true);
+            if ($decoded) {
+                $message = $decoded['error'] ?? $message;
+            }
+
+            throw new RestException($message, $code);
+        }
+
+        $result = (string) $response->getBody();
+        if ($this->cache) {
+            $this->cache->add(
+                $this->generateCacheHash($method, $path, $payload),
+                $result,
+                $this->cacheTime()
+            );
+        }
+
+        return json_decode($result);
     }
 
     /**
@@ -84,107 +203,21 @@ class APIService
 
         return $formatted;
     }
-    /**
-     * Make a multi-part request to the vault
-     *
-     * @param string             $path    The path to post to
-     * @param MultipartPayload[] $payload The payload to send
-     * @param string             $verb    The http verb to use
-     *
-     * @throws UnauthorizedException on 401
-     * @throws ServerException on 500
-     *
-     * @return mixed
-     */
-    protected function multipart(string $path, array $payload, string $verb = 'POST')
-    {
-        $this->validate($payload);
-
-        if ($verb === 'PATCH') {
-            $payload[] = new MultipartPayload('_method', $verb);
-            $verb = 'POST';
-        }
-
-        $response = null;
-        $multipart = $this->format($payload);
-
-        $path = str_replace($this->url, '', $path);
-        if (substr($path, 0, 1) !== '/') {
-            $path = '/' . $path;
-        }
-
-        try {
-            /* @var Response $response */
-            $response = $this->client->$verb($this->url . $path, [
-                'headers' => [
-                    'authorization' => $this->cred,
-                ],
-                'multipart' => $multipart,
-            ]);
-
-            return json_decode((string) $response->getBody());
-        } catch (ClientException $ex) {
-            if ($ex->getCode()) {
-                $response = array_values(
-                    json_decode((string) $ex->getResponse()->getBody(), true)
-                )[0];
-                throw new UnauthorizedException($response, $ex->getResponse()->getStatusCode());
-            }
-        } catch (GuzzleServerException $ex) {
-            $response = (string) $ex->getResponse()->getBody();
-            throw new ServerException($response, $ex->getResponse()->getStatusCode());
-        }
-
-        return $response;
-    }
 
     /**
-     * Send a request to the API
+     * Convert, validate and transform
      *
-     * @param string          $method  The method to use
-     * @param string          $path    The path to call
-     * @param string[]|object $payload The payload to send
+     * @param mixed $payload Payload to send with request
      *
-     * @throws RestException
-     *
-     * @return mixed[]|\stdClass
+     * @return mixed[]
      */
-    protected function request(string $method, string $path, $payload = [])
+    protected function payload($payload): array
     {
         if (!is_array($payload)) {
             $payload = json_decode(json_encode($payload), true);
         }
 
-        $path = str_replace($this->url, '', $path);
-        if (substr($path, 0, 1) !== '/') {
-            $path = '/' . $path;
-        }
-
-        $query = 'query';
-        if (strtolower($method) !== 'get') {
-            $query = 'form_params';
-        }
-
-        $payload = array_merge($this->additional, $payload);
-
-        try {
-            $response = $this->client->request($method, $this->url . $path, [
-                'headers' => ['authorization' => $this->cred],
-                $query => $payload,
-            ]);
-        } catch (ClientException | ServerException $ex) {
-            $response = $ex->getResponse();
-            $code = $response->getStatusCode();
-            $message = (string) $response->getBody();
-            $decoded = json_decode($message, true);
-            if ($decoded) {
-                $message = $decoded['error'] ?? $message;
-            }
-
-            throw new RestException($message, $code);
-        }
-
-        return json_decode((string) $response->getBody());
+        return array_merge($this->additional, $payload ?? []);
     }
 
     /**
@@ -192,19 +225,17 @@ class APIService
      *
      * @param MultipartPayload[] $payload The payload to validate
      *
+     * @throws InvalidArgumentException
+     *
      * @return void
      */
     protected function validate(array $payload): void
     {
         foreach ($payload as $row) {
             if (!$row instanceof MultipartPayload) {
-                $type = is_object($row) ? get_class($row) : gettype($row);
                 throw new InvalidArgumentException(
-                    sprintf(
-                        '$payload must be an array of %s, got [%s]',
-                        MultipartPayload::class,
-                        $type
-                    )
+                    $row,
+                    MultipartPayload::class
                 );
             }
         }

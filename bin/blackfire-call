@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php declare(strict_types = 1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+[$path, $verb, $url, $params] = $argv;
+
+switch (strtolower($verb)) {
+    case 'post':
+        $method = ' -X POST ';
+        break;
+    case 'patch':
+        $method = ' -X PATCH';
+        break;
+    case 'get':
+    case 'delete':
+        $method = '';
+        break;
+    default:
+        $method = '';
+}
+
+$headers = '';
+if (stripos($params, '.php') !== false) {
+    $params = include $params;
+    $params = json_encode($params);
+    $headers = '-H "Content-Type: application/json"';
+}
+
+if ($params) {
+    $params = ' -d ' . $params;
+}
+
+$command = sprintf('blackfire curl %s %s %s -o ~/blackfire_last_response.log %s ', $params, $headers, $method, $url);
+$std = new \Vicimus\Support\Classes\StandardOutput();
+$std->info(sprintf('Executing %s', $command));
+
+$std->info(shell_exec($command));

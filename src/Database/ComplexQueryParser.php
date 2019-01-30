@@ -3,9 +3,10 @@
 namespace Vicimus\Support\Database;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use InvalidArgumentException;
+use Illuminate\Database\Query\Builder;
+use Vicimus\Support\Exceptions\InvalidArgumentException;
 
 /**
  * Handles the more complex queries for the API
@@ -53,7 +54,7 @@ class ComplexQueryParser
      */
     public function query($query, string $property, string $value)
     {
-        $this->typecheck($query, 'complex');
+        $this->typeCheck($query);
         list($type, $statement) = explode(':', $value);
 
         return $this->$type($query, $property, $statement);
@@ -71,7 +72,7 @@ class ComplexQueryParser
     protected function gt($query, string $property, string $statement)
     {
         if ($statement === 'now') {
-            $statement = new DateTime;
+            $statement = new DateTime();
         }
 
         return $query->where($property, '>', $statement);
@@ -89,7 +90,7 @@ class ComplexQueryParser
     protected function in($query, string $property, string $statement)
     {
         $hasNull = false;
-        $possibilities = array_map(function ($value) use (&$hasNull) {
+        $possibilities = array_map(static function ($value) use (&$hasNull) {
             if ($value === 'null') {
                 $value = null;
                 $hasNull = true;
@@ -102,7 +103,7 @@ class ComplexQueryParser
             return $query->whereIn($property, $possibilities);
         }
 
-        return $query->where(function (Builder $sub) use ($property, $possibilities) {
+        return $query->where(static function (Builder $sub) use ($property, $possibilities): void {
             $sub->whereIn($property, $possibilities)
                 ->orWhereNull($property);
         });
@@ -135,7 +136,7 @@ class ComplexQueryParser
     protected function lt($query, string $property, string $statement)
     {
         if ($statement === 'now') {
-            $statement = new DateTime;
+            $statement = new DateTime();
         }
 
         return $query->where($property, '<', $statement);
@@ -144,20 +145,15 @@ class ComplexQueryParser
     /**
      * Check if the parameter was a valid type
      *
-     * @param mixed  $object The object to inspect
-     * @param string $method The method that is calling this bad boy
+     * @param mixed $object The object to inspect
      *
      * @throws InvalidArgumentException if the object was not appropriate
      * @return void
      */
-    private function typecheck($object, string $method): void
+    private function typeCheck($object): void
     {
-        if (!$object instanceof Builder && !$object instanceof Relation) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to '.get_class($this).'::'.$method.'() must be '.
-                'in instance of '.Builder::class.' or '.Relation::class.', '.
-                'instance of '.get_class($object).' given'
-            );
+        if (!$object instanceof Builder && !$object instanceof Relation && !$object instanceof EloquentBuilder) {
+            throw new InvalidArgumentException($object, EloquentBuilder::class, Builder::class, Relation::class);
         }
     }
 }

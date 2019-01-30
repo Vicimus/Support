@@ -16,8 +16,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseCountry(string $input): ?string
+    public static function parseCountry(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::countriesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -34,8 +38,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseLanguage(string $input): ?string
+    public static function parseLanguage(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::languagesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -52,8 +60,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseMileageUnit(string $input): ?string
+    public static function parseMileageUnit(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::mileageUnitsPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -70,8 +82,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parsePaymentType(string $input): ?string
+    public static function parsePaymentType(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::paymentTypesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -89,8 +105,12 @@ class Parser
      *
      * @return null|string
      */
-    public static function parseState(string $input, string $country): ?string
+    public static function parseState(?string $input, ?string $country): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::statesPatterns($country) as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -107,8 +127,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseTimezone(string $input): ?string
+    public static function parseTimezone(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::timezonesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -125,8 +149,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseVehicleMake(string $input): ?string
+    public static function parseVehicleMake(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::vehicleMakesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;
@@ -143,8 +171,12 @@ class Parser
      *
      * @return string|null
      */
-    public static function parseVehicleSaleClass(string $input): ?string
+    public static function parseVehicleSaleClass(?string $input): ?string
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach (Enums::vehicleSaleClassesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;

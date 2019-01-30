@@ -40,7 +40,7 @@ interface ADFVehicle
      *
      * @return string[]
      */
-    public function toArray(): array;
+    public function toAdfArray(): array;
 
     /**
      * Should return the type of vehicle. Things like showroom, new, used, etc

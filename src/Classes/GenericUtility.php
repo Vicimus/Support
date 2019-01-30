@@ -2,12 +2,12 @@
 
 namespace Vicimus\Support\Classes;
 
+use Throwable;
+use Vicimus\Support\Exceptions\UtilityException;
 use Vicimus\Support\Interfaces\Utility;
 
 /**
  * Represents a generic utility
- *
- * @author Jordan
  */
 class GenericUtility implements Utility
 {
@@ -51,12 +51,18 @@ class GenericUtility implements Utility
      *
      * @param mixed[] $flags Optional flags to pass along
      *
+     * @throws UtilityException
+     *
      * @return mixed
      */
     public function call(?array $flags = null)
     {
         $method = $this->call;
-        return $this->results($method($flags));
+        try {
+            return $this->results($method($flags));
+        } catch (Throwable $ex) {
+            throw new UtilityException($this, $ex);
+        }
     }
 
     /**

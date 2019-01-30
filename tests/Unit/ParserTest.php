@@ -7,8 +7,6 @@ use Vicimus\Support\Classes\Parser;
 
 /**
  * Class ParserTest
- *
- * @package Vicimus\Support\Tests\Unit
  */
 class ParserTest extends TestCase
 {
@@ -21,6 +19,7 @@ class ParserTest extends TestCase
     {
         $result = Parser::parseVehicleSaleClass('used');
         $this->assertEquals('used', $result);
+        $this->assertNull(Parser::parseVehicleSaleClass('lame'));
 
         $result = Parser::parseVehicleSaleClass('new');
         $this->assertEquals('new', $result);
@@ -68,6 +67,8 @@ class ParserTest extends TestCase
 
         $result = Parser::parseVehicleMake('Honda Accord');
         $this->assertEquals('Honda', $result);
+
+        $this->assertNull(Parser::parseVehicleMake('banana'));
     }
 
     /**
@@ -94,6 +95,8 @@ class ParserTest extends TestCase
 
         $result = Parser::parseCountry('United-States of America');
         $this->assertEquals('US', $result);
+
+        $this->assertNull(Parser::parseCountry('banana'));
     }
 
     /**
@@ -120,6 +123,8 @@ class ParserTest extends TestCase
 
         $result = Parser::parseLanguage('fra');
         $this->assertEquals('fr', $result);
+
+        $this->assertNull(Parser::parseLanguage('banana'));
     }
 
     /**
@@ -143,6 +148,8 @@ class ParserTest extends TestCase
 
         $result = Parser::parseMileageUnit('kilomètres');
         $this->assertEquals('km', $result);
+
+        $this->assertNull(Parser::parseMileageUnit('banana'));
     }
 
     /**
@@ -169,6 +176,8 @@ class ParserTest extends TestCase
 
         $result = Parser::parsePaymentType('Financement');
         $this->assertEquals('finance', $result);
+
+        $this->assertNull(Parser::parsePaymentType('banana'));
     }
 
     /**
@@ -189,6 +198,8 @@ class ParserTest extends TestCase
 
         $result = Parser::parseTimezone('Mountain timezone');
         $this->assertEquals('MST', $result);
+
+        $this->assertNull(Parser::parseTimezone('banana'));
     }
 
     /**
@@ -206,5 +217,7 @@ class ParserTest extends TestCase
 
         $result = Parser::parseState('Alabama', 'US');
         $this->assertEquals('AL', $result);
+
+        $this->assertNull(Parser::parseState('banana', 'strawberry'));
     }
 }
