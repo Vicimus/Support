@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vicimus\Support\Interfaces\FIltering;
+namespace Vicimus\Support\Interfaces\Filtering;
 
 use Illuminate\Database\Eloquent\Builder;
 
