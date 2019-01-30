@@ -10,13 +10,22 @@ use Illuminate\Database\Eloquent\Builder;
 interface QueryHandler
 {
     /**
-     * Pass the query to a handler
+     * Handle a query
      *
-     * @param Builder $query  The builder
-     * @param Filter  $filter The filter
-     * @param string  $type   The type of query being handled
+     * @param Builder      $query   The query
+     * @param Filter       $filter  The filter
+     * @param QueryTracker $tracker Track things
      *
      * @return void
      */
-    public function handle(Builder $query, Filter $filter, string $type): void;
+    public function handle(Builder $query, Filter $filter, ?QueryTracker $tracker): void;
+
+    /**
+     * Check if the handler is wanting to handle this filter
+     *
+     * @param Filter $filter The filter
+     *
+     * @return bool
+     */
+    public function handles(Filter $filter): bool;
 }
