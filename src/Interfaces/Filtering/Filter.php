@@ -68,6 +68,19 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $birthday
  * @property int $warranty_expiration
  * @property bool $exclude_bounced
+ * @property int $ah_expiration
+ * @property int $life_expiration
+ * @property int $gap_expiration
+ * @property int $employment_expiration
+ * @property int $breakdown_expiration
+ * @property int $service_expiration
+ * @property int $ro_open_min
+ * @property int $ro_open_max
+ * @property int $ro_close_min
+ * @property int $ro_close_max
+ * @property int $pickup_min
+ * @property int $pickup_max
+ * @property string $service_advisor
  */
 interface Filter extends Eloquent
 {
