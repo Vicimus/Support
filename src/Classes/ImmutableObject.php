@@ -217,12 +217,12 @@ class ImmutableObject implements JsonSerializable, WillValidate
     /**
      * Cast a specific value
      *
-     * @param string $property The property being cast
-     * @param mixed  $value    The current value
+     * @param string|int $property The property being cast
+     * @param mixed      $value    The current value
      *
      * @return mixed
      */
-    private function doAttributeCast(string $property, $value)
+    private function doAttributeCast($property, $value)
     {
         if ($value === null) {
             return $value;

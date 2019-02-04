@@ -4,6 +4,8 @@ namespace Vicimus\Support\Interfaces\Filtering;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Vicimus\Support\Database\Model;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
 use Vicimus\Support\Interfaces\Eloquent;
@@ -67,6 +69,20 @@ interface Campaign extends Eloquent
     public function customers(): HasManyFromAPI;
 
     /**
+     * Departments
+     *
+     * @return MorphToMany
+     */
+    public function departments(): MorphToMany;
+
+    /**
+     * Campaigns allowed to share customers
+     *
+     * @return HasMany
+     */
+    public function includes(): HasMany;
+
+    /**
      * Check if an campaign is email only
      *
      * @return bool
@@ -93,4 +109,11 @@ interface Campaign extends Eloquent
      * @return HasMany
      */
     public function logs(): HasMany;
+
+    /**
+     * Campaigns have stats
+     *
+     * @return HasOne
+     */
+    public function stats(): HasOne;
 }
