@@ -29,4 +29,18 @@ abstract class TestCase extends PHPUnitTestCase
 
         throw new InvalidArgumentException('Argument must be a valid class');
     }
+
+    /**
+     * Get a basic mock object
+     *
+     * @param string $class
+     *
+     * @return MockObject|mixed
+     */
+    public function basicMock(string $class)
+    {
+        return $this->getMockBuilder($class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
 }

@@ -39,6 +39,12 @@ class Model extends LaravelModel
     private static $noCasts = [];
 
     /**
+     * Store the columns
+     * @var string[]
+     */
+    private $columns = [];
+
+    /**
      * Properties protected from mass assignment
      *
      * @var string[]
@@ -85,7 +91,24 @@ class Model extends LaravelModel
      */
     public function getTableColumns(): array
     {
-        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->table);
+        if (count($this->columns)) {
+            return $this->columns;
+        }
+
+        $this->columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($this->table);
+        return $this->columns;
+    }
+
+    /**
+     * Check if table column exists
+     *
+     * @param string $column The column
+     *
+     * @return bool
+     */
+    public function hasColumn(string $column): bool
+    {
+        return in_array($column, $this->getTableColumns(), false);
     }
 
     /**
