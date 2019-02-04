@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Services;
 
+use Vicimus\Support\Exceptions\CalculatorException;
 use Vicimus\Support\Interfaces\Financial\HasDownpayment;
 use Vicimus\Support\Interfaces\Financial\HasIncentive;
 use Vicimus\Support\Interfaces\Financial\HasLeaseRate;
@@ -41,6 +42,10 @@ class LeaseCalculator
             $nper = $this->nper($vehicle, $frequency);
             $pValue = $this->presentValue($vehicle);
             $fValue = $this->futureValue($vehicle, $vehicle);
+        }
+
+        if ($nper === 0) {
+            throw new CalculatorException('Number of payment periods cannot be 0');
         }
 
         if (!$rate) {
