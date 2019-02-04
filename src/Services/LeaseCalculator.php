@@ -44,7 +44,7 @@ class LeaseCalculator
             $fValue = $this->futureValue($vehicle, $vehicle);
         }
 
-        if ($nper === 0) {
+        if (!$nper) {
             throw new CalculatorException('Number of payment periods cannot be 0');
         }
 
