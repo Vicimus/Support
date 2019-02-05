@@ -2,9 +2,10 @@
 
 namespace Vicimus\Support\Classes\Timezones;
 
-use DateTime;
 use DateTimeZone;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Collection;
+use Vicimus\Support\Classes\DateTime;
 
 /**
  * Class Timezones
@@ -12,11 +13,40 @@ use Illuminate\Support\Collection;
 class Timezones
 {
     /**
+     * The cache repository
+     *
+     * @var Repository
+     */
+    private $cache;
+
+    /**
+     * Timezones constructor.
+     *
+     * @param Repository $cache The cache repository
+     */
+    public function __construct(Repository $cache)
+    {
+        $this->cache = $cache;
+    }
+
+    /**
      * Get all timezones
      *
      * @return Collection
      */
     public function all(): Collection
+    {
+        return $this->cache->rememberForever('timezones', function () {
+            return $this->payload();
+        });
+    }
+
+    /**
+     * Get the timezone payload
+     *
+     * @return Collection|Timezone[]
+     */
+    public function payload(): Collection
     {
         $payload = [];
         $timezones = DateTimeZone::listIdentifiers();
@@ -33,6 +63,14 @@ class Timezones
                 'display' => $display,
             ]);
         }
+
+        usort($payload, static function (Timezone $timezoneA, Timezone $timezoneB): int {
+            if ($timezoneA->offset === $timezoneB->offset) {
+                return 0;
+            }
+
+            return ($timezoneA->offset > $timezoneB->offset) ? 1 : -1;
+        });
 
         return new Collection($payload);
     }
