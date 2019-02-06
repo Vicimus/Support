@@ -81,6 +81,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $pickup_min
  * @property int $pickup_max
  * @property string $service_advisor
+ * @property string $fi_manager
  */
 interface Filter extends Eloquent
 {
