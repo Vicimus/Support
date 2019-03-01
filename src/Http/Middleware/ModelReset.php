@@ -29,7 +29,7 @@ class ModelReset
      *
      * @return void
      */
-    public function terminate()
+    public function terminate(): void
     {
         Model::resetAll();
     }

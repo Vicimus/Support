@@ -18,3 +18,5 @@ exclude_patterns:
 - "**/scripts/"
 - "**/storage/"
 - "**/.*"
+- "/src/Testing/ResponseFactory.php"
+- "/src/Testing/Application.php"
