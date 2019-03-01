@@ -24,17 +24,17 @@ class LeaseCalculator
      * @param int             $nper      Number of payment periods (can be blank if LeaseItem provided)
      * @param float           $pValue    The Present Value of the item (can be blank if LeaseItem provided)
      * @param float           $fValue    The Future Value of the item (can be blank if LeaseItem provided)
-     * @param int             $type      Payments made at the start or end of period
      *
      * @return float
+     *
+     * @throws CalculatorException
      */
     public function payment(
         $rate,
         int $frequency = 12,
         ?int $nper = null,
         ?float $pValue = null,
-        ?float $fValue = null,
-        ?int $type = 1
+        ?float $fValue = null
     ): float {
         if ($rate instanceof LeaseItem) {
             $vehicle = $rate;

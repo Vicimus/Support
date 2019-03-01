@@ -216,7 +216,7 @@ class BasicCache implements Repository
      */
     public function rememberForever($key, Closure $callback)
     {
-        // TODO: Implement rememberForever() method.
+        return $callback();
     }
 
     /**

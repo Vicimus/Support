@@ -5,6 +5,13 @@ namespace Vicimus\Support\Testing;
 use Illuminate\Contracts\Routing\ResponseFactory as ResponseFactoryContract;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Class ResponseFactory
+ *
+ * Implements a contract for our testing purposes
+ *
+ * phpcs:disable
+ */
 class ResponseFactory implements ResponseFactoryContract
 {
     /**
