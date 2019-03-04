@@ -4,8 +4,6 @@ namespace Vicimus\Support\Services;
 
 use Vicimus\Support\Interfaces\ClassRepository;
 
-use function is_array;
-
 /**
  * Class BaseClassRepository
  */
