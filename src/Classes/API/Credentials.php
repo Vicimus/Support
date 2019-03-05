@@ -20,7 +20,7 @@ class Credentials extends ImmutableObject
      * @param string $id     The id
      * @param string $secret The secret
      */
-    public function __construct(string $url, string $id, string $secret)
+    public function __construct(?string $url, ?string $id, ?string $secret)
     {
         parent::__construct([
             'url' => $url,
