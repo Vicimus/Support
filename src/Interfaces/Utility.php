@@ -37,7 +37,7 @@ interface Utility
      *
      * @param mixed $payload OPTIONAL Anything needed to construct the results
      *
-     * @return void
+     * @return mixed
      */
     public function results($payload = null);
 

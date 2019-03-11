@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static LaravelModel|static find($id)
  * @method static LaravelModel|static findOrFail($id)
  * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
+ * @method static \Illuminate\Database\Eloquent\Builder|static distinct($column = null))
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotNull($c)
  * @method static LaravelModel|static create($attributes = [])
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNull($c)
