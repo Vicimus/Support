@@ -273,6 +273,22 @@ class Application extends Container implements HttpKernelInterface
     }
 
     /**
+     * Prepare the request by injecting any services.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Request
+     */
+    public function prepareRequest(Request $request)
+    {
+        if ( ! is_null($this['config']['session.driver']) && ! $request->hasSession())
+        {
+            $request->setSession($this['session']->driver());
+        }
+
+        return $request;
+    }
+
+    /**
      * Prepare the given value as a Response object.
      *
      * @param  mixed  $value
