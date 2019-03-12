@@ -1,0 +1,209 @@
+<?php
+
+namespace Vicimus\Support\Testing;
+
+use Illuminate\Cache\ArrayStore;
+use Illuminate\Cache\Repository;
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Mailer;
+use Illuminate\Pagination\Factory as PaginatorFactory;
+use Illuminate\Routing\Redirector;
+use Illuminate\Routing\RouteCollection;
+use Illuminate\Routing\Router;
+use Illuminate\Routing\UrlGenerator;
+use Illuminate\Session\CacheBasedSessionHandler;
+use Illuminate\Session\FileSessionHandler;
+use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Facade;
+use Illuminate\View\Factory;
+use PDO;
+use PDOException;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Translation\TranslatorInterface;
+use Vicimus\Support\Interfaces\Translator;
+use Vicimus\Support\Testing\Application;
+use Vicimus\Support\Testing\Client;
+
+/**
+ * Class DatabaseTestCase
+ */
+class ApplicationTestCase extends TestCase
+{
+    /**
+     * The application
+     *
+     * @var Application
+     */
+    protected $app;
+
+    protected $migrations = [];
+
+    protected $providers = [];
+
+    /**
+     * The testing client
+     *
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * Set up
+     *
+     * @return void
+     */
+    public function setup()
+    {
+        parent::setUp();
+
+        /** @var Application|mixed $app */
+        $app = new Application();
+
+        Facade::setFacadeApplication($app);
+
+        $app->instance('path.public', __DIR__.'/../resources/testing');
+        $app->instance('path.storage', __DIR__.'/../resources/testing');
+        $app->instance('path.base', __DIR__.'/../resources/testing');
+
+        $app->bind('app', static function () {
+            return new Application();
+        });
+
+        $app->bindShared('paginator', function ($app) {
+            /** @var TranslatorInterface $translator */
+            $translator = $this->getMockBuilder(TranslatorInterface::class)
+                ->getMock();
+
+            return new PaginatorFactory($app['request'], $app['view'], $translator);
+        });
+
+        $app->bind('request', static function () {
+            return new Request();
+        });
+
+        $app->bind('url', static function ($app) {
+            /** @var Router $router */
+            $router = $app['router'];
+            $routes = $router->getRoutes();
+            return new UrlGenerator($routes, $app['request']);
+        });
+
+        $app->bind('view', function () {
+            return $this->getMockBuilder(Factory::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        });
+
+        $app->bind('events', function () {
+            return $this->getMockBuilder(Dispatcher::class)
+                ->disableOriginalConstructor()->getMock();
+        });
+
+        $app->bind('mailer', function () {
+            return $this->getMockBuilder(Mailer::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        });
+
+        $app->bind('redirect', static function ($app) {
+            $router = $app['router'];
+            $routes = $router->getRoutes();
+
+            $redirector = new Redirector(new UrlGenerator($routes, new Request()));
+            $redirector->setSession($app['session']);
+
+            return $redirector;
+        });
+
+        $app->bind(Translator::class, function () {
+            return $this->getMockBuilder(Translator::class)->getMock();
+        });
+
+        $app->bind('session', static function () {
+            $repo = new Repository(new ArrayStore());
+            return new Store('testing', new CacheBasedSessionHandler($repo, 5));
+        });
+
+        $app->singleton('router', static function ($app) {
+            return new Router($app['events'], $app);
+        });
+
+        foreach ($this->providers as $provider) {
+            $instance = new $provider($app);
+            $instance->register();
+        }
+
+//        $provider = new InventoryServiceProvider($app);
+//        $provider->register();
+
+        $this->app = $app;
+
+        $capsule = new Manager($app);
+        $capsule->addConnection([
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+
+        $capsule->setFetchMode(PDO::FETCH_CLASS);
+
+
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+
+        $app->bind('db', static function () use ($capsule) {
+            return $capsule->getDatabaseManager();
+        });
+
+        if (count($this->migrations)) {
+            $finder = (new Finder())->in($this->migrations);
+
+            /** @var SplFileInfo $file */
+            foreach ($finder->files() as $file) {
+                $matches = [];
+                preg_match('/class\s(.+?)\s/', $file->getContents(), $matches);
+                $class = $matches[1];
+
+                /** @var mixed $instance */
+                $instance = new $class();
+                try {
+                    $instance->up();
+                } catch (PDOException $ex) {
+                    continue;
+                }
+            }
+        }
+
+        foreach ($this->routes as $route) {
+            require_once $route;
+        }
+
+        $this->client = new Client(static function ($verb, $payload) {
+            return Application::onRequest($verb, $payload);
+        }, $this->app);
+    }
+
+    /**
+     * Call the given URI and return the Response.
+     *
+     * @param  string  $method
+     * @param  string  $uri
+     * @param  array   $parameters
+     * @param  array   $files
+     * @param  array   $server
+     * @param  string  $content
+     * @param  bool	$changeHistory
+     * @return \Illuminate\Http\Response
+     */
+    protected function call($method, $uri, $parameters = [], $files = [], $server = [], $content = null, $changeHistory = true)
+    {
+        $this->client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
+
+        return $this->client->getResponse();
+    }
+}
