@@ -4,6 +4,8 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Enforces common methods among vehicle classes
+ *
+ * @property string $model
  */
 interface Vehicle
 {

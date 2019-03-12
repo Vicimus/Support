@@ -8,6 +8,8 @@ use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Vicimus\Support\Exceptions\TranslationFileException;
+use Vicimus\Support\Interfaces\Translator;
 
 if (!function_exists('env')) {
     /**
@@ -157,7 +159,7 @@ if (!function_exists('redirect')) {
     /**
      * @param string $url The url to redirect to
      *
-     * @return \Illuminate\Routing\Redirector|mixed
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|mixed
      */
     function redirect($url = null)
     {
@@ -180,5 +182,27 @@ if (!function_exists('now')) {
     function now()
     {
         return Carbon\Carbon::now();
+    }
+}
+
+if (!function_exists('tran')) {
+    /**
+     * Auto-write to translation files
+     *
+     * @param string|mixed $key       The key to look for
+     * @param string|mixed $default   The default to use
+     * @param mixed[]      $variables Variable placeholders
+     *
+     * @return mixed
+     */
+    function tran($key, $default = null, array $variables = [])
+    {
+        /** @var Translator $translator */
+        $translator = app(Translator::class);
+        try {
+            return $translator->tran($key, $default, $variables);
+        } catch (TranslationFileException $ex) {
+            return $default;
+        }
     }
 }
