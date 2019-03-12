@@ -24,6 +24,13 @@ interface ADFCustomer
     public function firstname(): string;
 
     /**
+     * Get the id of this customer
+     *
+     * @return int
+     */
+    public function id(): ?int;
+
+    /**
      * Get the lastname of this customer
      *
      * @return string
