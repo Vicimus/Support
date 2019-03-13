@@ -18,6 +18,7 @@ use Illuminate\Session\CacheBasedSessionHandler;
 use Illuminate\Session\FileSessionHandler;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 use PDO;
 use PDOException;
@@ -41,9 +42,25 @@ class ApplicationTestCase extends TestCase
      */
     protected $app;
 
+    /**
+     * Migrations
+     *
+     * @var string[]
+     */
     protected $migrations = [];
 
+    /**
+     * Providers to load
+     *
+     * @var string[]
+     */
     protected $providers = [];
+
+    /**
+     * The routes
+     * @var string[]
+     */
+    protected $routes = [];
 
     /**
      * The testing client
@@ -99,9 +116,8 @@ class ApplicationTestCase extends TestCase
                 ->getMock();
         });
 
-        $app->bind('events', function () {
-            return $this->getMockBuilder(Dispatcher::class)
-                ->disableOriginalConstructor()->getMock();
+        $app->singleton('events', function ($container) {
+            return new Dispatcher($container);
         });
 
         $app->bind('mailer', function () {
@@ -133,13 +149,21 @@ class ApplicationTestCase extends TestCase
             return new Router($app['events'], $app);
         });
 
+        /** @var ServiceProvider[] $providers */
+        $providers = [];
         foreach ($this->providers as $provider) {
-            $instance = new $provider($app);
-            $instance->register();
+            $providers[] = new $provider($app);
         }
 
-//        $provider = new InventoryServiceProvider($app);
-//        $provider->register();
+        foreach ($providers as $provider) {
+            $provider->register();
+        }
+
+        $this->bindings($app);
+
+        foreach ($providers as $provider) {
+            $provider->boot();
+        }
 
         $this->app = $app;
 
@@ -186,6 +210,18 @@ class ApplicationTestCase extends TestCase
         $this->client = new Client(static function ($verb, $payload) {
             return Application::onRequest($verb, $payload);
         }, $this->app);
+    }
+
+    /**
+     * Do any additional bindings
+     *
+     * @param Application $app The application
+     *
+     * @return void
+     */
+    protected function bindings($app)
+    {
+        //
     }
 
     /**
