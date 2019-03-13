@@ -11,6 +11,8 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $id
  * @property string $oem
  * @property string $title
+ * @property int $store_id
+ * @property int $lead_type_id
  */
 interface Campaign extends Eloquent
 {

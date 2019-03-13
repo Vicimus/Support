@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Retention\Exceptions\PurlSubmissionException;
+use Vicimus\ADF\ADFInfo;
+use Vicimus\Leads\Models\Confirmation;
 use Vicimus\Support\Exceptions\RestException;
 
 /**
@@ -19,6 +22,20 @@ interface PurlEvents
      * @throws RestException
      */
     public function handle(PurlEvent $event): bool;
+
+    /**
+     * Handle purl submissions
+     *
+     * @param ADFInfo  $info    The ADF info
+     * @param string[] $request The request payload
+     * @param int|null $lead    The lead id to be populated
+     *
+     * @return Confirmation
+     *
+     * @throws PurlSubmissionException
+     * @throws RestException
+     */
+    public function submission(ADFInfo $info, array $request, ?int &$lead = null): Confirmation;
 
     /**
      * Add a temperature to the records
