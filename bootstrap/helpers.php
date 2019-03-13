@@ -120,13 +120,21 @@ if (!function_exists('request')) {
 }
 
 if (!function_exists('event')) {
+    /**
+     * Fire an event or get the event dispatcher
+     *
+     * @param string $event   The event name
+     * @param mixed  $payload The payload to send with the event
+     *
+     * @return \Illuminate\Events\Dispatcher|mixed
+     */
     function event($event = null, $payload = null)
     {
         if ($event === null) {
             return app('events');
         }
 
-        return app('events')->fire($payload);
+        return app('events')->fire($event, $payload);
     }
 }
 

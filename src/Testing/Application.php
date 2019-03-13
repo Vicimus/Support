@@ -59,6 +59,18 @@ class Application extends Container implements HttpKernelInterface
     }
 
     /**
+     * Before
+     *
+     * @param $callable The param
+     *
+     * @return void
+     */
+    public function before($callable)
+    {
+        // Implement before() method
+    }
+
+    /**
      * Boot the application's service providers.
      *
      * @return void|mixed
