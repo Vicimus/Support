@@ -10,7 +10,7 @@ interface ChangeLoggable
     /**
      * Retrieve the output for a model in the change log.
      *
-     * @return mixed[]
+     * @return mixed[]|mixed
      */
     public function getChangeHeader();
 }
