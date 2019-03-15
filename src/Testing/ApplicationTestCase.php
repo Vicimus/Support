@@ -50,6 +50,12 @@ class ApplicationTestCase extends TestCase
     protected $migrations = [];
 
     /**
+     * The paths
+     * @var string[]
+     */
+    protected $paths = [];
+
+    /**
      * Providers to load
      *
      * @var string[]
@@ -83,13 +89,19 @@ class ApplicationTestCase extends TestCase
 
         Facade::setFacadeApplication($app);
 
-        $app->instance('path.public', __DIR__.'/../resources/testing');
-        $app->instance('path.storage', __DIR__.'/../resources/testing');
-        $app->instance('path.base', __DIR__.'/../resources/testing');
-
         $app->bind('app', static function () {
             return new Application();
         });
+
+
+        foreach ($this->paths as $path => $value) {
+            $second = $path;
+            if ($second) {
+                $second = '.' . $second;
+            }
+
+            $app->instance('path' . $second, $value);
+        }
 
         $app->bindShared('paginator', function ($app) {
             /** @var TranslatorInterface $translator */
@@ -116,7 +128,7 @@ class ApplicationTestCase extends TestCase
                 ->getMock();
         });
 
-        $app->singleton('events', function ($container) {
+        $app->singleton('events', static function ($container) {
             return new Dispatcher($container);
         });
 
@@ -126,7 +138,12 @@ class ApplicationTestCase extends TestCase
                 ->getMock();
         });
 
+        $app->bind('files', static function () {
+            return new Filesystem();
+        });
+
         $app->bind('redirect', static function ($app) {
+            /** @var Router $router */
             $router = $app['router'];
             $routes = $router->getRoutes();
 
