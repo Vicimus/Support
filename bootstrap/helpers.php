@@ -50,7 +50,7 @@ if (!function_exists('view')) {
      * @param string|mixed $path   The path to the view
      * @param mixed[]      $params The parameters to pass
      *
-     * @return Illuminate\View\View|mixed
+     * @return Illuminate\View\View|\Illuminate\View\Factory|mixed
      */
     function view($path = null, array $params = [])
     {

@@ -4,6 +4,8 @@ namespace Vicimus\Support\Testing;
 
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository;
+use Illuminate\Config\FileLoader;
+use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
@@ -11,15 +13,13 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
 use Illuminate\Pagination\Factory as PaginatorFactory;
 use Illuminate\Routing\Redirector;
-use Illuminate\Routing\RouteCollection;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\CacheBasedSessionHandler;
-use Illuminate\Session\FileSessionHandler;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\View\Factory;
+use Illuminate\View\ViewServiceProvider;
 use PDO;
 use PDOException;
 use PHPUnit\Framework\TestCase;
@@ -27,8 +27,6 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\TranslatorInterface;
 use Vicimus\Support\Interfaces\Translator;
-use Vicimus\Support\Testing\Application;
-use Vicimus\Support\Testing\Client;
 
 /**
  * Class DatabaseTestCase
@@ -89,8 +87,8 @@ class ApplicationTestCase extends TestCase
 
         Facade::setFacadeApplication($app);
 
-        $app->bind('app', static function () {
-            return new Application();
+        $app->bind('app', static function () use ($app) {
+            return $app;
         });
 
 
@@ -111,6 +109,10 @@ class ApplicationTestCase extends TestCase
             return new PaginatorFactory($app['request'], $app['view'], $translator);
         });
 
+        $app->singleton('cache', static function () {
+            return new ArrayStore();
+        });
+
         $app->bind('request', static function () {
             return new Request();
         });
@@ -120,12 +122,6 @@ class ApplicationTestCase extends TestCase
             $router = $app['router'];
             $routes = $router->getRoutes();
             return new UrlGenerator($routes, $app['request']);
-        });
-
-        $app->bind('view', function () {
-            return $this->getMockBuilder(Factory::class)
-                ->disableOriginalConstructor()
-                ->getMock();
         });
 
         $app->singleton('events', static function ($container) {
@@ -166,6 +162,16 @@ class ApplicationTestCase extends TestCase
             return new Router($app['events'], $app);
         });
 
+        $app->singleton('config', static function ($app) {
+            $config = new ConfigRepository(new FileLoader($app['files'], __DIR__), 'testing');
+            $config->set('view.paths', []);
+
+            return $config;
+        });
+
+        $views = new ViewServiceProvider($app);
+        $views->register();
+
         /** @var ServiceProvider[] $providers */
         $providers = [];
         foreach ($this->providers as $provider) {
@@ -178,6 +184,7 @@ class ApplicationTestCase extends TestCase
 
         $this->bindings($app);
 
+        $views->boot();
         foreach ($providers as $provider) {
             $provider->boot();
         }
