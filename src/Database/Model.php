@@ -63,7 +63,7 @@ class Model extends LaravelModel
      */
     public function getAttribute($key)
     {
-        if (!(self::$noCasts[static::class] ?? false)) {
+        if (!isset(self::$noCasts[static::class])) {
             return parent::getAttribute($key);
         }
 
@@ -72,7 +72,7 @@ class Model extends LaravelModel
         }
 
         if (array_key_exists($key, $this->attributes)) {
-            return $this->attributes[$key] ?? null;
+            return $this->attributes[$key];
         }
 
         // Here we will determine if the model base class itself contains this given key
