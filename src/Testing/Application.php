@@ -105,6 +105,18 @@ class Application extends Container implements HttpKernelInterface
     }
 
     /**
+     * Call an artisan command
+     *
+     * @param string $command Pretend to call an artisan command
+     *
+     * @return void
+     */
+    public function call($command)
+    {
+        //
+    }
+
+    /**
      * Get or check the current application environment.
      *
      * @return string|mixed
