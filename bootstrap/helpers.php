@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\View;
 use Vicimus\Support\Exceptions\TranslationFileException;
 use Vicimus\Support\Interfaces\Translator;
 
+if (!function_exists('lang')) {
+    function lang() {
+        return app('lang');
+    }
+}
+
 if (!function_exists('env')) {
     /**
      * Get an environmental value or the default passed if no value found

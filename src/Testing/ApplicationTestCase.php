@@ -2,13 +2,18 @@
 
 namespace Vicimus\Support\Testing;
 
+use Illuminate\Auth\AuthManager;
+use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Auth\GenericUser;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository;
 use Illuminate\Config\FileLoader;
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Cookie\CookieJar;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
 use Illuminate\Pagination\Factory as PaginatorFactory;
@@ -18,6 +23,7 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\CacheBasedSessionHandler;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
@@ -26,6 +32,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\TranslatorInterface;
+use Vicimus\Onyx\User;
 use Vicimus\Support\Interfaces\Translator;
 
 /**
@@ -46,6 +53,13 @@ class ApplicationTestCase extends TestCase
      * @var string[]
      */
     protected $migrations = [];
+
+    /**
+     * Base path for storage
+     *
+     * @var string
+     */
+    protected $path;
 
     /**
      * The paths
@@ -74,6 +88,23 @@ class ApplicationTestCase extends TestCase
     private $client;
 
     /**
+     * Act as a logged in user
+     *
+     * @param string $driver Driver to use
+     * @param mixed  $user   User
+     *
+     * @return void
+     */
+    public function beSomebody($driver = null, $user = null)
+    {
+        if (!$user) {
+            $user = new User();
+        }
+
+        $this->app['auth']->driver($driver)->setUser($user);
+    }
+
+    /**
      * Set up
      *
      * @return void
@@ -92,6 +123,11 @@ class ApplicationTestCase extends TestCase
         });
 
 
+        if ($this->path && !count($this->paths)) {
+            foreach (['', 'storage', 'view'] as $part) {
+                $this->paths[$part] = $this->path;
+            }
+        }
         foreach ($this->paths as $path => $value) {
             $second = $path;
             if ($second) {
@@ -107,6 +143,10 @@ class ApplicationTestCase extends TestCase
                 ->getMock();
 
             return new PaginatorFactory($app['request'], $app['view'], $translator);
+        });
+
+        $app->singleton('auth', static function ($app) {
+            return new AuthManager($app);
         });
 
         $app->singleton('cache', static function () {
@@ -138,6 +178,18 @@ class ApplicationTestCase extends TestCase
             return new Filesystem();
         });
 
+//        $app->bind('lang', static function () {
+//            return new Trans
+//        });
+
+        $app->bind('session.store', static function ($app) {
+            return $app['session'];
+        });
+
+        $app->bind('cookie', static function () {
+            return new CookieJar();
+        });
+
         $app->bind('redirect', static function ($app) {
             /** @var Router $router */
             $router = $app['router'];
@@ -149,6 +201,11 @@ class ApplicationTestCase extends TestCase
             return $redirector;
         });
 
+        $app->bind('translator', function () {
+            return $this->getMockBuilder(\Illuminate\Contracts\Translation\Translator::class)
+                ->getMock();
+        });
+
         $app->bind(Translator::class, function () {
             return $this->getMockBuilder(Translator::class)->getMock();
         });
@@ -158,6 +215,10 @@ class ApplicationTestCase extends TestCase
             return new Store('testing', new CacheBasedSessionHandler($repo, 5));
         });
 
+        $app->bind('hash', static function () {
+            return new BcryptHasher();
+        });
+
         $app->singleton('router', static function ($app) {
             return new Router($app['events'], $app);
         });
@@ -165,7 +226,7 @@ class ApplicationTestCase extends TestCase
         $app->singleton('config', static function ($app) {
             $config = new ConfigRepository(new FileLoader($app['files'], __DIR__), 'testing');
             $config->set('view.paths', []);
-
+            $config->set('auth.driver', 'eloquent');
             return $config;
         });
 
