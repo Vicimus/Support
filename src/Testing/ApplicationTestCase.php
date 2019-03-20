@@ -3,8 +3,6 @@
 namespace Vicimus\Support\Testing;
 
 use Illuminate\Auth\AuthManager;
-use Illuminate\Auth\EloquentUserProvider;
-use Illuminate\Auth\GenericUser;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository;
 use Illuminate\Config\FileLoader;
@@ -24,8 +22,8 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\CacheBasedSessionHandler;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Translation\Translator;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
 use PDOException;
@@ -34,7 +32,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\TranslatorInterface;
 use Vicimus\Onyx\User;
-use Vicimus\Support\Interfaces\Translator;
+use Vicimus\Support\Interfaces\Translator as VicimusTranslator;
 
 /**
  * Class DatabaseTestCase
@@ -282,14 +280,12 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->bind('translator', function () {
-            return $this->getMockBuilder(\Illuminate\Contracts\Translation\Translator::class)
-                ->getMock();
+            return $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock();
         });
 
-        $app->bind(Translator::class, function () {
-            return $this->getMockBuilder(Translator::class)->getMock();
+        $app->singleton('lang', static function ($app) {
+            return $app['translator'];
         });
-
 
         $app->bind('hash', static function () {
             return new BcryptHasher();
@@ -304,6 +300,10 @@ class ApplicationTestCase extends TestCase
 
         $app->singleton('router', static function ($app) {
             return new Router($app['events'], $app);
+        });
+
+        $app->bind(VicimusTranslator::class, function () {
+            return $this->getMockBuilder(VicimusTranslator::class)->disableOriginalConstructor()->getMock();
         });
 
         $views = new ViewServiceProvider($app);
