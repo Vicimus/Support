@@ -375,7 +375,7 @@ class ApplicationTestCase extends TestCase
 
         if (count($this->migrations)) {
             foreach ($this->migrations as $migrationPath) {
-                $finder = (new Finder())->in($migrationPath);
+                $finder = (new Finder())->in($migrationPath)->sortByName();
 
                 /** @var SplFileInfo $file */
                 foreach ($finder->files() as $file) {
