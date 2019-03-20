@@ -374,20 +374,22 @@ class ApplicationTestCase extends TestCase
         $db->setDefaultConnection('stub');
 
         if (count($this->migrations)) {
-            $finder = (new Finder())->in($this->migrations);
+            foreach ($this->migrations as $migrationPath) {
+                $finder = (new Finder())->in($migrationPath);
 
-            /** @var SplFileInfo $file */
-            foreach ($finder->files() as $file) {
-                $matches = [];
-                preg_match('/class\s(.+?)\s/', $file->getContents(), $matches);
-                $class = $matches[1];
+                /** @var SplFileInfo $file */
+                foreach ($finder->files() as $file) {
+                    $matches = [];
+                    preg_match('/class\s(.+?)\s/', $file->getContents(), $matches);
+                    $class = $matches[1];
 
-                /** @var mixed $instance */
-                $instance = new $class();
-                try {
-                    $instance->up();
-                } catch (PDOException $ex) {
-                    continue;
+                    /** @var mixed $instance */
+                    $instance = new $class();
+                    try {
+                        $instance->up();
+                    } catch (PDOException $ex) {
+                        throw $ex;
+                    }
                 }
             }
         }
