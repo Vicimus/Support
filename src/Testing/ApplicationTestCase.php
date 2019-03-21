@@ -14,6 +14,7 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Mail\Mailer;
 use Illuminate\Pagination\Factory as PaginatorFactory;
 use Illuminate\Routing\Redirector;
@@ -98,6 +99,13 @@ class ApplicationTestCase extends TestCase
     private $client;
 
     /**
+     * Last response
+     *
+     * @var Response
+     */
+    private $response;
+
+    /**
      * Act as a logged in user
      *
      * @param string $driver Driver to use
@@ -160,6 +168,15 @@ class ApplicationTestCase extends TestCase
         //
     }
 
+    protected function assertResponseStatus($status)
+    {
+        $this->assertEquals($status, $this->response->getStatusCode());
+    }
+    protected function assertResponseOk()
+    {
+        $this->assertEquals(200, $this->response->getStatusCode());
+    }
+
     /**
      * Call the given URI and return the Response.
      *
@@ -176,7 +193,9 @@ class ApplicationTestCase extends TestCase
     protected function call($method, $uri, $parameters = [], $files = [], $server = [], $content = null, $changeHistory = true)
     {
         $this->client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
-        return $this->client->getResponse();
+        $response = $this->client->getResponse();
+        $this->response = $response;
+        return $response;
     }
 
     /**
