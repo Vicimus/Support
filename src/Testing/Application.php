@@ -147,6 +147,16 @@ class Application extends Container implements HttpKernelInterface
     }
 
     /**
+     * Get locale
+     *
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return config('app.locale');
+    }
+
+    /**
      * Determine if the application is currently down for maintenance.
      *
      * @return bool|mixed
