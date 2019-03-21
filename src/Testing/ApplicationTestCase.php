@@ -188,7 +188,7 @@ class ApplicationTestCase extends TestCase
      * @param  string $content       Body content
      * @param  bool   $changeHistory Change history
      *
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     protected function call($method, $uri, $parameters = [], $files = [], $server = [], $content = null, $changeHistory = true)
     {

@@ -18,7 +18,7 @@ class Responses
      *
      * @return JsonResponse
      */
-    public function json($body, $code = 200)
+    public function json($body = null, $code = 200)
     {
         return new JsonResponse($body, $code);
     }
@@ -31,7 +31,7 @@ class Responses
      *
      * @return Response
      */
-    public function make($body, $code = 200)
+    public function make($body = null, $code = 200)
     {
         return new Response($body, $code);
     }
