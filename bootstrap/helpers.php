@@ -1,7 +1,6 @@
 <?php
 
 use DealerLive\Config\Services\Configuration;
-use DealerLive\Core\Services\Responses\Responses;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
@@ -10,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 use Vicimus\Support\Exceptions\TranslationFileException;
 use Vicimus\Support\Interfaces\Translator;
+use Vicimus\Support\Services\Responses;
 
 if (!function_exists('lang')) {
     function lang() {
