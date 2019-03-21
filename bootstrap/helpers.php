@@ -13,7 +13,7 @@ use Vicimus\Support\Services\Responses;
 
 if (!function_exists('lang')) {
     function lang() {
-        return app('lang');
+        return app('translator');
     }
 }
 
