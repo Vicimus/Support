@@ -220,3 +220,26 @@ if (!function_exists('tran')) {
         }
     }
 }
+
+if (!function_exists('validate')) {
+    /**
+     * Validate
+     *
+     * @param array                         $rules
+     * @param \Illuminate\Http\Request|null $request
+     */
+    function validate(array $rules, \Illuminate\Http\Request $request = null)
+    {
+        if ($request === null) {
+            $request = request();
+        }
+
+        /** @var \Illuminate\Contracts\Validation\Factory $factory */
+        $factory = app('validator');
+        $validator = $factory->make($request->all(), $rules);
+        if ($validator->fails()) {
+            $message = sprintf('Missing required fields [%s]', implode(', ', array_keys($validator->errors()->getMessages())));
+            throw new \Vicimus\Support\Exceptions\ValidationException($message);
+        }
+    }
+}

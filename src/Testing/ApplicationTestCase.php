@@ -25,6 +25,7 @@ use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Translation\Translator;
+use Illuminate\Validation\Factory;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
 use PDOException;
@@ -33,6 +34,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\TranslatorInterface;
 use Vicimus\Onyx\User;
+use Vicimus\Support\Exceptions\ValidationException;
 use Vicimus\Support\Interfaces\Translator as VicimusTranslator;
 
 /**
@@ -192,8 +194,13 @@ class ApplicationTestCase extends TestCase
      */
     protected function call($method, $uri, $parameters = [], $files = [], $server = [], $content = null, $changeHistory = true)
     {
-        $this->client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
-        $response = $this->client->getResponse();
+        try {
+            $this->client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
+            $response = $this->client->getResponse();
+        } catch (ValidationException $ex) {
+            $response = new Response($ex->getMessage(), 422);
+        }
+
         $this->response = $response;
         return $response;
     }
@@ -280,6 +287,10 @@ class ApplicationTestCase extends TestCase
 
         $app->singleton('session.store', static function ($app) {
             return $app['session'];
+        });
+
+        $app->bind('validator', static function ($app) {
+            return new Factory($app['translator'], $app);
         });
 
         $app->bind('cookie', static function () {
