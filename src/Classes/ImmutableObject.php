@@ -79,7 +79,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
             $original = json_decode(json_encode($original), true);
         }
 
-        $this->attributes = $this->castAttributes($original ?? []);
+        $this->attributes = $this->castAttributes($original ? $original : []);
         $this->validator = $validator;
     }
 
