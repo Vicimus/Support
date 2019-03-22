@@ -175,6 +175,7 @@ class ApplicationTestCase extends TestCase
     {
         $this->assertEquals($status, $this->response->getStatusCode());
     }
+
     protected function assertResponseOk()
     {
         $this->assertEquals(200, $this->response->getStatusCode());
@@ -358,6 +359,8 @@ class ApplicationTestCase extends TestCase
         foreach ($providers as $provider) {
             $provider->boot();
         }
+
+        $app->executeBefore();
 
         $this->app = $app;
 
