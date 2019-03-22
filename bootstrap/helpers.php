@@ -113,15 +113,26 @@ if (!function_exists('request')) {
      *
      * @param string|null|mixed $property Get the property
      *
+     * @param null              $default
+     *
      * @return \Illuminate\Http\Request|mixed
      */
-    function request($property = null)
+    function request($property = null, $default = null)
     {
         if (!$property) {
             return app('request');
         }
 
-        return app('request')->get($property);
+        $result = app('request')->get($property);
+        if ($result === null) {
+            $result = app('request')->input($property, $default);
+        }
+
+        if ($result === null) {
+            return $default;
+        }
+
+        return $result;
     }
 }
 
