@@ -22,6 +22,7 @@ class Client extends BaseClient {
     public function __construct(callable $onRequest, HttpKernelInterface $kernel, array $server = [], History $history = null, CookieJar $cookieJar = null)
     {
         $this->onRequest = $onRequest;
+        $server = array_merge($server, ['HTTP_REFERER' => 'http://www.glovebox.test']);
         parent::__construct($kernel, $server, $history, $cookieJar);
     }
 
