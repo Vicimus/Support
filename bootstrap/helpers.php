@@ -13,7 +13,7 @@ use Vicimus\Support\Services\Responses;
 
 if (!function_exists('lang')) {
     function lang() {
-        return app('lang');
+        return app('translator');
     }
 }
 
@@ -112,16 +112,18 @@ if (!function_exists('request')) {
      * Get the request instance
      *
      * @param string|null|mixed $property Get the property
+     * @param mixed             $default  Default to use
      *
      * @return \Illuminate\Http\Request|mixed
      */
-    function request($property = null)
+    function request($property = null, $default = null)
     {
+        $request = app('request');
         if (!$property) {
-            return app('request');
+            return $request;
         }
 
-        return app('request')->get($property);
+        return $request->get($property, $default);
     }
 }
 

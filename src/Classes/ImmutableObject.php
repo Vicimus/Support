@@ -64,7 +64,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($original = [], ?Factory $validator = null)
+    public function __construct($original = [], Factory $validator = null)
     {
         if (!is_array($original) && !is_object($original)) {
             $type = gettype($original);
@@ -79,7 +79,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
             $original = json_decode(json_encode($original), true);
         }
 
-        $this->attributes = $this->castAttributes($original ?? []);
+        $this->attributes = $this->castAttributes($original ? $original : []);
         $this->validator = $validator;
     }
 
@@ -147,7 +147,7 @@ class ImmutableObject implements JsonSerializable, WillValidate
      * @return bool
      * @throws ImmutableObjectException
      */
-    public function isValid(?Factory $validator = null)
+    public function isValid(Factory $validator = null)
     {
         if (!$this->validator && $validator) {
             $this->validator = $validator;

@@ -25,6 +25,7 @@ use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Translation\Translator;
+use Illuminate\Validation\DatabasePresenceVerifier;
 use Illuminate\Validation\Factory;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
@@ -174,6 +175,7 @@ class ApplicationTestCase extends TestCase
     {
         $this->assertEquals($status, $this->response->getStatusCode());
     }
+
     protected function assertResponseOk()
     {
         $this->assertEquals(200, $this->response->getStatusCode());
@@ -290,7 +292,9 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->bind('validator', static function ($app) {
-            return new Factory($app['translator'], $app);
+            $factory = new Factory($app['translator'], $app);
+            $factory->setPresenceVerifier(new DatabasePresenceVerifier($app['db']));
+            return $factory;
         });
 
         $app->bind('cookie', static function () {
@@ -355,6 +359,8 @@ class ApplicationTestCase extends TestCase
         foreach ($providers as $provider) {
             $provider->boot();
         }
+
+        $app->executeBefore();
 
         $this->app = $app;
 

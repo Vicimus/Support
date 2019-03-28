@@ -23,6 +23,8 @@ class Application extends Container implements HttpKernelInterface
      */
     protected static $requestClass = Request::class;
 
+    private $before = [];
+
     /**
      * Call a method on the default request class.
      *
@@ -61,13 +63,13 @@ class Application extends Container implements HttpKernelInterface
     /**
      * Before
      *
-     * @param $callable The param
+     * @param callable $callable The param
      *
      * @return void
      */
     public function before($callable)
     {
-        // Implement before() method
+        $this->before[] = $callable;
     }
 
     /**
@@ -124,6 +126,13 @@ class Application extends Container implements HttpKernelInterface
     public function environment()
     {
         return 'testing';
+    }
+
+    public function executeBefore()
+    {
+        foreach ($this->before as $before) {
+            $before($this);
+        }
     }
 
     /**
