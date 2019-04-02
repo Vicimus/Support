@@ -466,6 +466,7 @@ class ApplicationTestCase extends TestCase
 
         copy($unsullied, $testing);
         Facade::setFacadeApplication($this->app);
+        Facade::clearResolvedInstances();
 
         $this->client = new Client(static function ($verb, $payload) {
             return Application::onRequest($verb, $payload);
