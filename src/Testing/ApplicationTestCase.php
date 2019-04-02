@@ -432,7 +432,7 @@ class ApplicationTestCase extends TestCase
         $db->setDefaultConnection('default');
 
         copy($stub, $unsullied);
-        if (!filesize($unsullied)) {
+        if (count($this->migrations) && !filesize($unsullied)) {
             throw new \Exception('Database is 0 bytes. This is 99% an error');
         }
 
