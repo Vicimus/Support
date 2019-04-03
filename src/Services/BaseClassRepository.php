@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Services;
 
+use Illuminate\Support\Collection;
 use Vicimus\Support\Interfaces\ClassRepository;
 
 /**
@@ -15,6 +16,21 @@ class BaseClassRepository implements ClassRepository
      * @var string[]
      */
     private $repo = [];
+
+    /**
+     * Get all instances that have been registered
+     *
+     * @return Collection
+     */
+    public function get(): Collection
+    {
+        $payload = [];
+        foreach ($this->repo as $className) {
+            $payload[] = new $className();
+        }
+
+        return new Collection($payload);
+    }
 
     /**
      * Register one or many data services
