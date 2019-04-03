@@ -31,6 +31,13 @@ interface ADFCustomer
     public function lastname(): string;
 
     /**
+     * Get the id of this customer
+     *
+     * @return int
+     */
+    public function primaryId(): ?int;
+
+    /**
      * Get the street address of the customer if available.
      * Return null if it is not available
      *

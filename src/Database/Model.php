@@ -32,6 +32,15 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
 class Model extends LaravelModel
 {
     /**
+     * Properties protected from mass assignment
+     *
+     * @var string[]
+     */
+    protected $guarded = [
+        'id', 'updated_at', 'created_at',
+    ];
+
+    /**
      * Should we cast or not
      *
      * @var bool
@@ -43,15 +52,6 @@ class Model extends LaravelModel
      * @var string[]
      */
     private $columns = [];
-
-    /**
-     * Properties protected from mass assignment
-     *
-     * @var string[]
-     */
-    protected $guarded = [
-        'id', 'updated_at', 'created_at',
-    ];
 
     /**
      * Get an attribute from the model.
