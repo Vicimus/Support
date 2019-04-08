@@ -20,8 +20,13 @@ class ConquestDataCategoryInfo extends ImmutableObject
      * @param string            $class       The class
      * @param Collection|Info[] $sources     Data sources that fall within the category
      */
-    public function __construct(string $name, $description, string $image, string $class, Collection $sources)
-    {
+    public function __construct(
+        string $name,
+        $description,
+        string $image,
+        string $class,
+        Collection $sources
+    ) {
         if ($description instanceof View) {
             $description = $description->render();
         }
