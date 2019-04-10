@@ -57,11 +57,25 @@ class ImmutableModel extends ImmutableObject
         }
 
         foreach ($this->attributes() as $attribute) {
-            if (array_key_exists($attribute, $payload)) {
-                continue;
-            }
-
-            $payload[$attribute] = $model->$attribute;
+            $this->check($attribute, $payload, $model);
         }
+    }
+
+    /**
+     * Check the provided attribute vs the payload provided
+     *
+     * @param string  $attribute The attribute to check
+     * @param mixed[] $payload   The provided payload
+     * @param Model   $model     The model providing a fallback value
+     *
+     * @return void
+     */
+    private function check(string $attribute, array &$payload, Model $model): void
+    {
+        if (array_key_exists($attribute, $payload)) {
+            return;
+        }
+
+        $payload[$attribute] = $model->$attribute;
     }
 }
