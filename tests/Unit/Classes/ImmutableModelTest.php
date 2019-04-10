@@ -2,7 +2,9 @@
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Vicimus\Support\Classes\ImmutableModel;
 use Vicimus\Support\Database\Model;
 
@@ -18,11 +20,41 @@ class ImmutableModelTest extends TestCase
      */
     public function testConstructor(): void
     {
-        $model = $this->getMockBuilder(Model::class)->disableOriginalConstructor()->getMock();
-        $immutable = new ImmutableModel(['name' => 'Name'], $model);
-        $this->assertSame('Name', $immutable->name);
+        $model = new class extends Model{
+            //
+        };
+        $model->name = 'Model Name';
 
-        $second = new ImmutableModel(['name' => 'Name']);
-        $this->assertSame('Name', $second->name);
+        $this->assertSame('Model Name', $model->name);
+
+        $immutableModel = new class extends ImmutableModel{
+            /**
+             * Get attributes
+             * @return string[]
+             */
+            protected function attributes(): array
+            {
+                return ['name'];
+            }
+        };
+
+        $instance = new $immutableModel(['name' => null], $model);
+        $this->assertNull($instance->name);
+
+        $instance = new $immutableModel([], $model);
+        $this->assertSame('Model Name', $instance->name);
+
+        $class = new stdClass();
+        $class->name = 'Class Name';
+
+        $instance = new $immutableModel($class, $model);
+        $this->assertSame('Class Name', $instance->name);
+
+        try {
+            new ImmutableModel('banana');
+            $this->fail('Immutable Banana created');
+        } catch (InvalidArgumentException $ex) {
+            $this->assertContains('array or object', $ex->getMessage());
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Vicimus\Support\Classes;
 
 use InvalidArgumentException;
 use Vicimus\Support\Database\Model;
+use function is_array;
 
 /**
  * Class ImmutableObject
@@ -40,15 +41,19 @@ class ImmutableModel extends ImmutableObject
     /**
      * Merge the payload with defaults from the provided model
      *
-     * @param string[] $payload The payload provided to manipulate
-     * @param Model    $model   The model to merge with
+     * @param mixed $payload The payload provided to manipulate
+     * @param Model $model   The model to merge with
      *
      * @return void
      */
-    protected function merge(array &$payload, ?Model $model): void
+    protected function merge(&$payload, ?Model $model): void
     {
         if (!$model) {
             return;
+        }
+
+        if (!is_array($payload)) {
+            $payload = (array) $payload;
         }
 
         foreach ($this->attributes() as $attribute) {
