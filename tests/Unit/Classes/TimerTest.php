@@ -24,13 +24,15 @@ class TimerTest extends TestCase
             throw new Exception('Fail the timer');
         }, 0.001);
 
-        for ($index = 0; $index < 1000000; ++$index) {
+        for ($index = 0; $index < 1000; ++$index) {
             try {
                 $timer->invoke();
             } catch (Throwable $ex) {
                 $caught = true;
                 break;
             }
+
+            usleep(5000);
         }
 
         $this->assertTrue($caught);
