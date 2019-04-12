@@ -24,6 +24,13 @@ interface Campaign extends Eloquent
     public function collections(): MorphMany;
 
     /**
+     * Check if a campaign is just in draft mode
+     *
+     * @return bool
+     */
+    public function isDraft(): bool;
+
+    /**
      * Temperatures exist on a campaign
      *
      * @return MorphMany
