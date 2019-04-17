@@ -111,6 +111,13 @@ interface Campaign extends BaseCampaign
     public function logs(): HasMany;
 
     /**
+     * A campaign can have many notes associated with it
+     *
+     * @return HasMany
+     */
+    public function notes(): HasMany;
+
+    /**
      * Campaigns have stats
      *
      * @return HasOne
