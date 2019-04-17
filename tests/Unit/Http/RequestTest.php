@@ -66,4 +66,125 @@ class RequestTest extends TestCase
         $params = $request->all();
         $this->assertEquals(['store_id' => 118], $params);
     }
+
+    /**
+     * Test complex query
+     *
+     * @return void
+     */
+    public function testIsComplex(): void
+    {
+        $request = new Request([
+            'status' => 'in:1,2,3',
+        ]);
+
+        $this->assertTrue($request->isComplexQuery());
+    }
+
+    /**
+     * Test the bind method
+     *
+     * @return void
+     */
+    public function testBind(): void
+    {
+        $request = new Request([]);
+
+        $this->assertFalse($request->isComplexQuery());
+
+        $this->assertNotNull($request->bind('banana', static function () {
+            return 'strawberry';
+        }));
+    }
+
+    /**
+     * Test get
+     *
+     * @return void
+     */
+    public function testGet(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+            'status' => '3',
+        ]);
+
+        $this->assertEquals('strawberry', $request->get('banana'));
+        $this->assertEquals(3, $request->get('status', 0, 'int'));
+        $this->assertEquals('apples', $request->get('plums', 'apples'));
+    }
+
+    /**
+     * Test the built in order by stuff
+     *
+     * @return void
+     */
+    public function testOrderBy(): void
+    {
+        $request = new Request([
+            'orderBy' => 'status',
+        ]);
+
+        $this->assertEquals(['status', 'asc'], $request->orderBy());
+
+        $request = new Request([]);
+        $this->assertEquals(['id', 'asc'], $request->orderBy());
+
+        $request = new Request([
+            'orderBy' => 'vehicle:owner.status',
+        ]);
+
+        $this->assertEquals(['vehicle', 'owner.status'], $request->orderBy());
+    }
+
+    /**
+     * Test except excludes
+     *
+     * @return void
+     */
+    public function testExcept(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+            'status' => '3',
+        ]);
+
+        $this->assertEquals(['status' => 3], $request->except('banana'));
+
+        $request = new Request([
+            'banana' => 'strawberry',
+            'status' => '3',
+            'juju' => 'smithschuster',
+        ]);
+
+        $this->assertEquals(['juju' => 'smithschuster'], $request->except(['banana', 'status']));
+    }
+
+    /**
+     * Test has
+     *
+     * @return void
+     */
+    public function testHas(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+        ]);
+
+        $this->assertTrue($request->has('banana'));
+        $this->assertFalse($request->has('strawberry'));
+    }
+
+    /**
+     * Test receiving the illuminate request
+     *
+     * @return void
+     */
+    public function testToRequest(): void
+    {
+        $request = new Request([
+            'banana' => 'strawberry',
+        ]);
+        $this->assertInstanceOf(IllRequest::class, $request->toRequest());
+    }
 }

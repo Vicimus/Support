@@ -38,7 +38,7 @@ class HasManyFromAPITest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $builder->expects($this->exactly(3))
+        $builder->expects($this->atLeastOnce())
             ->method('insert');
 
         $connection = $this->getMockBuilder(ConnectionInterface::class)

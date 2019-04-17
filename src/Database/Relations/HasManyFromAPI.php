@@ -2,13 +2,13 @@
 
 namespace Vicimus\Support\Database\Relations;
 
-use DateTime;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use stdClass;
+use Vicimus\Support\Classes\DateTime;
 use Vicimus\Support\Database\ApiModel;
 use Vicimus\Support\Exceptions\ApiRelationException;
 
@@ -17,6 +17,14 @@ use Vicimus\Support\Exceptions\ApiRelationException;
  */
 class HasManyFromAPI
 {
+    /** Available casts */
+    private const CASTS = ['int', 'bool', 'array'];
+
+    /**
+     * Insert threshold
+     */
+    private const THRESHOLD = 1000;
+
     /**
      * Cast columns
      *
@@ -83,15 +91,20 @@ class HasManyFromAPI
     /**
      * HasManyFromAPI constructor.
      *
-     * @param DatabaseManager $db       Laravel based Database Manager
+     * @param DatabaseManager $dbase    Laravel based Database Manager
      * @param int             $id       The ID of the model this is on
      * @param string          $table    The table of the model
      * @param string          $relation The relation to build
      * @param callable|null   $loader   Callable function to call on the query
      */
-    public function __construct(DatabaseManager $db, int $id, string $table, string $relation, ?callable $loader = null)
-    {
-        $this->db = $db;
+    public function __construct(
+        DatabaseManager $dbase,
+        int $id,
+        string $table,
+        string $relation,
+        ?callable $loader = null
+    ) {
+        $this->db = $dbase;
         $this->id = $id;
 
         $elements = [$this->singular($table), $this->singular($relation)];
@@ -117,6 +130,7 @@ class HasManyFromAPI
      */
     public function associate(array $ids, array $additional = []): void
     {
+        $records = [];
         foreach (array_unique($ids) as $id) {
             if (!is_int($id)) {
                 throw new InvalidArgumentException(
@@ -124,21 +138,16 @@ class HasManyFromAPI
                 );
             }
 
-            $insertion = [];
-            $insertion[$this->left] = $this->id;
-            $insertion[$this->right] = $id;
+            $records[] = $this->buildInsertion($id, $additional[$id] ?? []);
+            if (count($records) < self::THRESHOLD) {
+                continue;
+            }
 
-            $add = $additional[$id] ?? [];
-            $insertion = array_merge($insertion, $add);
-
-            $insertion = array_merge($insertion, [
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ]);
-
-            $this->db->table($this->table)
-                ->insert($insertion);
+            $this->execute($records);
+            $records = [];
         }
+
+        $this->execute($records);
     }
 
     /**
@@ -360,22 +369,11 @@ class HasManyFromAPI
         }
 
         $cast = $this->casts[$property];
-        if (!in_array($cast, [
-            'int', 'bool', 'array',
-        ])) {
+        if (!in_array($cast, self::CASTS, true)) {
             throw new ApiRelationException('Invalid cast term ' . $cast);
         }
 
-        switch ($cast) {
-            case 'bool':
-                return (bool) $value;
-            case 'int':
-                return (int) $value;
-            case 'array':
-                return json_decode($value, true);
-            default:
-                return $value;
-        }
+        return $this->doCast($cast, $value);
     }
 
     /**
@@ -427,10 +425,69 @@ class HasManyFromAPI
      */
     protected function singular(string $table): string
     {
-        if (substr($table, -1, 1) === 's') {
+        if ($table[strlen($table) - 1] === 's') {
             return substr($table, 0, -1);
         }
 
         return $table;
+    }
+
+    /**
+     * Build the array that will be inserted into the array
+     *
+     * @param int     $id         The id being inserted
+     * @param mixed[] $additional Any additional parameters
+     *
+     * @return mixed[]
+     */
+    private function buildInsertion(int $id, array $additional): array
+    {
+        $insertion = [];
+        $insertion[$this->left] = $this->id;
+        $insertion[$this->right] = $id;
+
+        return array_merge($insertion, $additional, [
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
+        ]);
+    }
+
+    /**
+     * Do the cast
+     *
+     * @param string $cast  The cast
+     * @param mixed  $value The value
+     *
+     * @return bool|int|mixed
+     */
+    private function doCast(string $cast, $value)
+    {
+        switch ($cast) {
+            case 'bool':
+                return (bool) $value;
+            case 'int':
+                return (int) $value;
+            case 'array':
+                return json_decode($value, true);
+            default:
+                return $value;
+        }
+    }
+
+    /**
+     * Execute the insertion
+     *
+     * @param mixed[] $records The records to insert
+     *
+     * @return void
+     */
+    private function execute(array $records): void
+    {
+        if (!count($records)) {
+            return;
+        }
+
+        $this->db->table($this->table)
+            ->insert($records);
     }
 }

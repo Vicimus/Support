@@ -2,7 +2,8 @@
   "name": "vicimus/support",
   "type": "library",
   "require": {
-    "php": ">=7.1"
+      "php": ">=7.1",
+      "ext-json": "*"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "~6",
@@ -39,7 +40,11 @@
     {
       "type": "composer",
       "url": "https://repo.packages.vicimus.com"
-    }
+    },
+      {
+        "type":"git",
+        "url": "git@github.com:vicimus/standard.git"
+      }
   ],
   "config": {
     "sort-packages": true

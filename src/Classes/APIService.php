@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Classes;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
@@ -30,7 +30,7 @@ class APIService
     /**
      * The guzzle client
      *
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
@@ -51,14 +51,14 @@ class APIService
     /**
      * APIService constructor.
      *
-     * @param Client   $client     The guzzle client
-     * @param string   $url        The base url for the api
-     * @param string   $id         The ID for the API
-     * @param string   $secret     The Secret for the API
-     * @param string[] $additional Additional parameters to send with all requests
+     * @param ClientInterface $client     The guzzle client
+     * @param string          $url        The base url for the api
+     * @param string          $id         The ID for the API
+     * @param string          $secret     The Secret for the API
+     * @param string[]        $additional Additional parameters to send with all requests
      */
     public function __construct(
-        Client $client,
+        ClientInterface $client,
         string $url,
         ?string $id = null,
         ?string $secret = null,
@@ -95,7 +95,7 @@ class APIService
         $multipart = $this->format($payload);
 
         $path = str_replace($this->url, '', $path);
-        if (substr($path, 0, 1) !== '/') {
+        if (strpos($path, '/') !== 0) {
             $path = '/' . $path;
         }
 
@@ -110,15 +110,19 @@ class APIService
 
             $response = json_decode((string) $response->getBody());
         } catch (ClientException $ex) {
+            /** @var Response $rawResponse */
+            $rawResponse = $ex->getResponse();
             if ($ex->getCode()) {
                 $response = array_values(
-                    json_decode((string) $ex->getResponse()->getBody(), true)
+                    json_decode((string) $rawResponse->getBody(), true)
                 )[0];
-                throw new UnauthorizedException($response, $ex->getResponse()->getStatusCode());
+                throw new UnauthorizedException($response, $rawResponse->getStatusCode());
             }
         } catch (GuzzleServerException $ex) {
-            $response = (string) $ex->getResponse()->getBody();
-            throw new ServerException($response, $ex->getResponse()->getStatusCode());
+            /** @var Response $rawResponse */
+            $rawResponse = $ex->getResponse();
+            $response = (string) $rawResponse->getBody();
+            throw new ServerException($response, $rawResponse->getStatusCode());
         }
 
         return $response;
@@ -132,19 +136,20 @@ class APIService
      * @param string[]|object $payload The payload to send
      *
      * @throws RestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      *
      * @return mixed[]|\stdClass
      */
     public function request(string $method, string $path, $payload = [])
     {
         $path = str_replace($this->url, '', $path);
-        if (substr($path, 0, 1) !== '/') {
+        if (strpos($path, '/') !== 0) {
             $path = '/' . $path;
         }
 
         $query = 'query';
         if (strtolower($method) !== 'get') {
-            $query = 'form_params';
+            $query = 'json';
         }
 
         $match = $this->cacheMatch($method, $path, $payload);

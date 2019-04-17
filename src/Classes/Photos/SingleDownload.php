@@ -13,7 +13,7 @@ class SingleDownload implements DownloadRequest
     /**
      * The photo
      *
-     * @var Photo
+     * @var PhotoStatus
      */
     protected $photo;
 
