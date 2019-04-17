@@ -2,8 +2,11 @@
 
 namespace Vicimus\Support\Classes;
 
+use Illuminate\Http\Request;
+
 /**
  * Class RenderSpecs
+ *
  * @property int $width
  * @property int $height
  * @property int $scale
@@ -14,13 +17,20 @@ class RenderSpecs extends ImmutableObject
     /**
      * RenderSpecs constructor.
      *
-     * @param int|null $width  The width of the pdf element
-     * @param int|null $height The height of the pdf element
-     * @param int|null $scale  The scale to use
-     * @param int|null $pages  The number of pages
+     * @param Request|int|null $width  The width of the pdf element
+     * @param int|null         $height The height of the pdf element
+     * @param int|null         $scale  The scale to use
+     * @param int|null         $pages  The number of pages
      */
-    public function __construct(?int $width, ?int $height, ?int $scale, ?int $pages)
+    public function __construct($width, ?int $height = null, ?int $scale = null, ?int $pages = null)
     {
+        if ($width instanceof Request) {
+            $pages = (int) $width->get('pages');
+            $height = (int) $width->get('height');
+            $scale = (int) $width->get('scale');
+            $width = (int) $width->get('width');
+        }
+
         parent::__construct([
             'width' => $width,
             'height' => $height,
