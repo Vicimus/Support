@@ -140,7 +140,7 @@ class APIService
      *
      * @return mixed[]|\stdClass
      */
-    public function request(string $method, string $path, $payload = [])
+    public function request(string $method, string $path, $payload = [], ?string $tag = null)
     {
         $path = str_replace($this->url, '', $path);
         if (strpos($path, '/') !== 0) {
@@ -152,7 +152,7 @@ class APIService
             $query = 'json';
         }
 
-        $match = $this->cacheMatch($method, $path, $payload);
+        $match = $this->cacheMatch($method, $path, $payload, $tag);
         if ($match) {
             return $match;
         }
@@ -177,7 +177,7 @@ class APIService
         $result = (string) $response->getBody();
         if ($this->cache) {
             $this->cache->add(
-                $this->generateCacheHash($method, $path, $payload),
+                $this->generateCacheHash($method, $path, $payload, $tag),
                 $result,
                 $this->cacheTime()
             );
