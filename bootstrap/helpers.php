@@ -1,6 +1,7 @@
 <?php
 
 use DealerLive\Config\Services\Configuration;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
@@ -43,11 +44,15 @@ if (!function_exists('config')) {
      *
      * @param string|mixed $property The config property to get
      *
-     * @return mixed
+     * @return Repository|mixed
      */
-    function config($property)
+    function config($property = null)
     {
-        return Config::get($property);
+        if ($property) {
+            return Config::get($property);
+        }
+
+        return app('config');
     }
 }
 
