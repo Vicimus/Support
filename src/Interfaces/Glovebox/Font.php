@@ -5,7 +5,10 @@ namespace Vicimus\Support\Interfaces\Glovebox;
 use JsonSerializable;
 
 /**
- * Interface Font
+ * Represents a font selection with the glovebox application
+ *
+ * @property mixed[] $fonts
+ * @property string $name
  */
 interface Font extends JsonSerializable
 {
