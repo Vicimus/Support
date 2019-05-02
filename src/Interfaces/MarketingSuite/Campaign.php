@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Vicimus\Support\Interfaces\Eloquent;
 
@@ -21,9 +22,9 @@ interface Campaign extends Eloquent
     /**
      * Get collections associated with a campaign
      *
-     * @return MorphMany
+     * @return HasMany|MorphMany
      */
-    public function collections(): MorphMany;
+    public function collections();
 
     /**
      * Temperatures exist on a campaign
