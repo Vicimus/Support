@@ -27,6 +27,14 @@ interface Campaign extends Eloquent
     public function collections();
 
     /**
+     * Stored assets through Asset Creator. Introduced with Conquest,
+     * this will eventually be used with Retention as well.
+     *
+     * @return MorphMany
+     */
+    public function assets(): MorphMany;
+
+    /**
      * Temperatures exist on a campaign
      *
      * @return MorphMany
