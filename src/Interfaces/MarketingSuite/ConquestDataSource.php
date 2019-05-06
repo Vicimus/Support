@@ -11,6 +11,13 @@ use Vicimus\Support\Classes\ConquestDataSourceInfo;
 interface ConquestDataSource
 {
     /**
+     * Get an array of asset slugs supported by the source
+     *
+     * @return string[]
+     */
+    public function assets(): array;
+
+    /**
      * Get the category for this data source
      *
      * @return string
