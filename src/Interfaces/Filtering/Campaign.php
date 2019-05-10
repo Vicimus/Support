@@ -4,9 +4,11 @@ namespace Vicimus\Support\Interfaces\Filtering;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Vicimus\Support\Database\Model;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
-use Vicimus\Support\Interfaces\Eloquent;
+use Vicimus\Support\Interfaces\MarketingSuite\Campaign as BaseCampaign;
 
 /**
  * Campaign Model
@@ -50,7 +52,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property DateTime $generated_at
  * @property bool $subject_customized
  */
-interface Campaign extends Eloquent
+interface Campaign extends BaseCampaign
 {
     /**
      * A campaign can have many batches
@@ -67,9 +69,58 @@ interface Campaign extends Eloquent
     public function customers(): HasManyFromAPI;
 
     /**
+     * Departments
+     *
+     * @return MorphToMany
+     */
+    public function departments(): MorphToMany;
+
+    /**
+     * Campaigns allowed to share customers
+     *
+     * @return HasMany
+     */
+    public function includes(): HasMany;
+
+    /**
+     * Check if an campaign is email only
+     *
+     * @return bool
+     */
+    public function isEmailOnly(): bool;
+
+    /**
+     * Is the campaign letter only
+     *
+     * @return bool
+     */
+    public function isLetterOnly(): bool;
+
+    /**
+     * Is the campaign voice only
+     *
+     * @return bool
+     */
+    public function isVoiceOnly(): bool;
+
+    /**
      * The logs method
      *
      * @return HasMany
      */
     public function logs(): HasMany;
+
+    /**
+     * A campaign can have many notes associated with it
+     *
+     * @return HasMany
+     */
+    public function notes(): HasMany;
+
+    /**
+     * Campaigns have stats
+     *
+     * @return HasOne
+     */
+    public function stats(): HasOne;
 }

@@ -74,6 +74,22 @@ class Request
     }
 
     /**
+     * Get everything except the provided properties from the request
+     *
+     * @param string|string[] $properties The properties to exclude
+     *
+     * @return mixed[]
+     */
+    public function except($properties): array
+    {
+        if (!is_array($properties)) {
+            $properties = [$properties];
+        }
+
+        return $this->request->except($properties);
+    }
+
+    /**
      * Get a specific property
      *
      * @param string $property The property to get
@@ -168,6 +184,16 @@ class Request
     public function select(): array
     {
         return explode(',', $this->request->get('fields', '*') ?? '*');
+    }
+
+    /**
+     * Retrieve the illuminate request object
+     *
+     * @return IllRequest
+     */
+    public function toRequest(): IllRequest
+    {
+        return $this->request;
     }
 
     /**

@@ -1,0 +1,43 @@
+<?php declare(strict_types = 1);
+
+namespace Vicimus\Support\Interfaces\MarketingSuite;
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Vicimus\Support\Interfaces\Eloquent;
+
+/**
+ * Interface Campaign
+ *
+ * @property int $id
+ * @property string $oem
+ * @property string $title
+ * @property int $store_id
+ * @property int $lead_type_id
+ * @property string $parent_url
+ * @property int $purl_domain_id
+ */
+interface Campaign extends Eloquent
+{
+    /**
+     * Get collections associated with a campaign
+     *
+     * @return HasMany|MorphMany
+     */
+    public function collections();
+
+    /**
+     * Stored assets through Asset Creator. Introduced with Conquest,
+     * this will eventually be used with Retention as well.
+     *
+     * @return MorphMany
+     */
+    public function assets(): MorphMany;
+
+    /**
+     * Temperatures exist on a campaign
+     *
+     * @return MorphMany
+     */
+    public function temperatures(): MorphMany;
+}

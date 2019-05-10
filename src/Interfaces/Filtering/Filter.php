@@ -8,6 +8,7 @@ use Vicimus\Support\Interfaces\Eloquent;
 /**
  * The Filter model
  *
+ * @property int $id
  * @property string $name
  * @property bool $global
  * @property bool $preset
@@ -49,7 +50,38 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $displayed_emailed
  * @property int $displayed_lettered
  * @property string $languages
- * @property bool $customers_locked
+ * @property string $pay_types
+ * @property int $vehicle_value_min
+ * @property int $vehicle_value_max
+ * @property int $vehicle_rate_min
+ * @property int $vehicle_rate_max
+ * @property string $update_hash
+ * @property string $equity_position_finance
+ * @property string $equity_position_lease
+ * @property int $equity_position_finance_min
+ * @property int $equity_position_finance_max
+ * @property int $equity_position_lease_min
+ * @property int $equity_position_lease_max
+ * @property int $target_sold
+ * @property bool $target_sold_exclude
+ * @property bool $exclusion_days_override
+ * @property int $birthday
+ * @property int $warranty_expiration
+ * @property bool $exclude_bounced
+ * @property int $ah_expiration
+ * @property int $life_expiration
+ * @property int $gap_expiration
+ * @property int $employment_expiration
+ * @property int $breakdown_expiration
+ * @property int $service_expiration
+ * @property int $ro_open_min
+ * @property int $ro_open_max
+ * @property int $ro_close_min
+ * @property int $ro_close_max
+ * @property int $pickup_min
+ * @property int $pickup_max
+ * @property string $service_advisor
+ * @property string $fi_manager
  */
 interface Filter extends Eloquent
 {
