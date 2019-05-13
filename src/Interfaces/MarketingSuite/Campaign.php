@@ -40,4 +40,11 @@ interface Campaign extends Eloquent
      * @return MorphMany
      */
     public function temperatures(): MorphMany;
+
+    /**
+     * Get the store id for this campaigns
+     *
+     * @return int
+     */
+    public function storeId(): int;
 }

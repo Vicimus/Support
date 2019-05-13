@@ -41,12 +41,15 @@ interface ConquestDataSource
     /**
      * Handle launching assets from a specific conquest campaign
      *
-     * @param Campaign   $campaign The conquest campaign instance
-     * @param Collection $assets   The collection of assets to launch
+     * @param Campaign     $campaign The conquest campaign instance
+     * @param SourceRecord $source   The recorded use of a source with details
+     * @param Collection   $assets   The collection of assets to launch
      *
      * @return void
+     *
+     * @throws DataSouceException
      */
-    public function launch(Campaign $campaign, Collection $assets): void;
+    public function launch(Campaign $campaign, SourceRecord $source, Collection $assets): void;
 
     /**
      * The name of the data source as it should be displayed to clients
