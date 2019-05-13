@@ -21,7 +21,15 @@ interface Audience extends HasProperties
 
     /**
      * A unique hash to describe the audience state
+     *
      * @return string
      */
     public function hash(): string;
+
+    /**
+     * Get a name for this audience
+     *
+     * @return string
+     */
+    public function name(): string;
 }
