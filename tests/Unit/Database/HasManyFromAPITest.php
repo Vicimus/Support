@@ -91,7 +91,7 @@ class HasManyFromAPITest extends TestCase
         try {
             $has->associate(['1']);
         } catch (InvalidArgumentException $ex) {
-            $this->assertContains('int', $ex->getMessage());
+            $this->assertStringContainsString('int', $ex->getMessage());
         } catch (Throwable $ex) {
             $this->fail($ex->__toString());
         }
@@ -248,7 +248,6 @@ class HasManyFromAPITest extends TestCase
                 ['id' => 3],
             ]));
 
-
         /** @var ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject $connection */
         $connection = $this->getMockBuilder(ConnectionInterface::class)
             ->getMock();
@@ -259,7 +258,6 @@ class HasManyFromAPITest extends TestCase
         $db->method('connection')
             ->willReturn($connection);
 
-        $match = new Collection();
         $has = new HasManyFromAPI($db, 1, 'bananas', 'strawberries');
 
         $match = null;
@@ -268,7 +266,6 @@ class HasManyFromAPITest extends TestCase
         } catch (Throwable $ex) {
             $this->fail($ex->__toString());
         }
-
 
         $this->assertInstanceOf(stdClass::class, $match->first());
         $this->assertInstanceOf(Collection::class, $match);
@@ -321,7 +318,7 @@ class HasManyFromAPITest extends TestCase
             $hasMany->load();
             $this->wasExpectingException(ApiRelationException::class);
         } catch (ApiRelationException $ex) {
-            $this->assertContains('loader', $ex->getMessage());
+            $this->assertStringContainsString('loader', $ex->getMessage());
         }
 
         $hasMany = new HasManyFromAPI($db, 1, 'bananas', 'strawberries', static function ($results) {
@@ -380,7 +377,7 @@ class HasManyFromAPITest extends TestCase
             $hasMany->load();
             $this->wasExpectingException(ApiRelationException::class);
         } catch (ApiRelationException $ex) {
-            $this->assertContains('loader', $ex->getMessage());
+            $this->assertStringContainsString('loader', $ex->getMessage());
         }
 
         $hasMany = new HasManyFromAPI($db, 1, 'bananas', 'strawberries', static function ($results) {

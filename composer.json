@@ -12,8 +12,8 @@
     "illuminate/http": "~5",
     "illuminate/validation": "~5",
     "laravel/lumen": "~5",
-    "mikey179/vfsStream": "^1.6",
-    "phpunit/phpunit": "~7",
+    "mikey179/vfsstream": "^1.6",
+    "phpunit/phpunit": "~8",
     "vicimus/standard": "~4"
   },
   "suggest": {

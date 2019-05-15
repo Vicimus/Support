@@ -85,7 +85,7 @@ class GenericUtilityTest extends TestCase
         try {
             $utility->call();
         } catch (UtilityException $ex) {
-            $this->assertContains('threw an exception', $ex->getMessage());
+            $this->assertStringContainsString('threw an exception', $ex->getMessage());
         }
     }
 }

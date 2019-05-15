@@ -40,7 +40,7 @@ class ComplexQueryParserTest extends TestCase
             $parser->query('hello', 'banana', 'in:1,2,3');
             $this->wasExpectingException(InvalidArgumentException::class);
         } catch (InvalidArgumentException $ex) {
-            $this->assertContains('Builder', $ex->getMessage());
+            $this->assertStringContainsString('Builder', $ex->getMessage());
         }
 
         /** @var Builder|MockObject $query */

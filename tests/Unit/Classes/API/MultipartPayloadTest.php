@@ -66,7 +66,7 @@ class MultipartPayloadTest extends TestCase
         $format = $payload->format();
         $this->assertEquals('multipart/form-data', $format['Content-Type']);
         $this->assertEquals('my_image', $format['name']);
-        $this->assertInternalType('resource', $format['contents']);
+        $this->assertIsResource($format['contents']);
         $this->assertEquals('image/jpg', $format['mime']);
 
         $array = ['id' => 5];
