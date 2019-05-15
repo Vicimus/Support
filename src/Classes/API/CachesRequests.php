@@ -57,7 +57,6 @@ trait CachesRequests
             return json_decode($match) ?? $match;
         }
 
-
         return $match;
     }
 

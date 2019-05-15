@@ -2,18 +2,22 @@
 
 namespace Vicimus\Support\Classes;
 
+use ArrayAccess;
 use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;
 use RuntimeException;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
+use Vicimus\Support\Traits\AttributeArrayAccess;
 
 /**
  * Class ImmutableObject
  */
-class ImmutableObject implements JsonSerializable, WillValidate
+class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 {
+    use AttributeArrayAccess;
+
     /**
      * The read-only properties
      *

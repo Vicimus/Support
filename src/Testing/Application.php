@@ -9,6 +9,8 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Class Application
+ *
+ * phpcs:disable
  */
 class Application extends Container implements LaravelApp
 {

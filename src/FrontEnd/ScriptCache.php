@@ -148,7 +148,6 @@ class ScriptCache implements ConsoleOutput
                 return ($aPosition > $bPosition) ? 1 : -1;
             });
 
-
             $this->comment('Cached %s-cache-%s', $this->appName, $localeName);
             $this->cache->forever(sprintf('%s-cache-%s', $this->appName, $localeName), [$scripts, $styles]);
         }

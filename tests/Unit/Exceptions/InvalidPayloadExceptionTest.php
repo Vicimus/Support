@@ -20,8 +20,8 @@ class InvalidPayloadExceptionTest extends TestCase
         $banana = [];
         $ex = new InvalidPayloadException($banana, 'Campaign', 'Strawberry', self::class);
         $message = $ex->getMessage();
-        $this->assertContains('Campaign', $message);
-        $this->assertContains('Strawberry', $message);
-        $this->assertContains('InvalidPayloadExceptionTest', $message);
+        $this->assertStringContainsString('Campaign', $message);
+        $this->assertStringContainsString('Strawberry', $message);
+        $this->assertStringContainsString('InvalidPayloadExceptionTest', $message);
     }
 }

@@ -20,19 +20,19 @@ use Vicimus\Support\Interfaces\Eloquent;
 interface Campaign extends Eloquent
 {
     /**
-     * Get collections associated with a campaign
-     *
-     * @return HasMany|MorphMany
-     */
-    public function collections();
-
-    /**
      * Stored assets through Asset Creator. Introduced with Conquest,
      * this will eventually be used with Retention as well.
      *
      * @return MorphMany
      */
     public function assets(): MorphMany;
+
+    /**
+     * Get collections associated with a campaign
+     *
+     * @return HasMany|MorphMany
+     */
+    public function collections();
 
     /**
      * Temperatures exist on a campaign

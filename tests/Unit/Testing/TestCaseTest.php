@@ -16,6 +16,7 @@ class TestCaseTest extends TestCase
      * Test was expecting
      *
      * @return void
+     * @throws Throwable
      */
     public function testWasExpecting(): void
     {
@@ -25,13 +26,13 @@ class TestCaseTest extends TestCase
         try {
             $test->wasExpectingException(InvalidArgumentException::class);
         } catch (Throwable $ex) {
-            $this->assertContains(InvalidArgumentException::class, $ex->getMessage());
+            $this->assertStringContainsString(InvalidArgumentException::class, $ex->getMessage());
         }
 
         try {
             $test->wasExpectingException('string');
         } catch (Throwable $ex) {
-            $this->assertContains('must', $ex->getMessage());
+            $this->assertStringContainsString('must', $ex->getMessage());
         }
     }
 }
