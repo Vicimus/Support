@@ -159,7 +159,10 @@ class APIService
 
         try {
             $response = $this->client->request($method, $this->url . $path, [
-                'headers' => ['authorization' => $this->cred],
+                'headers' => [
+                    'authorization' => $this->cred,
+                    'accept' => 'application/json',
+                ],
                 $query => $this->payload($payload),
             ]);
         } catch (ClientException | GuzzleServerException $ex) {

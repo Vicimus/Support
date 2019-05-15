@@ -32,4 +32,11 @@ interface Audience extends HasProperties
      * @return string
      */
     public function name(): string;
+
+    /**
+     * Get a target instance representing who the audience targets
+     *
+     * @return Target
+     */
+    public function target(): Target;
 }
