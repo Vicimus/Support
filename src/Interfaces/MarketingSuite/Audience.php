@@ -2,9 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Shared\Models\Audiences\Property;
 
 /**
  * Interface Audience

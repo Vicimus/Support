@@ -35,16 +35,16 @@ interface Campaign extends Eloquent
     public function collections();
 
     /**
-     * Temperatures exist on a campaign
-     *
-     * @return MorphMany
-     */
-    public function temperatures(): MorphMany;
-
-    /**
      * Get the store id for this campaigns
      *
      * @return int
      */
     public function storeId(): int;
+
+    /**
+     * Temperatures exist on a campaign
+     *
+     * @return MorphMany
+     */
+    public function temperatures(): MorphMany;
 }
