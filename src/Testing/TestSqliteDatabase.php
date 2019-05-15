@@ -63,7 +63,7 @@ trait TestSqliteDatabase
             }
 
             if (!($GLOBALS['setupDatabase'] ?? false)) {
-                $this->doOneTimeSetup($database, $stub, $secondStub, $test);
+                $this->doOneTimeSetup($database, $secondStub, $stub, $test);
             }
 
             copy($secondStub, $test);
