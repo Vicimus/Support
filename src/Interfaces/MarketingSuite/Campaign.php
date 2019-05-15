@@ -35,6 +35,13 @@ interface Campaign extends Eloquent
     public function collections();
 
     /**
+     * Get the store id for this campaigns
+     *
+     * @return int
+     */
+    public function storeId(): int;
+
+    /**
      * Temperatures exist on a campaign
      *
      * @return MorphMany

@@ -108,7 +108,7 @@ class APIService
                 'multipart' => $multipart,
             ]);
 
-            $response = json_decode((string) $response->getBody());
+            $response = json_decode((string) $response->getBody(), false);
         } catch (ClientException $ex) {
             /** @var Response $rawResponse */
             $rawResponse = $ex->getResponse();
@@ -134,11 +134,11 @@ class APIService
      * @param string          $method  The method to use
      * @param string          $path    The path to call
      * @param string[]|object $payload The payload to send
-     *
-     * @throws RestException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param string|null     $tag     A special tag to use for caching
      *
      * @return mixed[]|\stdClass
+     * @throws RestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function request(string $method, string $path, $payload = [], ?string $tag = null)
     {
@@ -159,7 +159,10 @@ class APIService
 
         try {
             $response = $this->client->request($method, $this->url . $path, [
-                'headers' => ['authorization' => $this->cred],
+                'headers' => [
+                    'authorization' => $this->cred,
+                    'accept' => 'application/json',
+                ],
                 $query => $this->payload($payload),
             ]);
         } catch (ClientException | GuzzleServerException $ex) {

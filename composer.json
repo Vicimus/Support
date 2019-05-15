@@ -11,10 +11,9 @@
     "illuminate/database": "~5",
     "illuminate/http": "~5",
     "illuminate/validation": "~5",
-    "laravel/lumen": "~5",
     "mikey179/vfsstream": "^1.6",
     "phpunit/phpunit": "~8",
-    "vicimus/standard": "~4"
+    "vicimus/standard": "^4.1.2"
   },
   "suggest": {
       "laravel/lumen": "Required to use LumenRouter",
