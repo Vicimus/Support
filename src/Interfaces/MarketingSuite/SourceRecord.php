@@ -32,8 +32,8 @@ interface SourceRecord
     /**
      * Check if there is a property value
      *
-     * @param string $property The property to set
-     * @param string $value    If set, will record a property rather than get
+     * @param string       $property The property to set
+     * @param mixed|string $value    If set, will record a property rather than get
      *
      * @return void
      */
