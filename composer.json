@@ -36,16 +36,6 @@
       "tests/"
     ]
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://repo.packages.vicimus.com"
-    },
-      {
-        "type":"git",
-        "url": "git@github.com:vicimus/standard.git"
-      }
-  ],
   "config": {
     "sort-packages": true
   },
