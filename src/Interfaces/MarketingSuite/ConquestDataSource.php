@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 
 /**
@@ -9,6 +10,13 @@ use Vicimus\Support\Classes\ConquestDataSourceInfo;
  */
 interface ConquestDataSource
 {
+    /**
+     * Get an array of asset slugs supported by the source
+     *
+     * @return string[]
+     */
+    public function assets(): array;
+
     /**
      * Get the category for this data source
      *
@@ -29,6 +37,16 @@ interface ConquestDataSource
      * @return ConquestDataSourceInfo
      */
     public function info(): ConquestDataSourceInfo;
+
+    /**
+     * Handle launching assets from a specific conquest campaign
+     *
+     * @param Campaign   $campaign The conquest campaign instance
+     * @param Collection $assets   The collection of assets to launch
+     *
+     * @return void
+     */
+    public function launch(Campaign $campaign, Collection $assets): void;
 
     /**
      * The name of the data source as it should be displayed to clients

@@ -3,6 +3,8 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Http\Request;
+use Retention\Exceptions\PurlException;
+use Retention\Exceptions\TemplateException;
 
 /**
  * Interface PurlContract
@@ -15,6 +17,9 @@ interface PurlContract
      * @param Request $request The request
      *
      * @return PurlResponse
+     *
+     * @throws TemplateException
+     * @throws PurlException
      */
     public function response(Request $request): PurlResponse;
 }

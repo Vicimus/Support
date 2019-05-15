@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Vicimus\Support\Interfaces\Eloquent;
 
@@ -21,9 +22,17 @@ interface Campaign extends Eloquent
     /**
      * Get collections associated with a campaign
      *
+     * @return HasMany|MorphMany
+     */
+    public function collections();
+
+    /**
+     * Stored assets through Asset Creator. Introduced with Conquest,
+     * this will eventually be used with Retention as well.
+     *
      * @return MorphMany
      */
-    public function collections(): MorphMany;
+    public function assets(): MorphMany;
 
     /**
      * Temperatures exist on a campaign
