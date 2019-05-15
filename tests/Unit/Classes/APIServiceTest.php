@@ -70,7 +70,7 @@ class APIServiceTest extends GuzzleTestCase
             $this->wasExpectingException(RestException::class);
         } catch (RestException $ex) {
             $this->assertEquals(500, $ex->getCode());
-            $this->assertContains('bad stuff', $ex->getMessage());
+            $this->assertStringContainsString('bad stuff', $ex->getMessage());
         }
     }
 
@@ -114,7 +114,7 @@ class APIServiceTest extends GuzzleTestCase
             ]);
             $this->wasExpectingException(RestException::class);
         } catch (RestException $ex) {
-            $this->assertContains('you are bad', $ex->getMessage());
+            $this->assertStringContainsString('you are bad', $ex->getMessage());
             $this->assertEquals(422, $ex->getCode());
         }
 
@@ -124,7 +124,7 @@ class APIServiceTest extends GuzzleTestCase
             ]);
             $this->wasExpectingException(RestException::class);
         } catch (RestException $ex) {
-            $this->assertContains('i am bad', $ex->getMessage());
+            $this->assertStringContainsString('i am bad', $ex->getMessage());
             $this->assertEquals(500, $ex->getCode());
         }
 
@@ -135,7 +135,7 @@ class APIServiceTest extends GuzzleTestCase
             ]);
             $this->wasExpectingException(InvalidArgumentException::class);
         } catch (InvalidArgumentException $ex) {
-            $this->assertContains(MultipartPayload::class, $ex->getMessage());
+            $this->assertStringContainsString(MultipartPayload::class, $ex->getMessage());
             $this->assertEquals(500, $ex->getCode());
         }
     }

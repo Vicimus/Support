@@ -63,31 +63,7 @@ trait TestSqliteDatabase
             }
 
             if (!($GLOBALS['setupDatabase'] ?? false)) {
-                if (!$database) {
-                    @unlink($secondStub);
-                    @unlink($stub);
-                    touch($stub);
-                }
-
-                if ($database) {
-                    copy($secondStub, $stub);
-                }
-
-                @unlink($test);
-                touch($test);
-
-                if (!$database) {
-                    $this->doMigration();
-                }
-
-                copy($stub, $secondStub);
-                if (!filesize($secondStub)) {
-                    throw new TestException('Database is 0 bytes, this is 99% an error');
-                }
-
-                if (!$database) {
-                    $GLOBALS['setupDatabase'] = true;
-                }
+                $this->doOneTimeSetup($database, $stub, $secondStub, $test);
             }
 
             copy($secondStub, $test);
@@ -112,5 +88,48 @@ trait TestSqliteDatabase
     {
         $callable = $this->migrate;
         $callable($this);
+    }
+
+    /**
+     * Do the one time setup of the database
+     *
+     * @param string $database   The database
+     * @param string $secondStub The second stub
+     * @param string $stub       The first stub
+     * @param string $test       The test path
+     *
+     * @throws TestException
+     *
+     * @return void
+     */
+    private function doOneTimeSetup(?string $database, string $secondStub, string $stub, string $test): void
+    {
+        if (!$database) {
+            @unlink($secondStub);
+            @unlink($stub);
+            touch($stub);
+        }
+
+        if ($database) {
+            copy($secondStub, $stub);
+        }
+
+        @unlink($test);
+        touch($test);
+
+        if (!$database) {
+            $this->doMigration();
+        }
+
+        copy($stub, $secondStub);
+        if (!filesize($secondStub)) {
+            throw new TestException('Database is 0 bytes, this is 99% an error');
+        }
+
+        if ($database) {
+            return;
+        }
+
+        $GLOBALS['setupDatabase'] = true;
     }
 }

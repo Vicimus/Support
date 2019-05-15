@@ -54,7 +54,7 @@ class ImmutableModelTest extends TestCase
             new ImmutableModel('banana');
             $this->fail('Immutable Banana created');
         } catch (InvalidArgumentException $ex) {
-            $this->assertContains('array or object', $ex->getMessage());
+            $this->assertStringContainsString('array or object', $ex->getMessage());
         }
     }
 }

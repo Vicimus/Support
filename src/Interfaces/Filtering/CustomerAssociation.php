@@ -8,8 +8,8 @@ use Vicimus\Support\Interfaces\Eloquent;
 /**
  * Customer Association job interface
  * @property int bumper_id
- * @property boolean $complete
- * @property boolean $cancelled
+ * @property bool $complete
+ * @property bool $cancelled
  * @property Campaign $campaign
  */
 interface CustomerAssociation extends Eloquent
