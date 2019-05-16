@@ -213,7 +213,7 @@ class BasicCache implements Repository
      */
     public function remember($key, $minutes, Closure $callback)
     {
-        // TODO: Implement remember() method.
+        return $callback();
     }
 
     /**
