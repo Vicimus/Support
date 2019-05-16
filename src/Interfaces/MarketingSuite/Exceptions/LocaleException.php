@@ -2,10 +2,12 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Exceptions;
 
+use Throwable;
+
 /**
  * Interface LocaleException
  */
-interface LocaleException
+interface LocaleException extends Throwable
 {
     //
 }
