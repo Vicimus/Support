@@ -26,7 +26,7 @@ class BaseClassRepository implements ClassRepository
     {
         $payload = [];
         foreach ($this->repo as $className) {
-            $payload[] = new $className();
+            $payload[] = app($className);
         }
 
         return new Collection($payload);

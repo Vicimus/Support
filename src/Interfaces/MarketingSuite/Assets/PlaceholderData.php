@@ -3,7 +3,9 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
 use Vicimus\Support\Interfaces\MarketingSuite\Campaign;
+use Vicimus\Support\Interfaces\MarketingSuite\Identifiable;
 use Vicimus\Support\Interfaces\OemService;
+use Vicimus\Support\Interfaces\Store;
 
 /**
  * Interface PlaceholderData
@@ -12,10 +14,15 @@ interface PlaceholderData
 {
     /**
      * Get the campaign
-     *
      * @return Campaign
      */
     public function campaign(): Campaign;
+
+    /**
+     * Get the identifiable entity
+     * @return Identifiable
+     */
+    public function identifiable(): Identifiable;
 
     /**
      * Indicates if there are injections or not
@@ -25,8 +32,13 @@ interface PlaceholderData
 
     /**
      * Get the OEM name
-     *
      * @return OemService
      */
     public function oem(): OemService;
+
+    /**
+     * Get the store to use
+     * @return Store
+     */
+    public function store(): Store;
 }

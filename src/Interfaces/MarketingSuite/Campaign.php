@@ -16,6 +16,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $lead_type_id
  * @property string $parent_url
  * @property int $purl_domain_id
+ * @property int $user_id
  */
 interface Campaign extends Eloquent
 {
