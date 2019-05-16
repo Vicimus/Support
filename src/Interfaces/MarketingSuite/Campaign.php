@@ -36,6 +36,12 @@ interface Campaign extends Eloquent
     public function collections();
 
     /**
+     * Get the OEM for this campaign
+     * @return string
+     */
+    public function oem(): string;
+
+    /**
      * Get the store id for this campaigns
      *
      * @return int
