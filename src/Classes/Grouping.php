@@ -2,8 +2,6 @@
 
 namespace Vicimus\Support\Classes;
 
-use Vicimus\Support\Classes\ImmutableObject;
-
 /**
  * Class Grouping
  *
@@ -17,7 +15,7 @@ class Grouping extends ImmutableObject
     /**
      * AssetGrouping constructor
      *
-     * @param string[] $assets     The items belonging to the group
+     * @param string[] $items      The items belonging to the group
      * @param string[] $properties Properties for the group
      */
     public function __construct(array $items = [], array $properties = [])
