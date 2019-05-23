@@ -3,8 +3,8 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Support\Collection;
-use Shared\Classes\AssetGrouping;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
+use Vicimus\Support\Classes\Grouping;
 
 /**
  * Interface ConquestDataSource
@@ -60,9 +60,9 @@ interface ConquestDataSource
     public function name(): string;
 
     /**
-     * Retrieve a list of properties which are shared across the sources assets
+     * Retrieve a list of properties which are shared across items
      *
-     * @return string[]
+     * @return Grouping
      */
-    public function grouping(): AssetGrouping;
+    public function grouping(): Grouping;
 }
