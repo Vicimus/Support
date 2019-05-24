@@ -21,6 +21,13 @@ interface SourceRecord
     public function audiences(): MorphMany;
 
     /**
+     * Get an instance of the implementation
+     *
+     * @return ConquestDataSource
+     */
+    public function instantiate(): ConquestDataSource;
+
+    /**
      * Check if there is a property value
      *
      * @param string $property The property to check
@@ -38,4 +45,11 @@ interface SourceRecord
      * @return void
      */
     public function record(string $property, $value = null): void;
+
+    /**
+     * Get the type of data source this represents
+     *
+     * @return string
+     */
+    public function type(): string;
 }
