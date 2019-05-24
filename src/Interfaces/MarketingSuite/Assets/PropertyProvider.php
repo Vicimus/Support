@@ -22,22 +22,4 @@ interface PropertyProvider
      * @return AssetProperty[]
      */
     public function properties(): array;
-    
-    /**
-     * Validates a property
-     *
-     * @property PropertyRecord $property The proeprty to validate
-     * @property mixed          $value    The value to validate
-     *
-     * @return void
-     */
-    public function validate(PropertyRecord $property, $value): void;
-
-    /**
-     * Retrieve possible values for a property
-     *
-     * @param PropertyRecord $property The property to check
-     * @return array
-     */
-    public function values(PropertyRecord $property): array;
 }
