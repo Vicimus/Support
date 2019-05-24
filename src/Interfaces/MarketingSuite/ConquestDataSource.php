@@ -5,6 +5,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\PropertyRecord;
 
 /**
  * Interface ConquestDataSource
@@ -31,13 +32,6 @@ interface ConquestDataSource
      * @return string
      */
     public function description(): string;
-
-    /**
-     * Retrieve a list of properties which are shared across items
-     *
-     * @return Grouping
-     */
-    public function grouping(): Grouping;
 
     /**
      * Get information on this data source
