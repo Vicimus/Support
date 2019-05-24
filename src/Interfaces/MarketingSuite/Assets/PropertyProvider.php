@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
-use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\Property;
 use Vicimus\Support\Interfaces\PropertyRecord;
 
 /**
@@ -12,22 +12,22 @@ interface PropertyProvider
 {
     /**
      * Retrieve the associated items
-     * @return array
+     * @return string[]
      */
     public function items(): array;
-    
+
     /**
      * Retrieve a list of properties which are shared across items
      *
-     * @return AssetProperty[]
+     * @return Property[]
      */
     public function properties(): array;
-    
+
     /**
      * Validates a property
      *
-     * @property PropertyRecord $property The proeprty to validate
-     * @property mixed          $value    The value to validate
+     * @param PropertyRecord $property The property to validate
+     * @param mixed          $value    The value to validate
      *
      * @return void
      */
@@ -37,7 +37,8 @@ interface PropertyProvider
      * Retrieve possible values for a property
      *
      * @param PropertyRecord $property The property to check
-     * @return array
+     *
+     * @return mixed[]
      */
     public function values(PropertyRecord $property): array;
 }

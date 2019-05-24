@@ -22,9 +22,9 @@ interface PropertyRecord
     /**
      * A property validates
      *
-     * @property mixed $value The value to validate
+     * @param mixed $value The value to validate
      *
-     * @return string
+     * @return void
      */
     public function validate($value): void;
 }

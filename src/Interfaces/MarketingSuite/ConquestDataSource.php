@@ -4,8 +4,6 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
-use Vicimus\Support\Classes\Grouping;
-use Vicimus\Support\Interfaces\PropertyRecord;
 
 /**
  * Interface ConquestDataSource
