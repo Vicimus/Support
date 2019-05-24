@@ -32,14 +32,14 @@ interface Property
     /**
      * Get the value of the property
      *
-     * @return string
+     * @return mixed
      */
-    public function value(): ?string;
+    public function value();
 
     /**
      * Retrieves the possible values that the property can be
      *
-     * @return array
+     * @return mixed[]
      */
     public function values(): array;
 }

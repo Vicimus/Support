@@ -2,8 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Carbon;
 use Vicimus\Support\Interfaces\Eloquent;
 
 /**
@@ -17,29 +17,44 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property string $parent_url
  * @property int $purl_domain_id
  * @property int $user_id
+ * @property Carbon $start
+ * @property Carbon $end
+ * @property Carbon $updated_at
+ * @property Carbon $created_at
+ * @property string $live_site
+ * @property string $purl_background
  */
 interface Campaign extends Eloquent
 {
     /**
-     * Stored assets through Asset Creator. Introduced with Conquest,
-     * this will eventually be used with Retention as well.
-     *
-     * @return MorphMany
+     * Has the campaign portfolio been modified at all, even a single time
+     * @return bool
      */
-    public function assets(): MorphMany;
+    public function hasPortfolioBeenModified(): bool;
 
     /**
-     * Get collections associated with a campaign
+     * This method should return if the campaign is utilizing a specific
+     * medium. Is it sending letters, sending emails, using facebook carousel,
+     * etc.
      *
-     * @return HasMany|MorphMany
+     * @param string $slug The asset type slug
+     *
+     * @return bool
      */
-    public function collections();
+    public function medium(string $slug): bool;
 
     /**
      * Get the OEM for this campaign
      * @return string
      */
     public function oem(): string;
+
+    /**
+     * Get the assets associated with this campaign
+     *
+     * @return Asset[]
+     */
+    public function portfolio(): array;
 
     /**
      * Get the store id for this campaigns

@@ -3,9 +3,8 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Support\Collection;
+use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
-use Vicimus\Support\Classes\Grouping;
-use Vicimus\Support\Interfaces\PropertyRecord;
 
 /**
  * Interface ConquestDataSource
@@ -13,7 +12,10 @@ use Vicimus\Support\Interfaces\PropertyRecord;
 interface ConquestDataSource
 {
     /**
-     * Get an array of asset slugs supported by the source
+     * Get an array of asset slugs supported by the source. The index
+     * should be the CID code to use when generating identifiers
+     *
+     * @see https://vicimus.atlassian.net/wiki/spaces/SP/pages/578519054/Functionality+LP
      *
      * @return string[]
      */
@@ -25,6 +27,23 @@ interface ConquestDataSource
      * @return string
      */
     public function category(): string;
+
+    /**
+     * A data source has an external code assigned to it by the product team.
+     * This method must return that code.
+     *
+     * @see https://vicimus.atlassian.net/wiki/spaces/SP/pages/578519054/Functionality+LP
+     *
+     * @return int
+     */
+    public function code(): int;
+
+    /**
+     * Get a matrix of compatibility information
+     *
+     * @return ConquestCompatibilityMatrix
+     */
+    public function compatibility(): ConquestCompatibilityMatrix;
 
     /**
      * An informative description
@@ -49,7 +68,7 @@ interface ConquestDataSource
      *
      * @return void
      *
-     * @throws DataSouceException
+     * @throws DataSourceException
      */
     public function launch(Campaign $campaign, SourceRecord $source, Collection $assets): void;
 
