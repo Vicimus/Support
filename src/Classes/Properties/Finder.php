@@ -27,7 +27,7 @@ class Finder
     {
         /** @var Property $prop */
         foreach ($provider->properties() as $prop) {
-            if ($prop->property !== $property->name()) {
+            if ($prop->property() !== $property->name()) {
                 continue;
             }
 

@@ -3,7 +3,7 @@
 namespace Vicimus\Support\Classes\Properties;
 
 use Illuminate\Support\Facades\Validator as IllValidator;
-use Shared\Exceptions\PropertyException;
+use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\PropertyRecord;
 
@@ -20,16 +20,16 @@ class Validator extends Finder
      * @param mixed            $value    The value to validate
      *
      * @return void
-     * @throws PropertyException
+     * @throws RestException
      */
-    public function validate(PropertyProvider $provider, PropertyRecord $property, $value): void
+    public function validate(PropertyProvider $provider, PropertyRecord $property, $value): bool
     {
         $prop = $this->find($provider, $property);
         if (!$prop || !$prop->restrictions()) {
-            return;
+            return false;
         }
 
-        $this->check(['property' => $value], ['property' => $prop->restrictions()]);
+        return $this->check(['property' => $value], ['property' => $prop->restrictions()]);
     }
 
     /**
@@ -39,16 +39,18 @@ class Validator extends Finder
      * @param string[] $rules Rules to use
      *
      * @return void
-     * @throws PropertyException
+     * @throws RestException
      */
-    private function check(array $data, array $rules): void
+    private function check(array $data, array $rules): bool
     {
         $validator = IllValidator::make($data, $rules);
         if ($validator->fails()) {
-            throw new PropertyException(
+            throw new RestException(
                 json_encode($validator->errors()->all()),
                 422
             );
         }
+
+        return true;
     }
 }
