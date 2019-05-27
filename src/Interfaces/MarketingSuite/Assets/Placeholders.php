@@ -11,6 +11,15 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 interface Placeholders
 {
     /**
+     * Check if a given placeholder is a valid placeholder
+     *
+     * @param string $placeholder The placeholder to check
+     *
+     * @return bool
+     */
+    public function isValidPlaceholder(string $placeholder): bool;
+
+    /**
      * Get a placeholder value
      *
      * @param string          $placeholder The placeholder ie. {{DEALER.NAME}}

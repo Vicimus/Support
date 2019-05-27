@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Vicimus\Support\Interfaces\MarketingSuite\Assets\Validator;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 
 /**
@@ -27,11 +28,12 @@ interface Asset
     /**
      * Validate an asset
      *
-     * @param string[] $errors The errors found
+     * @param string[]  $errors    The errors found
+     * @param Validator $validator Optionally provide a validator to use
      *
      * @return bool
      *
      * @throws TemplateException
      */
-    public function validate(array &$errors = []): bool;
+    public function validate(array &$errors = [], ?Validator $validator = null): bool;
 }
