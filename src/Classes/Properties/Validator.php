@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Classes\Properties;
 
-use Illuminate\Support\Facades\Validator as IllValidator;
+use Illuminate\Contracts\Validation\Factory;
 use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\PropertyRecord;
@@ -12,6 +12,22 @@ use Vicimus\Support\Interfaces\PropertyRecord;
  */
 class Validator extends Finder
 {
+    /**
+     * Illuminate validator
+     * @var Factory
+     */
+    private $factory;
+
+    /**
+     * Validator constructor
+     *
+     * @param Factory $factory Illuminate validator
+     */
+    public function __construct(Factory $factory)
+    {
+        $this->factory = $factory;
+    }
+
     /**
      * Validate a property
      *
@@ -43,7 +59,8 @@ class Validator extends Finder
      */
     private function check(array $data, array $rules): bool
     {
-        $validator = IllValidator::make($data, $rules);
+        $validator = $this->factory->make($data, $rules);
+
         if ($validator->fails()) {
             throw new RestException(
                 json_encode($validator->errors()->all()),
