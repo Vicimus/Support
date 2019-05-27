@@ -8,15 +8,15 @@ namespace Vicimus\Support\Classes;
  * A container for items (class names/slugs) and their associated property slugs
  *
  * @property string[] $items
- * @property string[] $properties
+ * @property Property[] $properties
  */
 class Grouping extends ImmutableObject
 {
     /**
      * AssetGrouping constructor
      *
-     * @param string[] $items      The items belonging to the group
-     * @param string[] $properties Properties for the group
+     * @param string[]   $items      The items belonging to the group
+     * @param Property[] $properties Properties for the group
      */
     public function __construct(array $items = [], array $properties = [])
     {
