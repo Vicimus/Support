@@ -47,6 +47,7 @@ class ConquestCompatibilityMatrix extends ImmutableObject
             if (!$this->isValidSource($source)) {
                 continue;
             }
+
             if ($description instanceof View) {
                 $description = $description->render();
             }

@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use Vicimus\Support\Classes\ConquestCompatibility;
@@ -25,5 +26,22 @@ class ConquestCompatibilityTest extends TestCase
 
         $info = new ConquestCompatibility(get_class($class));
         $this->assertEquals(get_class($class), $info->class);
+    }
+
+    /**
+     * Test failure
+     *
+     * @return void
+     */
+    public function testConstructorInvalid(): void
+    {
+        $class = self::class;
+
+        try {
+            new ConquestCompatibility($class);
+            $this->fail('Was expecting exception');
+        } catch (InvalidArgumentException $ex) {
+            $this->assertStringContainsString(ConquestDataSource::class, $ex->getMessage());
+        }
     }
 }
