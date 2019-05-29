@@ -88,7 +88,6 @@ class ConquestCompatibilityMatrix extends ImmutableObject
             return false;
         }
 
-
         return !$class->isAbstract() || !$class->implementsInterface(ConquestDataSource::class);
     }
 }
