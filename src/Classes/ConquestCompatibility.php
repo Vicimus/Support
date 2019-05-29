@@ -6,6 +6,10 @@ use Vicimus\Support\Interfaces\MarketingSuite\ConquestDataSource;
 
 /**
  * Class ConquestCompatibility
+ *
+ * @property string $class
+ * @property string $name
+ * @property string $description
  */
 class ConquestCompatibility extends ImmutableObject
 {
