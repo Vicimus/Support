@@ -77,7 +77,9 @@ class ConquestCompatibilityMatrix extends ImmutableObject
      */
     private function isValidSource(string $source): bool
     {
-        if (!class_exists($source)) {
+        try {
+            $class = new ReflectionClass($source);
+        } catch (ReflectionException $ex) {
             return false;
         }
 
@@ -86,11 +88,6 @@ class ConquestCompatibilityMatrix extends ImmutableObject
             return false;
         }
 
-        try {
-            $class = new ReflectionClass($source);
-        } catch (ReflectionException $ex) {
-            return false;
-        }
 
         return !$class->isAbstract() || !$class->implementsInterface(ConquestDataSource::class);
     }
