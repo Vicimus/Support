@@ -48,11 +48,7 @@ class ConquestCompatibilityMatrix extends ImmutableObject
                 continue;
             }
 
-            if ($description instanceof View) {
-                $description = $description->render();
-            }
-
-            $rows[] = new ConquestCompatibility($source, $description);
+            $rows[] = new ConquestCompatibility($source, $this->render($description));
         }
 
         $this->attributes['matrix'] = array_merge($this->attributes['matrix'], $rows);
@@ -89,5 +85,21 @@ class ConquestCompatibilityMatrix extends ImmutableObject
         }
 
         return !$class->isAbstract() || !$class->implementsInterface(ConquestDataSource::class);
+    }
+
+    /**
+     * Render or just return the string
+     *
+     * @param string|View $description The description to render
+     *
+     * @return string
+     */
+    private function render($description): string
+    {
+        if ($description instanceof View) {
+            $description = $description->render();
+        }
+
+        return $description;
     }
 }
