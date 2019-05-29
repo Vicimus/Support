@@ -33,6 +33,18 @@ class BaseClassRepository implements ClassRepository
     }
 
     /**
+     * Check if a specific class is registered or not
+     *
+     * @param string $source The source to check
+     *
+     * @return bool
+     */
+    public function isRegistered(string $source): bool
+    {
+        return in_array($source, $this->repo);
+    }
+
+    /**
      * Register one or many data services
      *
      * @param string|string[] $classes Register one or many data sources

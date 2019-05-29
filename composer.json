@@ -2,8 +2,9 @@
   "name": "vicimus/support",
   "type": "library",
   "require": {
-      "php": ">=7.1",
-      "ext-json": "*"
+    "php": ">=7.1",
+    "ext-json": "*",
+    "symfony/var-dumper": "^4.2"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "~6",
@@ -25,7 +26,7 @@
       "symfony/dom-crawler": "Required for using the locale sniffer"
   },
   "autoload": {
-    "files": ["src/helpers.php"],
+    "files": ["bootstrap/helpers.php"],
     "psr-4": {
       "Vicimus\\Support\\": "src/"
     }
@@ -33,6 +34,9 @@
   "autoload-dev": {
     "classmap": [
       "tests/"
+    ],
+    "files":[
+      "bootstrap/dev-helpers.php"
     ]
   },
   "config": {

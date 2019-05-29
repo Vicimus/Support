@@ -8,6 +8,12 @@ use Vicimus\Support\Classes\ConquestDataSourceInfo as Info;
 
 /**
  * Class ConquestDataCategoryInfo
+ *
+ * @property string $name
+ * @property string $description
+ * @property string $image
+ * @property string $class
+ * @property Collection|Info[] $sources
  */
 class ConquestDataCategoryInfo extends ImmutableObject
 {
