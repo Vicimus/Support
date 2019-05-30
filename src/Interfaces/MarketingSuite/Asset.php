@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Vicimus\AssetBuilder\Classes\CallToAction;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\Validator;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 
@@ -13,6 +14,12 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
  */
 interface Asset
 {
+    /**
+     * Retrieve the call to actions for the asset
+     * @return CallToAction[]
+     */
+    public function callToActions(): array;
+
     /**
      * Get the rendered markup
      * @return string
