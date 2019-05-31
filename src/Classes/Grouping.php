@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Classes;
 
+use Vicimus\Support\Interfaces\Property;
+
 /**
  * Class Grouping
  *
