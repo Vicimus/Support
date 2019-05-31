@@ -5,6 +5,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
+use Vicimus\Support\Classes\Grouping;
 
 /**
  * Interface ConquestDataSource
@@ -51,6 +52,16 @@ interface ConquestDataSource
      * @return string
      */
     public function description(): string;
+
+    /**
+     * Get the asset grouping for this data source. The main reason this
+     * was created was for us to be able to handle shared properties across
+     * many assets. Specifically, Facebook has many assets that all share
+     * specific properties.
+     *
+     * @return Grouping
+     */
+    public function grouping(): Grouping;
 
     /**
      * Get information on this data source
