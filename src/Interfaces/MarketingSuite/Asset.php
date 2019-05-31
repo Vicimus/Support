@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Vicimus\AssetBuilder\Classes\CallToAction;
+use Vicimus\AssetBuilder\Classes\Instruction;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\Validator;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 
@@ -21,10 +22,25 @@ interface Asset
     public function callToActions(): array;
 
     /**
+     * Retrieve the instructions on the asset. This is not always populated
+     * and generally is only populated when necessary and sending to the
+     * PURL application
+     *
+     * @return Instruction[]
+     */
+    public function instructions(): array;
+
+    /**
      * Get the rendered markup
      * @return string
      */
     public function rendered(): string;
+
+    /**
+     * Convert the asset into an array that is easy to send over the network
+     * @return mixed[]
+     */
+    public function toArray(): array;
 
     /**
      * Get the slug or type of asset this represents
