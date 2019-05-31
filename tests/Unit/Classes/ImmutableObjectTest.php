@@ -115,4 +115,34 @@ class ImmutableObjectTest extends TestCase
             $this->assertStringContainsString('without', $ex->getMessage());
         }
     }
+
+    /**
+     * Test casting
+     *
+     * @return void
+     */
+    public function testCasting(): void
+    {
+        /* phpcs:disable */
+        $extension = new class extends ImmutableObject {
+            /** @var string[] Casts */
+            protected $casts = [
+                'id' => 'int',
+                'other' => ImmutableObject::class,
+            ];
+        };
+        /* phpcs:enable */
+
+        $instance = new $extension([
+            'id' => 1,
+            'fruit' => 'kiwi',
+            'other' => [
+                'banana' => 'strawberry',
+            ],
+        ]);
+
+        $this->assertSame(1, $instance->id);
+        $this->assertEquals('strawberry', $instance->other->banana);
+        $this->assertEquals('kiwi', $instance->fruit);
+    }
 }
