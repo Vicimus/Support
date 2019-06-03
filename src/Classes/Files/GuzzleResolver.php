@@ -5,6 +5,7 @@ namespace Vicimus\Support\Classes\Files;
 use ErrorException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Str;
 use Vicimus\Support\Interfaces\FileResolver;
 
 /**
@@ -61,9 +62,10 @@ class GuzzleResolver implements FileResolver
         }
 
         $content = (string) $response->getBody();
-        $local = str_random(32);
-        file_put_contents(sprintf('%s/%s', $this->path, $local), $content);
+        $local = Str::random(32);
+        $fullPath = sprintf('%s/%s', $this->path, $local);
+        file_put_contents($fullPath, $content);
 
-        return fopen($local, $mode);
+        return fopen($fullPath, $mode);
     }
 }
