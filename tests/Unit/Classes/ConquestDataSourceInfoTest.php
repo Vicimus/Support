@@ -34,6 +34,6 @@ class ConquestDataSourceInfoTest extends TestCase
         $this->assertEquals(self::class, $info->category);
         $this->assertEquals(self::class, $info->class);
         $this->assertNotNull($info->matrix);
-        $this->assertCount(1, $info->assets);
+        $this->assertCount(1, $info->mediums);
     }
 }

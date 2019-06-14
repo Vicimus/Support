@@ -10,7 +10,7 @@ namespace Vicimus\Support\Classes;
  * @property string                      $class
  * @property string                      $category
  * @property ConquestCompatibilityMatrix $matrix
- * @property string[]                    $assets
+ * @property string[]                    $mediums
  */
 class ConquestDataSourceInfo extends ImmutableObject
 {
@@ -22,7 +22,7 @@ class ConquestDataSourceInfo extends ImmutableObject
      * @param string                      $class       The implementing class
      * @param string                      $category    The category
      * @param ConquestCompatibilityMatrix $matrix      The compatibility matrix
-     * @param string[]                    $assets      The supported medium types
+     * @param string[]                    $mediums     The supported medium types
      */
     public function __construct(
         string $name,
@@ -30,7 +30,7 @@ class ConquestDataSourceInfo extends ImmutableObject
         string $class,
         string $category,
         ConquestCompatibilityMatrix $matrix,
-        array $assets
+        array $mediums
     ) {
         parent::__construct([
             'name' => $name,
@@ -38,7 +38,7 @@ class ConquestDataSourceInfo extends ImmutableObject
             'class' => $class,
             'category' => $category,
             'matrix' => $matrix,
-            'assets' => $assets,
+            'mediums' => $mediums,
         ]);
     }
 }
