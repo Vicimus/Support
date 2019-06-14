@@ -5,10 +5,12 @@ namespace Vicimus\Support\Classes;
 /**
  * Class ConquestDataSourceInfo
  *
- * @property string $name
- * @property string $description
- * @property string $class
- * @property string $category
+ * @property string                      $name
+ * @property string                      $description
+ * @property string                      $class
+ * @property string                      $category
+ * @property ConquestCompatibilityMatrix $matrix
+ * @property string[]                    $assets
  */
 class ConquestDataSourceInfo extends ImmutableObject
 {
