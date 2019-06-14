@@ -35,6 +35,7 @@ class ConquestCompatibility extends ImmutableObject
         }
 
         parent::__construct([
+            'assets' => array_values($instance->assets()),
             'class' => $class,
             'name' => $instance->name(),
             'description' => $description,
