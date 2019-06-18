@@ -59,7 +59,7 @@ class Model extends LaravelModel
      *
      * @return bool|null
      */
-    public function delete(): bool
+    public function delete(): ?bool
     {
         try {
             $result = parent::delete();
