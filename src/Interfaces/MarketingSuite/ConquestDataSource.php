@@ -64,6 +64,13 @@ interface ConquestDataSource
     public function grouping(): Grouping;
 
     /**
+     * Get a font-awesome icon to use to represent this on the front end
+     *
+     * @return string
+     */
+    public function icon(): string;
+
+    /**
      * Get information on this data source
      *
      * @return ConquestDataSourceInfo

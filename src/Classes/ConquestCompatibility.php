@@ -8,9 +8,10 @@ use Vicimus\Support\Interfaces\MarketingSuite\ConquestDataSource;
 /**
  * Class ConquestCompatibility
  *
- * @property string $class
- * @property string $name
- * @property string $description
+ * @property string   $class
+ * @property string   $name
+ * @property string   $description
+ * @property string[] $mediums
  */
 class ConquestCompatibility extends ImmutableObject
 {
@@ -36,6 +37,7 @@ class ConquestCompatibility extends ImmutableObject
 
         parent::__construct([
             'class' => $class,
+            'mediums' => array_values($instance->assets()),
             'name' => $instance->name(),
             'description' => $description,
         ]);
