@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Database;
 
 use Illuminate\Database\Eloquent\Model as LaravelModel;
+use Throwable;
 
 /**
  * Base class we can use in most of our projects
@@ -52,6 +53,22 @@ class Model extends LaravelModel
      * @var string[]
      */
     private $columns = [];
+
+    /**
+     * Override the delete method so it stops making us try catch it
+     *
+     * @return bool|null
+     */
+    public function delete(): ?bool
+    {
+        try {
+            $result = parent::delete();
+        } catch (Throwable $exception) {
+            return false;
+        }
+
+        return $result;
+    }
 
     /**
      * Get an attribute from the model.
