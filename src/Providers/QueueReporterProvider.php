@@ -29,10 +29,11 @@ class QueueReporterProvider extends ServiceProvider
 
         app('queue')->failing(static function (JobFailed $event) use ($logger): void {
             $message = sprintf(
-                '%s in file %s on line %s',
+                '%s in file %s on line %s with payload %s',
                 $event->exception->getMessage(),
                 $event->exception->getFile(),
-                $event->exception->getLine()
+                $event->exception->getLine(),
+                json_encode($event->job->payload())
             );
 
             $errorMessage = sprintf('%s failed. %s', $event->job->resolveName(), $message);
