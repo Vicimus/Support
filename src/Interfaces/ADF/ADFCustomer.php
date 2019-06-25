@@ -19,16 +19,16 @@ interface ADFCustomer
     /**
      * Get the firstname of this customer
      *
-     * @return string
+     * @return string|null
      */
-    public function firstname(): string;
+    public function firstname(): ?string;
 
     /**
      * Get the lastname of this customer
      *
-     * @return string
+     * @return string|null
      */
-    public function lastname(): string;
+    public function lastname(): ?string;
 
     /**
      * Get the street address of the customer if available.
