@@ -19,7 +19,7 @@ class ResourceResolver implements FileResolver
      *
      * @return resource
      */
-    public function file(string $path, string $mode = 'r')
+    public function file(string $path, string $mode = 'rb')
     {
         return fopen($path, $mode);
     }

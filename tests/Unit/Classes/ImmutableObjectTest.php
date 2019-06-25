@@ -37,7 +37,7 @@ class ImmutableObjectTest extends TestCase
             new ImmutableObject('string');
             $this->fail('Exception not thrown');
         } catch (InvalidArgumentException $ex) {
-            $this->assertContains('array', $ex->getMessage());
+            $this->assertStringContainsString('array', $ex->getMessage());
         }
     }
 
@@ -90,7 +90,7 @@ class ImmutableObjectTest extends TestCase
             $this->fail($ex->__toString());
         }
 
-        $this->assertInternalType('string', $errors);
+        $this->assertIsString($errors);
     }
 
     /**
@@ -105,14 +105,44 @@ class ImmutableObjectTest extends TestCase
             $obj->isValid();
             $this->fail('Was expecting ' . ImmutableObjectException::class);
         } catch (ImmutableObjectException $ex) {
-            $this->assertContains('isValid', $ex->getMessage());
+            $this->assertStringContainsString('isValid', $ex->getMessage());
         }
 
         try {
             $obj->getValidationMessage();
             $this->fail('Was expecting ' . ImmutableObjectException::class);
         } catch (ImmutableObjectException $ex) {
-            $this->assertContains('without', $ex->getMessage());
+            $this->assertStringContainsString('without', $ex->getMessage());
         }
+    }
+
+    /**
+     * Test casting
+     *
+     * @return void
+     */
+    public function testCasting(): void
+    {
+        /* phpcs:disable */
+        $extension = new class extends ImmutableObject {
+            /** @var string[] Casts */
+            protected $casts = [
+                'id' => 'int',
+                'other' => ImmutableObject::class,
+            ];
+        };
+        /* phpcs:enable */
+
+        $instance = new $extension([
+            'id' => 1,
+            'fruit' => 'kiwi',
+            'other' => [
+                'banana' => 'strawberry',
+            ],
+        ]);
+
+        $this->assertSame(1, $instance->id);
+        $this->assertEquals('strawberry', $instance->other->banana);
+        $this->assertEquals('kiwi', $instance->fruit);
     }
 }

@@ -71,7 +71,7 @@ class ApiModelTest extends TestCase
             $model->update([]);
             $this->wasExpectingException(ApiRelationException::class);
         } catch (ApiRelationException $ex) {
-            $this->assertContains('id', $ex->getMessage());
+            $this->assertStringContainsString('id', $ex->getMessage());
         }
     }
 }

@@ -64,7 +64,7 @@ class APIAssociatesTest extends TestCase
             $mock->hasManyFromApi($db, 'Whatever');
             $this->fail('Was expecting ' . ApiRelationException::class);
         } catch (ApiRelationException $ex) {
-            $this->assertContains('table', $ex->getMessage());
+            $this->assertStringContainsString('table', $ex->getMessage());
         }
 
         unset($mock->id);
@@ -73,7 +73,7 @@ class APIAssociatesTest extends TestCase
             $mock->hasManyFromApi($db, 'Whatever');
             $this->fail('Was expecting ' . ApiRelationException::class);
         } catch (ApiRelationException $ex) {
-            $this->assertContains('id', $ex->getMessage());
+            $this->assertStringContainsString('id', $ex->getMessage());
         }
     }
 }

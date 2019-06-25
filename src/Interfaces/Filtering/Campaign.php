@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Vicimus\Support\Database\Model;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
-use Vicimus\Support\Interfaces\Eloquent;
+use Vicimus\Support\Interfaces\MarketingSuite\Campaign as BaseCampaign;
 
 /**
  * Campaign Model
@@ -52,7 +52,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property DateTime $generated_at
  * @property bool $subject_customized
  */
-interface Campaign extends Eloquent
+interface Campaign extends BaseCampaign
 {
     /**
      * A campaign can have many batches
@@ -109,6 +109,13 @@ interface Campaign extends Eloquent
      * @return HasMany
      */
     public function logs(): HasMany;
+
+    /**
+     * A campaign can have many notes associated with it
+     *
+     * @return HasMany
+     */
+    public function notes(): HasMany;
 
     /**
      * Campaigns have stats

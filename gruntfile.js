@@ -25,7 +25,7 @@ module.exports = function(grunt) {
           src: phpFiles
       },
       options: {
-            bin: 'vendor/bin/phpcs',
+            bin: 'vendor/bin/phpcs -p',
             standard: standard,
             encoding: 'utf-8',
             verbose: false,

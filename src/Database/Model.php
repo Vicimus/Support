@@ -3,13 +3,14 @@
 namespace Vicimus\Support\Database;
 
 use Illuminate\Database\Eloquent\Model as LaravelModel;
+use Throwable;
 
 /**
  * Base class we can use in most of our projects
  *
  * @method static \Illuminate\Database\Eloquent\Builder orderBy($column, $ascending = true)
- * @method static LaravelModel|static find($id)
- * @method static LaravelModel|static findOrFail($id)
+ * @method static static find($id)
+ * @method static static findOrFail($id)
  * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotNull($c)
  * @method static LaravelModel|static create($attributes = [])
@@ -32,6 +33,15 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
 class Model extends LaravelModel
 {
     /**
+     * Properties protected from mass assignment
+     *
+     * @var string[]
+     */
+    protected $guarded = [
+        'id', 'updated_at', 'created_at',
+    ];
+
+    /**
      * Should we cast or not
      *
      * @var bool
@@ -45,13 +55,20 @@ class Model extends LaravelModel
     private $columns = [];
 
     /**
-     * Properties protected from mass assignment
+     * Override the delete method so it stops making us try catch it
      *
-     * @var string[]
+     * @return bool|null
      */
-    protected $guarded = [
-        'id', 'updated_at', 'created_at',
-    ];
+    public function delete(): ?bool
+    {
+        try {
+            $result = parent::delete();
+        } catch (Throwable $exception) {
+            return false;
+        }
+
+        return $result;
+    }
 
     /**
      * Get an attribute from the model.

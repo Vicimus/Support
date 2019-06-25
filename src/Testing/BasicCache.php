@@ -17,6 +17,16 @@ class BasicCache implements Repository
     protected $cache = [];
 
     /**
+     * BasicCache constructor.
+     *
+     * @param string[] $initial Set the initial cache
+     */
+    public function __construct(array $initial = [])
+    {
+        $this->cache = $initial;
+    }
+
+    /**
      * Store an item in the cache if the key does not exist.
      *
      * @param  string|mixed                               $key     The key
@@ -25,7 +35,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed
      */
-    public function add($key, $value, $minutes)
+    public function add($key, $value, $minutes = null)
     {
         // TODO: Implement add() method
     }
@@ -187,7 +197,7 @@ class BasicCache implements Repository
      *
      * @return void|mixed
      */
-    public function put($key, $value, $minutes)
+    public function put($key, $value, $minutes = null)
     {
         // TODO: Implement put() method.
     }
@@ -203,7 +213,7 @@ class BasicCache implements Repository
      */
     public function remember($key, $minutes, Closure $callback)
     {
-        // TODO: Implement remember() method.
+        return $callback();
     }
 
     /**
@@ -216,7 +226,7 @@ class BasicCache implements Repository
      */
     public function rememberForever($key, Closure $callback)
     {
-        // TODO: Implement rememberForever() method.
+        return $callback();
     }
 
     /**

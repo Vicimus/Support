@@ -18,6 +18,8 @@ class SmartAssertionsTest extends TestCase
      * Test
      *
      * @return void
+     *
+     * @throws Throwable
      */
     public function testResponseOk(): void
     {
@@ -34,7 +36,7 @@ class SmartAssertionsTest extends TestCase
             $result = $ex->getMessage();
         }
 
-        $this->assertContains('bad news', $result);
+        $this->assertStringContainsString('bad news', $result);
 
         try {
             $test->assertStatusOk(new Response(json_encode([
@@ -45,7 +47,7 @@ class SmartAssertionsTest extends TestCase
             $result = $ex->getMessage();
         }
 
-        $this->assertContains('invalid', $result);
+        $this->assertStringContainsString('invalid', $result);
 
         try {
             $test->assertStatusOk(new Response(json_encode([
@@ -58,8 +60,8 @@ class SmartAssertionsTest extends TestCase
             $result = $ex->getMessage();
         }
 
-        $this->assertContains(__FILE__, $result);
-        $this->assertContains('666', $result);
+        $this->assertStringContainsString(__FILE__, $result);
+        $this->assertStringContainsString('666', $result);
 
         try {
             $test->assertStatusOk(new Response('hi', 500));
@@ -67,7 +69,7 @@ class SmartAssertionsTest extends TestCase
             $result = $ex->getMessage();
         }
 
-        $this->assertContains('hi', $result);
+        $this->assertStringContainsString('hi', $result);
 
         try {
             $test->assertStatusOk(new Response(['id' => 1], 500));
@@ -75,13 +77,15 @@ class SmartAssertionsTest extends TestCase
             $result = $ex->getMessage();
         }
 
-        $this->assertContains(json_encode(['id' => 1]), $result);
+        $this->assertStringContainsString(json_encode(['id' => 1]), $result);
     }
 
     /**
      * Test filtering
      *
      * @return void
+     *
+     * @throws Throwable
      */
     public function testFiltering(): void
     {
@@ -105,6 +109,6 @@ class SmartAssertionsTest extends TestCase
             $result = $ex->getMessage();
         }
 
-        $this->assertContains('strawberry', $result);
+        $this->assertStringContainsString('strawberry', $result);
     }
 }

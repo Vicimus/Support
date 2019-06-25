@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Tests\Unit\Services;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 use Vicimus\Support\Interfaces\Financial\LeaseItem;
 use Vicimus\Support\Services\LeaseCalculator;
 use Vicimus\Support\Testing\TestCase;
@@ -16,6 +17,7 @@ class LeaseCalculatorTest extends TestCase
      * Test payments
      *
      * @return void
+     * @throws Throwable
      */
     public function testPayments(): void
     {
@@ -35,6 +37,7 @@ class LeaseCalculatorTest extends TestCase
      * Easy mode
      *
      * @return void
+     * @throws Throwable
      */
     public function testEasyMode(): void
     {
@@ -44,15 +47,15 @@ class LeaseCalculatorTest extends TestCase
 
         $vehicle->expects($this->once())
             ->method('msrp')
-            ->willReturn(36770);
+            ->willReturn(36770.0);
 
         $vehicle->expects($this->once())
             ->method('price')
-            ->willReturn(38694);
+            ->willReturn(38694.0);
 
         $vehicle->expects($this->once())
             ->method('downpayment')
-            ->willReturn(3600);
+            ->willReturn(3600.0);
 
         $vehicle->expects($this->once())
             ->method('residual')
@@ -64,7 +67,7 @@ class LeaseCalculatorTest extends TestCase
 
         $vehicle->expects($this->once())
             ->method('term')
-            ->willReturn(40);
+            ->willReturn(40.0);
 
         $calc = new LeaseCalculator();
         $payment = $calc->payment($vehicle);

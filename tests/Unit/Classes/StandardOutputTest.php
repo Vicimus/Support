@@ -23,10 +23,10 @@ class StandardOutputTest extends TestCase
         $std->comment('hello there');
         $result = ob_get_clean();
 
-        $this->assertContains('hello there', $result);
-        $this->assertContains('[1;34m', $result);
-        $this->assertContains("\n", $result);
-        $this->assertContains("\r", $result);
+        $this->assertStringContainsString('hello there', $result);
+        $this->assertStringContainsString('[1;34m', $result);
+        $this->assertStringContainsString("\n", $result);
+        $this->assertStringContainsString("\r", $result);
     }
 
     /**
@@ -42,10 +42,10 @@ class StandardOutputTest extends TestCase
         $std->error('hello there');
         $result = ob_get_clean();
 
-        $this->assertContains('hello there', $result);
-        $this->assertContains('[41m', $result);
-        $this->assertContains("\n\n", $result);
-        $this->assertContains("\r", $result);
+        $this->assertStringContainsString('hello there', $result);
+        $this->assertStringContainsString('[41m', $result);
+        $this->assertStringContainsString("\n\n", $result);
+        $this->assertStringContainsString("\r", $result);
     }
 
     /**
@@ -61,10 +61,10 @@ class StandardOutputTest extends TestCase
         $std->info('hello there');
         $result = ob_get_clean();
 
-        $this->assertContains('hello there', $result);
-        $this->assertContains('[32m', $result);
-        $this->assertContains("\n", $result);
-        $this->assertContains("\r", $result);
+        $this->assertStringContainsString('hello there', $result);
+        $this->assertStringContainsString('[32m', $result);
+        $this->assertStringContainsString("\n", $result);
+        $this->assertStringContainsString("\r", $result);
     }
 
     /**
@@ -80,9 +80,9 @@ class StandardOutputTest extends TestCase
         $std->line('hello there');
         $result = ob_get_clean();
 
-        $this->assertContains('hello there', $result);
-        $this->assertNotContains("\n", $result);
-        $this->assertContains("\r", $result);
+        $this->assertStringContainsString('hello there', $result);
+        $this->assertStringNotContainsString("\n", $result);
+        $this->assertStringContainsString("\r", $result);
     }
 
     /**
