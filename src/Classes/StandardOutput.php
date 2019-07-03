@@ -9,9 +9,10 @@ use Vicimus\Support\Interfaces\ConsoleOutput;
  */
 class StandardOutput implements ConsoleOutput
 {
-    public const COLOR_NONE = "\033[0m";
     public const COLOR_GREEN = "\033[32m";
+    public const COLOR_NONE = "\033[0m";
     public const COLOR_YELLOW = "\033[33m";
+
     /**
      * Line length
      *
