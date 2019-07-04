@@ -43,13 +43,29 @@ if (!function_exists('config')) {
      * Mirrors Laravel 5+ config method
      *
      * @param string|mixed $property The config property to get
+     * @param mixed|null   $default  The default value to use
      *
      * @return Repository|mixed
      */
-    function config($property = null)
+    function config($property = null, $default = null)
     {
+        /** @var Illuminate\Config\Repository $config */
+        $config = app('config');
         if ($property) {
-            return Config::get($property);
+            $value = $config->get($property, $default);
+            if (is_numeric($value)) {
+                return (int) $value;
+            }
+
+            if ($value === 'false') {
+                return false;
+            }
+
+            if ($value === 'true') {
+                return true;
+            }
+
+            return $value;
         }
 
         return app('config');
