@@ -56,8 +56,8 @@ class CachesRequestsTest extends TestCase
     {
         $match = $this->instance->cacheMatch('GET', '/api', ['id' => 1], 'banana');
         $this->assertEquals('strawberry', $match);
-        $this->assertEquals(['id' => 1], $this->instance->cacheMatch('', '', [], 'apple'));
-        $this->assertNull($this->instance->cacheMatch('', '', '', 'kiwi'));
+        $this->assertEquals(['id' => 1], $this->instance->cacheMatch('GET', '', [], 'apple'));
+        $this->assertNull($this->instance->cacheMatch('GET', '', '', 'kiwi'));
         $this->instance->bindCache(null);
         $this->assertNull($this->instance->cacheMatch('GET', '/api', ['id' => 1]));
     }
@@ -70,7 +70,7 @@ class CachesRequestsTest extends TestCase
      */
     public function testClearCache(): void
     {
-        $this->assertNotNull($this->instance->cacheMatch('', '', [], 'banana'));
+        $this->assertNotNull($this->instance->cacheMatch('GET', '', [], 'banana'));
         $this->instance->clearCache('', '', [], 'banana');
         $this->assertNull($this->instance->cacheMatch('', '', [], 'banana'));
     }
