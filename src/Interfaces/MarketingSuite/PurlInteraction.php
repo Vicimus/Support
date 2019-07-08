@@ -9,6 +9,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  * @property int $customer
  * @property int $temp
  * @property string $explanation
+ * @property bool $testing
  */
 interface PurlInteraction
 {
