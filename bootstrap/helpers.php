@@ -1,6 +1,7 @@
 <?php
 
 use DealerLive\Config\Services\Configuration;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
@@ -42,12 +43,32 @@ if (!function_exists('config')) {
      * Mirrors Laravel 5+ config method
      *
      * @param string|mixed $property The config property to get
+     * @param mixed|null   $default  The default value to use
      *
-     * @return mixed
+     * @return Repository|mixed
      */
-    function config($property)
+    function config($property = null, $default = null)
     {
-        return Config::get($property);
+        /** @var Illuminate\Config\Repository $config */
+        $config = app('config');
+        if ($property) {
+            $value = $config->get($property, $default);
+            if (is_numeric($value)) {
+                return (int) $value;
+            }
+
+            if ($value === 'false') {
+                return false;
+            }
+
+            if ($value === 'true') {
+                return true;
+            }
+
+            return $value;
+        }
+
+        return app('config');
     }
 }
 
