@@ -27,4 +27,22 @@ class Grouping extends ImmutableObject
             'properties' => $properties,
         ]);
     }
+
+    /**
+     * Access a groupings property
+     *
+     * @param string $property The property name to retrieve
+     *
+     * @return Property
+     */
+    public function property(string $property): Property
+    {
+        foreach ($this->properties as $prop) {
+            if ($prop->property() === $property) {
+                return $prop;
+            }
+        }
+
+        return null;
+    }
 }
