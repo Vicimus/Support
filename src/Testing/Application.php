@@ -5,24 +5,88 @@ namespace Vicimus\Support\Testing;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Foundation\Application as LaravelApp;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Throwable;
 
 /**
  * Class Application
  *
- * phpcs:disable
+ * @SuppressWarnings(PHPMD)
  */
-class Application extends Container implements LaravelApp
+class Application extends Container implements LaravelApp, HttpKernelInterface
 {
+    /**
+     * The request class used by the application.
+     *
+     * @var string
+     */
+    protected static $requestClass = Request::class;
+
+    /**
+     * The custom application path defined by the developer.
+     *
+     * @var string
+     */
+    protected $appPath;
+
+    /**
+     * The custom database path defined by the developer.
+     *
+     * @var string
+     */
+    protected $databasePath;
+
+    /**
+     * The custom environment path defined by the developer.
+     *
+     * @var string
+     */
+    protected $environmentPath;
+
+    /**
+     * Providers
+     * @var string[]
+     */
+    protected $providers = [];
+
+    /**
+     * The custom storage path defined by the developer.
+     *
+     * @var string
+     */
+    protected $storagePath;
+
+    /**
+     * Application constructor.
+     *
+     * @param string|null $basePath Provide the base path
+     */
+    public function __construct(?string $basePath = null)
+    {
+        if (!$basePath) {
+            return;
+        }
+
+        $this->setBasePath($basePath);
+    }
 
     /**
      * Get the base path of the Laravel installation.
      *
-     * @return string|mixed|void
+     * @param string $path Optionally, a path to append to the base path
+     *
+     * @return string
      */
-    public function basePath()
+    public function basePath(string $path = ''): string
     {
-        // Implement basePath() method.
+        return realpath($this->basePath.(($path) ? DIRECTORY_SEPARATOR.$path : $path));
     }
 
     /**
@@ -54,9 +118,103 @@ class Application extends Container implements LaravelApp
      *
      * @return void|mixed
      */
-    public function booting($callback)
+    public function booting($callback): void
     {
         // Implement booting() method.
+    }
+
+    /**
+     * Get the path to the bootstrap directory.
+     *
+     * @param string|mixed $path Optionally, a path to append to the bootstrap path
+     *
+     * @return string
+     */
+    public function bootstrapPath($path = ''): string
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'bootstrap'.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Run the given array of bootstrap classes.
+     *
+     * @param mixed[] $classes Array of bootstrap classes
+     *
+     * @return void
+     */
+    public function bootstrapWith(array $classes): void
+    {
+        // Implement bootstrapWith() method.
+    }
+
+    /**
+     * Get the path to the application configuration files.
+     *
+     * @param string|mixed $path Optionally, a path to append to the config path
+     *
+     * @return string
+     */
+    public function configPath($path = ''): string
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'config'.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+
+    /**
+     * Determine if the application configuration is cached.
+     *
+     * @return bool
+     */
+    public function configurationIsCached(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the path to the database directory.
+     *
+     * @param string|mixed $path Optionally, a path to append to the database path
+     * @return string
+     */
+    public function databasePath($path = ''): string
+    {
+        return (($this->databasePath) ?: $this->basePath.DIRECTORY_SEPARATOR.'database') .
+            (($path) ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Detect the application's current environment.
+     *
+     * @param Closure $callback Closure to detect environment
+     *
+     * @return string
+     */
+    public function detectEnvironment(Closure $callback): string
+    {
+        return 'testing';
+    }
+
+    /**
+     * Handle the given request and get the response.
+     *
+     * @param Request $request The request
+     *
+     * @return Response
+     */
+    public function dispatch(Request $request): Response
+    {
+        if ($this->isDownForMaintenance()) {
+            $response = $this['events']->until('illuminate.app.down');
+            if ($response !== null) {
+                return $this->prepareResponse($response);
+            }
+        }
+
+        if ($this->runningUnitTests() && !$this['session']->isStarted()) {
+            $this['session']->start();
+        }
+
+        return $this['router']->dispatch($this->prepareRequest($request));
     }
 
     /**
@@ -72,13 +230,63 @@ class Application extends Container implements LaravelApp
     }
 
     /**
+     * Get the environment file the application is using.
+     *
+     * @return string
+     */
+    public function environmentFile(): string
+    {
+        return $this->basePath('.env');
+    }
+
+    /**
+     * Get the fully qualified path to the environment file.
+     *
+     * @return string
+     */
+    public function environmentFilePath(): string
+    {
+        return $this->basePath('.env');
+    }
+
+    /**
+     * Get the path to the environment file directory.
+     *
+     * @return string
+     */
+    public function environmentPath(): string
+    {
+        return $this->basePath();
+    }
+
+    /**
+     * Get the path to the configuration cache file.
+     *
+     * @return string
+     */
+    public function getCachedConfigPath(): string
+    {
+        return $this->storagePath() . '/cache';
+    }
+
+    /**
      * Get the path to the cached packages.php file.
      *
      * @return string|mixed|void
      */
     public function getCachedPackagesPath()
     {
-        // Implement getCachedPackagesPath() method.
+        return $this->storagePath() . '/cache';
+    }
+
+    /**
+     * Get the path to the routes cache file.
+     *
+     * @return string
+     */
+    public function getCachedRoutesPath(): string
+    {
+        return $this->storagePath . '/cache';
     }
 
     /**
@@ -88,7 +296,89 @@ class Application extends Container implements LaravelApp
      */
     public function getCachedServicesPath()
     {
-        // Implement getCachedServicesPath() method.
+        return $this->storagePath() . '/cache';
+    }
+
+    /**
+     * Get the current application locale.
+     *
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return 'en';
+    }
+
+    /**
+     * Get the application namespace.
+     *
+     * @return string
+     */
+    public function getNamespace(): string
+    {
+        return '';
+    }
+
+    /**
+     * Get the registered service provider instances if any exist.
+     *
+     * @param ServiceProvider|string $provider The providers
+     *
+     * @return mixed[]
+     */
+    public function getProviders($provider): array
+    {
+        if ($provider) {
+            $this->providers[] = $provider;
+        }
+
+        return $this->providers;
+    }
+
+    /**
+     * Handle the given request and get the response.
+     *
+     * Provides compatibility with BrowserKit functional testing.
+     *
+     * @implements HttpKernelInterface::handle
+     *
+     * @param SymfonyRequest $request The request instance
+     * @param int|mixed      $type    The type of call
+     * @param bool|mixed     $catch   Should catch
+     *
+     * @return Response
+     *
+     * @throws Throwable
+     */
+    public function handle(
+        SymfonyRequest $request,
+        $type = HttpKernelInterface::MASTER_REQUEST,
+        $catch = true
+    ): Response {
+        try {
+            $request = Request::createFromBase($request);
+            $this->refreshRequest($request);
+
+            $this->boot();
+
+            return $this->dispatch($request);
+        } catch (Throwable $e) {
+            if (!$catch || ($this->runningUnitTests() && $type)) {
+                throw $e;
+            }
+
+            return $this['exception']->handleException($e);
+        }
+    }
+
+    /**
+     * Determine if the application has been bootstrapped before.
+     *
+     * @return bool
+     */
+    public function hasBeenBootstrapped(): bool
+    {
+        return true;
     }
 
     /**
@@ -102,16 +392,119 @@ class Application extends Container implements LaravelApp
     }
 
     /**
+     * Get the path to the language files.
+     *
+     * @return string
+     */
+    public function langPath(): string
+    {
+        return $this->resourcePath().DIRECTORY_SEPARATOR.'lang';
+    }
+
+    /**
+     * Load and boot all of the remaining deferred providers.
+     *
+     * @return void
+     */
+    public function loadDeferredProviders(): void
+    {
+        //Implement loadDeferredProviders() method.
+    }
+
+    /**
+     * Set the environment file to be loaded during bootstrapping.
+     *
+     * @param string|mixed $file Load the file
+     *
+     * @return self
+     */
+    public function loadEnvironmentFrom($file): self
+    {
+        return $this;
+    }
+
+    /**
+     * Call a method on the default request class.
+     *
+     * @param string  $method     The method
+     * @param mixed[] $parameters Parameters
+     *
+     * @return mixed
+     */
+    public static function onRequest(string $method, array $parameters = [])
+    {
+        return forward_static_call_array([static::requestClass(), $method], $parameters);
+    }
+
+    /**
+     * Get the path to the application "app" directory.
+     *
+     * @param string $path The path to get
+     *
+     * @return string
+     */
+    public function path(string $path = ''): string
+    {
+        $appPath = ($this->appPath) ?: $this->basePath.DIRECTORY_SEPARATOR.'app';
+        return $appPath.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Prepare the request by injecting any services.
+     *
+     * @param Request $request The request instance
+     *
+     * @return Request
+     */
+    public function prepareRequest(Request $request): Request
+    {
+        if ($this['config']['session.driver'] !== null && !$request->hasSession()) {
+            $request->setSession($this['session']->driver());
+        }
+
+        return $request;
+    }
+
+    /**
+     * Prepare the given value as a Response object.
+     *
+     * @param mixed $value A value
+     *
+     * @return Response
+     */
+    public function prepareResponse($value): Response
+    {
+        if (!$value instanceof SymfonyResponse) {
+            $value = new IlluminateResponse($value);
+        }
+
+        return $value->prepare($this['request']);
+    }
+
+    /**
+     * Get the path to the public / web directory.
+     *
+     * @return string
+     */
+    public function publicPath(): string
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'public';
+    }
+
+    /**
      * Register a service provider with the application.
      *
-     * @param  ServiceProvider|string $provider The provider
-     * @param  bool|mixed             $force    Force
+     * @param ServiceProvider|string $provider The provider
+     * @param bool|mixed             $force    Force
      *
      * @return ServiceProvider|mixed|void
      */
-    public function register($provider, $force = false)
+    public function register($provider, $force = false): void
     {
-        // Implement register() method when necessary
+        $this->providers[] = $provider;
+        if (!$force) {
+            return;
+        }
     }
 
     /**
@@ -127,14 +520,64 @@ class Application extends Container implements LaravelApp
     /**
      * Register a deferred provider and service.
      *
-     * @param  string|mixed $provider The providers
-     * @param  string|null  $service  The service
+     * @param string|mixed      $provider The providers
+     * @param string|mixed|null $service  The service
      *
      * @return void|mixed
      */
-    public function registerDeferredProvider($provider, $service = null)
+    public function registerDeferredProvider($provider, $service = null): void
     {
         // Implement registerDeferredProvider() method.
+    }
+
+    /**
+     * Get or set the request class for the application.
+     *
+     * @param string|null $class Optionally provide a class to use
+     *
+     * @return string
+     */
+    public static function requestClass(?string $class = null): string
+    {
+        if ($class !== null) {
+            static::$requestClass = $class;
+        }
+
+        return static::$requestClass;
+    }
+
+    /**
+     * Resolve a service provider instance from the class name.
+     *
+     * @param string|mixed $provider The provider class
+     *
+     * @return ServiceProvider
+     */
+    public function resolveProvider($provider): ServiceProvider
+    {
+        return app($provider);
+    }
+
+    /**
+     * Get the path to the resources directory.
+     *
+     * @param string|mixed $path Add a relative path
+     *
+     * @return string
+     */
+    public function resourcePath($path = ''): string
+    {
+        return $this->basePath('resources/' . $path);
+    }
+
+    /**
+     * Determine if the application routes are cached.
+     *
+     * @return bool
+     */
+    public function routesAreCached(): bool
+    {
+        return false;
     }
 
     /**
@@ -158,6 +601,64 @@ class Application extends Container implements LaravelApp
     }
 
     /**
+     * Set the base path for the application.
+     *
+     * @param string $basePath The base path to set
+     *
+     * @return self
+     */
+    public function setBasePath(string $basePath): self
+    {
+        $this->basePath = rtrim($basePath, '\/');
+
+        $this->bindPathsInContainer();
+
+        return $this;
+    }
+
+    /**
+     * Set the current application locale.
+     *
+     * @param string|mixed $locale The locale
+     *
+     * @return void
+     */
+    public function setLocale($locale): void
+    {
+        //Implement setLocale() method.
+    }
+
+    /**
+     * Determine if middleware has been disabled for the application.
+     *
+     * @return bool
+     */
+    public function shouldSkipMiddleware(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the path to the storage directory.
+     *
+     * @return string
+     */
+    public function storagePath(): string
+    {
+        return ($this->storagePath) ?: $this->basePath.DIRECTORY_SEPARATOR.'storage';
+    }
+
+    /**
+     * Terminate the application.
+     *
+     * @return void
+     */
+    public function terminate(): void
+    {
+        //
+    }
+
+    /**
      * Get the version number of the application.
      *
      * @return string|mixed|void
@@ -168,262 +669,34 @@ class Application extends Container implements LaravelApp
     }
 
     /**
-     * Get the path to the bootstrap directory.
-     *
-     * @param string $path Optionally, a path to append to the bootstrap path
-     *
-     * @return string
-     */
-    public function bootstrapPath($path = '')
-    {
-        // TODO: Implement bootstrapPath() method.
-    }
-
-    /**
-     * Get the path to the application configuration files.
-     *
-     * @param string $path Optionally, a path to append to the config path
-     *
-     * @return string
-     */
-    public function configPath($path = '')
-    {
-        // TODO: Implement configPath() method.
-    }
-
-    /**
-     * Get the path to the database directory.
-     *
-     * @param string $path Optionally, a path to append to the database path
-     *
-     * @return string
-     */
-    public function databasePath($path = '')
-    {
-        // TODO: Implement databasePath() method.
-    }
-
-    /**
-     * Get the path to the environment file directory.
-     *
-     * @return string
-     */
-    public function environmentPath()
-    {
-        // TODO: Implement environmentPath() method.
-    }
-
-    /**
-     * Get the path to the resources directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function resourcePath($path = '')
-    {
-        // TODO: Implement resourcePath() method.
-    }
-
-    /**
-     * Get the path to the storage directory.
-     *
-     * @return string
-     */
-    public function storagePath()
-    {
-        // TODO: Implement storagePath() method.
-    }
-
-    /**
-     * Resolve a service provider instance from the class name.
-     *
-     * @param string $provider
-     *
-     * @return \Illuminate\Support\ServiceProvider
-     */
-    public function resolveProvider($provider)
-    {
-        // TODO: Implement resolveProvider() method.
-    }
-
-    /**
-     * Run the given array of bootstrap classes.
-     *
-     * @param array $bootstrappers
+     * Bind all of the application paths in the container.
      *
      * @return void
      */
-    public function bootstrapWith(array $bootstrappers)
+    protected function bindPathsInContainer(): void
     {
-        // TODO: Implement bootstrapWith() method.
+        $this->instance('path', $this->path());
+        $this->instance('path.base', $this->basePath());
+        $this->instance('path.lang', $this->langPath());
+        $this->instance('path.config', $this->configPath());
+        $this->instance('path.public', $this->publicPath());
+        $this->instance('path.storage', $this->storagePath());
+        $this->instance('path.database', $this->databasePath());
+        $this->instance('path.resources', $this->resourcePath());
+        $this->instance('path.bootstrap', $this->bootstrapPath());
     }
 
     /**
-     * Determine if the application configuration is cached.
+     * Refresh the bound request instance in the container.
      *
-     * @return bool
-     */
-    public function configurationIsCached()
-    {
-        // TODO: Implement configurationIsCached() method.
-    }
-
-    /**
-     * Detect the application's current environment.
-     *
-     * @param \Closure $callback
-     *
-     * @return string
-     */
-    public function detectEnvironment(Closure $callback)
-    {
-        // TODO: Implement detectEnvironment() method.
-    }
-
-    /**
-     * Get the environment file the application is using.
-     *
-     * @return string
-     */
-    public function environmentFile()
-    {
-        // TODO: Implement environmentFile() method.
-    }
-
-    /**
-     * Get the fully qualified path to the environment file.
-     *
-     * @return string
-     */
-    public function environmentFilePath()
-    {
-        // TODO: Implement environmentFilePath() method.
-    }
-
-    /**
-     * Get the path to the configuration cache file.
-     *
-     * @return string
-     */
-    public function getCachedConfigPath()
-    {
-        // TODO: Implement getCachedConfigPath() method.
-    }
-
-    /**
-     * Get the path to the routes cache file.
-     *
-     * @return string
-     */
-    public function getCachedRoutesPath()
-    {
-        // TODO: Implement getCachedRoutesPath() method.
-    }
-
-    /**
-     * Get the current application locale.
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        // TODO: Implement getLocale() method.
-    }
-
-    /**
-     * Get the application namespace.
-     *
-     * @return string
-     *
-     * @throws \RuntimeException
-     */
-    public function getNamespace()
-    {
-        // TODO: Implement getNamespace() method.
-    }
-
-    /**
-     * Get the registered service provider instances if any exist.
-     *
-     * @param \Illuminate\Support\ServiceProvider|string $provider
-     *
-     * @return array
-     */
-    public function getProviders($provider)
-    {
-        // TODO: Implement getProviders() method.
-    }
-
-    /**
-     * Determine if the application has been bootstrapped before.
-     *
-     * @return bool
-     */
-    public function hasBeenBootstrapped()
-    {
-        // TODO: Implement hasBeenBootstrapped() method.
-    }
-
-    /**
-     * Load and boot all of the remaining deferred providers.
+     * @param Request $request The request instance
      *
      * @return void
      */
-    public function loadDeferredProviders()
+    protected function refreshRequest(Request $request): void
     {
-        // TODO: Implement loadDeferredProviders() method.
-    }
+        $this->instance('request', $request);
 
-    /**
-     * Set the environment file to be loaded during bootstrapping.
-     *
-     * @param string $file
-     *
-     * @return LaravelApp
-     */
-    public function loadEnvironmentFrom($file)
-    {
-        // TODO: Implement loadEnvironmentFrom() method.
+        Facade::clearResolvedInstance('request');
     }
-
-    /**
-     * Determine if the application routes are cached.
-     *
-     * @return bool
-     */
-    public function routesAreCached()
-    {
-        // TODO: Implement routesAreCached() method.
-    }
-
-    /**
-     * Set the current application locale.
-     *
-     * @param string $locale
-     *
-     * @return void
-     */
-    public function setLocale($locale)
-    {
-        // TODO: Implement setLocale() method.
-    }
-
-    /**
-     * Determine if middleware has been disabled for the application.
-     *
-     * @return bool
-     */
-    public function shouldSkipMiddleware()
-    {
-        // TODO: Implement shouldSkipMiddleware() method.
-    }
-
-    /**
-     * Terminate the application.
-     *
-     * @return void
-     */
-    public function terminate(){
- // TODO: Implement terminate() method.
-}}
+}

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * Interface Audience
  * @property int $id
+ * @property Audience $extension
  */
 interface Audience extends HasProperties
 {
@@ -19,7 +20,8 @@ interface Audience extends HasProperties
     public function audienceable(): MorphTo;
 
     /**
-     * An audience may extend another audience
+     * An audience may extend another audience as AudienceContract;
+
      *
      * @return BelongsTo|self
      */
