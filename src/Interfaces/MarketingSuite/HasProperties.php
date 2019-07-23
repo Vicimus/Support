@@ -7,6 +7,8 @@ use Shared\Models\Audiences\Property;
 
 /**
  * Interface HasProperties
+ *
+ * @property Property[] $properties
  */
 interface HasProperties
 {
