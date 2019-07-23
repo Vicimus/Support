@@ -1,33 +1,42 @@
 <?php declare(strict_types = 1);
 
 use Carbon\Carbon;
-use DealerLive\Config\Services\Configuration;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\Translation\Translator as TranslatorContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
+use Illuminate\Validation\ValidationException;
 use Vicimus\Support\Exceptions\TranslationFileException;
+use Vicimus\Support\Interfaces\Glovebox\Configuration;
 use Vicimus\Support\Interfaces\Glovebox\Translator;
 use Vicimus\Support\Services\Responses;
 use Vicimus\Support\Testing\Application;
 
-if ( ! function_exists('app'))
-{
+if (!function_exists('app')) {
     /**
      * Get the root Facade application instance.
      *
-     * @param  string  $make
+     * @noinspection PhpDocMissingThrowsInspection
+     *
+     * @param string $make Make an instance of this class
+     *
      * @return Application|Container|mixed
      */
-    function app($make = null)
+    function app(?string $make = null)
     {
-        $app = Illuminate\Support\Facades\Facade::getFacadeApplication();
+        $app = Illuminate\Support\Facades\Facade::getFacadeApplication() ?? Application::getInstance();
         if ($make) {
+            /** @noinspection PhpUnhandledExceptionInspection */
             return $app->make($make);
         }
 
@@ -36,7 +45,12 @@ if ( ! function_exists('app'))
 }
 
 if (!function_exists('lang')) {
-    function lang()
+    /**
+     * Get a translator instance
+     *
+     * @return TranslatorContract
+     */
+    function lang(): TranslatorContract
     {
         return app('translator');
     }
@@ -49,9 +63,9 @@ if (!function_exists('env')) {
      * @param string $key     The key to find
      * @param string $default The value to return if no value found
      *
-     * @return string
+     * @return string|int|bool
      */
-    function env($key, $default = null)
+    function env(string $key, ?string $default = null)
     {
         $value = getenv($key);
         if ($value === false) {
@@ -85,27 +99,28 @@ if (!function_exists('view')) {
      * @param string|mixed $path   The path to the view
      * @param mixed[]      $params The parameters to pass
      *
-     * @return \Illuminate\View\View|\Illuminate\View\Factory|mixed
+     * @return ViewFactory|View
      */
     function view($path = null, array $params = [])
     {
+        /** @var ViewFactory $factory */
+        $factory = app('view');
         if ($path === null) {
-            return app('view');
+            return $factory;
         }
 
-        return app('view')->make($path, $params);
+        return $factory->make($path, $params);
     }
 }
-
 
 if (!function_exists('response')) {
     /**
      * @param string|mixed $response The response to send
-     * @param int|mixed    $code     The http code to use
+     * @param int          $code     The http code to use
      *
      * @return \Illuminate\Http\Response|ResponseFactory|mixed
      */
-    function response($response = null, $code = 200)
+    function response($response = null, int $code = 200)
     {
         if ($response === null) {
             return new Responses();
@@ -140,13 +155,14 @@ if (!function_exists('request')) {
     /**
      * Get the request instance
      *
-     * @param string|null|mixed $property Get the property
-     * @param mixed             $default  Default to use
+     * @param string|null $property Get the property
+     * @param mixed       $default  Default to use
      *
-     * @return \Illuminate\Http\Request|mixed
+     * @return Request|mixed
      */
-    function request($property = null, $default = null)
+    function request(?string $property = null, $default = null)
     {
+        /** @var Request $request */
         $request = app('request');
         if (!$property) {
             return $request;
@@ -163,15 +179,17 @@ if (!function_exists('event')) {
      * @param string $event   The event name
      * @param mixed  $payload The payload to send with the event
      *
-     * @return \Illuminate\Events\Dispatcher|mixed
+     * @return Dispatcher|mixed[]|null
      */
-    function event($event = null, $payload = null)
+    function event(?string $event = null, $payload = null)
     {
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = app('events');
         if ($event === null) {
-            return app('events');
+            return $dispatcher;
         }
 
-        return app('events')->dispatch($event, $payload);
+        return $dispatcher->dispatch($event, $payload);
     }
 }
 
@@ -179,11 +197,12 @@ if (!function_exists('setting')) {
     /**
      * Check a config setting
      *
-     * @param string $property The property to check
+     * @param string     $property The property to check
+     * @param string|int $default  The default value to use
      *
      * @return Configuration|mixed
      */
-    function setting($property = null, $default = null)
+    function setting(?string $property = null, $default = null)
     {
         /** @var Configuration $service */
         $service = app(Configuration::class);
@@ -204,11 +223,11 @@ if (!function_exists('redirect')) {
     /**
      * @param string $url The url to redirect to
      *
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|mixed
+     * @return Redirector|RedirectResponse|mixed
      */
-    function redirect($url = null)
+    function redirect(?string $url = null)
     {
-        /** @var \Illuminate\Routing\Redirector $redirector */
+        /** @var Redirector $redirector */
         $redirector = app('redirect');
         if ($url === null) {
             return $redirector;
@@ -222,11 +241,11 @@ if (!function_exists('now')) {
     /**
      * Get now
      *
-     * @return \Carbon\Carbon
+     * @return Carbon
      */
-    function now()
+    function now(): Carbon
     {
-        return Carbon\Carbon::now();
+        return Carbon::now();
     }
 }
 
@@ -256,10 +275,14 @@ if (!function_exists('validate')) {
     /**
      * Validate
      *
-     * @param array                         $rules
-     * @param \Illuminate\Http\Request|null $request
+     * @param string[]     $rules   The rules to use to validate
+     * @param Request|null $request The request instance
+     *
+     * @return void
+     *
+     * @throws ValidationException
      */
-    function validate(array $rules, \Illuminate\Http\Request $request = null)
+    function validate(array $rules, ?Request $request = null): void
     {
         if ($request === null) {
             $request = request();
@@ -269,21 +292,36 @@ if (!function_exists('validate')) {
         $factory = app('validator');
         $validator = $factory->make($request->all(), $rules);
         if ($validator->fails()) {
-            $message = sprintf('Missing required fields [%s]', implode(', ', array_keys($validator->errors()->getMessages())));
-            throw new \Vicimus\Support\Exceptions\ValidationException($message);
+            throw new ValidationException($validator);
         }
     }
 }
 
 if (!function_exists('public_path')) {
-    function public_path(string $relative = null)
+    /**
+     * Get the public path
+     *
+     * phpcs:disable Generic.NamingConventions.CamelCapsFunctionName.NotCamelCaps
+     *
+     * @param string|null $relative Add a relative path to it
+     *
+     * @return string
+     */
+    function public_path(?string $relative = null): string
     {
         return app('path.public') . DIRECTORY_SEPARATOR . $relative;
     }
 }
 
 if (!function_exists('storage_path')) {
-    function storage_path(string $relative = null)
+    /**
+     * Get the storage path
+     *
+     * @param string|null $relative Add a relative path to it
+     *
+     * @return string
+     */
+    function storage_path(?string $relative = null): string
     {
         return app('path.storage') . DIRECTORY_SEPARATOR . $relative;
     }
@@ -291,7 +329,14 @@ if (!function_exists('storage_path')) {
 
 
 if (!function_exists('app_path')) {
-    function app_path(string $relative = null)
+    /**
+     * Get the app path
+     *
+     * @param string|null $relative Add a relative path to it
+     *
+     * @return string
+     */
+    function app_path(?string $relative = null): string
     {
         return app('path.app') . DIRECTORY_SEPARATOR . $relative;
     }

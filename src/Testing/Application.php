@@ -7,16 +7,14 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Foundation\Application as LaravelApp;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Class Application
  *
- * phpcs:disable
+ * @SuppressWarnings(PHPMD)
  */
 class Application extends Container implements LaravelApp, HttpKernelInterface
 {
@@ -36,6 +34,13 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     protected $databasePath;
 
     /**
+     * The custom environment path defined by the developer.
+     *
+     * @var string
+     */
+    protected $environmentPath;
+
+    /**
      * The custom storage path defined by the developer.
      *
      * @var string
@@ -43,18 +48,29 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     protected $storagePath;
 
     /**
-     * The custom environment path defined by the developer.
+     * Application constructor.
      *
-     * @var string
+     * @param string|null $basePath Provide the base path
      */
-    protected $environmentPath;
-
-
-    public function __construct(string $basePath = null)
+    public function __construct(?string $basePath = null)
     {
-        if ($basePath) {
-            $this->setBasePath($basePath);
+        if (!$basePath) {
+            return;
         }
+
+        $this->setBasePath($basePath);
+    }
+
+    /**
+     * Get the base path of the Laravel installation.
+     *
+     * @param string $path Optionally, a path to append to the base path
+     *
+     * @return string
+     */
+    public function basePath(string $path = ''): string
+    {
+        return realpath($this->basePath.(($path) ? DIRECTORY_SEPARATOR.$path : $path));
     }
 
     /**
@@ -77,17 +93,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     public function booted($callback)
     {
         // Implement booted() method.
-    }
-
-    /**
-     * Get the base path of the Laravel installation.
-     *
-     * @param  string  $path Optionally, a path to append to the base path
-     * @return string
-     */
-    public function basePath($path = '')
-    {
-        return realpath($this->basePath.($path ? DIRECTORY_SEPARATOR.$path : $path));
     }
 
     /**
