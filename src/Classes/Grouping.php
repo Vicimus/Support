@@ -18,12 +18,14 @@ class Grouping extends ImmutableObject
     /**
      * AssetGrouping constructor
      *
+     * //phpcs:disable
+     *
      * @param string[]   $items      The items belonging to the group
      * @param Property[] $properties Properties for the group
-     * @throws InvalidArgumentException
      */
     public function __construct(array $items = [], array $properties = [])
     {
+        //phpcs:enable
         foreach ($properties as $property) {
             if (!$property instanceof Property) {
                 throw new InvalidArgumentException($property, Property::class);
