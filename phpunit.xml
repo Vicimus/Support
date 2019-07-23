@@ -21,6 +21,7 @@
                 <file>./src/Testing/Application.php</file>
                 <file>./src/Testing/BasicCache.php</file>
                 <file>./src/Locale/States.php</file>
+                <file>./src/Testing/ApplicationTestCase.php</file>
             </exclude>
         </whitelist>
     </filter>
