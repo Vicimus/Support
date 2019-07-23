@@ -5,24 +5,56 @@ namespace Vicimus\Support\Testing;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Foundation\Application as LaravelApp;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Class Application
  *
  * phpcs:disable
  */
-class Application extends Container implements LaravelApp
+class Application extends Container implements LaravelApp, HttpKernelInterface
 {
 
     /**
-     * Get the base path of the Laravel installation.
+     * The custom application path defined by the developer.
      *
-     * @return string|mixed|void
+     * @var string
      */
-    public function basePath()
+    protected $appPath;
+
+    /**
+     * The custom database path defined by the developer.
+     *
+     * @var string
+     */
+    protected $databasePath;
+
+    /**
+     * The custom storage path defined by the developer.
+     *
+     * @var string
+     */
+    protected $storagePath;
+
+    /**
+     * The custom environment path defined by the developer.
+     *
+     * @var string
+     */
+    protected $environmentPath;
+
+
+    public function __construct(string $basePath = null)
     {
-        // Implement basePath() method.
+        if ($basePath) {
+            $this->setBasePath($basePath);
+        }
     }
 
     /**
@@ -46,6 +78,51 @@ class Application extends Container implements LaravelApp
     {
         // Implement booted() method.
     }
+
+    /**
+     * Get the base path of the Laravel installation.
+     *
+     * @param  string  $path Optionally, a path to append to the base path
+     * @return string
+     */
+    public function basePath($path = '')
+    {
+        return realpath($this->basePath.($path ? DIRECTORY_SEPARATOR.$path : $path));
+    }
+
+    /**
+     * Get the path to the bootstrap directory.
+     *
+     * @param  string  $path Optionally, a path to append to the bootstrap path
+     * @return string
+     */
+    public function bootstrapPath($path = '')
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'bootstrap'.($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Get the path to the application configuration files.
+     *
+     * @param  string  $path Optionally, a path to append to the config path
+     * @return string
+     */
+    public function configPath($path = '')
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'config'.($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Get the path to the database directory.
+     *
+     * @param  string  $path Optionally, a path to append to the database path
+     * @return string
+     */
+    public function databasePath($path = '')
+    {
+        return ($this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'database').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
 
     /**
      * Register a new boot listener.
@@ -158,6 +235,21 @@ class Application extends Container implements LaravelApp
     }
 
     /**
+     * Set the base path for the application.
+     *
+     * @param  string  $basePath
+     * @return self
+     */
+    public function setBasePath($basePath)
+    {
+        $this->basePath = rtrim($basePath, '\/');
+
+        $this->bindPathsInContainer();
+
+        return $this;
+    }
+
+    /**
      * Get the version number of the application.
      *
      * @return string|mixed|void
@@ -165,42 +257,6 @@ class Application extends Container implements LaravelApp
     public function version()
     {
         // Implement version
-    }
-
-    /**
-     * Get the path to the bootstrap directory.
-     *
-     * @param string $path Optionally, a path to append to the bootstrap path
-     *
-     * @return string
-     */
-    public function bootstrapPath($path = '')
-    {
-        // TODO: Implement bootstrapPath() method.
-    }
-
-    /**
-     * Get the path to the application configuration files.
-     *
-     * @param string $path Optionally, a path to append to the config path
-     *
-     * @return string
-     */
-    public function configPath($path = '')
-    {
-        // TODO: Implement configPath() method.
-    }
-
-    /**
-     * Get the path to the database directory.
-     *
-     * @param string $path Optionally, a path to append to the database path
-     *
-     * @return string
-     */
-    public function databasePath($path = '')
-    {
-        // TODO: Implement databasePath() method.
     }
 
     /**
@@ -232,7 +288,7 @@ class Application extends Container implements LaravelApp
      */
     public function storagePath()
     {
-        // TODO: Implement storagePath() method.
+        return $this->storagePath ?: $this->basePath.DIRECTORY_SEPARATOR.'storage';
     }
 
     /**
@@ -426,4 +482,159 @@ class Application extends Container implements LaravelApp
      */
     public function terminate(){
  // TODO: Implement terminate() method.
-}}
+}
+
+    /**
+     * Handle the given request and get the response.
+     *
+     * Provides compatibility with BrowserKit functional testing.
+     *
+     * @implements HttpKernelInterface::handle
+     *
+     * @param  \Symfony\Component\HttpFoundation\Request  $request
+     * @param  int   $type
+     * @param  bool  $catch
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Exception
+     */
+    public function handle(SymfonyRequest $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    {
+        try
+        {
+            $this->refreshRequest($request = \Illuminate\Http\Request::createFromBase($request));
+
+            $this->boot();
+
+            return $this->dispatch($request);
+        }
+        catch (\Exception $e)
+        {
+            if ( ! $catch || $this->runningUnitTests()) throw $e;
+
+            return $this['exception']->handleException($e);
+        }
+        catch (\Throwable $e)
+        {
+            if ( ! $catch || $this->runningUnitTests()) throw $e;
+
+            return $this['exception']->handleException($e);
+        }
+    }
+
+    /**
+     * Refresh the bound request instance in the container.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function refreshRequest(Request $request)
+    {
+        $this->instance('request', $request);
+
+        Facade::clearResolvedInstance('request');
+    }
+
+    /**
+     * Handle the given request and get the response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function dispatch(Request $request)
+    {
+        if ($this->isDownForMaintenance())
+        {
+            $response = $this['events']->until('illuminate.app.down');
+
+            if ( ! is_null($response)) return $this->prepareResponse($response, $request);
+        }
+
+        if ($this->runningUnitTests() && ! $this['session']->isStarted())
+        {
+            $this['session']->start();
+        }
+
+        return $this['router']->dispatch($this->prepareRequest($request));
+    }
+
+    /**
+     * Prepare the request by injecting any services.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Request
+     */
+    public function prepareRequest(Request $request)
+    {
+        if ( ! is_null($this['config']['session.driver']) && ! $request->hasSession())
+        {
+            $request->setSession($this['session']->driver());
+        }
+
+        return $request;
+    }
+
+    /**
+     * Prepare the given value as a Response object.
+     *
+     * @param  mixed  $value
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function prepareResponse($value)
+    {
+        if ( ! $value instanceof SymfonyResponse) $value = new \Illuminate\Http\Response($value);
+
+        return $value->prepare($this['request']);
+    }
+
+    /**
+     * Get the path to the public / web directory.
+     *
+     * @return string
+     */
+    public function publicPath()
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'public';
+    }
+
+    /**
+     * Get the path to the language files.
+     *
+     * @return string
+     */
+    public function langPath()
+    {
+        return $this->resourcePath().DIRECTORY_SEPARATOR.'lang';
+    }
+
+    /**
+     * Get the path to the application "app" directory.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    public function path($path = '')
+    {
+        $appPath = $this->appPath ?: $this->basePath.DIRECTORY_SEPARATOR.'app';
+
+        return $appPath.($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+
+    /**
+     * Bind all of the application paths in the container.
+     *
+     * @return void
+     */
+    protected function bindPathsInContainer()
+    {
+        $this->instance('path', $this->path());
+        $this->instance('path.base', $this->basePath());
+        $this->instance('path.lang', $this->langPath());
+        $this->instance('path.config', $this->configPath());
+        $this->instance('path.public', $this->publicPath());
+        $this->instance('path.storage', $this->storagePath());
+        $this->instance('path.database', $this->databasePath());
+        $this->instance('path.resources', $this->resourcePath());
+        $this->instance('path.bootstrap', $this->bootstrapPath());
+    }
+}
