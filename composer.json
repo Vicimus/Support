@@ -3,15 +3,24 @@
     "type": "library",
     "require": {
         "php": ">=7.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "illuminate/hashing": "^5.8"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "~6",
         "illuminate/auth": "~5",
+        "illuminate/cache": "^5.8",
+        "illuminate/config": "^5.8",
+        "illuminate/cookie": "^5.8",
         "illuminate/database": "~5",
+        "illuminate/events": "^5.8",
         "illuminate/http": "~5",
+        "illuminate/mail": "^5.8",
+        "illuminate/pagination": "^5.8",
         "illuminate/routing": "^5.8",
         "illuminate/validation": "~5",
+        "illuminate/view": "^5.8",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "~8",
         "symfony/browser-kit": "^4.3",

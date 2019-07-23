@@ -4,6 +4,7 @@ namespace Vicimus\Support\Testing;
 
 use Illuminate\Auth\AuthManager;
 use Illuminate\Cache\ArrayStore;
+use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Database\Capsule\Manager;
@@ -14,7 +15,7 @@ use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Mailer;
-use Illuminate\Pagination\Factory as PaginatorFactory;
+use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
@@ -28,19 +29,25 @@ use Illuminate\Validation\Factory;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
 use PDOException;
+use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Translation\TranslatorInterface;
 use Vicimus\Support\Exceptions\ValidationException;
 use Vicimus\Support\Interfaces\Glovebox\Translator as VicimusTranslator;
 
 /**
  * Class ApplicationTestCase
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class ApplicationTestCase extends TestCase
 {
+    /**
+     * The instance of an application that we use
+     *
+     * @var self
+     */
     private static $application;
-    private static $setupDatabase = false;
 
     /**
      * The application
@@ -103,15 +110,9 @@ class ApplicationTestCase extends TestCase
     private $client;
 
     /**
-     * Last response
-     *
-     * @var Response
-     */
-    private $response;
-
-    /**
      * Set up
      *
+     * @noinspection PhpDocMissingThrowsInspection
      * @return void
      */
     public function setup(): void
@@ -122,6 +123,7 @@ class ApplicationTestCase extends TestCase
             $this->database = $this->path . '/database';
         }
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->createApplication();
     }
 
@@ -143,7 +145,7 @@ class ApplicationTestCase extends TestCase
      *
      * @return void
      */
-    protected function bindings($app)
+    protected function bindings(Application $app): void
     {
         //
     }
@@ -155,7 +157,7 @@ class ApplicationTestCase extends TestCase
      *
      * @return void
      */
-    protected function booted($app)
+    protected function booted(Application $app): void
     {
         //
     }
@@ -163,18 +165,25 @@ class ApplicationTestCase extends TestCase
     /**
      * Call the given URI and return the Response.
      *
-     * @param  string $method        The method to use
-     * @param  string $uri           The url to hit
-     * @param  array  $parameters    Parameters to send
-     * @param  array  $files         Files to send
-     * @param  array  $server        Server values to send
-     * @param  string $content       Body content
-     * @param  bool   $changeHistory Change history
+     * @param  string  $method        The method to use
+     * @param  string  $uri           The url to hit
+     * @param  mixed[] $parameters    Parameters to send
+     * @param  mixed[] $files         Files to send
+     * @param  mixed[] $server        Server values to send
+     * @param  string  $content       Body content
+     * @param  bool    $changeHistory Change history
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    protected function call($method, $uri, $parameters = [], $files = [], $server = [], $content = null, $changeHistory = true)
-    {
+    protected function call(
+        string $method,
+        string $uri,
+        array $parameters = [],
+        array $files = [],
+        array $server = [],
+        ?string $content = null,
+        bool $changeHistory = true
+    ): Response {
         try {
             $this->client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
             $response = $this->client->getResponse();
@@ -182,8 +191,26 @@ class ApplicationTestCase extends TestCase
             $response = new Response($ex->getMessage(), 422);
         }
 
-        $this->response = $response;
         return $response;
+    }
+
+    /**
+     * Boot providers
+     *
+     * @param ServiceProvider[] $providers Providers
+     *
+     * @return void
+     */
+    private function boot(array $providers): void
+    {
+        /** @var ServiceProvider|mixed $provider */
+        foreach ($providers as $provider) {
+            if (!method_exists($provider, 'boot')) {
+                continue;
+            }
+
+            $provider->boot();
+        }
     }
 
     /**
@@ -222,14 +249,51 @@ class ApplicationTestCase extends TestCase
             $app->instance('path' . $second, $value);
         }
 
-        $app->singleton('paginator', function ($app) {
-            /** @var TranslatorInterface $translator */
-            $translator = $this->getMockBuilder(TranslatorInterface::class)
-                ->getMock();
+        $this->executeBindings($app);
 
-            return new PaginatorFactory($app['request'], $app['view'], $translator);
-        });
+        $pagination = new PaginationServiceProvider($app);
+        $pagination->register();
 
+        $views = new ViewServiceProvider($app);
+        $views->register();
+
+        /** @var ServiceProvider[] $providers */
+        $providers = [];
+        foreach ($this->providers as $provider) {
+            $providers[] = new $provider($app);
+        }
+
+        foreach ($providers as $provider) {
+            $provider->register();
+        }
+
+        $this->bindings($app);
+        $this->boot($providers);
+
+        $this->app = $app;
+        $this->setDatabases($app);
+
+        foreach ($this->routes as $route) {
+            /** @noinspection PhpIncludeInspection */
+            require $route;
+        }
+
+        $this->booted($app);
+
+        self::$application = $this->app;
+        $this->client = new Client(static function ($verb, $payload) {
+            return Application::onRequest($verb, $payload);
+        }, $this->app);
+    }
+    /**
+     * Bind things
+     *
+     * @param Application $app The application instance
+     *
+     * @return void
+     */
+    private function executeBindings(Application $app): void
+    {
         $app->singleton('auth', static function ($app) {
             return new AuthManager($app);
         });
@@ -282,7 +346,7 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->singleton('session', static function () {
-            $repo = new \Illuminate\Cache\Repository(new ArrayStore());
+            $repo = new CacheRepository(new ArrayStore());
             return new Store('testing', new CacheBasedSessionHandler($repo, 5));
         });
 
@@ -320,38 +384,54 @@ class ApplicationTestCase extends TestCase
         $app->bind(VicimusTranslator::class, function () {
             return $this->getMockBuilder(VicimusTranslator::class)->disableOriginalConstructor()->getMock();
         });
+    }
 
-        $views = new ViewServiceProvider($app);
-        $views->register();
+    /**
+     * Refresh the application instead of creating a whole new instance.
+     * This improves testing speeds by over 9000 percent
+     *
+     * @return void
+     */
+    private function refreshApplication(): void
+    {
+        $this->app = self::$application;
+        $unsullied = $this->database . '/unsullied.sqlite';
+        $testing = $this->database . '/testing.sqlite';
 
-        /** @var ServiceProvider[] $providers */
-        $providers = [];
-        foreach ($this->providers as $provider) {
-            $providers[] = new $provider($app);
-        }
+        copy($unsullied, $testing);
+        Facade::setFacadeApplication($this->app);
+        Facade::clearResolvedInstances();
 
-        foreach ($providers as $provider) {
-            $provider->register();
-        }
+        $this->client = new Client(static function ($verb, $payload) {
+            return Application::onRequest($verb, $payload);
+        }, $this->app);
+    }
 
-        $this->bindings($app);
-
-        foreach ($providers as $provider) {
-            $provider->boot();
-        }
-
-        $this->app = $app;
+    /**
+     * Set up the databases
+     *
+     * @param Application $app The application
+     *
+     * @return void
+     *
+     * @throws RuntimeException
+     */
+    private function setDatabases(Application $app): void
+    {
 
         $stub = $this->database . '/stub.sqlite';
         $unsullied = $this->database . '/unsullied.sqlite';
         $testing = $this->database . '/testing.sqlite';
 
+        // phpcs:disable
         @unlink($unsullied);
         @unlink($stub);
         touch($stub);
 
         @unlink($testing);
         touch($testing);
+
+        // phpcs:enable
 
         $capsule = new Manager($app);
         $capsule->addConnection([
@@ -411,43 +491,9 @@ class ApplicationTestCase extends TestCase
 
         copy($stub, $unsullied);
         if (count($this->migrations) && !filesize($unsullied)) {
-            throw new \Exception('Database is 0 bytes. This is 99% an error');
+            throw new RuntimeException('Database is 0 bytes. This is 99% an error');
         }
 
-        self::$setupDatabase = true;
-
         copy($unsullied, $testing);
-
-        foreach ($this->routes as $route) {
-            require $route;
-        }
-
-        $this->booted($app);
-
-        self::$application = $this->app;
-        $this->client = new Client(static function ($verb, $payload) {
-            return Application::onRequest($verb, $payload);
-        }, $this->app);
-    }
-
-    /**
-     * Refresh the application instead of creating a whole new instance.
-     * This improves testing speeds by over 9000 percent
-     *
-     * @return void
-     */
-    private function refreshApplication()
-    {
-        $this->app = self::$application;
-        $unsullied = $this->database . '/unsullied.sqlite';
-        $testing = $this->database . '/testing.sqlite';
-
-        copy($unsullied, $testing);
-        Facade::setFacadeApplication($this->app);
-        Facade::clearResolvedInstances();
-
-        $this->client = new Client(static function ($verb, $payload) {
-            return Application::onRequest($verb, $payload);
-        }, $this->app);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace Vicimus\Support\Testing;
 
+use Illuminate\Http\Request;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\BrowserKit\Request as DomRequest;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Vicimus\Support\Exceptions\ValidationException;
 
 /**
  * Class Client
@@ -40,6 +42,23 @@ class Client extends HttpKernelBrowser
         $this->onRequest = $onRequest;
         $server = array_merge($server, ['HTTP_REFERER' => 'http://www.glovebox.test']);
         parent::__construct($kernel, $server, $history, $cookieJar);
+    }
+
+    /**
+     * Get a response
+     *
+     * @noinspection PhpDocRedundantThrowsInspection
+     *
+     * @return Response|void
+     *
+     * @throws ValidationException
+     *
+     * phpcs:disable
+     */
+    public function getResponse(): Response
+    {
+        parent::getResponse();
+        // phpcs:enable
     }
 
     /**

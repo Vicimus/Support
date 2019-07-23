@@ -22,6 +22,12 @@ use Throwable;
  */
 class Application extends Container implements LaravelApp, HttpKernelInterface
 {
+    /**
+     * The request class used by the application.
+     *
+     * @var string
+     */
+    protected static $requestClass = Request::class;
 
     /**
      * The custom application path defined by the developer.
@@ -141,7 +147,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
         // Implement bootstrapWith() method.
     }
 
-
     /**
      * Get the path to the application configuration files.
      *
@@ -153,6 +158,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     {
         return $this->basePath.DIRECTORY_SEPARATOR.'config'.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
     }
+
 
     /**
      * Determine if the application configuration is cached.
@@ -418,6 +424,19 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     }
 
     /**
+     * Call a method on the default request class.
+     *
+     * @param string  $method     The method
+     * @param mixed[] $parameters Parameters
+     *
+     * @return mixed
+     */
+    public static function onRequest(string $method, array $parameters = [])
+    {
+        return forward_static_call_array([static::requestClass(), $method], $parameters);
+    }
+
+    /**
      * Get the path to the application "app" directory.
      *
      * @param string $path The path to get
@@ -509,6 +528,22 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     public function registerDeferredProvider($provider, $service = null): void
     {
         // Implement registerDeferredProvider() method.
+    }
+
+    /**
+     * Get or set the request class for the application.
+     *
+     * @param string|null $class Optionally provide a class to use
+     *
+     * @return string
+     */
+    public static function requestClass(?string $class = null): string
+    {
+        if ($class !== null) {
+            static::$requestClass = $class;
+        }
+
+        return static::$requestClass;
     }
 
     /**
