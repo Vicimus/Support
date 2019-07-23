@@ -24,3 +24,4 @@ exclude_patterns:
 - "**/.*"
 - "/src/Testing/ResponseFactory.php"
 - "/src/Testing/Application.php"
+- "/src/Testing/ApplicationTestCase.php"
