@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Classes;
 
+use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Interfaces\Property;
 
 /**
@@ -22,6 +23,12 @@ class Grouping extends ImmutableObject
      */
     public function __construct(array $items = [], array $properties = [])
     {
+        foreach ($properties as $property) {
+            if (!$property instanceof Property) {
+                throw new InvalidArgumentException($property, Property::class);
+            }
+        }
+
         parent::__construct([
             'items' => $items,
             'properties' => $properties,
@@ -35,7 +42,7 @@ class Grouping extends ImmutableObject
      *
      * @return Property
      */
-    public function property(string $property): Property
+    public function property(string $property): ?Property
     {
         foreach ($this->properties as $prop) {
             if ($prop->property() === $property) {
