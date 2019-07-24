@@ -3,11 +3,12 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Vicimus\Support\Interfaces\Eloquent;
 
 /**
  * Interface HasValues
  */
-interface HasValues
+interface HasValues extends Eloquent, HasDatatype, HasHash
 {
 
     /**
