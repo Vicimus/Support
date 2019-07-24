@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Builder;
 interface Eloquent
 {
     /**
+     * Load a relation or relations
+     *
+     * @param mixed $relations The relations to load
+     *
+     * @return mixed
+     */
+    public function load($relations);
+
+    /**
      * Get the query object
      *
      * @return Builder|mixed
