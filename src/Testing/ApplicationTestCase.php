@@ -12,6 +12,7 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Hashing\BcryptHasher;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Mailer;
@@ -32,6 +33,7 @@ use PDOException;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Vicimus\Support\Exceptions\ValidationException;
 use Vicimus\Support\Interfaces\Glovebox\Translator as VicimusTranslator;
 
@@ -173,7 +175,7 @@ class ApplicationTestCase extends TestCase
      * @param  string  $content       Body content
      * @param  bool    $changeHistory Change history
      *
-     * @return Response
+     * @return SymfonyResponse|JsonResponse|Response
      */
     protected function call(
         string $method,
@@ -183,7 +185,7 @@ class ApplicationTestCase extends TestCase
         array $server = [],
         ?string $content = null,
         bool $changeHistory = true
-    ): Response {
+    ): SymfonyResponse {
         try {
             $this->client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
             $response = $this->client->getResponse();

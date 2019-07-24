@@ -57,7 +57,7 @@ class Client extends HttpKernelBrowser
      */
     public function getResponse(): Response
     {
-        parent::getResponse();
+        return parent::getResponse();
         // phpcs:enable
     }
 
