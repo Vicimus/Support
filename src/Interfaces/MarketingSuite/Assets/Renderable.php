@@ -44,6 +44,12 @@ interface Renderable
     public function storeId(): int;
 
     /**
+     * Touch the timestamps
+     * @return void
+     */
+    public function touch(): void;
+
+    /**
      * Update the renderable record with new parameters
      *
      * @param string $newPath The new path to set
