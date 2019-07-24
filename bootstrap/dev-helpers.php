@@ -176,12 +176,12 @@ if (!function_exists('event')) {
     /**
      * Fire an event or get the event dispatcher
      *
-     * @param string $event   The event name
-     * @param mixed  $payload The payload to send with the event
+     * @param mixed|string $event   The event name
+     * @param mixed        $payload The payload to send with the event
      *
      * @return Dispatcher|mixed[]|null
      */
-    function event(?string $event = null, $payload = null)
+    function event($event = null, $payload = null)
     {
         /** @var Dispatcher $dispatcher */
         $dispatcher = app('events');
