@@ -4,13 +4,14 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shared\Models\Audiences\Property;
+use Vicimus\Support\Interfaces\Eloquent;
 
 /**
  * Interface HasProperties
  *
  * @property Property[] $properties
  */
-interface HasProperties
+interface HasProperties extends Eloquent, HasDatatype, HasHash
 {
     /**
      * An audience has many properties
