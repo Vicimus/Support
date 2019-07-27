@@ -44,17 +44,17 @@ if (!function_exists('app')) {
     }
 }
 
-if ( ! function_exists('url'))
-{
+if (!function_exists('url')) {
     /**
      * Generate a url for the application.
      *
-     * @param  string  $path
-     * @param  mixed   $parameters
-     * @param  bool    $secure
+     * @param string $path       The path
+     * @param mixed  $parameters The parameters
+     * @param bool   $secure     Secure
+     *
      * @return string
      */
-    function url($path = null, $parameters = array(), $secure = null)
+    function url(?string $path = null, $parameters = [], ?bool $secure = null): string
     {
         return app('url')->to($path, $parameters, $secure);
     }
