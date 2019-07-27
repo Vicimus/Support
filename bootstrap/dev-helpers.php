@@ -44,6 +44,22 @@ if (!function_exists('app')) {
     }
 }
 
+if (!function_exists('url')) {
+    /**
+     * Generate a url for the application.
+     *
+     * @param string $path       The path
+     * @param mixed  $parameters The parameters
+     * @param bool   $secure     Secure
+     *
+     * @return string
+     */
+    function url(?string $path = null, $parameters = [], ?bool $secure = null): string
+    {
+        return app('url')->to($path, $parameters, $secure);
+    }
+}
+
 if (!function_exists('lang')) {
     /**
      * Get a translator instance
@@ -179,7 +195,7 @@ if (!function_exists('event')) {
      * @param mixed|string $event   The event name
      * @param mixed        $payload The payload to send with the event
      *
-     * @return Dispatcher|mixed[]|null
+     * @return Dispatcher|mixed[]
      */
     function event($event = null, $payload = null)
     {
@@ -339,5 +355,19 @@ if (!function_exists('app_path')) {
     function app_path(?string $relative = null): string
     {
         return app('path.app') . DIRECTORY_SEPARATOR . $relative;
+    }
+}
+
+if (!function_exists('base_path')) {
+    /**
+     * Get the app path
+     *
+     * @param string|null $relative Add a relative path to it
+     *
+     * @return string
+     */
+    function base_path(?string $relative = null): string
+    {
+        return app('path.base') . DIRECTORY_SEPARATOR . $relative;
     }
 }

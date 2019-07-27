@@ -30,6 +30,7 @@ use Illuminate\Validation\Factory;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
 use PDOException;
+use ReflectionMethod;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -211,7 +212,12 @@ class ApplicationTestCase extends TestCase
                 continue;
             }
 
-            $provider->boot();
+            $method = new ReflectionMethod(get_class($provider), 'boot');
+            $params = [];
+            foreach ($method->getParameters() as $param) {
+                $params[] = app()->make($param->getType()->getName());
+            }
+            $provider->boot(...$params);
         }
     }
 
