@@ -8,6 +8,8 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Translation\Translator as TranslatorContract;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Illuminate\Database\Eloquent\FactoryBuilder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -139,7 +141,7 @@ if (!function_exists('response')) {
     function response($response = null, int $code = 200)
     {
         if ($response === null) {
-            return new Responses();
+            return new Responses(app('view'));
         }
 
         return Response::make($response, $code);
@@ -369,5 +371,58 @@ if (!function_exists('base_path')) {
     function base_path(?string $relative = null): string
     {
         return app('path.base') . DIRECTORY_SEPARATOR . $relative;
+    }
+}
+
+if (!function_exists('config_path')) {
+    /**
+     * Get the config path
+     *
+     * @param string|null $relative The relative path to add to it
+     *
+     * @return string
+     */
+    function config_path(?string $relative = null): string
+    {
+        return app('path.config') . DIRECTORY_SEPARATOR . $relative;
+    }
+}
+
+
+if (! function_exists('route')) {
+    /**
+     * Generate the URL to a named route.
+     *
+     * @param string[]|string $name       Name or names of the routes
+     * @param mixed           $parameters Parameters
+     * @param bool            $absolute   Absolute
+     *
+     * @return string
+     */
+    function route($name, $parameters = [], bool $absolute = true): string
+    {
+        return app('url')->route($name, $parameters, $absolute);
+    }
+}
+
+if (! function_exists('factory')) {
+    /**
+     * Create a model factory builder for a given class, name, and amount.
+     *
+     * @return FactoryBuilder
+     */
+    function factory(): FactoryBuilder
+    {
+        $factory = app(EloquentFactory::class);
+
+        $arguments = func_get_args();
+
+        if (isset($arguments[1]) && is_string($arguments[1])) {
+            return $factory->of($arguments[0], $arguments[1])->times($arguments[2] ?? null);
+        } elseif (isset($arguments[1])) {
+            return $factory->of($arguments[0])->times($arguments[1]);
+        }
+
+        return $factory->of($arguments[0]);
     }
 }

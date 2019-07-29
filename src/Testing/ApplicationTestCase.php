@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Testing;
 
+use Faker\Generator;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository as CacheRepository;
@@ -10,6 +11,7 @@ use Illuminate\Cookie\CookieJar;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\JsonResponse;
@@ -302,6 +304,10 @@ class ApplicationTestCase extends TestCase
      */
     private function executeBindings(Application $app): void
     {
+        $app->singleton(EloquentFactory::class, static function () {
+            return new EloquentFactory(\Faker\Factory::create());
+        });
+
         $app->singleton('auth', static function ($app) {
             return new AuthManager($app);
         });
@@ -311,7 +317,7 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->singleton('cache', static function () {
-            return new ArrayStore();
+            return new BasicCache();
         });
 
         $app->bind('request', static function () {
