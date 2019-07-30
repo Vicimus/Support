@@ -53,6 +53,27 @@ class QueueReporterProvider extends ServiceProvider
     }
 
     /**
+     * Is ignored name
+     *
+     * @param string $job       The job
+     * @param string $exception The exception
+     *
+     * @return string|null
+     */
+    private function isIgnoredItem(string $job, string $exception): ?string
+    {
+        if (in_array($job, $this->ignore, false)) {
+            return $job;
+        }
+
+        if (in_array($exception, $this->ignore, false)) {
+            return $exception;
+        }
+
+        return null;
+    }
+
+    /**
      * Look for a match within an array
      *
      * @param JobFailed $event   The event
@@ -81,11 +102,15 @@ class QueueReporterProvider extends ServiceProvider
      */
     private function shouldIgnore(JobFailed $event): bool
     {
-        if (!in_array($event->job->resolveName(), $this->ignore, false)) {
+        $job = $event->job->resolveName();
+        $exception = get_class($event->exception);
+
+        $key = $this->isIgnoredItem($job, $exception);
+        if ($key === null) {
             return false;
         }
 
-        $matches = $this->ignore[$event->job->resolveName()];
+        $matches = $this->ignore[$key];
         if ($matches === '*') {
             return true;
         }
