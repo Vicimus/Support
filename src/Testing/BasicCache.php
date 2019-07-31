@@ -3,12 +3,13 @@
 namespace Vicimus\Support\Testing;
 
 use Closure;
+use Illuminate\Cache\StoreInterface;
 use Illuminate\Contracts\Cache\Repository;
 
 /**
  * Class BasicCache
  */
-class BasicCache implements Repository
+class BasicCache implements Repository, StoreInterface
 {
     /**
      * Cache store
@@ -271,6 +272,26 @@ class BasicCache implements Repository
      */
     public function setMultiple($values, $ttl = null)
     {
-        // TODO: Implement setMultiple() method.
+        $this->cache = array_merge($this->cache, $values);
+    }
+
+    /**
+     * Remove all items from the cache.
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->cache = [];
+    }
+
+    /**
+     * Get the cache key prefix.
+     *
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return 'testing-';
     }
 }

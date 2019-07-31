@@ -62,6 +62,13 @@ class ApplicationTestCase extends TestCase
     protected $database = ':memory:';
 
     /**
+     * Path to lang files
+     *
+     * @var string
+     */
+    protected $lang;
+
+    /**
      * Migrations
      *
      * @var string[]
@@ -259,7 +266,7 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->singleton('cache', static function () {
-            return new ArrayStore();
+            return new BasicCache();
         });
 
         $app->bind('request', static function () {
@@ -302,7 +309,7 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->singleton('session', static function () {
-            $repo = new Repository(new ArrayStore());
+            $repo = new Repository(new BasicCache());
             return new Store('testing', new CacheBasedSessionHandler($repo, 5));
         });
 
@@ -314,7 +321,11 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->bind('translator', function () {
-            return $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock();
+            return new Translator(new \Illuminate\Translation\FileLoader(app('files'),  $this->lang), 'en');
+        });
+
+        $app->bind(TranslatorInterface::class, function ($app) {
+            return $app['translator'];
         });
 
         $app->singleton('lang', static function ($app) {
