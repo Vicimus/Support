@@ -77,6 +77,32 @@ class QueueReporterProvider extends ServiceProvider
     }
 
     /**
+     * Check if a key is a match
+     *
+     * @param string    $key   The key we are checking
+     * @param JobFailed $event The failure
+     *
+     * @return bool
+     */
+    private function isKeyMatch(string $key, JobFailed $event): bool
+    {
+        $matches = $this->ignore[$key];
+        if ($matches === '*') {
+            return true;
+        }
+
+        if (!is_array($matches)) {
+            $matches = [$matches];
+        }
+
+        if ($this->matchInArray($event, $matches)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Look for a match within an array
      *
      * @param JobFailed $event   The event
@@ -127,16 +153,7 @@ class QueueReporterProvider extends ServiceProvider
     private function shouldIgnoreFromKeys(array $keys, JobFailed $event): bool
     {
         foreach ($keys as $key) {
-            $matches = $this->ignore[$key];
-            if ($matches === '*') {
-                return true;
-            }
-
-            if (!is_array($matches)) {
-                $matches = [$matches];
-            }
-
-            if ($this->matchInArray($event, $matches)) {
+            if ($this->isKeyMatch($key, $event)) {
                 return true;
             }
         }
