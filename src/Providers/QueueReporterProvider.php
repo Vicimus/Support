@@ -25,15 +25,15 @@ class QueueReporterProvider extends ServiceProvider
      *
      * @param LoggerInterface $logger The application logger
      *
-     * @return void
+     * @return bool
      */
-    public function boot(LoggerInterface $logger): void
+    public function boot(LoggerInterface $logger): bool
     {
         if (app()->environment() !== 'production') {
-            return;
+            return false;
         }
 
-        $this->ignore = config('queue.ignore-failures');
+        $this->ignore = config('queue.ignore-failures') ?? [];
 
         app('queue')->failing(function (JobFailed $event) use ($logger): void {
             if ($this->shouldIgnore($event)) {
@@ -50,6 +50,8 @@ class QueueReporterProvider extends ServiceProvider
             $errorMessage = sprintf('%s failed. %s', $event->job->resolveName(), $message);
             $logger->critical($errorMessage);
         });
+
+        return true;
     }
 
     /**
@@ -58,19 +60,20 @@ class QueueReporterProvider extends ServiceProvider
      * @param string $job       The job
      * @param string $exception The exception
      *
-     * @return string|null
+     * @return string[]
      */
-    private function isIgnoredItem(string $job, string $exception): ?string
+    private function isIgnoredItem(string $job, string $exception): array
     {
-        if (in_array($job, $this->ignore, false)) {
-            return $job;
+        $items = [];
+        if (array_key_exists($job, $this->ignore)) {
+            $items[] = $job;
         }
 
-        if (in_array($exception, $this->ignore, false)) {
-            return $exception;
+        if (array_key_exists($exception, $this->ignore)) {
+            $items[] = $exception;
         }
 
-        return null;
+        return $items;
     }
 
     /**
@@ -105,20 +108,39 @@ class QueueReporterProvider extends ServiceProvider
         $job = $event->job->resolveName();
         $exception = get_class($event->exception);
 
-        $key = $this->isIgnoredItem($job, $exception);
-        if ($key === null) {
+        $keys = $this->isIgnoredItem($job, $exception);
+        if (!count($keys)) {
             return false;
         }
 
-        $matches = $this->ignore[$key];
-        if ($matches === '*') {
-            return true;
+        return $this->shouldIgnoreFromKeys($keys, $event);
+    }
+
+    /**
+     * Check a series of keys
+     *
+     * @param string[]  $keys  The keys to check
+     * @param JobFailed $event The event
+     *
+     * @return bool
+     */
+    private function shouldIgnoreFromKeys(array $keys, JobFailed $event): bool
+    {
+        foreach ($keys as $key) {
+            $matches = $this->ignore[$key];
+            if ($matches === '*') {
+                return true;
+            }
+
+            if (!is_array($matches)) {
+                $matches = [$matches];
+            }
+
+            if ($this->matchInArray($event, $matches)) {
+                return true;
+            }
         }
 
-        if (!is_array($matches)) {
-            $matches = [$matches];
-        }
-
-        return $this->matchInArray($event, $matches);
+        return false;
     }
 }
