@@ -2,14 +2,16 @@
 
 namespace Vicimus\Support\Testing;
 
-use Faker\Generator;
+use Faker\Factory as FakerFactory;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Filesystem\Filesystem;
@@ -32,6 +34,7 @@ use Illuminate\Validation\Factory;
 use Illuminate\View\ViewServiceProvider;
 use PDO;
 use PDOException;
+use ReflectionException;
 use ReflectionMethod;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
@@ -205,6 +208,9 @@ class ApplicationTestCase extends TestCase
      * @param ServiceProvider[] $providers Providers
      *
      * @return void
+     *
+     * @throws ReflectionException
+     * @throws BindingResolutionException
      */
     private function boot(array $providers): void
     {
@@ -217,6 +223,10 @@ class ApplicationTestCase extends TestCase
             $method = new ReflectionMethod(get_class($provider), 'boot');
             $params = [];
             foreach ($method->getParameters() as $param) {
+                if (!$param->getType()) {
+                    continue;
+                }
+
                 $params[] = app()->make($param->getType()->getName());
             }
             $provider->boot(...$params);
@@ -227,6 +237,9 @@ class ApplicationTestCase extends TestCase
      * Create the testing application
      *
      * @return void
+     *
+     * @throws BindingResolutionException
+     * @throws ReflectionException
      */
     private function createApplication(): void
     {
@@ -305,7 +318,7 @@ class ApplicationTestCase extends TestCase
     private function executeBindings(Application $app): void
     {
         $app->singleton(EloquentFactory::class, static function () {
-            return new EloquentFactory(\Faker\Factory::create());
+            return new EloquentFactory(FakerFactory::create());
         });
 
         $app->singleton('auth', static function ($app) {
