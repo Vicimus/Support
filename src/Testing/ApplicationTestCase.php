@@ -10,6 +10,7 @@ use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Seeder;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Hashing\BcryptHasher;
@@ -62,6 +63,13 @@ class ApplicationTestCase extends TestCase
     protected $database = ':memory:';
 
     /**
+     * Path to lang files
+     *
+     * @var string
+     */
+    protected $lang;
+
+    /**
      * Migrations
      *
      * @var string[]
@@ -93,6 +101,12 @@ class ApplicationTestCase extends TestCase
      * @var string[]
      */
     protected $routes = [];
+
+    /**
+     * A list of seeds to run after migrations are complete
+     * @var string[]
+     */
+    protected $seeds = [];
 
     /**
      * The testing client
@@ -259,7 +273,7 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->singleton('cache', static function () {
-            return new ArrayStore();
+            return new BasicCache();
         });
 
         $app->bind('request', static function () {
@@ -302,7 +316,7 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->singleton('session', static function () {
-            $repo = new Repository(new ArrayStore());
+            $repo = new Repository(new BasicCache());
             return new Store('testing', new CacheBasedSessionHandler($repo, 5));
         });
 
@@ -314,7 +328,11 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->bind('translator', function () {
-            return $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock();
+            return new Translator(new \Illuminate\Translation\FileLoader(app('files'),  $this->lang), 'en');
+        });
+
+        $app->bind(TranslatorInterface::class, function ($app) {
+            return $app['translator'];
         });
 
         $app->singleton('lang', static function ($app) {
@@ -439,6 +457,12 @@ class ApplicationTestCase extends TestCase
         self::$setupDatabase = true;
 
         copy($unsullied, $testing);
+
+        foreach ($this->seeds as $seed) {
+            /** @var Seeder $instance */
+            $instance = app($seed);
+            $instance->run();
+        }
 
         foreach ($this->routes as $route) {
             require $route;
