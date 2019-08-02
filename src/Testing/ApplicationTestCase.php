@@ -5,6 +5,7 @@ namespace Vicimus\Support\Testing;
 use Faker\Factory as FakerFactory;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Cache\ArrayStore;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -290,6 +291,7 @@ class ApplicationTestCase extends TestCase
         }
 
         $this->bindings($app);
+
         $this->boot($providers);
 
         $this->app = $app;
@@ -330,6 +332,10 @@ class ApplicationTestCase extends TestCase
 
         $app->singleton('cache', static function () {
             return new BasicCache();
+        });
+
+        $app->singleton(CacheManager::class, static function ($app) {
+            return new CacheManager($app);
         });
 
         $app->bind('request', static function () {
