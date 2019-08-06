@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Testing;
 
 use Illuminate\Auth\AuthManager;
-use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository;
 use Illuminate\Config\FileLoader;
 use Illuminate\Config\Repository as ConfigRepository;
@@ -36,6 +35,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\TranslatorInterface;
 use Vicimus\Onyx\User;
+use Vicimus\Support\Database\ModelFactory;
 use Vicimus\Support\Exceptions\ValidationException;
 use Vicimus\Support\Interfaces\Translator as VicimusTranslator;
 
@@ -61,6 +61,13 @@ class ApplicationTestCase extends TestCase
      * @var string
      */
     protected $database = ':memory:';
+
+    /**
+     * Factories to include
+     *
+     * @var string[]
+     */
+    protected $factories = [];
 
     /**
      * Path to lang files
@@ -122,6 +129,12 @@ class ApplicationTestCase extends TestCase
      */
     private $response;
 
+    protected function basicMock($class)
+    {
+        return $this->getMockBuilder($class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
     /**
      * Act as a logged in user
      *
@@ -278,6 +291,10 @@ class ApplicationTestCase extends TestCase
 
         $app->bind('request', static function () {
             return new Request();
+        });
+
+        $app->singleton('factory', static function () {
+            return new ModelFactory();
         });
 
         $app->bind('url', static function ($app) {
@@ -466,6 +483,17 @@ class ApplicationTestCase extends TestCase
 
         foreach ($this->routes as $route) {
             require $route;
+        }
+
+        if (count($this->factories)) {
+            foreach ($this->factories as $factoryPath) {
+                $finder = (new Finder())->in($factoryPath)->name('*.php');
+
+                /** @var SplFileInfo $file */
+                foreach ($finder->files() as $file) {
+                    require_once $file;
+                }
+            }
         }
 
         $this->booted($app);

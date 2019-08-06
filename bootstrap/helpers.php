@@ -8,13 +8,35 @@ use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Vicimus\Support\Database\ModelFactory;
+use Vicimus\Support\Database\ModelFactoryBuilder;
 use Vicimus\Support\Exceptions\TranslationFileException;
 use Vicimus\Support\Interfaces\Translator;
 use Vicimus\Support\Services\Responses;
 
 if (!function_exists('lang')) {
-    function lang() {
+    function lang()
+    {
         return app('translator');
+    }
+}
+
+if (!function_exists('factory')) {
+    /**
+     * @param string|null $class The class to create
+     * @param int|null    $count The number to create
+     *
+     * @return ModelFactoryBuilder|ModelFactory
+     */
+    function factory($class = null, $count = null)
+    {
+        /** @var ModelFactory $factory */
+        $factory = app('factory');
+        if ($class === null) {
+            return $factory;
+        }
+
+        return $factory->builder($class, $count);
     }
 }
 
