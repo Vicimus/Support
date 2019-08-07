@@ -6,6 +6,9 @@ use Illuminate\Support\Collection;
 
 /**
  * Generic parser.
+ *
+ * @param Collection $conquest
+ * @param Collection $retention
  */
 class CalloutResponse extends ImmutableObject
 {
