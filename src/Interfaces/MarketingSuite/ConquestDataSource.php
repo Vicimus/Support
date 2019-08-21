@@ -56,11 +56,14 @@ interface ConquestDataSource
     /**
      * Estimate the audience size
      *
-     * @param Audience $audience The audience to estimate
+     * @see https://developers.facebook.com/docs/marketing-api/reference/ad-campaign/delivery_estimate/
+     *
+     * @param Audience     $audience The audience to estimate
+     * @param SourceRecord $record   The source record
      *
      * @return int
      */
-    public function estimate(Audience $audience): int;
+    public function estimate(Audience $audience, SourceRecord $record): int;
 
     /**
      * Get the asset grouping for this data source. The main reason this
