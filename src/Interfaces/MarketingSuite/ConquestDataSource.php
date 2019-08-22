@@ -23,6 +23,18 @@ interface ConquestDataSource
     public function assets(): array;
 
     /**
+     * If a budget has been set or updated, we need to pass it along to the
+     * data source for it to inform it's API that the budget has increased.
+     *
+     * @param Audience     $audience The audience involved
+     * @param SourceRecord $record   The source record
+     * @param int          $amount   The amount
+     *
+     * @return void
+     */
+    public function budget(Audience $audience, SourceRecord $record, int $amount): void;
+
+    /**
      * Get the category for this data source
      *
      * @return string
