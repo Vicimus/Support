@@ -120,4 +120,10 @@ interface ConquestDataSource
      * @return string
      */
     public function name(): string;
+
+    /**
+     * Get a validator to validate certain things
+     * @return ConquestDataSourceValidator
+     */
+    public function validator(): ConquestDataSourceValidator;
 }
