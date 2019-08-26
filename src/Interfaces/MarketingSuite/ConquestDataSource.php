@@ -108,4 +108,14 @@ interface ConquestDataSource
      * @return string
      */
     public function name(): string;
+
+    /**
+     * A data source can add to a report about the campaign
+     *
+     * @param Campaign       $campaign The campaign involved
+     * @param ConquestReport $report   The report to build on
+     *
+     * @return void
+     */
+    public function report(Campaign $campaign, ConquestReport &$report): void;
 }
