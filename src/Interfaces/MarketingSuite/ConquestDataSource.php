@@ -54,6 +54,18 @@ interface ConquestDataSource
     public function description(): string;
 
     /**
+     * Estimate the audience size
+     *
+     * @see https://developers.facebook.com/docs/marketing-api/reference/ad-campaign/delivery_estimate/
+     *
+     * @param Audience     $audience The audience to estimate
+     * @param SourceRecord $record   The source record
+     *
+     * @return int
+     */
+    public function estimate(Audience $audience, SourceRecord $record): int;
+
+    /**
      * Get the asset grouping for this data source. The main reason this
      * was created was for us to be able to handle shared properties across
      * many assets. Specifically, Facebook has many assets that all share

@@ -174,7 +174,7 @@ class APIService
                 $message = $decoded['error'] ?? $message;
             }
 
-            throw new RestException($message, $code);
+            throw new RestException(is_string($message) ? $message : json_encode($message), $code);
         }
 
         $result = (string) $response->getBody();

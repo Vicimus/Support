@@ -10,9 +10,10 @@ interface Configuration
     /**
      * Check a configuration value
      *
-     * @param string $property The property to check
+     * @param string     $property The property to check
+     * @param string|int $default  The default value
      *
      * @return mixed
      */
-    public function check(string $property);
+    public function check(string $property, $default = null);
 }

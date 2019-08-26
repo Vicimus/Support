@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Classes\API;
 
 use Illuminate\Contracts\Cache\Repository;
+use Psr\SimpleCache\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
 
 use function is_string;
@@ -40,10 +41,12 @@ trait CachesRequests
      * @param string|null $tag     A special tag to use
      *
      * @return mixed|null
+     *
+     * @throws InvalidArgumentException
      */
     public function cacheMatch(string $method, string $path, $payload, ?string $tag = null)
     {
-        if (!$this->cache) {
+        if (!$this->cache || strtolower($method) !== 'get') {
             return null;
         }
 
@@ -54,7 +57,7 @@ trait CachesRequests
         }
 
         if (is_string($match)) {
-            return json_decode($match) ?? $match;
+            return json_decode($match, false) ?? $match;
         }
 
         return $match;
@@ -68,7 +71,7 @@ trait CachesRequests
      */
     protected function cacheTime(): int
     {
-        return 15;
+        return 15 * 60;
     }
 
     /**
@@ -98,6 +101,8 @@ trait CachesRequests
      * @param string $hash The hash
      *
      * @return mixed
+     *
+     * @throws InvalidArgumentException
      */
     protected function findCacheMatch(string $hash)
     {

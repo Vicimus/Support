@@ -1,5 +1,9 @@
 version: 2
-
+checks:
+  argument-count:
+    enabled: true
+    config:
+      threshold: 5
 exclude_patterns:
 - "config/"
 - "db/"
@@ -20,3 +24,4 @@ exclude_patterns:
 - "**/.*"
 - "/src/Testing/ResponseFactory.php"
 - "/src/Testing/Application.php"
+- "/src/Testing/ApplicationTestCase.php"
