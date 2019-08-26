@@ -112,10 +112,10 @@ interface ConquestDataSource
     /**
      * A data source can add to a report about the campaign
      *
-     * @param Campaign       $campaign The campaign involved
-     * @param ConquestReport $report   The report to build on
+     * @param SourceRecord   $source The source record
+     * @param ConquestReport $report The report to build on
      *
      * @return void
      */
-    public function report(Campaign $campaign, ConquestReport &$report): void;
+    public function report(SourceRecord $source, ConquestReport &$report): void;
 }
