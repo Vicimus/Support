@@ -77,11 +77,11 @@ if (!function_exists('env')) {
      * Get an environmental value or the default passed if no value found
      *
      * @param string $key     The key to find
-     * @param string $default The value to return if no value found
+     * @param mixed  $default The value to return if no value found
      *
      * @return string|int|bool
      */
-    function env(string $key, ?string $default = null)
+    function env(string $key, $default = null)
     {
         $value = getenv($key);
         if ($value === false) {

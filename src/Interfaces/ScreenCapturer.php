@@ -10,6 +10,16 @@ use Vicimus\Support\Classes\RenderSpecs;
 interface ScreenCapturer
 {
     /**
+     * Get HTML to represent the... HTML
+     *
+     * @param string           $url   The url to capture
+     * @param RenderSpecs|null $specs The specs
+     *
+     * @return string
+     */
+    public function html(string $url, ?RenderSpecs $specs = null): string;
+
+    /**
      * Convert a URL into a JPG representation of that web-page
      *
      * @param string      $url   The URL to capture
