@@ -13,5 +13,26 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  */
 interface PurlInteraction
 {
-    //
+    /**
+     * The campaign id
+     * @return int
+     */
+    public function campaign(): int;
+    /**
+     * The customer id
+     * @return int
+     */
+    public function customer(): int;
+
+    /**
+     * An explanation of the action
+     * @return string
+     */
+    public function explanation(): ?string;
+
+    /**
+     * The score for the interaction
+     * @return int
+     */
+    public function temp(): int;
 }

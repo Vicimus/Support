@@ -122,6 +122,16 @@ interface ConquestDataSource
     public function name(): string;
 
     /**
+     * A data source can add to a report about the campaign
+     *
+     * @param SourceRecord   $source The source record
+     * @param ConquestReport $report The report to build on
+     *
+     * @return void
+     */
+    public function report(SourceRecord $source, ConquestReport &$report): void;
+
+    /**
      * Get a validator to validate certain things
      * @return ConquestDataSourceValidator
      */
