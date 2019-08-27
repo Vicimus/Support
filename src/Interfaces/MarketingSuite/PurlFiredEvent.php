@@ -36,6 +36,15 @@ interface PurlFiredEvent
     public function name(): string;
 
     /**
+     * Get the referer
+     *
+     * @param string|null $referer If not null will set the referer else return it
+     *
+     * @return string|PurlFiredEvent
+     */
+    public function referer(?string $referer = null);
+
+    /**
      * Get the temperature associated with the event
      *
      * @return int
