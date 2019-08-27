@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Classes;
 
 use Vicimus\Support\Exceptions\InvalidArgumentException;
+use Vicimus\Support\Interfaces\MarketingSuite\Campaign;
 use Vicimus\Support\Interfaces\Property;
 
 /**
@@ -36,6 +37,20 @@ class Grouping extends ImmutableObject
             'items' => $items,
             'properties' => $properties,
         ]);
+    }
+
+    /**
+     * On update allows extending classes to implement some code when
+     * something on the group is updated
+     *
+     * @param Campaign $campaign The campaign
+     * @param mixed[]  $payload  The parameters that were updated
+     *
+     * @return void
+     */
+    public function onUpdate(Campaign $campaign, array $payload): void
+    {
+        //
     }
 
     /**
