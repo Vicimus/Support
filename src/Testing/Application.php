@@ -64,6 +64,12 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     protected $storagePath;
 
     /**
+     * Testing
+     * @var string
+     */
+    private $environment = 'testing';
+
+    /**
      * Application constructor.
      *
      * @param string|null $basePath Provide the base path
@@ -226,7 +232,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      */
     public function environment(...$environments)
     {
-        return 'testing';
+        return $this->environment;
     }
 
     /**
@@ -613,6 +619,19 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
 
         $this->bindPathsInContainer();
 
+        return $this;
+    }
+
+    /**
+     * Set the environment
+     *
+     * @param string $env The environment
+     *
+     * @return Application
+     */
+    public function setEnvironment(string $env): self
+    {
+        $this->environment = $env;
         return $this;
     }
 
