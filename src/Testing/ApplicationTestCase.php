@@ -160,7 +160,12 @@ class ApplicationTestCase extends TestCase
     public function setup()
     {
         parent::setUp();
+
         $this->createApplication();
+
+        /** @var \Illuminate\Contracts\Cache\Repository|Repository $cache */
+        $cache = app('cache');
+        $cache->clear();
     }
 
     /**
