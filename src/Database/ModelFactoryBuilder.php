@@ -43,4 +43,25 @@ class ModelFactoryBuilder
 
         return new Collection($results);
     }
+
+    /**
+     * @param array $params
+     *
+     * @return \Illuminate\Database\Eloquent\Model[]
+     */
+    public function make(array $params = [])
+    {
+        $class = $this->class;
+        $definition = $this->definition;
+        $results = [];
+        for ($i = 0; $i < $this->count; $i++) {
+            $results[] = new $class(array_merge($definition(Factory::create()), $params));
+        }
+
+        if ($this->count === 1) {
+            return $results[0];
+        }
+
+        return $results;
+    }
 }
