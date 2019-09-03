@@ -132,6 +132,16 @@ interface ConquestDataSource
     public function report(SourceRecord $source, ConquestReport &$report): void;
 
     /**
+     * Report on the status of an asset. APPROVED, PENDING or REJECTED
+     *
+     * @param SourceRecord $source The source record
+     * @param AssetRecord  $asset  The asset
+     *
+     * @return int
+     */
+    public function status(SourceRecord $source, AssetRecord $asset): int;
+
+    /**
      * Get a validator to validate certain things
      * @return ConquestDataSourceValidator
      */
