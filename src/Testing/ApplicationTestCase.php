@@ -528,5 +528,7 @@ class ApplicationTestCase extends TestCase
         $this->client = new Client(static function ($verb, $payload) {
             return Application::onRequest($verb, $payload);
         }, $this->app);
+
+        $this->booted($this->app);
     }
 }
