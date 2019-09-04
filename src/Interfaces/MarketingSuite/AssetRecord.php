@@ -4,8 +4,10 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 /**
  * Interface AssetRecord
+ * @property int $id
+ * @property string $type
  */
-interface AssetRecord
+interface AssetRecord extends SimpleProperties
 {
     //
 }

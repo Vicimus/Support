@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 
 /**
  * Interface ConquestDataSource
@@ -134,12 +135,13 @@ interface ConquestDataSource
     /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
      *
-     * @param SourceRecord $source The source record
-     * @param AssetRecord  $asset  The asset
+     * @param AssetRecord $asset The asset
      *
      * @return int
+     *
+     * @throws StatusException
      */
-    public function status(SourceRecord $source, AssetRecord $asset): int;
+    public function status(AssetRecord $asset): int;
 
     /**
      * Get a validator to validate certain things
