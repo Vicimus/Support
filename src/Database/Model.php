@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
 /**
  * Base class we can use in most of our projects
  *
- * @method static \Illuminate\Database\Eloquent\Builder orderBy($column, $ascending = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|static orderBy($column, $ascending = true)
  * @method static LaravelModel|static find($id)
  * @method static LaravelModel|static findOrFail($id)
  * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
