@@ -287,7 +287,7 @@ class ImmutableObject implements JsonSerializable, WillValidate, ArrayAccess
      *
      * @return bool
      */
-    private function isScalar(string $value)
+    private function isScalar($value)
     {
         return in_array($value, [
             'int', 'bool', 'string', 'float',
