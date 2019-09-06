@@ -163,6 +163,10 @@ class ApplicationTestCase extends TestCase
 
         $this->createApplication();
 
+        $this->app->bind('request', static function () {
+            return new Request();
+        });
+
         /** @var \Illuminate\Contracts\Cache\Repository|Repository $cache */
         $cache = app('cache');
         $cache->clear();
