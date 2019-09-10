@@ -47,7 +47,7 @@ class ModelFactoryBuilder
     /**
      * @param array $params
      *
-     * @return \Illuminate\Database\Eloquent\Model[]
+     * @return \Illuminate\Database\Eloquent\Model[]|Model
      */
     public function make(array $params = [])
     {

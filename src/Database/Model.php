@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Database;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 
 /**
@@ -13,14 +15,14 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
  * @method static \Illuminate\Database\Eloquent\Builder|static distinct($column = null))
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotNull($c)
- * @method static LaravelModel|static create($attributes = [])
+ * @method static LaravelModel|static create($attributes)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNull($c)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereHas($relation, $closure)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed()
  * @method static LaravelModel|static firstOrCreate($attributes)
- * @method static \Illuminate\Database\Eloquent\Builder|static query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|static query()
  * @method static LaravelModel|static firstOrFail()
  * @method static LaravelModel|static first()
  * @method static \Illuminate\Database\Eloquent\Builder|static select($fields)
@@ -29,6 +31,10 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
  * @method static \Illuminate\Database\Eloquent\Builder|static has(string $relationship)
  * @method static bool truncate()
  * @method static int count()
+ *
+ * @property int $id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Model extends LaravelModel
 {
@@ -83,6 +89,16 @@ class Model extends LaravelModel
         }
 
         return $this->getRelationValue($key);
+    }
+
+    /**
+     * Get the "deleted at" column for the builder.
+     *
+     * @return string
+     */
+    protected function getDeletedAtColumn()
+    {
+        return 'deleted_at';
     }
 
     /**
