@@ -27,6 +27,13 @@ use Vicimus\Support\Interfaces\Eloquent;
 interface Campaign extends Eloquent
 {
     /**
+     * A campaign has many acknowledgements
+     *
+     * @return MorphMany
+     */
+    public function acknowledgements(): MorphMany;
+
+    /**
      * Has the campaign portfolio been modified at all, even a single time
      * @return bool
      */
