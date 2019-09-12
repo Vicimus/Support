@@ -21,7 +21,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * The read-only properties
      *
-     * @var string[]
+     * @var mixed[][]
      */
     protected $attributes = [];
 
@@ -187,13 +187,44 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      */
     public function toArray(): array
     {
-        if (!count($this->hidden)) {
-            return $this->attributes;
+        $payload = [];
+        foreach (array_filter($this->attributes, function ($key) {
+            return !in_array($key, $this->hidden, false);
+        }, ARRAY_FILTER_USE_KEY) as $property => $item) {
+            if ($item instanceof self) {
+                $payload[$property] = $item->toArray();
+                continue;
+            }
+
+            if (!is_array($item)) {
+                $payload[$property] = $item;
+                continue;
+            }
+
+            $payload[$property] = $this->convertToArray($item);
         }
 
-        return array_filter($this->attributes, function ($key) {
-            return !in_array($key, $this->hidden);
-        }, ARRAY_FILTER_USE_KEY);
+        return $payload;
+    }
+
+    private function convertToArray(array $items)
+    {
+        $payload = [];
+        foreach ($items as $property => $item) {
+            if ($item instanceof self) {
+                $payload[$property] = $item->toArray();
+                continue;
+            }
+
+            if (!is_array($item)) {
+                $payload[$property] = $item;
+                continue;
+            }
+
+            $payload[$property] = $this->convertToArray($item);
+        }
+
+        return $payload;
     }
 
     /**
