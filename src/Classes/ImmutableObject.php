@@ -191,17 +191,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         foreach (array_filter($this->attributes, function ($key) {
             return !in_array($key, $this->hidden, false);
         }, ARRAY_FILTER_USE_KEY) as $property => $item) {
-            if ($item instanceof self) {
-                $payload[$property] = $item->toArray();
-                continue;
-            }
-
-            if (!is_array($item)) {
-                $payload[$property] = $item;
-                continue;
-            }
-
-            $payload[$property] = $this->convertToArray($item);
+            $payload[$property] = $this->convertArrayItem($item);
         }
 
         return $payload;
@@ -230,6 +220,26 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     }
 
     /**
+     * Convert a single item
+     *
+     * @param ImmutableObject|mixed[]|mixed $item The item
+     *
+     * @return mixed|mixed[]
+     */
+    private function convertArrayItem($item)
+    {
+        if ($item instanceof self) {
+            return $item->toArray();
+        }
+
+        if (!is_array($item)) {
+            return $item;
+        }
+
+        return $this->convertToArray($item);
+    }
+
+    /**
      * Convert recursively to an array
      *
      * @param mixed[] $items The items to convert
@@ -240,17 +250,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     {
         $payload = [];
         foreach ($items as $property => $item) {
-            if ($item instanceof self) {
-                $payload[$property] = $item->toArray();
-                continue;
-            }
-
-            if (!is_array($item)) {
-                $payload[$property] = $item;
-                continue;
-            }
-
-            $payload[$property] = $this->convertToArray($item);
+            $payload[$property] = $this->convertArrayItem($item);
         }
 
         return $payload;
