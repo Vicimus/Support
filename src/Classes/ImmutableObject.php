@@ -207,26 +207,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         return $payload;
     }
 
-    private function convertToArray(array $items)
-    {
-        $payload = [];
-        foreach ($items as $property => $item) {
-            if ($item instanceof self) {
-                $payload[$property] = $item->toArray();
-                continue;
-            }
-
-            if (!is_array($item)) {
-                $payload[$property] = $item;
-                continue;
-            }
-
-            $payload[$property] = $this->convertToArray($item);
-        }
-
-        return $payload;
-    }
-
     /**
      * Takes in the original data and converts it according to the protected
      * local property $this->casts
@@ -247,6 +227,33 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         }
 
         return $transformed;
+    }
+
+    /**
+     * Convert recursively to an array
+     *
+     * @param mixed[] $items The items to convert
+     *
+     * @return mixed[]
+     */
+    private function convertToArray(array $items): array
+    {
+        $payload = [];
+        foreach ($items as $property => $item) {
+            if ($item instanceof self) {
+                $payload[$property] = $item->toArray();
+                continue;
+            }
+
+            if (!is_array($item)) {
+                $payload[$property] = $item;
+                continue;
+            }
+
+            $payload[$property] = $this->convertToArray($item);
+        }
+
+        return $payload;
     }
 
     /**
