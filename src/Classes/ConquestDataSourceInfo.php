@@ -23,6 +23,7 @@ class ConquestDataSourceInfo extends ImmutableObject
      * @param string                      $category    The category
      * @param ConquestCompatibilityMatrix $matrix      The compatibility matrix
      * @param string[]                    $mediums     The supported medium types
+     * @param string                      $icon        The source icon
      */
     public function __construct(
         string $name,
