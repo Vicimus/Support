@@ -30,7 +30,8 @@ class ConquestDataSourceInfo extends ImmutableObject
         string $class,
         string $category,
         ConquestCompatibilityMatrix $matrix,
-        array $mediums
+        array $mediums,
+        string $icon
     ) {
         parent::__construct([
             'name' => $name,
@@ -39,6 +40,7 @@ class ConquestDataSourceInfo extends ImmutableObject
             'category' => $category,
             'matrix' => $matrix,
             'mediums' => $mediums,
+            'icon' => $icon,
         ]);
     }
 }
