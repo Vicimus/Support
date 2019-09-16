@@ -381,7 +381,13 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->bind(VicimusTranslator::class, function () {
-            return $this->getMockBuilder(VicimusTranslator::class)->disableOriginalConstructor()->getMock();
+            $mock = $this->getMockBuilder(VicimusTranslator::class)->disableOriginalConstructor()->getMock();
+            $mock->method('tran')
+                ->willReturnCallback(static function ($key, $default) {
+                    return $default;
+                });
+
+            return $mock;
         });
 
         $views = new ViewServiceProvider($app);
