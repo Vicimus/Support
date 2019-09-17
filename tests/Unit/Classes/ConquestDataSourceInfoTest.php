@@ -26,7 +26,8 @@ class ConquestDataSourceInfoTest extends TestCase
             new ConquestCompatibilityMatrix([
                 'banana' => 'strawberry',
             ]),
-            ['facebook_carousel']
+            ['facebook_carousel'],
+            'fa-facebook'
         );
 
         $this->assertEquals('Banana', $info->name);
