@@ -169,7 +169,10 @@ class ApplicationTestCase extends TestCase
 
         /** @var \Illuminate\Contracts\Cache\Repository|Repository $cache */
         $cache = app('cache');
-        $cache->clear();
+        if (method_exists($cache, 'clear')) {
+            $cache->clear();
+        }
+
     }
 
     /**
