@@ -160,7 +160,7 @@ class BasicCache implements Repository, StoreInterface
      */
     public function has($key)
     {
-        // TODO: Implement has() method.
+        return array_key_exists($key, $this->cache);
     }
 
     /**
@@ -214,7 +214,13 @@ class BasicCache implements Repository, StoreInterface
      */
     public function remember($key, $minutes, Closure $callback)
     {
-        return $callback();
+        if ($this->has($key)) {
+            return $this->get($key);
+        }
+
+        $value = $callback();
+        $this->cache[$key] = $value;
+        return $value;
     }
 
     /**
