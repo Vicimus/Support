@@ -5,25 +5,25 @@ namespace Vicimus\Support\Interfaces\Glovebox\Leads;
 use Vicimus\Support\Interfaces\Glovebox\EloquentRepository;
 
 /**
- * Interface LeadTypes
+ * Interface LeadDistributions
  */
-interface LeadTypes extends EloquentRepository
+interface LeadDistributions extends EloquentRepository
 {
     /**
-     * Get a lead type by type slug
+     * Get a distribution by assigned type
      *
-     * @param string $type The type to get
+     * @param LeadType $type The type to get by
      *
-     * @return LeadType
+     * @return LeadDistribution|null
      */
-    public function byType($type);
+    public function byType(LeadType $type);
 
     /**
      * Create a new type record
      *
      * @param mixed[] $attributes The attributes
      *
-     * @return LeadType
+     * @return LeadDistribution
      */
     public function create(array $attributes);
 
@@ -32,23 +32,16 @@ interface LeadTypes extends EloquentRepository
      *
      * @param int $id The id of the type to get
      *
-     * @return LeadType|null
+     * @return LeadDistribution|null
      */
     public function find($id);
-
-    /**
-     * Just get the first type in the database
-     *
-     * @return LeadType
-     */
-    public function first();
 
     /**
      * Find or create
      *
      * @param mixed[] $attributes The attributes
      *
-     * @return LeadType
+     * @return LeadDistribution
      */
     public function firstOrCreate(array $attributes);
 }

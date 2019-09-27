@@ -5,9 +5,9 @@ namespace Vicimus\Support\Interfaces\Glovebox\Leads;
 use Vicimus\Support\Interfaces\Glovebox\EloquentRepository;
 
 /**
- * Interface LeadMessages
+ * Interface LeadType
  */
-interface LeadMessages extends EloquentRepository
+interface LeadRecords extends EloquentRepository
 {
     //
 }
