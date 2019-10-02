@@ -22,6 +22,7 @@ use Vicimus\Support\Traits\CastsAttributes;
  * @method static \Illuminate\Database\Eloquent\Builder|static whereHas($relation, $closure)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static whereNotIn($column, $items)
+ * @method static \Illuminate\Database\Eloquent\Builder|static orWhereNotIn($column, $items)
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed()
  * @method static LaravelModel|static firstOrCreate($attributes)
  * @method static \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|static query()
