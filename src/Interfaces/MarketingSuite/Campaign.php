@@ -43,6 +43,15 @@ interface Campaign extends Eloquent
     public function hasPortfolioBeenModified(): bool;
 
     /**
+     * Retrieve an identifier to use for an asset slug
+     *
+     * @param string $type The asset type slug
+     *
+     * @return string
+     */
+    public function identifier(string $type): string;
+
+    /**
      * This method should return if the campaign is utilizing a specific
      * medium. Is it sending letters, sending emails, using facebook carousel,
      * etc.
