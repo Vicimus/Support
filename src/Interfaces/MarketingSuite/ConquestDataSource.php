@@ -43,6 +43,16 @@ interface ConquestDataSource
     public function category(): string;
 
     /**
+     * Clean up after an audience
+     *
+     * @param Audience     $audience The audience that is being deleted
+     * @param SourceRecord $record   The record
+     *
+     * @return void
+     */
+    public function clean(Audience $audience, SourceRecord $record): void;
+
+    /**
      * A data source has an external code assigned to it by the product team.
      * This method must return that code.
      *
