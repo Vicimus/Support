@@ -89,9 +89,12 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      * @param string $path Optionally, a path to append to the base path
      *
      * @return string
+     *
+     * @codingStandardsIgnoreStart
      */
-    public function basePath(string $path = ''): string
+    public function basePath($path = ''): string
     {
+        // @codingStandardsIgnoreEnd
         return realpath($this->basePath.(($path) ? DIRECTORY_SEPARATOR.$path : $path));
     }
 
