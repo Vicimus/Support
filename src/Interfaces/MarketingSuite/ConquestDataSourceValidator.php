@@ -10,6 +10,15 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 interface ConquestDataSourceValidator
 {
     /**
+     * Validate a Campaigns assets
+     *
+     * @param Campaign $campaign The campaign to validate
+     *
+     * @return string[]
+     */
+    public function assets(Campaign $campaign): array;
+
+    /**
      * Validate a budget
      *
      * @param Audience     $audience The audience
