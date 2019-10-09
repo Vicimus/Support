@@ -76,6 +76,13 @@ interface Campaign extends Eloquent
     public function portfolio(): array;
 
     /**
+     * Retrieve a property value
+     *
+     * @return string|null
+     */
+    public function property(): ?string;
+
+    /**
      * Get the store id for this campaigns
      *
      * @return int
