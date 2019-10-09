@@ -76,16 +76,6 @@ interface Campaign extends Eloquent
     public function portfolio(): array;
 
     /**
-     * Retrieve a property value
-     *
-     * @param string $name    The name of the property
-     * @param mixed  $default The default value to return
-     *
-     * @return int|string|mixed|null
-     */
-    public function property(string $name, $default = null);
-
-    /**
      * Get the store id for this campaigns
      *
      * @return int
