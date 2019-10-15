@@ -34,6 +34,7 @@ use Vicimus\Support\Traits\CastsAttributes;
  * @method static \Illuminate\Database\Eloquent\Builder|static has(string $relationship)
  * @method static bool truncate()
  * @method static int count()
+ * @method static \Illuminate\Database\Eloquent\Builder|static groupBy(string $column)
  *
  * @property int $id
  * @property Carbon $created_at

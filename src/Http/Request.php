@@ -21,11 +21,11 @@ class Request extends LaravelRequest
     public function get($key, $default = null, $deep = false)
     {
         $result = parent::get($key, $default, $deep);
-        if ($result === null) {
+        if ($result === null || $result === $default) {
             $result = $this->input($key, $default);
         }
 
-        if ($result === null) {
+        if ($result === null || $result === $default) {
             return $default;
         }
 
