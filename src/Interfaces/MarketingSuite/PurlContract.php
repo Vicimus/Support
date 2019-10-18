@@ -12,6 +12,17 @@ use Retention\Exceptions\TemplateException;
 interface PurlContract
 {
     /**
+     * Pinging is a way to
+     *
+     * @param int $campaignId The campaign id
+     * @param int $customerId The customer id
+     * @param int $duration   The time between pings in milliseconds
+     *
+     * @return void
+     */
+    public function ping(int $campaignId, int $customerId, int $duration): void;
+
+    /**
      * Generate a purl response based on the request
      *
      * @param Request $request The request
