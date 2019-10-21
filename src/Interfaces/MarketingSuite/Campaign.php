@@ -76,6 +76,13 @@ interface Campaign extends Eloquent
     public function portfolio(): array;
 
     /**
+     * Has many recents
+     *
+     * @return MorphMany
+     */
+    public function recents(): MorphMany;
+
+    /**
      * Get the store id for this campaigns
      *
      * @return int
