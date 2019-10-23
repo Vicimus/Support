@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 
 /**
@@ -87,6 +88,8 @@ interface ConquestDataSource
      * @param SourceRecord $record   The source record
      *
      * @return int
+     *
+     * @throws BudgetException
      */
     public function estimate(Audience $audience, SourceRecord $record): int;
 
