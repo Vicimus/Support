@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
  *
  * @property Collection|Audience[] $audiences
  * @property int $id
+ * @property Campaign $campaign
  */
 interface SourceRecord
 {
