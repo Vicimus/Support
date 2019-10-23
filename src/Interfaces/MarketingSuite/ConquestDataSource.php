@@ -146,7 +146,7 @@ interface ConquestDataSource
      *
      * @return void
      */
-    public function report(SourceRecord $source, ConquestReport &$report, ?DateTimeInterface $date = null): void;
+    public function report(SourceRecord $source, ConquestReport $report, ?DateTimeInterface $date = null): void;
 
     /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
