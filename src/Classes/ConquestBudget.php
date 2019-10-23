@@ -19,4 +19,16 @@ class ConquestBudget extends ImmutableObject
     {
         parent::__construct(array_merge(['spend' => null, 'total' => null], (array) $original));
     }
+
+    /**
+     * Set the spend for a budget
+     *
+     * @param float $spend The spend to set
+     *
+     * @return void
+     */
+    public function setSpend(float $spend): void
+    {
+        $this->attributes['spend'] = $spend;
+    }
 }
