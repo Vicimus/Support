@@ -20,5 +20,8 @@ class ConquestBudgetTest extends TestCase
         $budget = new ConquestBudget([]);
         $this->assertNull($budget->spend);
         $this->assertNull($budget->total);
+
+        $budget->setSpend(500);
+        $this->assertEquals(500, $budget->spend);
     }
 }
