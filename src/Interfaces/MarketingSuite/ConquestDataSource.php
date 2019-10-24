@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
