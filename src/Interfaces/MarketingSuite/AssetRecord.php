@@ -2,12 +2,20 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+
 /**
  * Interface AssetRecord
  * @property int $id
  * @property string $type
+ * @property Campaign $campaign
  */
 interface AssetRecord extends SimpleProperties
 {
-    //
+    /**
+     * Get the owning campaign
+     *
+     * @return MorphTo|Campaign
+     */
+    public function campaign(): MorphTo;
 }
