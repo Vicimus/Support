@@ -2,10 +2,12 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 
 /**
@@ -85,6 +87,8 @@ interface ConquestDataSource
      * @param SourceRecord $record   The source record
      *
      * @return int
+     *
+     * @throws BudgetException
      */
     public function estimate(Audience $audience, SourceRecord $record): int;
 
@@ -135,12 +139,13 @@ interface ConquestDataSource
     /**
      * A data source can add to a report about the campaign
      *
-     * @param SourceRecord   $source The source record
-     * @param ConquestReport $report The report to build on
+     * @param SourceRecord           $source The source record
+     * @param ConquestReport         $report The report to build on
+     * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
      *
      * @return void
      */
-    public function report(SourceRecord $source, ConquestReport &$report): void;
+    public function report(SourceRecord $source, ConquestReport $report, ?DateTimeInterface $date = null): void;
 
     /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
