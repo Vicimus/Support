@@ -80,7 +80,8 @@ class ScriptCache implements ConsoleOutput
     {
         $order = [
             'runtime',
-            'polyfill',
+            'polyfills',
+            'scripts',
             'main',
         ];
 
@@ -192,14 +193,18 @@ class ScriptCache implements ConsoleOutput
      */
     private function getName(string $filename): string
     {
-        if (stripos($filename, 'main.')) {
+        if (stripos($filename, 'main')) {
             return 'main';
         }
 
-        if (stripos($filename, 'runtime.')) {
+        if (stripos($filename, 'runtime')) {
             return 'runtime';
         }
 
-        return 'polyfill';
+        if (stripos($filename, 'scripts')) {
+            return 'scripts';
+        }
+
+        return 'polyfills';
     }
 }
