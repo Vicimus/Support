@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Tests\Unit\FrontEnd;
 
+use Illuminate\Http\Request;
+use Illuminate\Routing\RouteCollection;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Facade;
 use Vicimus\Support\FrontEnd\ScriptCache;
 use Vicimus\Support\Testing\Application;
@@ -20,12 +23,17 @@ class ScriptCacheTest extends TestCase
      */
     public function setup(): void
     {
-        parent::setup();
+        parent::setUp();
+
         $app = new Application();
         Facade::setFacadeApplication($app);
 
         $app->bind('path.public', static function () {
-            return __DIR__;
+            return __DIR__ . '/../../../resources/testing';
+        });
+
+        $app->bind('url', static function () {
+            return new UrlGenerator(new RouteCollection(), new Request());
         });
     }
 
@@ -36,7 +44,11 @@ class ScriptCacheTest extends TestCase
      */
     public function testMake(): void
     {
-        $scripts = new ScriptCache(new BasicCache(), __DIR__, 'support-tests');
+        $scripts = new ScriptCache(
+            new BasicCache(),
+            __DIR__ . '/../../../resources/testing/front-end',
+            'support-tests'
+        );
         $this->assertNotNull($scripts);
     }
 
@@ -48,10 +60,39 @@ class ScriptCacheTest extends TestCase
     public function testUnhealthy(): void
     {
         $cache = new BasicCache();
-        $scripts = new ScriptCache($cache, __DIR__, 'support-tests');
+        $scripts = new ScriptCache(
+            $cache,
+            __DIR__ . '/../../../resources/testing/front-end',
+            'support-tests'
+        );
         $this->assertTrue($scripts->areUnhealthy());
 
         $cache->put(sprintf('%s-cache-%s', 'support-tests', 'en'), ['hello' => 'banana']);
         $this->assertFalse($scripts->areUnhealthy());
+    }
+
+    /**
+     * Test cache
+     *
+     * @return void
+     */
+    public function testCache(): void
+    {
+        $cache = $this->basicMock(BasicCache::class);
+        $cache->expects($this->once())
+            ->method('forever');
+
+        $cache->expects($this->once())
+            ->method('forget');
+
+        $scripts = new ScriptCache(
+            $cache,
+            __DIR__ . '/../../../resources/testing/front-end',
+            'support-tests'
+        );
+
+        $scripts->cache();
+
+        $scripts->forget();
     }
 }
