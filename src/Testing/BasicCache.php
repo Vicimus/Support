@@ -159,7 +159,7 @@ class BasicCache implements Repository
      */
     public function has($key)
     {
-        // TODO: Implement has() method.
+        return isset($this->cache[$key]);
     }
 
     /**
@@ -199,7 +199,7 @@ class BasicCache implements Repository
      */
     public function put($key, $value, $minutes = null)
     {
-        // TODO: Implement put() method.
+        $this->cache[$key] = $value;
     }
 
     /**
