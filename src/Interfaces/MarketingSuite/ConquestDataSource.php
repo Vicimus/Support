@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Conquest\Exceptions\ReportingException;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
@@ -144,6 +145,8 @@ interface ConquestDataSource
      * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
      *
      * @return void
+     *
+     * @throws DataSourceException
      */
     public function report(SourceRecord $source, ConquestReport $report, ?DateTimeInterface $date = null): void;
 
