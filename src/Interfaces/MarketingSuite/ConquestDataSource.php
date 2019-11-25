@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Conquest\Exceptions\ReportingException;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
