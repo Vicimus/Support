@@ -7,6 +7,7 @@ use Vicimus\Support\Classes\Benchmark;
 use Vicimus\Support\Classes\NullOutput;
 use Vicimus\Support\Classes\StandardOutput;
 use Vicimus\Support\Exceptions\TestException;
+use Vicimus\Support\Interfaces\ConsoleOutput;
 
 /**
  * Trait TestSqliteDatabase
@@ -106,18 +107,11 @@ trait TestSqliteDatabase
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
-        $output = new NullOutput();
-        $quiet = (int) getenv('VICIMUS_TEST_NO_DATABASE_OUTPUT');
-        if (!$quiet) {
-            $output = new StandardOutput();
-        }
-
-        $bench = new Benchmark();
-        $bench->init();
+        $output = $this->output();
+        $bench = (new Benchmark())->init();
         if (!$this->isOutdated($database)) {
             copy(database_path('.cached'), $stub);
-            $bench->stop();
-            $output->info(sprintf('Restored database from cache [%s]' . "\n", $bench->get()['time']));
+            $output->info(sprintf('Restored database from cache [%s]' . "\n", $bench->stop()->get()['time']));
             $this->finish($database, $stub, $secondStub);
             return;
         }
@@ -207,5 +201,21 @@ trait TestSqliteDatabase
         }
 
         return $this->checksum($database) !== file_get_contents(base_path('.vicimus.test.cache'));
+    }
+
+    /**
+     * Get the output
+     *
+     * @return ConsoleOutput
+     */
+    private function output(): ConsoleOutput
+    {
+        $output = new NullOutput();
+        $quiet = (int) getenv('VICIMUS_TEST_NO_DATABASE_OUTPUT');
+        if (!$quiet) {
+            $output = new StandardOutput();
+        }
+
+        return $output;
     }
 }
