@@ -2,9 +2,11 @@
 
 namespace Vicimus\Support\Unit\Testing;
 
+use Illuminate\Support\Facades\Facade;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\MockObject\MockObject;
 use Vicimus\Support\Exceptions\TestException;
+use Vicimus\Support\Testing\Application;
 use Vicimus\Support\Testing\TestCase;
 use Vicimus\Support\Testing\TestSqliteDatabase;
 
@@ -21,6 +23,18 @@ class TestSqliteDatabaseTest extends TestCase
     public function setup(): void
     {
         vfsStream::setup('root');
+        $app = new Application();
+        Facade::setFacadeApplication($app);
+
+        $app->bind('path.base', static function () {
+            return __DIR__ . '/../../../resources/testing';
+        });
+
+        $app->bind('path.database', static function () {
+            return __DIR__ . '/../../../resources/testing';
+        });
+
+        putenv('VICIMUS_TEST_NO_DATABASE_OUTPUT=1');
     }
     /**
      * Test setup
@@ -41,6 +55,6 @@ class TestSqliteDatabaseTest extends TestCase
             // This is just for testing
         }
 
-        $this->assertFileExists(vfsStream::url('root/testing.sqlite'));
+        $this->assertFileExists(vfsStream::url('root/stub.sqlite'));
     }
 }
