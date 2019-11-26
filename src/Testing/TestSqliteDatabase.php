@@ -4,6 +4,7 @@ namespace Vicimus\Support\Testing;
 
 use Illuminate\Support\Facades\DB;
 use Vicimus\Support\Classes\Benchmark;
+use Vicimus\Support\Classes\NullOutput;
 use Vicimus\Support\Classes\StandardOutput;
 use Vicimus\Support\Exceptions\TestException;
 
@@ -105,12 +106,18 @@ trait TestSqliteDatabase
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
+        $output = new NullOutput();
+        $quiet = (int) getenv('VICIMUS_TEST_NO_DATABASE_OUTPUT');
+        if (!$quiet) {
+            $output = new StandardOutput();
+        }
+
         $bench = new Benchmark();
         $bench->init();
         if (!$this->isOutdated($database)) {
             copy(database_path('.cached'), $stub);
             $bench->stop();
-            (new StandardOutput())->info(sprintf('Restored database from cache [%s]' . "\n", $bench->get()['time']));
+            $output->info(sprintf('Restored database from cache [%s]' . "\n", $bench->get()['time']));
             $this->finish($database, $stub, $secondStub);
             return;
         }
@@ -130,7 +137,7 @@ trait TestSqliteDatabase
             file_put_contents(base_path('.vicimus.test.cache'), $this->checksum($database));
             copy($stub, database_path('.cached'));
             $bench->stop();
-            (new StandardOutput())->info(sprintf('One time database set up complete [%s]', $bench->get()['time']));
+            $output->info(sprintf('One time database set up complete [%s]', $bench->get()['time']));
         }
 
         $this->finish($database, $stub, $secondStub);
@@ -150,10 +157,12 @@ trait TestSqliteDatabase
         }
 
         $output = '';
-        exec(sprintf('find -s %s -type f', database_path('migrations')), $output);
-
         $size = '';
-        exec(sprintf('du -s %s', database_path('migrations')), $size);
+
+        if (file_exists(database_path('migrations'))) {
+            exec(sprintf('find -s %s -type f', database_path('migrations')), $output);
+            exec(sprintf('du -s %s', database_path('migrations')), $size);
+        }
 
         return md5(json_encode($output) . json_encode($size));
     }
