@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
 use Vicimus\Support\Interfaces\Eloquent;
 
@@ -26,6 +27,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $send_email
  * @property bool $send_letter
  * @property bool $send_voice
+ * @property ScriptContract $script
  */
 interface Campaign extends Eloquent
 {
@@ -74,6 +76,13 @@ interface Campaign extends Eloquent
      * @return Asset[]
      */
     public function portfolio(): array;
+
+    /**
+     * A campaign can have one script
+     *
+     * @return MorphOne|ScriptContract
+     */
+    public function script(): MorphOne;
 
     /**
      * Get the store id for this campaigns

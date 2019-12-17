@@ -154,7 +154,7 @@ trait TestSqliteDatabase
         $size = '';
 
         if (file_exists(database_path('migrations'))) {
-            exec(sprintf('find -s %s -type f', database_path('migrations')), $output);
+            exec(sprintf('find %s -type f', database_path('migrations')), $output);
             exec(sprintf('du -s %s', database_path('migrations')), $size);
         }
 
