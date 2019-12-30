@@ -28,6 +28,8 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $send_letter
  * @property bool $send_voice
  * @property ScriptContract $script
+ * @property mixed $letter
+ * @property string $subject
  */
 interface Campaign extends Eloquent
 {
