@@ -83,6 +83,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property string $service_advisor
  * @property string $fi_manager
  * @property bool $vehicle_models_exclude
+ * @property string $emails
  */
 interface Filter extends Eloquent
 {
