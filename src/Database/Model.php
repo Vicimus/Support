@@ -59,11 +59,15 @@ class Model extends LaravelModel
      *
      * @return bool|null
      */
-    public function delete(): ?bool
+    public function delete(bool $throw = false): ?bool
     {
         try {
             $result = parent::delete();
         } catch (Throwable $exception) {
+            if ($throw) {
+                throw $exception;
+            }
+
             return false;
         }
 
