@@ -2,10 +2,13 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 
 /**
  * Interface ConquestDataSource
@@ -23,11 +26,33 @@ interface ConquestDataSource
     public function assets(): array;
 
     /**
+     * If a budget has been set or updated, we need to pass it along to the
+     * data source for it to inform it's API that the budget has increased.
+     *
+     * @param Audience     $audience The audience involved
+     * @param SourceRecord $record   The source record
+     * @param int          $amount   The amount
+     *
+     * @return void
+     */
+    public function budget(Audience $audience, SourceRecord $record, int $amount): void;
+
+    /**
      * Get the category for this data source
      *
      * @return string
      */
     public function category(): string;
+
+    /**
+     * Clean up after an audience
+     *
+     * @param Audience     $audience The audience that is being deleted
+     * @param SourceRecord $record   The record
+     *
+     * @return void
+     */
+    public function clean(Audience $audience, SourceRecord $record): void;
 
     /**
      * A data source has an external code assigned to it by the product team.
@@ -52,6 +77,20 @@ interface ConquestDataSource
      * @return string
      */
     public function description(): string;
+
+    /**
+     * Estimate the audience size
+     *
+     * @see https://developers.facebook.com/docs/marketing-api/reference/ad-campaign/delivery_estimate/
+     *
+     * @param Audience     $audience The audience to estimate
+     * @param SourceRecord $record   The source record
+     *
+     * @return int
+     *
+     * @throws BudgetException
+     */
+    public function estimate(Audience $audience, SourceRecord $record): int;
 
     /**
      * Get the asset grouping for this data source. The main reason this
@@ -96,4 +135,34 @@ interface ConquestDataSource
      * @return string
      */
     public function name(): string;
+
+    /**
+     * A data source can add to a report about the campaign
+     *
+     * @param SourceRecord           $source The source record
+     * @param ConquestReport         $report The report to build on
+     * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
+     *
+     * @return void
+     *
+     * @throws DataSourceException
+     */
+    public function report(SourceRecord $source, ConquestReport $report, ?DateTimeInterface $date = null): void;
+
+    /**
+     * Report on the status of an asset. APPROVED, PENDING or REJECTED
+     *
+     * @param AssetRecord $asset The asset
+     *
+     * @return int
+     *
+     * @throws StatusException
+     */
+    public function status(AssetRecord $asset): int;
+
+    /**
+     * Get a validator to validate certain things
+     * @return ConquestDataSourceValidator
+     */
+    public function validator(): ConquestDataSourceValidator;
 }

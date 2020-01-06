@@ -8,6 +8,12 @@ namespace Vicimus\Support\Interfaces;
 interface Property
 {
     /**
+     * Get the display string for the input
+     * @return string
+     */
+    public function display(): string;
+
+    /**
      * Get the input type for the property
      * @return string
      */

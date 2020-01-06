@@ -23,6 +23,7 @@ class ConquestDataSourceInfo extends ImmutableObject
      * @param string                      $category    The category
      * @param ConquestCompatibilityMatrix $matrix      The compatibility matrix
      * @param string[]                    $mediums     The supported medium types
+     * @param string                      $icon        The source icon
      */
     public function __construct(
         string $name,
@@ -30,7 +31,8 @@ class ConquestDataSourceInfo extends ImmutableObject
         string $class,
         string $category,
         ConquestCompatibilityMatrix $matrix,
-        array $mediums
+        array $mediums,
+        string $icon
     ) {
         parent::__construct([
             'name' => $name,
@@ -39,6 +41,7 @@ class ConquestDataSourceInfo extends ImmutableObject
             'category' => $category,
             'matrix' => $matrix,
             'mediums' => $mediums,
+            'icon' => $icon,
         ]);
     }
 }
