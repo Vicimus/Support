@@ -2,9 +2,11 @@
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vicimus\Support\Classes\Grouping;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
+use Vicimus\Support\Interfaces\MarketingSuite\Campaign;
 use Vicimus\Support\Interfaces\Property;
 
 /**
@@ -67,5 +69,22 @@ class GroupingTest extends TestCase
 
         $prop = $grouping->property('test_prop2');
         $this->assertNull($prop);
+    }
+
+    /**
+     * On Update exists
+     *
+     * @return void
+     */
+    public function testOnUpdate(): void
+    {
+        /** @var Campaign|MockObject $campaign */
+        $campaign = $this->getMockBuilder(Campaign::class)->getMock();
+        $payload = [];
+
+        $grouping = new Grouping();
+        $grouping->onUpdate($campaign, $payload);
+
+        $this->assertNotNull($grouping);
     }
 }

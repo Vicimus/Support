@@ -5,6 +5,7 @@ namespace Vicimus\Support\Interfaces\Filtering;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Vicimus\Support\Database\Model;
 use Vicimus\Support\Database\Relations\HasManyFromAPI;
@@ -113,9 +114,9 @@ interface Campaign extends BaseCampaign
     /**
      * A campaign can have many notes associated with it
      *
-     * @return HasMany
+     * @return MorphMany
      */
-    public function notes(): HasMany;
+    public function notes(): MorphMany;
 
     /**
      * Campaigns have stats
