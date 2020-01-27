@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
  * @property int $height
  * @property int $scale
  * @property int $pages
+ * @property bool $letter
  */
 class RenderSpecs extends ImmutableObject
 {
@@ -21,13 +22,20 @@ class RenderSpecs extends ImmutableObject
      * @param int|null         $height The height of the pdf element
      * @param int|null         $scale  The scale to use
      * @param int|null         $pages  The number of pages
+     * @param bool             $letter The letter
      */
-    public function __construct($width, ?int $height = null, ?int $scale = null, ?int $pages = null)
-    {
+    public function __construct(
+        $width,
+        ?int $height = null,
+        ?int $scale = null,
+        ?int $pages = null,
+        bool $letter = true
+    ) {
         if ($width instanceof Request) {
             $pages = (int) $width->get('pages');
             $height = (int) $width->get('height');
             $scale = (int) $width->get('scale');
+            $letter = $width->get('letter');
             $width = (int) $width->get('width');
         }
 
@@ -36,6 +44,7 @@ class RenderSpecs extends ImmutableObject
             'height' => $height,
             'scale' => $scale,
             'pages' => $pages,
+            'letter' => $letter,
         ]);
     }
 }
