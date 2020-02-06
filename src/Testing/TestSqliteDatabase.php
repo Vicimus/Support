@@ -44,12 +44,12 @@ trait TestSqliteDatabase
      *
      * @param string   $path     The path to your database storage
      * @param string[] $external A list of external databases
-     *
-     * @throws TestException
+     * @param string[] $aliases  Aliases for the main database
      *
      * @return void
+     * @throws TestException
      */
-    public function setupDatabases(string $path, array $external = []): void
+    public function setupDatabases(string $path, array $external = [], array $aliases = []): void
     {
         $external['null'] = '';
         $external = array_reverse($external);
@@ -63,7 +63,12 @@ trait TestSqliteDatabase
             $secondStub = sprintf('%s/%sunsullied.sqlite', $path, $database);
             $test = sprintf('%s/%stesting.sqlite', $path, $database);
             if ($database) {
-                config()->set('database.connections.'. $code .'.database', $test);
+                config()->set('database.connections.' . $code . '.database', $test);
+            } else {
+                foreach ($aliases as $alias) {
+                    config()->set('database.connections.' . $alias . '.database', $test);
+                    config()->set('database.connections.' . $alias . '.driver', 'sqlite');
+                }
             }
 
             if (!($GLOBALS['setupDatabase'] ?? false)) {
