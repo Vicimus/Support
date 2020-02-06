@@ -30,6 +30,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property ScriptContract $script
  * @property mixed $letter
  * @property string $subject
+ * @property Carbon $email_at
  */
 interface Campaign extends Eloquent
 {
