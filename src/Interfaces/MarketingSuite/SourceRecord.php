@@ -47,6 +47,12 @@ interface SourceRecord
     public function record(string $property, $value = null): void;
 
     /**
+     * Get the store id this source is associated with
+     * @return int
+     */
+    public function storeId(): int;
+
+    /**
      * Get the type of data source this represents
      *
      * @return string

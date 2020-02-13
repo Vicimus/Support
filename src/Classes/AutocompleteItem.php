@@ -4,6 +4,9 @@ namespace Vicimus\Support\Classes;
 
 /**
  * Class AutocompleteItem
+ *
+ * @property int $id
+ * @property mixed[] $additionalDetails
  */
 class AutocompleteItem extends ImmutableObject
 {

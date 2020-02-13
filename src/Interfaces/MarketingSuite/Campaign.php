@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
 use Vicimus\Support\Interfaces\Eloquent;
 
@@ -23,6 +24,13 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property Carbon $created_at
  * @property string $live_site
  * @property string $purl_background
+ * @property bool $send_email
+ * @property bool $send_letter
+ * @property bool $send_voice
+ * @property ScriptContract $script
+ * @property mixed $letter
+ * @property string $subject
+ * @property Carbon $email_at
  */
 interface Campaign extends Eloquent
 {
@@ -38,6 +46,15 @@ interface Campaign extends Eloquent
      * @return bool
      */
     public function hasPortfolioBeenModified(): bool;
+
+    /**
+     * Retrieve an identifier to use for an asset slug
+     *
+     * @param string $type The asset type slug
+     *
+     * @return string
+     */
+    public function identifier(string $type): string;
 
     /**
      * This method should return if the campaign is utilizing a specific
@@ -62,6 +79,13 @@ interface Campaign extends Eloquent
      * @return Asset[]
      */
     public function portfolio(): array;
+
+    /**
+     * A campaign can have one script
+     *
+     * @return MorphOne|ScriptContract
+     */
+    public function script(): MorphOne;
 
     /**
      * Get the store id for this campaigns

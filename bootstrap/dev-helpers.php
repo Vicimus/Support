@@ -374,6 +374,20 @@ if (!function_exists('base_path')) {
     }
 }
 
+if (!function_exists('database_path')) {
+    /**
+     * Get the app path
+     *
+     * @param string|null $relative Add a relative path to it
+     *
+     * @return string
+     */
+    function database_path(?string $relative = null): string
+    {
+        return app('path.database') . DIRECTORY_SEPARATOR . $relative;
+    }
+}
+
 if (!function_exists('config_path')) {
     /**
      * Get the config path

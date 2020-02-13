@@ -2,32 +2,33 @@
 
 namespace Vicimus\Support\Database;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Throwable;
 
 /**
  * Base class we can use in most of our projects
  *
- * @method static \Illuminate\Database\Eloquent\Builder orderBy($column, $ascending = true)
+ * @method static Builder orderBy($column, $ascending = true)
  * @method static static find($id)
  * @method static static findOrFail($id)
- * @method static \Illuminate\Database\Eloquent\Builder|static where($c, $v = null, $v = null, $b = 'and')
- * @method static \Illuminate\Database\Eloquent\Builder|static whereNotNull($c)
+ * @method static Builder|static where($c, $v = null, $v = null, $b = 'and')
+ * @method static Builder|static whereNotNull($c)
  * @method static LaravelModel|static create($attributes = [])
- * @method static \Illuminate\Database\Eloquent\Builder|static whereNull($c)
- * @method static \Illuminate\Database\Eloquent\Builder|static whereHas($relation, $closure)
- * @method static \Illuminate\Database\Eloquent\Builder|static whereIn($column, $items)
- * @method static \Illuminate\Database\Eloquent\Builder|static whereNotIn($column, $items)
- * @method static \Illuminate\Database\Eloquent\Builder|static orWhereNotIn($column, $items)
- * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed()
+ * @method static Builder|static whereNull($c)
+ * @method static Builder|static whereHas($relation, $closure)
+ * @method static Builder|static whereIn($column, $items)
+ * @method static Builder|static whereNotIn($column, $items)
+ * @method static Builder|static orWhereNotIn($column, $items)
+ * @method static Builder|static withTrashed()
  * @method static LaravelModel|static firstOrCreate($attributes)
- * @method static \Illuminate\Database\Eloquent\Builder|static query()
+ * @method static Builder|static query()
  * @method static LaravelModel|static firstOrFail()
  * @method static LaravelModel|static first()
- * @method static \Illuminate\Database\Eloquent\Builder|static select($fields)
- * @method static \Illuminate\Database\Eloquent\Builder|static whereDoesntHave($relation, $closure = null)
- * @method static \Illuminate\Database\Eloquent\Builder|static take(int $number)
- * @method static \Illuminate\Database\Eloquent\Builder|static has(string $relationship)
+ * @method static Builder|static select($fields)
+ * @method static Builder|static whereDoesntHave($relation, $closure = null)
+ * @method static Builder|static take(int $number)
+ * @method static Builder|static has(string $relationship)
  * @method static bool truncate()
  * @method static int count()
  */
@@ -58,13 +59,24 @@ class Model extends LaravelModel
     /**
      * Override the delete method so it stops making us try catch it
      *
+     * phpcs:disable
+     *
+     * @noinspection PhpDocMissingThrowsInspection
+     * @param bool $throw Optionally throw on error or ignore
+     *
      * @return bool|null
      */
-    public function delete(): ?bool
+    public function delete(bool $throw = false): ?bool
     {
+        // phpcs:enable
         try {
             $result = parent::delete();
         } catch (Throwable $exception) {
+            if ($throw) {
+                /** @noinspection PhpUnhandledExceptionInspection */
+                throw $exception;
+            }
+
             return false;
         }
 
