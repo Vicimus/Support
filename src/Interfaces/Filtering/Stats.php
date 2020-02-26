@@ -10,6 +10,7 @@ use JsonSerializable;
  * @property int $invites
  * @property int $emails
  * @property int $letters
+ * @property int $rvms
  * @property int $excluded
  * @property int $total
  * @property float $cost
