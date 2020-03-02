@@ -16,7 +16,6 @@ interface Placeholders
      * @param string $placeholder The placeholder to check
      *
      * @return bool
-     *
      */
     public function isValidCustomPlaceholder(string $placeholder): bool;
 
