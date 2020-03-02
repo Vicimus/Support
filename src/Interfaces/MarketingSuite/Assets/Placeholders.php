@@ -10,7 +10,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
  */
 interface Placeholders
 {
-    /** 
+    /**
      * If the placeholder is a custom, determine that it is formatted correctly with it's label
      *
      * @param string $placeholder The placeholder to check
