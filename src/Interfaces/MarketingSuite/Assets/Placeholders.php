@@ -11,6 +11,15 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 interface Placeholders
 {
     /**
+     * If the placeholder is a custom, determine that it is formatted correctly with it's label
+     *
+     * @param string $placeholder The placeholder to check
+     *
+     * @return bool
+     */
+    public function isValidCustomPlaceholder(string $placeholder): bool;
+
+    /**
      * Check if a given placeholder is a valid placeholder
      *
      * @param string $placeholder The placeholder to check
