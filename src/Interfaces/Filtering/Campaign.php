@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Interfaces\Filtering;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -121,7 +122,7 @@ interface Campaign extends BaseCampaign
     /**
      * Campaigns have stats
      *
-     * @return HasOne
+     * @return HasOne|Builder|Model
      */
     public function stats(): HasOne;
 }
