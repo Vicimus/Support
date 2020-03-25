@@ -34,6 +34,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property Carbon $print_at
  * @property bool $send_optimization
  * @property bool $send_bdc
+ * @property bool $send_sms
  */
 interface Campaign extends Eloquent
 {
