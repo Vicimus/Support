@@ -23,10 +23,11 @@ interface Placeholders
      * Check if a given placeholder is a valid placeholder
      *
      * @param string $placeholder The placeholder to check
+     * @param string $type        The type of campaign making the request
      *
      * @return bool
      */
-    public function isValidPlaceholder(string $placeholder): bool;
+    public function isValidPlaceholder(string $placeholder, string $type): bool;
 
     /**
      * Get a placeholder value
