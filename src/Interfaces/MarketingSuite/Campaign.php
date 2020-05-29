@@ -35,6 +35,8 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $send_optimization
  * @property bool $send_bdc
  * @property bool $send_sms
+ * @property Carbon $print_request
+ * @property Carbon $sms_at
  */
 interface Campaign extends Eloquent
 {
@@ -70,6 +72,13 @@ interface Campaign extends Eloquent
      * @return bool
      */
     public function medium(string $slug): bool;
+
+    /**
+     * Return an array of campaign medium toggles with their associated datetime value
+     *
+     * @return mixed[]
+     */
+    public function mediumAssociations(): array;
 
     /**
      * Get the OEM for this campaign
