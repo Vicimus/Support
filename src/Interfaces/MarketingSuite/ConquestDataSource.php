@@ -142,12 +142,18 @@ interface ConquestDataSource
      * @param SourceRecord           $source The source record
      * @param ConquestReport         $report The report to build on
      * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
+     * @param DateTimeInterface|null $end    The end date to collect info for (if null then today)
      *
      * @return void
      *
      * @throws DataSourceException
      */
-    public function report(SourceRecord $source, ConquestReport $report, ?DateTimeInterface $date = null): void;
+    public function report(
+        SourceRecord $source,
+        ConquestReport $report,
+        ?DateTimeInterface $date = null,
+        ?DateTimeInterface $end = null
+    ): void;
 
     /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
