@@ -53,7 +53,9 @@ interface Audience extends HasProperties
     /**
      * Get a target instance representing who the audience targets
      *
+     * @param bool $pure Flag to manipulate the target values
+     *
      * @return Target
      */
-    public function target(): Target;
+    public function target(bool $pure): Target;
 }
