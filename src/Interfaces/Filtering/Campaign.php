@@ -98,6 +98,12 @@ interface Campaign extends BaseCampaign
     public function isLetterOnly(): bool;
 
     /**
+     * Is the campaign sms only
+     * @return bool
+     */
+    public function isSmsOnly(): bool;
+
+    /**
      * Is the campaign voice only
      *
      * @return bool
