@@ -48,6 +48,13 @@ interface Campaign extends Eloquent
     public function acknowledgements(): MorphMany;
 
     /**
+     * Retrieve the form id to use for the purl
+     *
+     * @return int
+     */
+    public function formId(): ?int;
+
+    /**
      * Has the campaign portfolio been modified at all, even a single time
      * @return bool
      */
