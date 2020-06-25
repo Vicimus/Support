@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Database;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Throwable;
@@ -163,6 +164,18 @@ class Model extends LaravelModel
     public static function resetAll(): void
     {
         self::$noCasts = [];
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param DateTimeInterface $date The date
+     *
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
