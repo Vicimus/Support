@@ -167,6 +167,16 @@ class Model extends LaravelModel
     }
 
     /**
+     * Turn off casting
+     *
+     * @return void
+     */
+    public static function withoutCasts(): void
+    {
+        self::$noCasts[static::class] = true;
+    }
+
+    /**
      * Prepare a date for array / JSON serialization.
      *
      * @param DateTimeInterface $date The date
@@ -176,15 +186,5 @@ class Model extends LaravelModel
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    /**
-     * Turn off casting
-     *
-     * @return void
-     */
-    public static function withoutCasts(): void
-    {
-        self::$noCasts[static::class] = true;
     }
 }
