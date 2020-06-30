@@ -51,6 +51,8 @@ interface ConquestDataSource
      * @param SourceRecord $record   The record
      *
      * @return void
+     *
+     * @throws DataSourceException
      */
     public function clean(Audience $audience, SourceRecord $record): void;
 
