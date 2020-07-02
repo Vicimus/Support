@@ -13,7 +13,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
  * @property string $template
  * @property mixed[] $tabs
  */
-interface Asset
+interface Asset extends AssetContract
 {
     /**
      * Retrieve the call to actions for the asset
