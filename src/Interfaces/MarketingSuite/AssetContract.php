@@ -2,8 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Shared\Models\Scripts\Script;
-
 /**
  * Interface AssetContract
  */
