@@ -48,6 +48,14 @@ interface Campaign extends Eloquent
     public function acknowledgements(): MorphMany;
 
     /**
+     * Retrieve an asset from the campaign
+     *
+     * @param string $type The type of the asset
+     * @return AssetContract|null
+     */
+    public function asset(string $type): ?AssetContract;
+
+    /**
      * Retrieve the form id to use for the purl
      *
      * @return int
