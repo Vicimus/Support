@@ -82,7 +82,6 @@ class CachesRequestsTest extends TestCase
      */
     public function testCacheTime(): void
     {
-        /** @var mixed $instance */
         $this->assertGreaterThan(0, $this->instance->getCacheTime());
     }
 
