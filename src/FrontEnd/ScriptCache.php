@@ -86,12 +86,13 @@ class ScriptCache implements ConsoleOutput
         ];
 
         $finder = new Finder();
+        /** @var SplFileInfo $locale */
         foreach ($finder->directories()->in($this->pathToFrontEnd)->depth(0) as $locale) {
             $names = [];
             $paths = [];
 
             $fileFinder = new Finder();
-            /** @var SplFileInfo $locale */
+
             $localeName = $locale->getRelativePathname();
             $fileFinder->files()->in($locale->getRealPath())->name('*.js')->depth(0);
             foreach ($fileFinder as $file) {
