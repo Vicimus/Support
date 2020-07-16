@@ -28,6 +28,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $scale_invites_percent
  * @property DateTime $created_at
  * @property DateTime $updated_at
+ * @property string $vehicle_makes
  * @property string $vehicle_models
  * @property string $postal_codes
  * @property string $cities
@@ -83,6 +84,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property string $service_advisor
  * @property string $fi_manager
  * @property bool $include_businesses
+ * @property bool $vehicle_makes_exclude
  * @property bool $vehicle_models_exclude
  * @property string $emails
  * @proeprty bool $bucket_vehicles
