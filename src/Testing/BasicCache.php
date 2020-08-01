@@ -124,7 +124,11 @@ class BasicCache implements Repository, StoreInterface
      */
     public function get($key, $default = null)
     {
-        return $this->cache[$key] ?? $default;
+        if (!array_key_exists($key, $this->cache)) {
+            return $default;
+        }
+
+        return $this->cache[$key];
     }
 
     /**
