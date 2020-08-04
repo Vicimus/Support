@@ -77,7 +77,6 @@ class GenericUtility implements Utility
 
     /**
      * The name of the utility
-     *
      * @return string
      */
     public function name(): string
@@ -95,5 +94,15 @@ class GenericUtility implements Utility
     public function results($payload = null)
     {
         return $payload;
+    }
+
+    /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt()
+    {
+        return null;
     }
 }
