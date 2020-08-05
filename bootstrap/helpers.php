@@ -1,15 +1,11 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 use DealerLive\Config\Services\Configuration;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
 use Vicimus\Support\Database\ModelFactory;
 use Vicimus\Support\Database\ModelFactoryBuilder;
 use Vicimus\Support\Exceptions\TranslationFileException;
