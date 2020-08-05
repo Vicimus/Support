@@ -33,9 +33,9 @@ class ModelFactoryBuilder
      *
      * @param callable     $definition The definition
      * @param string|Model $class      The class to create
-     * @param int          $count      How many to create
+     * @param int|null     $count      How many to create
      */
-    public function __construct(callable $definition, string $class, int $count)
+    public function __construct(callable $definition, string $class, ?int $count)
     {
         $this->class = $class;
         $this->count = $count ?: 1;

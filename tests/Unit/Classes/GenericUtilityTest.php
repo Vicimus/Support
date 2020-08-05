@@ -88,4 +88,15 @@ class GenericUtilityTest extends TestCase
             $this->assertStringContainsString('threw an exception', $ex->getMessage());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testPrompt(): void
+    {
+        $utility = new GenericUtility('Test Utility', 'Testing', static function (): void {
+            //
+        });
+        $this->assertEquals('', $utility->prompt());
+    }
 }
