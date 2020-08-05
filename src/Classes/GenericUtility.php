@@ -77,12 +77,21 @@ class GenericUtility implements Utility
 
     /**
      * The name of the utility
-     *
      * @return string
      */
     public function name(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt(): string
+    {
+        return '';
     }
 
     /**

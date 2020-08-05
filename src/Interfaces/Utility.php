@@ -10,7 +10,7 @@ interface Utility
     /**
      * Called to execute the utility
      *
-     * @param mixed[] $flags The flags to use
+     * @param string[] $flags Optional flags to add to the call.
      *
      * @return mixed
      */
@@ -29,6 +29,13 @@ interface Utility
      * @return string
      */
     public function name(): string;
+
+    /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt(): string;
 
     /**
      * To be displayed after a call, to show the results of the call

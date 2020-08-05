@@ -47,9 +47,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/"
-        ],
+        "psr-4": {
+            "Vicimus\\Support\\Tests\\": "tests/"
+        },
         "files": [
             "bootstrap/dev-helpers.php"
         ]
