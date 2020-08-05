@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Database;
 
@@ -16,19 +16,19 @@ class SoftDeletingScope extends LaravelScope
      * @param Builder $builder The builder instance
      *
      * @return void
+     *
+     * phpcs:disable
      */
-    public function extend(Builder $builder)
+    public function extend(Builder $builder): void
     {
-        foreach ($this->extensions as $extension)
-        {
+        foreach ($this->extensions as $extension) {
             $this->{"add{$extension}"}($builder);
         }
 
-        $builder->onDelete(function(Builder $builder)
-        {
-            return $builder->update(array(
-                'deleted_at' => $builder->getModel()->freshTimestampString()
-            ));
+        $builder->onDelete(static function (Builder $builder) {
+            return $builder->update([
+                'deleted_at' => $builder->getModel()->freshTimestampString(),
+            ]);
         });
     }
 }

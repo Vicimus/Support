@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
-use Illuminate\Database\Query\Builder as QBuilder;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QBuilder;
 use Vicimus\Support\Interfaces\Glovebox\Promotions\PromotionIncentive;
 
 /**
@@ -12,10 +12,11 @@ use Vicimus\Support\Interfaces\Glovebox\Promotions\PromotionIncentive;
 interface Promotions
 {
     /**
-     * Return the PromotionJoin query
-     * @return Builder|QBuilder
+     * @param int $incentiveId The incentive id to find
+     *
+     * @return PromotionIncentive
      */
-    public function queryJoin();
+    public function incentive(int $incentiveId): PromotionIncentive;
 
     /**
      * Return the promotion query
@@ -24,9 +25,8 @@ interface Promotions
     public function query();
 
     /**
-     * @param int $incentiveId The incentive id to find
-     *
-     * @return PromotionIncentive
+     * Return the PromotionJoin query
+     * @return Builder|QBuilder
      */
-    public function incentive($incentiveId);
+    public function queryJoin();
 }

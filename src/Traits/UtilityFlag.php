@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Traits;
 
@@ -17,7 +17,7 @@ trait UtilityFlag
      *
      * @return string
      */
-    public function addFlags($flags)
+    public function addFlags($flags): string
     {
         return view('utility.partials.flags')
             ->with([

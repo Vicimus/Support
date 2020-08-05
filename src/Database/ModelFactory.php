@@ -1,14 +1,31 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Database;
 
 use InvalidArgumentException;
 
+/**
+ * Class ModelFactory
+ */
 class ModelFactory
 {
+    /**
+     * The definitions
+     * @var callable[]|array
+     */
     private $definitions = [];
 
-    public function builder($class, $count = null)
+    /**
+     * Get the builder for a class
+     *
+     * @param string   $class The class
+     * @param int|null $count The number to make
+     *
+     * @return ModelFactoryBuilder
+     *
+     * @throws InvalidArgumentException
+     */
+    public function builder(string $class, ?int $count = null): ModelFactoryBuilder
     {
         if (!isset($this->definitions[$class])) {
             throw new InvalidArgumentException(sprintf('No definition found for [%s]', $class));
@@ -25,9 +42,8 @@ class ModelFactory
      *
      * @return void
      */
-    public function define($class, $closure)
+    public function define(string $class, callable $closure): void
     {
         $this->definitions[$class] = $closure;
     }
-
 }

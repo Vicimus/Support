@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -14,5 +14,5 @@ interface HasRates
      *
      * @return mixed[]
      */
-    public function getAllRates($lease = false);
+    public function getAllRates(bool $lease = false): array;
 }

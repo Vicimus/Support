@@ -1,8 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Traits;
-
-use Vicimus\Eevee\Models\Joins\PageBlock;
 
 /**
  * Trait CastsAttributes
@@ -61,7 +59,7 @@ trait CastsAttributes
      *
      * @return bool
      */
-    private function isNumericArray($value)
+    private function isNumericArray($value): bool
     {
         if (!is_array($value)) {
             return false;
@@ -83,7 +81,7 @@ trait CastsAttributes
      *
      * @return bool
      */
-    private function isScalar($value)
+    private function isScalar(string $value): bool
     {
         return in_array($value, [
             'int', 'bool', 'string', 'float',

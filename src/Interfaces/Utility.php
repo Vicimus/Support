@@ -1,36 +1,41 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
 /**
  * Represents a Utility that can be run
- *
- * @author Jordan
  */
 interface Utility
 {
     /**
-     * The name of the utility
+     * Called to execute the utility
      *
-     * @return string
+     * @param string[] $flags Optional flags to add to the call.
+     *
+     * @return mixed
      */
-    public function name();
+    public function call(?array $flags = null);
 
     /**
      * A description of what this utility does
      *
      * @return string
      */
-    public function description();
+    public function description(): string;
 
     /**
-     * Called to execute the utility
+     * The name of the utility
      *
-     * @param string[] $flags Optional flags to add to the call.
-     *
-     * @return void
+     * @return string
      */
-    public function call(array $flags = null);
+    public function name(): string;
+
+    /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt(): string;
 
     /**
      * To be displayed after a call, to show the results of the call
@@ -40,11 +45,4 @@ interface Utility
      * @return mixed
      */
     public function results($payload = null);
-
-    /**
-     * Returns a confirmation prompt for the utility.
-     *
-     * @return string
-     */
-    public function prompt();
 }

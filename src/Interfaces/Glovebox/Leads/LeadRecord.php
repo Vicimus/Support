@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox\Leads;
 
@@ -14,5 +14,5 @@ interface LeadRecord
      *
      * @return void
      */
-    public function send();
+    public function send(): void;
 }

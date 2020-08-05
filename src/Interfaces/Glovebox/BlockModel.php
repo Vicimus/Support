@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -15,5 +15,5 @@ interface BlockModel
      *
      * @return mixed
      */
-    public function setting($property, $default = null);
+    public function setting(string $property, $default = null);
 }

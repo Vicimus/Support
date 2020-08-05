@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -14,5 +14,5 @@ interface PageLocator
      *
      * @return Page|null
      */
-    public function find($pageId);
+    public function find(int $pageId): ?Page;
 }

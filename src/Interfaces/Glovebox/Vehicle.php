@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -17,7 +17,7 @@ interface Vehicle
      *
      * @return string
      */
-    public function getMainPhoto($thumbnail = false, $checkExists = false);
+    public function getMainPhoto(bool $thumbnail = false, bool $checkExists = false): string;
 
     /**
      * Get the URL to view the VDP of the vehicle. This applies various
@@ -27,5 +27,5 @@ interface Vehicle
      *
      * @return string
      */
-    public function getUrl($source = null);
+    public function getUrl(?string $source = null): string;
 }

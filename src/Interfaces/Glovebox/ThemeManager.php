@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -12,5 +12,5 @@ interface ThemeManager
      *
      * @return Result
      */
-    public function refresh();
+    public function refresh(): Result;
 }

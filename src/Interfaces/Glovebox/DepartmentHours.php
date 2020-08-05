@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -14,5 +14,5 @@ interface DepartmentHours
      *
      * @return mixed[] $day => $hours
      */
-    public function daysHours($shortNames = false);
+    public function daysHours(bool $shortNames = false): array;
 }

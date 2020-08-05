@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -12,5 +12,5 @@ interface ChangeLoggable
      *
      * @return string[]
      */
-    public function getChangeHeader();
+    public function getChangeHeader(): array;
 }

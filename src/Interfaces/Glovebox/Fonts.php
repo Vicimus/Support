@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -12,5 +12,5 @@ interface Fonts
      *
      * @return Font[]
      */
-    public function get();
+    public function get(): array;
 }

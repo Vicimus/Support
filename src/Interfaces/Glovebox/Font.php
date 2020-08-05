@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -19,7 +19,7 @@ interface Font extends JsonSerializable
      *
      * @return string
      */
-    public function src(array $file);
+    public function src(array $file): string;
 
     /**
      * Get the url to the font file
@@ -28,5 +28,5 @@ interface Font extends JsonSerializable
      *
      * @return string
      */
-    public function url(array $file);
+    public function url(array $file): string;
 }

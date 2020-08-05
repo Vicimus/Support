@@ -85,6 +85,16 @@ class GenericUtility implements Utility
     }
 
     /**
+     * Returns a confirmation prompt for the utility.
+     *
+     * @return string
+     */
+    public function prompt(): string
+    {
+        return '';
+    }
+
+    /**
      * To be displayed after a call, to show the results of the call
      *
      * @param string|string[] $payload OPTIONAL Anything needed to construct the results
@@ -94,15 +104,5 @@ class GenericUtility implements Utility
     public function results($payload = null)
     {
         return $payload;
-    }
-
-    /**
-     * Returns a confirmation prompt for the utility.
-     *
-     * @return string
-     */
-    public function prompt()
-    {
-        return null;
     }
 }

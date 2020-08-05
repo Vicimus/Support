@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -14,5 +14,5 @@ interface Hours
      *
      * @return DepartmentHours
      */
-    public function byName($name);
+    public function byName(string $name): DepartmentHours;
 }

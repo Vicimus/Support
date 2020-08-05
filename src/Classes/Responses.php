@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Classes;
 
@@ -18,7 +18,7 @@ class Responses
      *
      * @return JsonResponse
      */
-    public function json($body = null, $code = 200)
+    public function json($body = null, int $code = 200): JsonResponse
     {
         return new JsonResponse($body, $code);
     }
@@ -31,7 +31,7 @@ class Responses
      *
      * @return Response
      */
-    public function make($body = null, $code = 200)
+    public function make($body = null, int $code = 200): Response
     {
         return new Response($body, $code);
     }

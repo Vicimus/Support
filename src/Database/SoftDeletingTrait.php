@@ -1,11 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Database;
 
 /**
  * Trait SoftDeletingTrait
+ *
+ * phpcs:disable
  */
-trait SoftDeletingTrait {
+trait SoftDeletingTrait
+{
 
     /**
      * Indicates if the model is currently force deleting.
@@ -19,7 +22,7 @@ trait SoftDeletingTrait {
      *
      * @return void
      */
-    public static function bootSoftDeletingTrait()
+    public static function bootSoftDeletingTrait(): void
     {
         static::addGlobalScope(new SoftDeletingScope());
     }
@@ -29,7 +32,7 @@ trait SoftDeletingTrait {
      *
      * @return void
      */
-    public function forceDelete()
+    public function forceDelete(): void
     {
         $this->forceDeleting = true;
 
@@ -43,14 +46,14 @@ trait SoftDeletingTrait {
      *
      * @return void
      */
-    protected function performDeleteOnModel()
+    protected function performDeleteOnModel(): void
     {
-        if ($this->forceDeleting)
-        {
-            return $this->withTrashed()->where($this->getKeyName(), $this->getKey())->forceDelete();
+        if ($this->forceDeleting) {
+            $this->withTrashed()->where($this->getKeyName(), $this->getKey())->forceDelete();
+            return;
         }
 
-        return $this->runSoftDelete();
+        $this->runSoftDelete();
     }
 
     /**
@@ -58,13 +61,13 @@ trait SoftDeletingTrait {
      *
      * @return void
      */
-    protected function runSoftDelete()
+    protected function runSoftDelete(): void
     {
         $query = $this->newQuery()->where($this->getKeyName(), $this->getKey());
 
         $this->{$this->getDeletedAtColumn()} = $time = $this->freshTimestamp();
 
-        $query->update(array($this->getDeletedAtColumn() => $this->fromDateTime($time)));
+        $query->update([$this->getDeletedAtColumn() => $this->fromDateTime($time)]);
     }
 
     /**
@@ -72,13 +75,12 @@ trait SoftDeletingTrait {
      *
      * @return bool|null
      */
-    public function restore()
+    public function restore(): ?bool
     {
         // If the restoring event does not return false, we will proceed with this
         // restore operation. Otherwise, we bail out so the developer will stop
         // the restore totally. We will clear the deleted timestamp and save.
-        if ($this->fireModelEvent('restoring') === false)
-        {
+        if ($this->fireModelEvent('restoring') === false) {
             return false;
         }
 
@@ -101,7 +103,7 @@ trait SoftDeletingTrait {
      *
      * @return bool
      */
-    public function trashed()
+    public function trashed(): bool
     {
         return ! is_null($this->{$this->getDeletedAtColumn()});
     }
@@ -113,7 +115,7 @@ trait SoftDeletingTrait {
      */
     public static function withTrashed()
     {
-        return (new static)->newQueryWithoutScope(new SoftDeletingScope);
+        return (new static())->newQueryWithoutScope(new SoftDeletingScope());
     }
 
     /**
@@ -123,7 +125,7 @@ trait SoftDeletingTrait {
      */
     public static function onlyTrashed()
     {
-        $instance = new static;
+        $instance = new static();
 
         $column = $instance->getQualifiedDeletedAtColumn();
 
@@ -133,10 +135,10 @@ trait SoftDeletingTrait {
     /**
      * Register a restoring model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param  \Closure|string $callback
      * @return void
      */
-    public static function restoring($callback)
+    public static function restoring($callback): void
     {
         static::registerModelEvent('restoring', $callback);
     }
@@ -144,10 +146,10 @@ trait SoftDeletingTrait {
     /**
      * Register a restored model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param  \Closure|string $callback
      * @return void
      */
-    public static function restored($callback)
+    public static function restored($callback): void
     {
         static::registerModelEvent('restored', $callback);
     }
@@ -157,7 +159,7 @@ trait SoftDeletingTrait {
      *
      * @return string
      */
-    public function getDeletedAtColumn()
+    public function getDeletedAtColumn(): string
     {
         return defined('static::DELETED_AT') ? static::DELETED_AT : 'deleted_at';
     }
@@ -167,7 +169,7 @@ trait SoftDeletingTrait {
      *
      * @return string
      */
-    public function getQualifiedDeletedAtColumn()
+    public function getQualifiedDeletedAtColumn(): string
     {
         return $this->getTable().'.'.$this->getDeletedAtColumn();
     }

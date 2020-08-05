@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -10,24 +10,24 @@ namespace Vicimus\Support\Interfaces;
 interface Vehicle
 {
     /**
-     * Return an array of properties that can be used to represent the
-     * vehicle
+     * Get the description of the type of vehicle (new, used, showroom, banana)
      *
-     * @return array
+     * @return string
      */
-    public function toArray();
+    public function getType(): string;
 
     /**
      * Return a modified price after incentives have been applied
      *
      * @return int
      */
-    public function showPrice();
+    public function showPrice(): int;
 
     /**
-     * Get the description of the type of vehicle (new, used, showroom, banana)
+     * Return an array of properties that can be used to represent the
+     * vehicle
      *
-     * @return string
+     * @return string[]|array
      */
-    public function getType();
+    public function toArray(): array;
 }

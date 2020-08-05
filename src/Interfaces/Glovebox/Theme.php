@@ -1,11 +1,12 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
 /**
  * Interface Theme
  */
-interface Theme {
+interface Theme
+{
     /**
      * Get a value
      *
@@ -13,5 +14,5 @@ interface Theme {
      *
      * @return mixed
      */
-    public function get($property);
+    public function get(string $property);
 }

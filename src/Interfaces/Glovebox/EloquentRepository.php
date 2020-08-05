@@ -1,9 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
-
-use Vicimus\Support\Interfaces\Glovebox\Leads\LeadPerson;
-use Vicimus\Support\Interfaces\Glovebox\Leads\LeadType;
 
 /**
  * Interface EloquentRepository
@@ -26,7 +23,7 @@ interface EloquentRepository
      *
      * @return mixed|null
      */
-    public function find($id);
+    public function find(int $id);
 
     /**
      * Find or create

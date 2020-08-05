@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -20,5 +20,5 @@ interface Translator
      *
      * @throws TranslationFileException
      */
-    public function tran($key, $default = null, array $variables = []);
+    public function tran(string $key, ?string $default = null, array $variables = []);
 }
