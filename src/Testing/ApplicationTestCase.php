@@ -147,6 +147,7 @@ class ApplicationTestCase extends TestCase
     {
         if (!$user) {
             $user = new User();
+            $user->email = 'testing@vicimus.com';
         }
 
         $this->app['auth']->driver($driver)->setUser($user);
