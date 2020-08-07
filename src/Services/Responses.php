@@ -4,12 +4,25 @@ namespace Vicimus\Support\Services;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class Responses
  */
 class Responses
 {
+    /**
+     * Download a file as a response
+     *
+     * @param string $path The path to the file
+     *
+     * @return BinaryFileResponse
+     */
+    public function download($path)
+    {
+        return new BinaryFileResponse($path);
+    }
+
     /**
      * Generate a json response
      *
