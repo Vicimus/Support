@@ -5,6 +5,7 @@ namespace Vicimus\Support\Services;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class Responses
@@ -25,6 +26,18 @@ class Responses
     public function __construct(Factory $view)
     {
         $this->view = $view;
+    }
+
+    /**
+     * Download a file as a response
+     *
+     * @param string $path The path to the file
+     *
+     * @return BinaryFileResponse
+     */
+    public function download(string $path): BinaryFileResponse
+    {
+        return new BinaryFileResponse($path);
     }
 
     /**
