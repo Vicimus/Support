@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Interfaces;
 
 use InvalidArgumentException;
-use League\Flysystem\Filesystem;
 
 /**
  * Class DiskManager
@@ -19,5 +18,5 @@ interface DiskManager
      *
      * @throws InvalidArgumentException
      */
-    public function disk(string $disk);
+    public function disk($disk);
 }
