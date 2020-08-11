@@ -83,7 +83,7 @@ trait ConsoleOutputter
      *
      * @return $this
      */
-    public function bind(ConsoleOutput $output)
+    public function bind(ConsoleOutput $output = null)
     {
         $this->output = $output;
         return $this;
