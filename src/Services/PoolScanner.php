@@ -5,28 +5,52 @@ namespace Vicimus\Support\Services;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Pool;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
+use Iterator;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
 class PoolScanner
 {
     use ConsoleOutputter;
 
-    private $scanned = 0;
+    /**
+     * Number downloaded
+     * @var int
+     */
     private $downloaded = 0;
 
     /**
+     * Number scanned
+     * @var int
+     */
+    private $scanned = 0;
+
+    /**
+     * Client
      * @var ClientInterface
      */
     private $client;
 
+    /**
+     * PoolScanner constructor.
+     *
+     * @param ClientInterface $client The client
+     */
     public function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }
 
     /**
-     * @param callable[]|\Iterator $requests
+     * Scan using head requests
+     *
+     * @param callable[]|Iterator $requests  The requests
+     * @param callable            $filter    Filter callable to filter out success calls
+     * @param callable            $success   The success call
+     * @param callable|null       $rejected  Rejected callable
+     *
+     * @return PromiseInterface
      */
     public function scan($requests, callable $filter, callable $success, callable $rejected = null)
     {
@@ -46,21 +70,13 @@ class PoolScanner
 
                 $success($response, $index);
             },
-            'rejected' => function (ClientException $reason, $index) use ($rejected) {
-                $rejected($reason, $index);
+            'rejected' => static function (ClientException $reason, $index) use ($rejected) {
+                if ($rejected) {
+                    $rejected($reason, $index);
+                }
             },
         ]);
 
         return $pool->promise();
-//                $headers = new PhotoHeaders($response->getHeaders());
-//                if (!$this->shouldDownload($headers, $index)) {
-//                    return;
-//                }
-//
-//                $positives[$this->locals[$index]] = $this->scan[$index];
-//                $vehicle = $this->vehicles[$index];
-//                $vehicle->update([
-//                    'remote_stock_photo' => $this->remote($headers, $index),
-//                ]);
     }
 }
