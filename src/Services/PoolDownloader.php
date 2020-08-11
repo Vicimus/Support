@@ -17,14 +17,35 @@ class PoolDownloader
 {
     use ConsoleOutputter;
 
-    private $scanned = 0;
-    private $downloaded = 0;
     /**
      * @var ClientInterface
      */
     private $client;
+
+    /**
+     * The configuration
+     * @var array|int[]
+     */
     private $config;
 
+    /**
+     * Number downloaded
+     * @var int
+     */
+    private $downloaded = 0;
+
+    /**
+     * Number scanned
+     * @var int
+     */
+    private $scanned = 0;
+
+    /**
+     * PoolDownloader constructor.
+     *
+     * @param ClientInterface $client The client
+     * @param array|int[]     $config The configuration
+     */
     public function __construct(ClientInterface $client, array $config = ['concurrency' => 10])
     {
         $this->client = $client;
@@ -32,7 +53,13 @@ class PoolDownloader
     }
 
     /**
-     * @param callable[]|Iterator $requests
+     * Get the pool downloader
+     *
+     * @param callable[]|Iterator $requests The download requests
+     * @param callable            $success  The success callable
+     * @param callable|null       $rejected The rejected callable
+     *
+     * @return PromiseInterface
      */
     public function pool($requests, callable $success, callable $rejected = null): PromiseInterface
     {

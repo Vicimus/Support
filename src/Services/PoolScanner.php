@@ -70,7 +70,8 @@ class PoolScanner
 
                 $success($response, $index);
             },
-            'rejected' => static function (ClientException $reason, $index) use ($rejected) {
+            'rejected' => function (ClientException $reason, $index) use ($rejected) {
+                $this->error($reason->getMessage());
                 if ($rejected) {
                     $rejected($reason, $index);
                 }
