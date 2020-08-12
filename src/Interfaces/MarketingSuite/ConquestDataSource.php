@@ -9,6 +9,7 @@ use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
 
 /**
  * Interface ConquestDataSource
@@ -167,6 +168,17 @@ interface ConquestDataSource
      * @throws StatusException
      */
     public function status(AssetRecord $asset): int;
+
+    /**
+     * Update an updated audience, at it's source
+     *
+     * @param Audience     $audience The audience which was updated
+     * @param SourceRecord $source   The source the audience relates to
+     *
+     * @return void
+     * @throws UpdateException
+     */
+    public function update(Audience $audience, SourceRecord $source): void;
 
     /**
      * Get a validator to validate certain things

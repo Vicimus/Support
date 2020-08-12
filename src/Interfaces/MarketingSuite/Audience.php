@@ -57,5 +57,5 @@ interface Audience extends HasProperties
      *
      * @return Target
      */
-    public function target(bool $pure): Target;
+    public function target(bool $pure = true): Target;
 }
