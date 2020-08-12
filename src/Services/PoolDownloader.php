@@ -4,6 +4,7 @@ namespace Vicimus\Support\Services;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
@@ -74,7 +75,7 @@ class PoolDownloader
                 $this->line(sprintf('Downloading %s (%s)', $this->downloaded, $display));
                 $success($response, $index);
             },
-            'rejected' => function (ClientException $reason, $index) use ($rejected) {
+            'rejected' => function (GuzzleException $reason, $index) use ($rejected) {
                 $this->error($reason->getMessage() . PHP_EOL);
                 if ($rejected) {
                     $rejected($reason, $index);

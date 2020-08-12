@@ -3,7 +3,7 @@
 namespace Vicimus\Support\Services;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
@@ -70,7 +70,7 @@ class PoolScanner
 
                 $success($response, $index);
             },
-            'rejected' => function (ClientException $reason, $index) use ($rejected) {
+            'rejected' => function (GuzzleException $reason, $index) use ($rejected) {
                 $this->error($reason->getMessage());
                 if ($rejected) {
                     $rejected($reason, $index);
