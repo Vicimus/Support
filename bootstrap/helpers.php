@@ -44,6 +44,10 @@ if (!function_exists('___') && function_exists('__')) {
     }
 }
 
+if (defined('LARAVEL_START')) {
+    return;
+}
+
 if (!function_exists('lang')) {
     function lang()
     {
