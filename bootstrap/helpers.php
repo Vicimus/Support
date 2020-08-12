@@ -12,7 +12,7 @@ use Vicimus\Support\Exceptions\TranslationFileException;
 use Vicimus\Support\Interfaces\Translator;
 use Vicimus\Support\Services\Responses;
 
-if (!function_exists('___') && function_exists('__')) {
+if (!function_exists('___')) {
     /**
      * Translate the given message.
      *
