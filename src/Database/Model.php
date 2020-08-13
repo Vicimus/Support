@@ -182,9 +182,8 @@ class Model extends LaravelModel
      *
      * Overrides Laravels version which broke between 7.20 and 7.25
      *
-     * @param string $key The key to check
+     * @param string|int $key The key to check
      * @return string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     protected function removeTableFromKey($key)
     {
