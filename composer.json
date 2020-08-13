@@ -39,9 +39,6 @@
         "symfony/dom-crawler": "Required for using the locale sniffer"
     },
     "autoload": {
-        "files": [
-            "bootstrap/helpers.php"
-        ],
         "psr-4": {
             "Vicimus\\Support\\": "src/"
         }
