@@ -5,7 +5,9 @@ namespace Vicimus\Support\Database;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
+use Illuminate\Support\Str;
 use Throwable;
+use Vicimus\Support\Exceptions\RestException;
 
 /**
  * Base class we can use in most of our projects
@@ -82,6 +84,19 @@ class Model extends LaravelModel
         }
 
         return $result;
+    }
+
+    /**
+     * Remove the table name from a given key.
+     *
+     * Overrides Laravels version which broke between 7.20 and 7.25
+     *
+     * @param string $key The key to check
+     * @return string
+     */
+    protected function removeTableFromKey($key)
+    {
+        return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
     }
 
     /**
