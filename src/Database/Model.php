@@ -184,7 +184,7 @@ class Model extends LaravelModel
      *
      * @param string $key The key to check
      * @return string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     protected function removeTableFromKey($key)
     {
