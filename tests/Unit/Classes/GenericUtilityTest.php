@@ -90,6 +90,7 @@ class GenericUtilityTest extends TestCase
     }
 
     /**
+     * Test prompt
      * @return void
      */
     public function testPrompt(): void

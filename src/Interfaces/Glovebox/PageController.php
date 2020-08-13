@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -15,9 +15,9 @@ interface PageController
      * eevee pages (which is what should happen) and finally if no route is
      * matched the URL, it tries to find a Page for it.
      *
-     * @param mixed $args Arguments containing a page to show
+     * @param string[] $args Arguments containing a page to show
      *
      * @return Response
      */
-    public function show($args = []);
+    public function show(array $args = []): Response;
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -14,7 +14,7 @@ interface InventoryPageLocator
      *
      * @return Page
      */
-    public function vdp($type);
+    public function vdp(string $type): Page;
 
     /**
      * Find a VLP page based on a url. Will fallback to 'all' if a specific type can't be found.
@@ -24,5 +24,5 @@ interface InventoryPageLocator
      *
      * @return Page
      */
-    public function vlp($url);
+    public function vlp(string $url): Page;
 }
