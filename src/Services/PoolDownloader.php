@@ -69,11 +69,9 @@ class PoolDownloader
      */
     public function pool($requests, callable $success, callable $rejected = null): PromiseInterface
     {
-        $current = 0;
         $pool = new Pool($this->client, $requests, [
             'concurrency' => $this->config['concurrency'],
-            'fulfilled' => function (Response $response, $index) use (&$current, $success) {
-                $current++;
+            'fulfilled' => function (Response $response, $index) use ($success) {
                 $size = (int) $response->getHeader('Content-Length')[0];
                 $this->scanned += $size;
                 $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
@@ -82,11 +80,12 @@ class PoolDownloader
                 $output = 'Downloading %s (%s)';
                 $args = [$this->downloaded, $display];
                 if ($this->total) {
+                    $percent = round($this->downloaded / $this->total * 100);
                     $output = 'Downloading %s/%s %s%% (%s)';
                     $args = [
                         $this->downloaded,
-                        $current,
                         $this->total,
+                        $percent,
                         $display,
                     ];
                 }
