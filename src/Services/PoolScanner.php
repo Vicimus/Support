@@ -33,6 +33,12 @@ class PoolScanner
     private $client;
 
     /**
+     * The total number of scans
+     * @var int
+     */
+    private $total = 0;
+
+    /**
      * PoolScanner constructor.
      *
      * @param ClientInterface $client The client
@@ -58,16 +64,31 @@ class PoolScanner
             'concurrency' => 20,
             'fulfilled' => function (Response $response, $index) use ($filter, $success) {
                 $size = (int) $response->getHeader('Content-Length')[0];
-                $this->scanned += $size;
-
                 $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
                 $this->downloaded++;
 
-                $this->line(sprintf('Scanning: %s (%s)', $this->downloaded, $display));
+                $output = 'Scanning %s (%s)';
+                $args = [$this->downloaded, $display];
+                if ($this->total) {
+                    $percent = round($this->downloaded / $this->total * 100);
+                    $output = 'Scanning %s/%s %s%% (%s)';
+                    $args = [
+                        $this->downloaded,
+                        $this->total,
+                        $percent,
+                        $display,
+                    ];
+                }
+
+                $this->line(sprintf($output, ...$args));
+
                 if (!$filter($response, $index)) {
+                    $this->line(sprintf('Scanning: %s (%s)', $this->downloaded, $display));
                     return;
                 }
 
+                $this->scanned += $size;
+                $this->line(sprintf('Scanning: %s (%s)', $this->downloaded, $display));
                 $success($response, $index);
             },
             'rejected' => function (GuzzleException $reason, $index) use ($rejected) {
@@ -79,5 +100,18 @@ class PoolScanner
         ]);
 
         return $pool->promise();
+    }
+
+    /**
+     * Set the total number of downloads
+     *
+     * @param int $total The total
+     *
+     * @return $this
+     */
+    public function total(int $total): self
+    {
+        $this->total = $total;
+        return $this;
     }
 }

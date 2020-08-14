@@ -42,6 +42,11 @@ class PoolDownloader
     private $scanned = 0;
 
     /**
+     * @var int
+     */
+    private $total = 0;
+
+    /**
      * PoolDownloader constructor.
      *
      * @param ClientInterface $client The client
@@ -64,15 +69,29 @@ class PoolDownloader
      */
     public function pool($requests, callable $success, callable $rejected = null): PromiseInterface
     {
+        $current = 0;
         $pool = new Pool($this->client, $requests, [
             'concurrency' => $this->config['concurrency'],
-            'fulfilled' => function (Response $response, $index) use ($success) {
+            'fulfilled' => function (Response $response, $index) use (&$current, $success) {
+                $current++;
                 $size = (int) $response->getHeader('Content-Length')[0];
                 $this->scanned += $size;
                 $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
                 $this->downloaded++;
 
-                $this->line(sprintf('Downloading %s (%s)', $this->downloaded, $display));
+                $output = 'Downloading %s (%s)';
+                $args = [$this->downloaded, $display];
+                if ($this->total) {
+                    $output = 'Downloading %s/%s %s%% (%s)';
+                    $args = [
+                        $this->downloaded,
+                        $current,
+                        $this->total,
+                        $display,
+                    ];
+                }
+
+                $this->line(sprintf($output, ...$args));
                 $success($response, $index);
             },
             'rejected' => function (GuzzleException $reason, $index) use ($rejected) {
@@ -84,5 +103,18 @@ class PoolDownloader
         ]);
 
         return $pool->promise();
+    }
+
+    /**
+     * Set the total number of downloads
+     *
+     * @param int $total The total
+     *
+     * @return $this
+     */
+    public function total(int $total): self
+    {
+        $this->total = $total;
+        return $this;
     }
 }
