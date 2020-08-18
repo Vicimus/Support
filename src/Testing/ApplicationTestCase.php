@@ -165,7 +165,9 @@ class ApplicationTestCase extends TestCase
         $this->createApplication();
 
         $this->app->bind('request', static function () {
-            return new Request();
+            $request  = new Request();
+            $request->setSession(session());
+            return $request;
         });
 
         /** @var \Illuminate\Contracts\Cache\Repository|Repository $cache */
@@ -303,7 +305,9 @@ class ApplicationTestCase extends TestCase
         });
 
         $app->bind('request', static function () {
-            return new Request();
+            $request = new Request();
+            $request->setSession(session());
+            return $request;
         });
 
         $app->singleton('factory', static function () {
