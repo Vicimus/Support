@@ -323,11 +323,7 @@ class Application extends Container implements HttpKernelInterface
      */
     public function prepareRequest(Request $request)
     {
-        if ( ! is_null($this['config']['session.driver']) && ! $request->hasSession())
-        {
-            $request->setSession($this['session']->driver());
-        }
-
+        $request->setSession(session());
         return $request;
     }
 

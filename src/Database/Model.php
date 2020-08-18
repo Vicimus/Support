@@ -73,6 +73,53 @@ class Model extends LaravelModel
     ];
 
     /**
+     * Convert the model's attributes to an array.
+     *
+     * @return array
+     */
+    public function attributesToArray()
+    {
+        $attributes = $this->getArrayableAttributes();
+
+        // If an attribute is a date, we will cast it to a string after converting it
+        // to a DateTime / Carbon instance. This is so we will get some consistent
+        // formatting while accessing attributes vs. arraying / JSONing a model.
+        foreach ($this->getDates() as $key)
+        {
+            if ( ! isset($attributes[$key])) continue;
+
+            $attributes[$key] = (string) $this->asDateTime($attributes[$key]);
+        }
+
+        // We want to spin through all the mutated attributes for this model and call
+        // the mutator for the attribute. We cache off every mutated attributes so
+        // we don't have to constantly check on attributes that actually change.
+        foreach ($this->getMutatedAttributes() as $key)
+        {
+            if ( ! array_key_exists($key, $attributes)) continue;
+
+            $attributes[$key] = $this->mutateAttributeForArray(
+                $key, $attributes[$key]
+            );
+        }
+
+        // Here we will grab all of the appended, calculated attributes to this model
+        // as these attributes are not really in the attributes array, but are run
+        // when we need to array or JSON the model for convenience to the coder.
+        foreach ($this->getArrayableAppends() as $key)
+        {
+            $attributes[$key] = $this->mutateAttributeForArray($key, null);
+        }
+
+        $castAttributes = [];
+        foreach ($attributes as $key => $value) {
+            $castAttributes[$key] = $this->doAttributeCast($key, $value);
+        }
+
+        return $castAttributes;
+    }
+
+    /**
      * Get an attribute from the model.
      *
      * @param string|mixed $key The key to get
