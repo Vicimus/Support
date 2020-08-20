@@ -6,6 +6,11 @@ namespace Vicimus\Support\Interfaces\Glovebox;
  * Interface Vehicle
  *
  * @property int $id
+ * @property int $year
+ * @property string $make
+ * @property string $model
+ * @property string $trim
+ * @property string $style_id
  */
 interface Vehicle
 {
