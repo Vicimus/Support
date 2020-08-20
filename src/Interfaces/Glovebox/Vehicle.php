@@ -4,6 +4,8 @@ namespace Vicimus\Support\Interfaces\Glovebox;
 
 /**
  * Interface Vehicle
+ *
+ * @property int $id
  */
 interface Vehicle
 {
