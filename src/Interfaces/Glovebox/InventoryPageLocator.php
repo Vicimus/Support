@@ -8,6 +8,18 @@ namespace Vicimus\Support\Interfaces\Glovebox;
 interface InventoryPageLocator
 {
     /**
+     * Get the sdp page
+     * @return Page|null
+     */
+    public function sdp();
+
+    /**
+     * Get the slp page
+     * @return Page|null
+     */
+    public function slp();
+
+    /**
      * Get a vdp page
      *
      * @param string $type The type of vdp to get
