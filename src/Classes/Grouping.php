@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Classes;
 
+use Vicimus\AssetBuilder\Classes\AssetProperty;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Interfaces\MarketingSuite\Campaign;
 use Vicimus\Support\Interfaces\Property;
@@ -69,5 +70,23 @@ class Grouping extends ImmutableObject
         }
 
         return null;
+    }
+
+    /**
+     * Parse the constant properties and convert them into AssetProperty instances
+     *
+     * @param string[]|string[][] $properties The properties
+     *
+     * @return AssetProperty[]
+     */
+    protected function parse(array $properties): array
+    {
+        $payload = [];
+        foreach ($properties as $property => $info) {
+            $info['property'] = $property;
+            $payload[] = new AssetProperty($info);
+        }
+
+        return $payload;
     }
 }
