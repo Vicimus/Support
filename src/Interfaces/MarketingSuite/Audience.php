@@ -22,6 +22,12 @@ interface Audience extends HasProperties
     public function audienceable(): MorphTo;
 
     /**
+     * Retrieve the criteria from the audience
+     * @return CriteriaContract
+     */
+    public function criteria(): CriteriaContract;
+
+    /**
      * An audience may extend another audience as AudienceContract;
 
      *
