@@ -9,7 +9,15 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  */
 interface CriteriaContract
 {
+    /**
+     * Retrieve the payload for setting the campaign criteria
+     * @return array
+     */
     public function payload(): array;
 
+    /**
+     * Retrieve the keywords for setting the ad group criteria
+     * @return array
+     */
     public function keywords(): array;
 }
