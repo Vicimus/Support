@@ -159,6 +159,15 @@ interface ConquestDataSource
     ): void;
 
     /**
+     * Reschedule a campaign
+     *
+     * @param SourceRecord $source  The data source
+     * @param string[]     $payload The update payload
+     * @return void
+     */
+    public function reschedule(SourceRecord $source, array $payload): void;
+
+    /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
      *
      * @param AssetRecord $asset The asset
