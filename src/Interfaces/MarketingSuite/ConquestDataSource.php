@@ -92,6 +92,7 @@ interface ConquestDataSource
      * @return int
      *
      * @throws BudgetException
+     * @throws DataSourceException
      */
     public function estimate(Audience $audience, SourceRecord $record): int;
 
