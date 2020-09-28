@@ -20,4 +20,10 @@ interface CustomerAssociation extends Eloquent
      * @return BelongsTo
      */
     public function campaign(): BelongsTo;
+
+    /**
+     * Refresh
+     * @return string|int|bool
+     */
+    public function refresh();
 }
