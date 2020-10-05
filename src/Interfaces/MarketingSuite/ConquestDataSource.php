@@ -82,6 +82,19 @@ interface ConquestDataSource
     public function description(): string;
 
     /**
+     * A campaign was deleted and the source needs to clean up after itself.
+     * The name clean was already taken.
+     *
+     * @param Campaign     $campaign The campaign that was deleted
+     * @param SourceRecord $record   The data source record
+     *
+     * @return void
+     *
+     * @throws DataSourceException
+     */
+    public function destroy(Campaign $campaign, SourceRecord $record): void;
+
+    /**
      * Estimate the audience size
      *
      * @see https://developers.facebook.com/docs/marketing-api/reference/ad-campaign/delivery_estimate/
