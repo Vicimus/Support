@@ -78,6 +78,15 @@ interface Block
     public function getRawModel(): string;
 
     /**
+     * Get the settings for a block
+     *
+     * @param string $block The block to get settings for
+     *
+     * @return string
+     */
+    public function getSettings(string $block): string;
+
+    /**
      * Is the block managed
      *
      * @return bool
