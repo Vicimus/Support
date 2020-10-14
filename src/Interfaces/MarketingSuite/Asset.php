@@ -16,6 +16,20 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 interface Asset extends AssetContract
 {
     /**
+     * Determine if an asset has been approved
+     *
+     * @return bool
+     */
+    public function active(): bool;
+
+    /**
+     * Determine if an asset has been approved
+     *
+     * @return bool
+     */
+    public function approved(): bool;
+
+    /**
      * Retrieve the call to actions for the asset
      * @return CallToAction[]
      */
