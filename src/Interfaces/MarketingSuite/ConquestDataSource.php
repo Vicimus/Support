@@ -17,7 +17,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
 interface ConquestDataSource
 {
     /**
-     * Determine if a source
+     * Determine if a source has been approved to go live
      *
      * @param Campaign     $campaign The campaign containing the assets
      * @param SourceRecord $source   The related data source
