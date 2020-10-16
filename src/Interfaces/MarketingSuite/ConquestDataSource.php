@@ -17,6 +17,16 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
 interface ConquestDataSource
 {
     /**
+     * Determine if a source
+     *
+     * @param Campaign     $campaign The campaign containing the assets
+     * @param SourceRecord $source   The related data source
+     *
+     * @return bool
+     */
+    public function approved(Campaign $campaign, SourceRecord $source): bool;
+
+    /**
      * Get an array of asset slugs supported by the source. The index
      * should be the CID code to use when generating identifiers
      *
