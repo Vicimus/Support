@@ -5,6 +5,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
+use Shared\Contracts\Prospect;
 use Vicimus\Support\Interfaces\Eloquent;
 
 /**
@@ -54,6 +55,13 @@ interface Campaign extends Eloquent
      * @return AssetContract|null
      */
     public function asset(string $type): ?AssetContract;
+
+    /**
+     * Retrieve a Carbon Copy for a campaign
+     *
+     * @return Prospect|null
+     */
+    public function copy(): ?Prospect;
 
     /**
      * Retrieve the form id to use for the purl
