@@ -72,6 +72,18 @@ class ScriptCache implements ConsoleOutput
     }
 
     /**
+     * Get the base href for the scripts
+     *
+     * @param string $locale The locale
+     *
+     * @return string
+     */
+    public function baseHref(string $locale = 'en'): string
+    {
+        return $this->pathToFrontEnd . '/' . $locale;
+    }
+
+    /**
      * Read the script directory and cache the file names
      *
      * @return void
