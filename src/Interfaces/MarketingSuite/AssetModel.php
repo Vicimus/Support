@@ -47,10 +47,4 @@ interface AssetModel
      * @return void
      */
     public function touch();
-
-    /**
-     * @param array $params
-     * @return bool
-     */
-    public function update(array $attributes = [], array $options = []);
 }
