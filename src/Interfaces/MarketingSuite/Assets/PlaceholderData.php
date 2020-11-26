@@ -38,7 +38,7 @@ interface PlaceholderData
 
     /**
      * Get the store to use
-     * @return Store
+     * @return Store|null
      */
-    public function store(): Store;
+    public function store(): ?Store;
 }
