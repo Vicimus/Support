@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
-use Illuminate\Contracts\Validation\Factory;
-
 /**
  * Class ComplexValue
  *
@@ -15,10 +13,10 @@ class ComplexValue extends ImmutableObject
 {
     /**
      * ComplexValue constructor
-     * 
+     *
      * @param string|int|null $value      The value of the option
      * @param string          $label      The display text of the option
-     * @param string|null     $additional Additioanl data to use in the display
+     * @param string|null     $additional Additional data to use in the display
      */
     public function __construct($value, string $label, ?string $additional = null)
     {
