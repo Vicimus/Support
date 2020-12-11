@@ -6,6 +6,10 @@ namespace Vicimus\Support\Classes;
  * Class ComplexValue
  *
  * Represents a select option on the front end which may provide additional data
+ *
+ * @property string|int|null $value
+ * @property string $label
+ * @property string|null $additional
  */
 class ComplexValue extends ImmutableObject
 {
