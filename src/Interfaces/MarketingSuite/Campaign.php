@@ -57,6 +57,12 @@ interface Campaign extends Eloquent
     public function asset(string $type): ?AssetContract;
 
     /**
+     * Retrieve associated categories
+     * @return string[]
+     */
+    public function categories(): array;
+
+    /**
      * Retrieve a Carbon Copy for a campaign
      *
      * @return Prospect|null
