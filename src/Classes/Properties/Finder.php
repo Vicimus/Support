@@ -16,6 +16,7 @@ class Finder
      *
      * @param PropertyProvider $provider The property provider
      * @param PropertyRecord   $property Property to search for
+     * @param int|null         $storeId  The store Id
      *
      * @return Property|null
      *
@@ -23,10 +24,10 @@ class Finder
      * - Does this need access to the asset owning the property to see if its a part of the grouping
      * - Should a source provide multiple groupings
      */
-    protected function find(PropertyProvider $provider, PropertyRecord $property): ?Property
+    protected function find(PropertyProvider $provider, PropertyRecord $property, ?int $storeId = null): ?Property
     {
         /** @var Property $prop */
-        foreach ($provider->properties() as $prop) {
+        foreach ($provider->properties($storeId) as $prop) {
             if ($prop->property() !== $property->name()) {
                 continue;
             }

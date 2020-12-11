@@ -15,11 +15,13 @@ class Values extends Finder
      *
      * @param PropertyProvider $provider Property provider
      * @param PropertyRecord   $property The property to check
+     * @param int|null         $storeId  The associated store id
+     *
      * @return mixed[]
      */
-    public function values(PropertyProvider $provider, PropertyRecord $property): array
+    public function values(PropertyProvider $provider, PropertyRecord $property, ?int $storeId = null): array
     {
-        $prop = $this->find($provider, $property);
+        $prop = $this->find($provider, $property, $storeId);
         return ($prop) ? $prop->values() : [];
     }
 }
