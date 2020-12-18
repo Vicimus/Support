@@ -5,6 +5,8 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Illuminate\Http\Request;
 use Retention\Exceptions\PurlException;
 use Retention\Exceptions\TemplateException;
+use Vicimus\Onyx\Exceptions\OnyxException;
+use Vicimus\Support\Interfaces\Store;
 
 /**
  * Interface PurlContract
@@ -33,4 +35,15 @@ interface PurlContract
      * @throws PurlException
      */
     public function response(Request $request): PurlResponse;
+
+    /**
+     * Get the store for the specified subdomain
+     *
+     * @param string|null $subdomain The subdomain to use in the search
+     *
+     * @return Store
+     * @throws OnyxException
+     * @throws PurlException
+     */
+    public function store(?string $subdomain): Store;
 }
