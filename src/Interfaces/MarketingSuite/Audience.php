@@ -23,9 +23,9 @@ interface Audience extends HasProperties
 
     /**
      * Retrieve the criteria from the audience
-     * @return CriteriaContract
+     * @return CriteriaContract|null
      */
-    public function criteria(): CriteriaContract;
+    public function criteria(): ?CriteriaContract;
 
     /**
      * An audience may extend another audience as AudienceContract;
