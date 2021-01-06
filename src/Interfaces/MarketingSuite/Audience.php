@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * Interface Audience
  * @property int $id
- * @property Audience $extension
  * @property int $estimated
+ * @property bool $preset
+ * @property Audience $extension
  * @property Campaign|SourceRecord|mixed $audienceable
  */
 interface Audience extends HasProperties
