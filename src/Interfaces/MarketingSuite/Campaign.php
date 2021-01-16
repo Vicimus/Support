@@ -92,6 +92,13 @@ interface Campaign extends Eloquent
     public function identifier(string $type): string;
 
     /**
+     * Is the campaign email only
+     *
+     * @return bool
+     */
+    public function isEmailOnly(): bool;
+
+    /**
      * This method should return if the campaign is utilizing a specific
      * medium. Is it sending letters, sending emails, using facebook carousel,
      * etc.
