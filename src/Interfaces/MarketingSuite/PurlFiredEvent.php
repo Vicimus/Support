@@ -24,6 +24,12 @@ interface PurlFiredEvent
     public function additional(): ?string;
 
     /**
+     * Retrieve the cta id for the event
+     * @return int|null
+     */
+    public function cta(): ?int;
+
+    /**
      * Return the icon for the event
      * @return string
      */
