@@ -2,16 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use DateTimeInterface;
-use Illuminate\Support\Collection;
-use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
-use Vicimus\Support\Classes\ConquestDataSourceInfo;
-use Vicimus\Support\Classes\Grouping;
-use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
-use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
-use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
-use Vicimus\Support\Interfaces\Store;
-
 /**
  * Interface ConquestDataSourceCredentials
  */
