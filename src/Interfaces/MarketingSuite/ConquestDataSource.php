@@ -10,6 +10,7 @@ use Vicimus\Support\Classes\Grouping;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
+use Vicimus\Support\Interfaces\Store;
 
 /**
  * Interface ConquestDataSource
@@ -66,6 +67,15 @@ interface ConquestDataSource
      * @throws DataSourceException
      */
     public function clean(Audience $audience, SourceRecord $record): void;
+
+    /**
+     * Retrieve the credentials for a source from the provided store
+     *
+     * @param Store $store The store
+     *
+     * @return ConquestDataSourceCredentials
+     */
+    public function credentials(Store $store): ConquestDataSourceCredentials;
 
     /**
      * A data source has an external code assigned to it by the product team.
