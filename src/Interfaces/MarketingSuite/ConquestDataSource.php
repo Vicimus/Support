@@ -69,15 +69,6 @@ interface ConquestDataSource
     public function clean(Audience $audience, SourceRecord $record): void;
 
     /**
-     * Retrieve the credentials for a source from the provided store
-     *
-     * @param Store $store The store
-     *
-     * @return ConquestDataSourceCredentials
-     */
-    public function credentials(Store $store): ConquestDataSourceCredentials;
-
-    /**
      * A data source has an external code assigned to it by the product team.
      * This method must return that code.
      *
@@ -93,6 +84,15 @@ interface ConquestDataSource
      * @return ConquestCompatibilityMatrix
      */
     public function compatibility(): ConquestCompatibilityMatrix;
+
+    /**
+     * Retrieve the credentials for a source from the provided store
+     *
+     * @param Store $store The store
+     *
+     * @return ConquestDataSourceCredentials
+     */
+    public function credentials(Store $store): ConquestDataSourceCredentials;
 
     /**
      * An informative description
