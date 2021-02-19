@@ -10,6 +10,7 @@ use Vicimus\Support\Classes\Grouping;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
+use Vicimus\Support\Interfaces\Store;
 
 /**
  * Interface ConquestDataSource
@@ -83,6 +84,15 @@ interface ConquestDataSource
      * @return ConquestCompatibilityMatrix
      */
     public function compatibility(): ConquestCompatibilityMatrix;
+
+    /**
+     * Retrieve the credentials for a source from the provided store
+     *
+     * @param Store $store The store
+     *
+     * @return ConquestDataSourceCredentials
+     */
+    public function credentials(Store $store): ConquestDataSourceCredentials;
 
     /**
      * An informative description
