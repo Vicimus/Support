@@ -89,6 +89,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property string $emails
  * @property bool $bucket_vehicles
  * @property int $targeting
+ * @property bool $active
  */
 interface Filter extends Eloquent
 {
