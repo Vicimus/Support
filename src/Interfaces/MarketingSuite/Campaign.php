@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
@@ -128,6 +129,13 @@ interface Campaign extends Eloquent
      * @return Asset[]
      */
     public function portfolio(): array;
+
+    /**
+     * A campaign has many prospects
+     *
+     * @return HasMany
+     */
+    public function prospects(): HasMany;
 
     /**
      * A campaign can have one script
