@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
@@ -57,6 +58,12 @@ interface Campaign extends Eloquent
     public function asset(string $type): ?AssetContract;
 
     /**
+     * Retrieve associated categories
+     * @return string[]
+     */
+    public function categories(): array;
+
+    /**
      * Retrieve a Carbon Copy for a campaign
      *
      * @return Prospect|null
@@ -84,6 +91,13 @@ interface Campaign extends Eloquent
      * @return string
      */
     public function identifier(string $type): string;
+
+    /**
+     * Is the campaign email only
+     *
+     * @return bool
+     */
+    public function isEmailOnly(): bool;
 
     /**
      * This method should return if the campaign is utilizing a specific
@@ -115,6 +129,13 @@ interface Campaign extends Eloquent
      * @return Asset[]
      */
     public function portfolio(): array;
+
+    /**
+     * A campaign has many prospects
+     *
+     * @return HasMany
+     */
+    public function prospects(): HasMany;
 
     /**
      * A campaign can have one script
