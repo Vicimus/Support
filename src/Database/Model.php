@@ -59,6 +59,20 @@ class Model extends LaravelModel
     private $columns = [];
 
     /**
+     * Respect no casts rule
+     *
+     * @return mixed
+     */
+    public function attributesToArray()
+    {
+        if (!(self::$noCasts[static::class] ?? false)) {
+            return parent::attributesToArray();
+        }
+
+        return $this->attributes;
+    }
+
+    /**
      * Override the delete method so it stops making us try catch it
      *
      * phpcs:disable
