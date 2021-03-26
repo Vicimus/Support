@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * Interface Audience
  * @property int $id
- * @property Audience $extension
  * @property int $estimated
+ * @property bool $preset
+ * @property Audience $extension
  * @property Campaign|SourceRecord|mixed $audienceable
  */
 interface Audience extends HasProperties
@@ -23,9 +24,9 @@ interface Audience extends HasProperties
 
     /**
      * Retrieve the criteria from the audience
-     * @return CriteriaContract
+     * @return CriteriaContract|null
      */
-    public function criteria(): CriteriaContract;
+    public function criteria(): ?CriteriaContract;
 
     /**
      * An audience may extend another audience as AudienceContract;

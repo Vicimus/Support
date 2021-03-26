@@ -29,7 +29,9 @@ interface PropertyProvider
     /**
      * Retrieve a list of properties which are shared across items
      *
+     * @param int|null $storeId The associated store id
+     *
      * @return Property[]
      */
-    public function properties(): array;
+    public function properties(?int $storeId = null): array;
 }
