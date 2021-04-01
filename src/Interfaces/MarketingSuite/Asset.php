@@ -36,12 +36,6 @@ interface Asset extends AssetContract
     public function callToActions(): array;
 
     /**
-     * The intent of the Asset, conquest|retention
-     * @return string
-     */
-    public function intent(): string;
-
-    /**
      * Retrieve the instructions on the asset. This is not always populated
      * and generally is only populated when necessary and sending to the
      * PURL application
@@ -49,6 +43,12 @@ interface Asset extends AssetContract
      * @return Instruction[]
      */
     public function instructions(): array;
+
+    /**
+     * The intent of the Asset, conquest|retention
+     * @return string
+     */
+    public function intent(): string;
 
     /**
      * Get the rendered markup

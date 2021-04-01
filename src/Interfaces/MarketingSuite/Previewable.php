@@ -2,7 +2,10 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-interface Previewable 
+/**
+ * Represents a campaign which can have it's assets previewed
+ */
+interface Previewable
 {
     /**
      * The oem this campaign is associated with
@@ -12,14 +15,14 @@ interface Previewable
     public function oem(): string;
 
     /**
-     * Supported assets
-     * @return string[]
-     */
-    public function supported(): array;
-
-    /**
      * Get the store id for this campaign
      * @return int
      */
     public function storeId(): int;
+
+    /**
+     * Supported assets
+     * @return string[]
+     */
+    public function supported(): array;
 }

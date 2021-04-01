@@ -13,8 +13,8 @@ interface Validator
     /**
      * Check if content contains invalid placeholders
      *
-     * @param string   $content The content to validate
-     * @param string[] $invalid The matches found
+     * @param string|null $content The content to validate
+     * @param string[]    $invalid The matches found
      *
      * @return bool
      */
@@ -25,7 +25,7 @@ interface Validator
      *
      * @param Asset|string $asset  The asset to validate
      * @param string[]     $errors The errors array to fill with info
-     * @param string       $ype    The type of campaign using the validator
+     * @param string       $type   The type of campaign using the validator
      *
      * @return bool
      *
