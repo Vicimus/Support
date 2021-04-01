@@ -45,6 +45,12 @@ interface Asset extends AssetContract
     public function instructions(): array;
 
     /**
+     * The intent of the Asset, conquest|retention
+     * @return string
+     */
+    public function intent(): string;
+
+    /**
      * Get the rendered markup
      * @return string
      */

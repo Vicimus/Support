@@ -58,6 +58,12 @@ interface Campaign extends Eloquent
     public function asset(string $type): ?AssetContract;
 
     /**
+     * A campaign has many assets
+     * @return MorphMany
+     */
+    public function assets(): MorphMany;
+
+    /**
      * Retrieve associated categories
      * @return string[]
      */
@@ -131,11 +137,34 @@ interface Campaign extends Eloquent
     public function portfolio(): array;
 
     /**
+     * Find a property value or return null
+     *
+     * @param string          $name    The property to look for
+     * @param string|int|bool $default The default value to return if the property doesn't exist
+     *
+     * @return int|string|bool|null
+     */
+    public function property(string $name, $default = null);
+
+    /**
      * A campaign has many prospects
      *
      * @return HasMany
      */
     public function prospects(): HasMany;
+
+    /**
+     * Check if there is a property value
+     *
+     * @param string               $property The property to set
+     * @param string|int|bool|null $value    If set, will record a property rather than get
+     * @param bool                 $hidden   The hidden state of a property
+     *
+     * @return void
+     *
+     * @throws JsonException
+     */
+    public function record(string $property, $value = null, bool $hidden = false): void;
 
     /**
      * A campaign can have one script
@@ -157,4 +186,10 @@ interface Campaign extends Eloquent
      * @return MorphMany
      */
     public function temperatures(): MorphMany;
+
+    /**
+     * Campaign version
+     * @return int
+     */
+    public function version(): int;
 }
