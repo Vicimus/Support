@@ -40,6 +40,12 @@ interface AssetModel
     public function identifier(): Identifiable;
 
     /**
+     * The intent of the Asset, conquest|retention
+     * @return string
+     */
+    public function intent(): string;
+
+    /**
      * Touch the timestamps
      *
      * @return void

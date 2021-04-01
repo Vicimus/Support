@@ -25,10 +25,11 @@ interface Validator
      *
      * @param Asset|string $asset  The asset to validate
      * @param string[]     $errors The errors array to fill with info
+     * @param string       $ype    The type of campaign using the validator
      *
      * @return bool
      *
      * @throws TemplateException
      */
-    public function validate($asset, array &$errors): bool;
+    public function validate($asset, array &$errors, string $type): bool;
 }
