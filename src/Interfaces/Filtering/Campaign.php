@@ -125,6 +125,13 @@ interface Campaign extends BaseCampaign
     public function notes(): MorphMany;
 
     /**
+     * A campaign may have a staggered medium schedule
+     *
+     * @return HasMany|null
+     */
+    public function staggers(): ?HasMany;
+
+    /**
      * Campaigns have stats
      *
      * @return HasOne

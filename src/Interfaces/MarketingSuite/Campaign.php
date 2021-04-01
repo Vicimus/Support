@@ -137,6 +137,7 @@ interface Campaign extends Eloquent
     public function portfolio(): array;
 
     /**
+<<<<<<< HEAD
      * Find a property value or return null
      *
      * @param string          $name    The property to look for
