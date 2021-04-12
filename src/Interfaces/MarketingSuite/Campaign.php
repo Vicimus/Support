@@ -31,6 +31,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $send_voice
  * @property ScriptContract $script
  * @property mixed $letter
+ * @property mixed $postcard
  * @property string $subject
  * @property Carbon $email_at
  * @property Carbon $print_at
