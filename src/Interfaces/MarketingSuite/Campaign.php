@@ -107,6 +107,13 @@ interface Campaign extends Eloquent
     public function isEmailOnly(): bool;
 
     /**
+     * Is the campaign purl only
+     *
+     * @return bool
+     */
+    public function isPurlOnly(): bool;
+
+    /**
      * This method should return if the campaign is utilizing a specific
      * medium. Is it sending letters, sending emails, using facebook carousel,
      * etc.
