@@ -5,7 +5,6 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Assets\Models\Source;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Vicimus\Support\Database\Model;
 
 /**
  * Interface HasSource

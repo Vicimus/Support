@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
