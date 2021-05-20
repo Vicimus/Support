@@ -63,8 +63,13 @@ class PoolScanner
         $pool = new Pool($this->client, $requests, [
             'concurrency' => 20,
             'fulfilled' => function (Response $response, $index) use ($filter, $success) {
-                $size = (int) $response->getHeader('Content-Length')[0];
-                $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
+                $size = 0;
+                $display = 0;
+                if ($response->hasHeader('Content-Length') && count($response->getHeader('Content-Length'))) {
+                    $size = (int) $response->getHeader('Content-Length')[0];
+                    $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
+                }
+
                 $this->downloaded++;
 
                 $output = 'Scanning %s (%s)';
