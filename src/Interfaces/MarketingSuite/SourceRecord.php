@@ -2,8 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
 
 /**
@@ -20,13 +20,6 @@ interface SourceRecord
      * @return MorphMany
      */
     public function audiences(): MorphMany;
-
-    /**
-     * A source belongs to a campaign
-     *
-     * @return BelongsTo|Campaign
-     */
-    public function campaign(): BelongsTo;
 
     /**
      * Get an instance of the implementation
@@ -53,6 +46,13 @@ interface SourceRecord
      * @return void
      */
     public function record(string $property, $value = null): void;
+
+    /**
+     * A source belongs to a campaign
+     *
+     * @return MorphTo|HasSource
+     */
+    public function sourceable(): MorphTo;
 
     /**
      * Get the store id this source is associated with
