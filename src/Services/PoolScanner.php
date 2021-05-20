@@ -64,7 +64,7 @@ class PoolScanner
             'concurrency' => 20,
             'fulfilled' => function (Response $response, $index) use ($filter, $success) {
                 $size = 0;
-                $display = 'N/A';
+                $display = 0;
                 if ($response->hasHeader('Content-Length') && count($response->getHeader('Content-Length'))) {
                     $size = (int) $response->getHeader('Content-Length')[0];
                     $display = round($this->scanned / 1024 / 1024, 2) . 'MB';

@@ -73,7 +73,7 @@ class PoolDownloader
             'concurrency' => $this->config['concurrency'],
             'fulfilled' => function (Response $response, $index) use ($success) {
                 $size = 0;
-                $display = 'N/A';
+                $display = 0;
                 if ($response->hasHeader('Content-Length') && count($response->getHeader('Content-Length'))) {
                     $size = (int) $response->getHeader('Content-Length')[0];
                     $this->scanned += $size;
