@@ -72,11 +72,15 @@ class PoolDownloader
         $pool = new Pool($this->client, $requests, [
             'concurrency' => $this->config['concurrency'],
             'fulfilled' => function (Response $response, $index) use ($success) {
-                $size = (int) $response->getHeader('Content-Length')[0];
-                $this->scanned += $size;
-                $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
-                $this->downloaded++;
+                $size = 0;
+                $display = 'N/A';
+                if ($response->hasHeader('Content-Length') && count($response->getHeader('Content-Length'))) {
+                    $size = (int) $response->getHeader('Content-Length')[0];
+                    $this->scanned += $size;
+                    $display = round($this->scanned / 1024 / 1024, 2) . 'MB';
+                }
 
+                $this->downloaded++;
                 $output = 'Downloading %s (%s)';
                 $args = [$this->downloaded, $display];
                 if ($this->total) {
