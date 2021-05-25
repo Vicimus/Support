@@ -44,4 +44,15 @@ class ConquestDataSourceInfo extends ImmutableObject
             'icon' => $icon,
         ]);
     }
+
+    public function setVerification($verify)
+    {
+        $this->attributes['verification'] = $verify;
+        unset($this->attributes['verification']['store']);
+    }
+
+    public function setDetails($details)
+    {
+        $this->attributes['details'] = $details;
+    }
 }
