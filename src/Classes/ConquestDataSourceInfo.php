@@ -48,11 +48,11 @@ class ConquestDataSourceInfo extends ImmutableObject
     /**
      * Set the details
      *
-     * @param object $details Details object
+     * @param object|string[][] $details Details object
      *
      * @return void
      */
-    public function setDetails(object $details): void
+    public function setDetails($details): void
     {
         $this->attributes['details'] = $details;
     }
