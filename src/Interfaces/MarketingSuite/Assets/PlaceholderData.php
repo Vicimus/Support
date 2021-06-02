@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
-use Vicimus\Support\Interfaces\MarketingSuite\Campaign;
 use Vicimus\Support\Interfaces\MarketingSuite\Identifiable;
 use Vicimus\Support\Interfaces\MarketingSuite\Placeholderable;
 use Vicimus\Support\Interfaces\OemService;
