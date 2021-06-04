@@ -97,7 +97,7 @@ interface Campaign extends Eloquent
      *
      * @return string
      */
-    public function identifier(string $type): string;
+//    public function identifier(string $type): string;
 
     /**
      * Is the campaign email only
