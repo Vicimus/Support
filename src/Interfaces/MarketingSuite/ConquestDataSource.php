@@ -142,9 +142,11 @@ interface ConquestDataSource
     /**
      * Check to make sure the data source has valid credentials
      *
+     * @param SourceRecord $record The source model
+     *
      * @return bool
      */
-    public function hasValidCredentials(): bool;
+    public function hasValidCredentials(SourceRecord $record): bool;
 
     /**
      * Get a font-awesome icon to use to represent this on the front end
