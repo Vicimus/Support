@@ -140,6 +140,13 @@ interface ConquestDataSource
     public function grouping(): Grouping;
 
     /**
+     * Check to make sure the data source has valid credentials
+     *
+     * @return bool
+     */
+    public function hasValidCredentials(): bool;
+
+    /**
      * Get a font-awesome icon to use to represent this on the front end
      *
      * @return string
