@@ -91,15 +91,6 @@ interface Campaign extends Eloquent
     public function hasPortfolioBeenModified(): bool;
 
     /**
-     * Retrieve an identifier to use for an asset slug
-     *
-     * @param string $type The asset type slug
-     *
-     * @return string
-     */
-    public function identifier(string $type): string;
-
-    /**
      * Is the campaign email only
      *
      * @return bool
