@@ -144,7 +144,7 @@ interface ConquestDataSource
      *
      * @return bool
      */
-    public function hasValidCredentials(): bool;
+    public function hasValidCredentials(SourceRecord $sourceRecord): bool;
 
     /**
      * Get a font-awesome icon to use to represent this on the front end
