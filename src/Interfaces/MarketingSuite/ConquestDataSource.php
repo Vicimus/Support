@@ -142,6 +142,8 @@ interface ConquestDataSource
     /**
      * Check to make sure the data source has valid credentials
      *
+     * @param SourceRecord $sourceRecord The source to validate
+     *
      * @return bool
      */
     public function hasValidCredentials(SourceRecord $sourceRecord): bool;
