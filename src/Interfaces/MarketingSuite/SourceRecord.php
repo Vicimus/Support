@@ -5,7 +5,6 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
-use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 
 /**
  * Interface SourceRecord
