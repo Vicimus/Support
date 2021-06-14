@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
@@ -15,7 +16,7 @@ use Vicimus\Support\Interfaces\Store;
 /**
  * Interface ConquestDataSource
  */
-interface ConquestDataSource
+interface ConquestDataSource extends PropertyProvider
 {
     /**
      * Determine if a source has been approved to go live

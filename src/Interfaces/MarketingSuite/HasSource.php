@@ -2,20 +2,21 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Assets\Models\Source;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Collection;
 
 /**
  * Interface HasSource
  *
- *
+ * @property Collection|Audience[] $audiences
+ * @property SourceRecord $source
  */
 interface HasSource
 {
     /**
      * Has many assets
-     * @return MorphMany|AssetModel[]
+     * @return MorphMany|Asset[]
      */
     public function assets(): MorphMany;
 
@@ -39,7 +40,7 @@ interface HasSource
 
     /**
      * Update the models timestamp
-     * @return bool
+     * @return bool|void
      */
     public function touch();
 }
