@@ -5,11 +5,16 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 use Assets\Models\Source;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Carbon;
 
 /**
  * Interface HasSource
  *
- *
+ * @property int $id
+ * @property string $title
+ * @property Carbon $end
+ * @property Carbon $start
+ * @property Audience[] $audiences
  */
 interface HasSource
 {
@@ -24,6 +29,12 @@ interface HasSource
      * @return MorphMany
      */
     public function audiences(): MorphMany;
+
+    /**
+     * Retrieve associated datasource categories
+     * @return string[]
+     */
+    public function categories(): array;
 
     /**
      * Retrieve the related source

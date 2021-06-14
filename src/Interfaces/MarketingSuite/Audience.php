@@ -60,9 +60,10 @@ interface Audience extends HasProperties
     /**
      * Get a target instance representing who the audience targets
      *
-     * @param bool $pure Flag to manipulate the target values
+     * @param null|AssetRecord $asset The asset being targeted
+     * @param bool             $pure  Flag to manipulate the target values
      *
      * @return Target
      */
-    public function target(AssetRecord $asset, bool $pure = true): Target;
+    public function target(?AssetRecord $asset, bool $pure = true): Target;
 }

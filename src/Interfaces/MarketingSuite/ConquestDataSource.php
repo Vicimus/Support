@@ -2,8 +2,10 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Conquest\Exceptions\DataSourceException;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
+use Vicimus\Facebook\Exceptions\FacebookException;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
@@ -84,6 +86,17 @@ interface ConquestDataSource
      * @return ConquestCompatibilityMatrix
      */
     public function compatibility(): ConquestCompatibilityMatrix;
+
+    /**
+     * Create a campaign for the source
+     *
+     * @param HasSource    $campaign The local campaign
+     * @param SourceRecord $source   The campaign source
+     *
+     * @return void
+     * @throws DataSourceException
+     */
+    public function create(HasSource $campaign, SourceRecord $source): void;
 
     /**
      * Retrieve the credentials for a source from the provided store
@@ -174,6 +187,15 @@ interface ConquestDataSource
      * @throws DataSourceException
      */
     public function launch(Campaign $campaign, SourceRecord $source, Collection $assets): void;
+
+    /**
+     * Mediums on the sourceable item where changed
+     *
+     * @param SourceRecord $source The source related to the update
+     *
+     * @return void
+     */
+    public function mediumsUpdated(SourceRecord $source): void;
 
     /**
      * The name of the data source as it should be displayed to clients
