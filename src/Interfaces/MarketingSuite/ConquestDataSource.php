@@ -2,10 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Conquest\Exceptions\DataSourceException;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
-use Vicimus\Facebook\Exceptions\FacebookException;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
