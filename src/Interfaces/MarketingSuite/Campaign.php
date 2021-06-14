@@ -65,12 +65,6 @@ interface Campaign extends Eloquent
     public function assets(): MorphMany;
 
     /**
-     * Retrieve associated categories
-     * @return string[]
-     */
-    public function categories(): array;
-
-    /**
      * Retrieve a Carbon Copy for a campaign
      *
      * @return Prospect|null

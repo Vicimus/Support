@@ -8,6 +8,12 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 interface Previewable
 {
     /**
+     * Do we want AC to return fallback assets
+     * @return bool
+     */
+    public function fallback(): bool;
+
+    /**
      * The oem this campaign is associated with
      *
      * @return string

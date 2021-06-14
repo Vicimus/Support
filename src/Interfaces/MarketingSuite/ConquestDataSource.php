@@ -87,6 +87,17 @@ interface ConquestDataSource extends PropertyProvider
     public function compatibility(): ConquestCompatibilityMatrix;
 
     /**
+     * Create a campaign for the source
+     *
+     * @param HasSource    $campaign The local campaign
+     * @param SourceRecord $source   The campaign source
+     *
+     * @return void
+     * @throws DataSourceException
+     */
+    public function create(HasSource $campaign, SourceRecord $source): void;
+
+    /**
      * Retrieve the credentials for a source from the provided store
      *
      * @param Store $store The store
@@ -175,6 +186,15 @@ interface ConquestDataSource extends PropertyProvider
      * @throws DataSourceException
      */
     public function launch(Campaign $campaign, SourceRecord $source, Collection $assets): void;
+
+    /**
+     * Mediums on the sourceable item where changed
+     *
+     * @param SourceRecord $source The source related to the update
+     *
+     * @return void
+     */
+    public function mediumsUpdated(SourceRecord $source): void;
 
     /**
      * The name of the data source as it should be displayed to clients
