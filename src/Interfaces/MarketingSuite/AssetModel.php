@@ -7,7 +7,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  *
  * Represents an database model or a fake version of one
  *
- * @property Campaign $campaign
+ * @property Placeholderable $campaign
  * @property int $id
  * @property int $height
  * @property int $width
@@ -20,7 +20,7 @@ interface AssetModel
 {
     /**
      * Retrieve the related campaign
-     * @return Relation|Campaign
+     * @return Relation|Placeholderable
      */
     public function campaign();
 
