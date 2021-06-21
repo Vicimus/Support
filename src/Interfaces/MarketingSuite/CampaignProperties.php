@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Shared\Interfaces\Validatable;
+
 /**
  * Interface CampaignProperties
  */
