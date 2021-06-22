@@ -16,16 +16,9 @@ use Illuminate\Support\Collection;
  * @property string $title
  * @property Carbon $end
  * @property Carbon $start
- * @property Audience[] $audiences
  */
 interface HasSource
 {
-    /**
-     * Has many assets
-     * @return MorphMany|Asset[]
-     */
-    public function assets(): MorphMany;
-
     /**
      * Has many audiences
      * @return MorphMany
@@ -37,6 +30,8 @@ interface HasSource
      * @return string[]
      */
     public function categories(): array;
+
+    public function contentId(): ?int;
 
     /**
      * Retrieve the related source
