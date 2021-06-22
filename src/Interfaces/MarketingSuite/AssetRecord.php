@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * Interface AssetRecord
  * @property int $id
  * @property string $type
- * @property Campaign $campaign
  */
 interface AssetRecord extends SimpleProperties
 {
@@ -17,5 +16,5 @@ interface AssetRecord extends SimpleProperties
      *
      * @return MorphTo|Campaign
      */
-    public function campaign(): MorphTo;
+    public function assetable(): MorphTo;
 }
