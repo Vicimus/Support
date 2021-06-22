@@ -31,6 +31,15 @@ interface HasSource
      */
     public function categories(): array;
 
+    /**
+     * If something has a source, we must assume
+     * it can also define which content it wants to use
+     * for it's assets, even though this interface
+     * literally has nothing to do with assets. Things
+     * using hasSource require the content id be there.
+     *
+     * @return int|null
+     */
     public function contentId(): ?int;
 
     /**
