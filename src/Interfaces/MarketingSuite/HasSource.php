@@ -16,16 +16,9 @@ use Illuminate\Support\Collection;
  * @property string $title
  * @property Carbon $end
  * @property Carbon $start
- * @property Audience[] $audiences
  */
 interface HasSource
 {
-    /**
-     * Has many assets
-     * @return MorphMany|Asset[]
-     */
-    public function assets(): MorphMany;
-
     /**
      * Has many audiences
      * @return MorphMany
@@ -37,6 +30,17 @@ interface HasSource
      * @return string[]
      */
     public function categories(): array;
+
+    /**
+     * If something has a source, we must assume
+     * it can also define which content it wants to use
+     * for it's assets, even though this interface
+     * literally has nothing to do with assets. Things
+     * using hasSource require the content id be there.
+     *
+     * @return int|null
+     */
+    public function contentId(): ?int;
 
     /**
      * Retrieve the related source
