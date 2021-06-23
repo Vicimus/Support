@@ -7,7 +7,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  *
  * Represents an database model or a fake version of one
  *
- * @property Placeholderable $campaign
+ * @property Previewable $campaign
  * @property int $id
  * @property int $height
  * @property int $width
@@ -22,7 +22,7 @@ interface AssetModel
      * Retrieve the related campaign
      * @return Relation|Placeholderable
      */
-    public function campaign();
+    public function assetable();
 
     /**
      * Get the format we can render this item in (png, jpg, html, pdf)
