@@ -12,11 +12,11 @@ interface ConquestDataSourceValidator
     /**
      * Validate a Campaigns assets
      *
-     * @param CampaignProperties $campaign The campaign to validate
+     * @param Validatable $campaign The campaign to validate
      *
      * @return string[]
      */
-    public function assets(CampaignProperties $campaign): array;
+    public function assets(Validatable $campaign): array;
 
     /**
      * Validate a budget
