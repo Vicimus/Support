@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Shared\Interfaces\Validatable;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 
 /**
