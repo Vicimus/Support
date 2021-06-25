@@ -32,6 +32,12 @@ interface AssetModel
     public function format(): string;
 
     /**
+     * Get the height of the asset
+     * @return int
+     */
+    public function height(): int;
+
+    /**
      * Get an identifier for this asset. PURLs do not need an identifier
      * as the identifier is what is used to get to the PURL.
      *
@@ -51,4 +57,10 @@ interface AssetModel
      * @return void
      */
     public function touch();
+
+    /**
+     * Get the width of the asset
+     * @return int
+     */
+    public function width(): int;
 }

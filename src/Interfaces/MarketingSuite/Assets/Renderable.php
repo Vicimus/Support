@@ -8,6 +8,18 @@ namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 interface Renderable
 {
     /**
+     * Get the content id used for this renderable
+     * @return int
+     */
+    public function contentId(): int;
+
+    /**
+     * Get the external id used by this renderable
+     * @return int
+     */
+    public function externalId(): int;
+
+    /**
      * Get the format we can render this item in (png, jpg, html, pdf)
      * @return string
      */
