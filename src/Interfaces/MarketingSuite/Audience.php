@@ -4,6 +4,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Vicimus\Support\Interfaces\MarketingSuite\Assets\Creatable;
 
 /**
  * Interface Audience
@@ -60,10 +61,10 @@ interface Audience extends HasProperties
     /**
      * Get a target instance representing who the audience targets
      *
-     * @param null|AssetRecord $asset The asset being targeted
+     * @param null|Creatable $asset The asset being targeted
      * @param bool             $pure  Flag to manipulate the target values
      *
      * @return Target
      */
-    public function target(?AssetRecord $asset, bool $pure = true): Target;
+    public function target(?Creatable $asset, bool $pure = true): Target;
 }
