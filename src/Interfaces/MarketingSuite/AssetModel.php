@@ -25,6 +25,18 @@ interface AssetModel
     public function assetable();
 
     /**
+     * An asset model has to define what content id its using
+     * @return int
+     */
+    public function contentId(): int;
+
+    /**
+     * An asset model has to define its AC external primary key
+     * @return int
+     */
+    public function externalId(): int;
+
+    /**
      * Get the format we can render this item in (png, jpg, html, pdf)
      *
      * @return string
