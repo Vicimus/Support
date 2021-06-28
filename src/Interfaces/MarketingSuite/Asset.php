@@ -36,6 +36,12 @@ interface Asset extends AssetContract
     public function callToActions(): array;
 
     /**
+     * Get the height
+     * @return int
+     */
+    public function height(): int;
+
+    /**
      * Retrieve the instructions on the asset. This is not always populated
      * and generally is only populated when necessary and sending to the
      * PURL application
@@ -79,4 +85,10 @@ interface Asset extends AssetContract
      * @throws TemplateException
      */
     public function validate(array &$errors = [], ?Validator $validator = null): bool;
+
+    /**
+     * The width of this asset
+     * @return int
+     */
+    public function width(): int;
 }
