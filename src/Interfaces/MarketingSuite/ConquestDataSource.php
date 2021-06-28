@@ -204,6 +204,17 @@ interface ConquestDataSource extends PropertyProvider
     public function name(): string;
 
     /**
+     * Process multiple asset actions for a source
+     *
+     * @param HasSource    $campaign The campaign
+     * @param SourceRecord $source   The data source
+     * @param array        $results  The actions results
+     *
+     * @return void
+     */
+    public function process(HasSource $campaign, SourceRecord $source, array $results): void;
+
+    /**
      * A data source can add to a report about the campaign
      *
      * @param SourceRecord           $source The source record
