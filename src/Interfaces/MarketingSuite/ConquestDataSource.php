@@ -4,7 +4,6 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;
-use InventoryAds\Classes\DynamicAdResultSet;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
@@ -12,6 +11,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
+use Vicimus\Support\Interfaces\ResultSet;
 use Vicimus\Support\Interfaces\Store;
 
 /**
@@ -207,13 +207,13 @@ interface ConquestDataSource extends PropertyProvider
     /**
      * Process multiple asset actions for a source
      *
-     * @param HasSource          $campaign The campaign
-     * @param SourceRecord       $source   The data source
-     * @param DynamicAdResultSet $results  The actions results
+     * @param HasSource     $campaign The campaign
+     * @param SourceRecord  $source   The data source
+     * @param ResultSet     $results  The actions results
      *
      * @return void
      */
-    public function process(HasSource $campaign, SourceRecord $source, DynamicAdResultSet $results): void;
+    public function process(HasSource $campaign, SourceRecord $source, ResultSet $results): void;
 
     /**
      * A data source can add to a report about the campaign
