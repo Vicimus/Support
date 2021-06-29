@@ -11,7 +11,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
-use Vicimus\Support\Interfaces\ResultSet;
+use Vicimus\Support\Interfaces\MarketingSuite\ResultSet;
 use Vicimus\Support\Interfaces\Store;
 
 /**
