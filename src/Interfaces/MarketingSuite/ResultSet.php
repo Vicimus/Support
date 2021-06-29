@@ -4,6 +4,9 @@ namespace Vicimus\Support\Interfaces;
 
 use Illuminate\Support\Collection;
 
+/**
+ * Interface ResultSet
+ */
 interface ResultSet
 {
     /**
