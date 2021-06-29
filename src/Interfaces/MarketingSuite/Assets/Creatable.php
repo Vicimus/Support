@@ -4,6 +4,9 @@ namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
 use DateTimeInterface;
 
+/**
+ * Interface Creatable
+ */
 interface Creatable
 {
     /**
@@ -63,13 +66,6 @@ interface Creatable
     public function property(string $name, $default = null);
 
     /**
-     * Retrieve the slug type of the asset
-     *
-     * @return string
-     */
-    public function type(): string;
-
-    /**
      * Record a property value
      *
      * @param string               $property The property to set
@@ -86,4 +82,11 @@ interface Creatable
      * @return DateTimeInterface|null
      */
     public function start(): ?DateTimeInterface;
+
+    /**
+     * Retrieve the slug type of the asset
+     *
+     * @return string
+     */
+    public function type(): string;
 }
