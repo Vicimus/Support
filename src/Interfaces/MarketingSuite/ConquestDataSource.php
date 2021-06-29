@@ -207,9 +207,9 @@ interface ConquestDataSource extends PropertyProvider
     /**
      * Process multiple asset actions for a source
      *
-     * @param HasSource     $campaign The campaign
-     * @param SourceRecord  $source   The data source
-     * @param ResultSet     $results  The actions results
+     * @param HasSource    $campaign The campaign
+     * @param SourceRecord $source   The data source
+     * @param ResultSet    $results  The actions results
      *
      * @return void
      */
