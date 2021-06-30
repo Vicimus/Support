@@ -12,6 +12,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\UpdateException;
 use Vicimus\Support\Interfaces\MarketingSuite\ResultSet;
+use Vicimus\Support\Interfaces\MarketingSuite\ResultSet;
 use Vicimus\Support\Interfaces\Store;
 
 /**
@@ -128,6 +129,16 @@ interface ConquestDataSource extends PropertyProvider
     public function destroy(Campaign $campaign, SourceRecord $record): void;
 
     /**
+     * Disable multiple assets from a data sources campaign
+     *
+     * @param SourceRecord $source  The data source
+     * @param ResultSet    $results The result set containing the items to remove
+     *
+     * @return void
+     */
+    public function disable(SourceRecord $source, ResultSet $results): void;
+
+    /**
      * Estimate the audience size
      *
      * @see https://developers.facebook.com/docs/marketing-api/reference/ad-campaign/delivery_estimate/
@@ -205,7 +216,7 @@ interface ConquestDataSource extends PropertyProvider
     public function name(): string;
 
     /**
-     * Process multiple asset actions for a source
+     * Add multiple assets to a data sources campaign
      *
      * @param HasSource    $campaign The campaign
      * @param SourceRecord $source   The data source
