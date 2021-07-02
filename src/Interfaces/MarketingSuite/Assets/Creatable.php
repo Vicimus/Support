@@ -39,12 +39,6 @@ interface Creatable
     public function error(string $message): void;
 
     /**
-     * Retrieve a unique identifier for the asset
-     * @return string
-     */
-    public function id(): string;
-
-    /**
      * Retrieve a link property value from the asset/asset assetable instance
      *
      * @param string $field The link property name ('link'/'main_link')
