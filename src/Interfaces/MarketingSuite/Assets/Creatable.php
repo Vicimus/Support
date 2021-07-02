@@ -17,6 +17,12 @@ interface Creatable
     public function active(): bool;
 
     /**
+     * Retrieve a unique identifier for the asset
+     * @return string
+     */
+    public function creativeName(): string;
+
+    /**
      * Retrieve the assets end date
      *
      * @return DateTimeInterface|null
