@@ -22,6 +22,13 @@ interface SourceRecord
     public function audiences(): MorphMany;
 
     /**
+     * A source can have many custom audiences
+     *
+     * @return MorphMany
+     */
+    public function customAudiences(): MorphMany;
+
+    /**
      * Get an instance of the implementation
      *
      * @return ConquestDataSource
