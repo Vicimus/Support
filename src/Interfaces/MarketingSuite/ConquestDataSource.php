@@ -130,11 +130,11 @@ interface ConquestDataSource extends PropertyProvider
      * Disable multiple assets from a data sources campaign
      *
      * @param SourceRecord $source  The data source
-     * @param ResultSet    $results The result set containing the items to remove
+     * @param string[]     $results The array of data source ad ids to remove
      *
      * @return void
      */
-    public function disable(SourceRecord $source, ResultSet $results): void;
+    public function disable(SourceRecord $source, array $results): void;
 
     /**
      * Estimate the audience size
