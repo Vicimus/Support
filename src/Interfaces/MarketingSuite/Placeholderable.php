@@ -34,4 +34,10 @@ interface Placeholderable
      * @return int|null
      */
     public function purlDomainId(): ?int;
+
+    /**
+     * Campaign version
+     * @return int
+     */
+    public function version(): int;
 }
