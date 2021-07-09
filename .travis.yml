@@ -19,5 +19,5 @@ before_script:
 
 script:
   - vendor/bin/phpcs --warning-severity=999 "src" "tests" "bootstrap" --standard=vendor/vicimus/standard/VicimusStandard --report=full
-  - vendor/bin/phpunit --coverage-clover clover.xml
+  - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover clover.xml
   - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
