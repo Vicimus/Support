@@ -13,7 +13,7 @@ interface RecordsLeads
      * @return int
      */
     public function campaignId(): int;
-    
+
     /**
      * Retrieve the lead type id assigned to the campaign
      *
