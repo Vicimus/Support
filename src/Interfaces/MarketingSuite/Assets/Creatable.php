@@ -83,6 +83,16 @@ interface Creatable
     public function record(string $property, $value = null, bool $hidden = false): void;
 
     /**
+     * Record a property value, maintaining the old value if one exists.
+     *
+     * @param string               $property The property to set
+     * @param string|int|bool|null $value    The value to save
+     *
+     * @return void
+     */
+    public function replace(string $property, $value = null): void;
+
+    /**
      * Retrieve the assets start date
      *
      * @return DateTimeInterface|null
