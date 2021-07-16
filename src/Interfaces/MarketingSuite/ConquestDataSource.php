@@ -279,4 +279,13 @@ interface ConquestDataSource extends PropertyProvider
      * @return ConquestDataSourceValidator
      */
     public function validator(): ConquestDataSourceValidator;
+
+    /**
+     * Verify the connection to the source
+     *
+     * @param int $storeId The store id to verify
+     *
+     * @return ConquestDataSourceVerificationResponse
+     */
+    public function verify(int $storeId): ConquestDataSourceVerificationResponse;
 }
