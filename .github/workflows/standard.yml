@@ -1,0 +1,51 @@
+name: Standard Build
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  pr-linter:
+    runs-on: self-hosted
+    steps:
+      - run: vpm lint ${{ github.event.number }} vicimus/support "BUMP|TEM|BSMS|GOOG|GBX|TEL|DEL|SS|QA"
+
+  tests:
+    runs-on: self-hosted
+    steps:
+      - uses: vicimus/clean-action@master
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          composer install --no-interaction
+      - name: Set up CodeClimate env
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        run: |
+          echo "::set-env name=GIT_BRANCH::$GITHUB_HEAD_REF"
+          echo "::set-env name=GIT_COMMIT_SHA::$PR_HEAD_SHA"
+      - name: Setup code climate
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          sudo chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+      - name: Execute PHP Tests
+        run: |
+          XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover clover.xml
+      - name: Send To Code Climate
+        run: ./cc-test-reporter after-build -t clover
+        env:
+          CC_TEST_REPORTER_ID: 5796fc8424f8c41b1abbd0e6a5bbf53107d51f996387e377809193a760556b0d
+
+  phpcs:
+    runs-on: self-hosted
+    steps:
+      - uses: vicimus/clean-action@master
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          composer install --no-interaction
+      - name: Execute php linter
+        run: |
+          vendor/bin/phpcs -p -n src tests --standard=vendor/vicimus/standard/VicimusStandard --report=full
