@@ -44,4 +44,29 @@ class ConquestDataSourceInfo extends ImmutableObject
             'icon' => $icon,
         ]);
     }
+
+    /**
+     * Set the details
+     *
+     * @param object|string[][] $details Details object
+     *
+     * @return void
+     */
+    public function setDetails($details): void
+    {
+        $this->attributes['details'] = $details;
+    }
+
+    /**
+     * Set verification details
+     *
+     * @param object $verify The verification object
+     *
+     * @return void
+     */
+    public function setVerification(object $verify): void
+    {
+        $this->attributes['verification'] = $verify;
+        unset($this->attributes['verification']['store']);
+    }
 }

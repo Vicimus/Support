@@ -4,6 +4,9 @@ namespace Vicimus\Support\Interfaces;
 
 /**
  * Interface Property
+ *
+ * @property int $id
+ * @property mixed $value
  */
 interface PropertyRecord
 {

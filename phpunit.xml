@@ -21,6 +21,8 @@
                 <directory>./src/Testing</directory>
                 <file>./src/Locale/States.php</file>
                 <file>./src/Testing/ApplicationTestCase.php</file>
+                <file>./src/Database/SoftDeletingScope.php</file>
+                <file>./src/Database/SoftDeletingTrait.php</file>
             </exclude>
         </whitelist>
     </filter>

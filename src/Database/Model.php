@@ -2,8 +2,10 @@
 
 namespace Vicimus\Support\Database;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
+use Illuminate\Support\Str;
 use Throwable;
 
 /**
@@ -55,6 +57,20 @@ class Model extends LaravelModel
      * @var string[]
      */
     private $columns = [];
+
+    /**
+     * Respect no casts rule
+     *
+     * @return mixed
+     */
+    public function attributesToArray()
+    {
+        if (!(self::$noCasts[static::class] ?? false)) {
+            return parent::attributesToArray();
+        }
+
+        return $this->attributes;
+    }
 
     /**
      * Override the delete method so it stops making us try catch it
@@ -173,5 +189,30 @@ class Model extends LaravelModel
     public static function withoutCasts(): void
     {
         self::$noCasts[static::class] = true;
+    }
+
+    /**
+     * Remove the table name from a given key.
+     *
+     * Overrides Laravels version which broke between 7.20 and 7.25
+     *
+     * @param string|int $key The key to check
+     * @return string
+     */
+    protected function removeTableFromKey($key)
+    {
+        return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param DateTimeInterface $date The date
+     *
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

@@ -37,6 +37,7 @@ use PDOException;
 use ReflectionException;
 use ReflectionMethod;
 use RuntimeException;
+use stdClass;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -116,6 +117,24 @@ class ApplicationTestCase extends TestCase
      * @var Client
      */
     private $client;
+
+    /**
+     * Act as a logged in user
+     *
+     * @param string|null $driver Driver to use
+     * @param mixed       $user   User
+     *
+     * @return void
+     */
+    public function beSomebody(?string $driver = null, $user = null): void
+    {
+        if (!$user) {
+            $user = new stdClass();
+            $user->email = 'testing@vicimus.com';
+        }
+
+        $this->app['auth']->driver($driver)->setUser($user);
+    }
 
     /**
      * Set up

@@ -2,8 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
-use Vicimus\Support\Interfaces\MarketingSuite\Campaign;
 use Vicimus\Support\Interfaces\MarketingSuite\Identifiable;
+use Vicimus\Support\Interfaces\MarketingSuite\Placeholderable;
 use Vicimus\Support\Interfaces\OemService;
 use Vicimus\Support\Interfaces\Store;
 
@@ -14,9 +14,9 @@ interface PlaceholderData
 {
     /**
      * Get the campaign
-     * @return Campaign
+     * @return Placeholderable
      */
-    public function campaign(): Campaign;
+    public function campaign(): Placeholderable;
 
     /**
      * Get the identifiable entity
@@ -38,7 +38,7 @@ interface PlaceholderData
 
     /**
      * Get the store to use
-     * @return Store
+     * @return Store|null
      */
-    public function store(): Store;
+    public function store(): ?Store;
 }

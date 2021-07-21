@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Interfaces\Filtering;
 
 use JsonSerializable;
+use Vicimus\Billing\Classes\CostBreakdown;
 
 /**
  * Interface Stats
@@ -10,9 +11,10 @@ use JsonSerializable;
  * @property int $invites
  * @property int $emails
  * @property int $letters
+ * @property int $rvms
  * @property int $excluded
  * @property int $total
- * @property float $cost
+ * @property CostBreakdown $cost
  * @property mixed[] $breakdown
  * @property Campaign $campaign
  * @property OptOuts $optOuts

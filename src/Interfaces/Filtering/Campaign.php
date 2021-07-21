@@ -98,6 +98,12 @@ interface Campaign extends BaseCampaign
     public function isLetterOnly(): bool;
 
     /**
+     * Is the campaign sms only
+     * @return bool
+     */
+    public function isSmsOnly(): bool;
+
+    /**
      * Is the campaign voice only
      *
      * @return bool
@@ -117,6 +123,13 @@ interface Campaign extends BaseCampaign
      * @return MorphMany
      */
     public function notes(): MorphMany;
+
+    /**
+     * A campaign may have a staggered medium schedule
+     *
+     * @return HasMany|null
+     */
+    public function staggers(): ?HasMany;
 
     /**
      * Campaigns have stats

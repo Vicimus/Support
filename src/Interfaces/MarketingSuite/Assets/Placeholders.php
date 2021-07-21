@@ -11,13 +11,23 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 interface Placeholders
 {
     /**
-     * Check if a given placeholder is a valid placeholder
+     * If the placeholder is a custom, determine that it is formatted correctly with it's label
      *
      * @param string $placeholder The placeholder to check
      *
      * @return bool
      */
-    public function isValidPlaceholder(string $placeholder): bool;
+    public function isValidCustomPlaceholder(string $placeholder): bool;
+
+    /**
+     * Check if a given placeholder is a valid placeholder
+     *
+     * @param string $placeholder The placeholder to check
+     * @param string $type        The type of campaign making the request
+     *
+     * @return bool
+     */
+    public function isValidPlaceholder(string $placeholder, string $type): bool;
 
     /**
      * Get a placeholder value

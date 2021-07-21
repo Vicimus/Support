@@ -13,13 +13,33 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
  * @property string $template
  * @property mixed[] $tabs
  */
-interface Asset
+interface Asset extends AssetContract
 {
+    /**
+     * Determine if an asset has been approved
+     *
+     * @return bool
+     */
+    public function active(): bool;
+
+    /**
+     * Determine if an asset has been approved
+     *
+     * @return bool
+     */
+    public function approved(): bool;
+
     /**
      * Retrieve the call to actions for the asset
      * @return CallToAction[]
      */
     public function callToActions(): array;
+
+    /**
+     * Get the height
+     * @return int
+     */
+    public function height(): int;
 
     /**
      * Retrieve the instructions on the asset. This is not always populated
@@ -29,6 +49,12 @@ interface Asset
      * @return Instruction[]
      */
     public function instructions(): array;
+
+    /**
+     * The intent of the Asset, conquest|retention
+     * @return string
+     */
+    public function intent(): string;
 
     /**
      * Get the rendered markup
@@ -59,4 +85,10 @@ interface Asset
      * @throws TemplateException
      */
     public function validate(array &$errors = [], ?Validator $validator = null): bool;
+
+    /**
+     * The width of this asset
+     * @return int
+     */
+    public function width(): int;
 }

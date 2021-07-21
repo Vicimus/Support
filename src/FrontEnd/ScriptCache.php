@@ -72,6 +72,18 @@ class ScriptCache implements ConsoleOutput
     }
 
     /**
+     * Get the base href for the scripts
+     *
+     * @param string $locale The locale
+     *
+     * @return string
+     */
+    public function baseHref(string $locale = 'en'): string
+    {
+        return $this->pathToFrontEnd . '/' . $locale;
+    }
+
+    /**
      * Read the script directory and cache the file names
      *
      * @return void
@@ -86,12 +98,13 @@ class ScriptCache implements ConsoleOutput
         ];
 
         $finder = new Finder();
+        /** @var SplFileInfo $locale */
         foreach ($finder->directories()->in($this->pathToFrontEnd)->depth(0) as $locale) {
             $names = [];
             $paths = [];
 
             $fileFinder = new Finder();
-            /** @var SplFileInfo $locale */
+
             $localeName = $locale->getRelativePathname();
             $fileFinder->files()->in($locale->getRealPath())->name('*.js')->depth(0);
             foreach ($fileFinder as $file) {
