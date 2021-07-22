@@ -12,30 +12,34 @@ use Illuminate\Http\Request;
  * @property int $scale
  * @property int $pages
  * @property bool $letter
+ * @property bool $postcard
  */
 class RenderSpecs extends ImmutableObject
 {
     /**
      * RenderSpecs constructor.
      *
-     * @param Request|int|null $width  The width of the pdf element
-     * @param int|null         $height The height of the pdf element
-     * @param int|null         $scale  The scale to use
-     * @param int|null         $pages  The number of pages
-     * @param bool             $letter The letter
+     * @param Request|int|null $width    The width of the pdf element
+     * @param int|null         $height   The height of the pdf element
+     * @param int|null         $scale    The scale to use
+     * @param int|null         $pages    The number of pages
+     * @param bool             $letter   The letter
+     * @param bool             $postcard The postcard toggle
      */
     public function __construct(
         $width,
         ?int $height = null,
         ?int $scale = null,
         ?int $pages = null,
-        bool $letter = true
+        bool $letter = true,
+        bool $postcard = false
     ) {
         if ($width instanceof Request) {
             $pages = (int) $width->get('pages');
             $height = (int) $width->get('height');
             $scale = (int) $width->get('scale');
             $letter = $width->get('letter');
+            $postcard = $width->get('postcard');
             $width = (int) $width->get('width');
         }
 
@@ -45,6 +49,7 @@ class RenderSpecs extends ImmutableObject
             'scale' => $scale,
             'pages' => $pages,
             'letter' => $letter,
+            'postcard' => $postcard,
         ]);
     }
 }
