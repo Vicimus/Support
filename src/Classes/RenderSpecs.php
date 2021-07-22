@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
  * @property int $scale
  * @property int $pages
  * @property bool $letter
+ * @property bool $postcard
  */
 class RenderSpecs extends ImmutableObject
 {

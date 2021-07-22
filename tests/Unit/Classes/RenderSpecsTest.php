@@ -17,10 +17,12 @@ class RenderSpecsTest extends TestCase
      */
     public function testConstructor(): void
     {
-        $render = new RenderSpecs(1, 2, 3, 4);
+        $render = new RenderSpecs(1, 2, 3, 4, false, true);
         $this->assertEquals(1, $render->width);
         $this->assertEquals(2, $render->height);
         $this->assertEquals(3, $render->scale);
         $this->assertEquals(4, $render->pages);
+        $this->assertFalse($render->letter);
+        $this->assertTrue($render->postcard);
     }
 }
