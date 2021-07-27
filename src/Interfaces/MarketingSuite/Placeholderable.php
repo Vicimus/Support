@@ -22,6 +22,20 @@ interface Placeholderable
     public function campaignTitle(): string;
 
     /**
+     * Retrieve the description of the selected form for the campaign
+     *
+     * @return string
+     */
+    public function formDescription(): string;
+
+    /**
+     * Retrieve the title of the selected form for the campaign
+     *
+     * @return string
+     */
+    public function formTitle(): string;
+
+    /**
      * Retrieve the oem name from the implementation
      *
      * @return int|null
