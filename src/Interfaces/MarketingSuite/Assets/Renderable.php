@@ -62,6 +62,13 @@ interface Renderable
     public function touch(): void;
 
     /**
+     * Get the asset type slug
+     *
+     * @return string
+     */
+    public function type(): string;
+
+    /**
      * Update the renderable record with new parameters
      *
      * @param string $newPath The new path to set
