@@ -17,12 +17,6 @@ interface Creatable
     public function active(): bool;
 
     /**
-     * Retrieves the ad set
-     * @return AdSet|null
-     */
-    public function getAdSet(): ?AdSet;
-
-    /**
      * Retrieve a unique identifier for the asset
      * @return string
      */
@@ -43,6 +37,12 @@ interface Creatable
      * @return void
      */
     public function error(string $message): void;
+
+    /**
+     * Retrieves the ad set
+     * @return AdSet|null
+     */
+    public function getAdSet(): ?AdSet;
 
     /**
      * Retrieve a link property value from the asset/asset assetable instance
