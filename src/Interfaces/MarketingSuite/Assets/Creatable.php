@@ -17,6 +17,12 @@ interface Creatable
     public function active(): bool;
 
     /**
+     * Retrieves the ad set
+     * @return AdSet|null
+     */
+    public function getAdSet(): ?AdSet;
+
+    /**
      * Retrieve a unique identifier for the asset
      * @return string
      */
@@ -91,6 +97,15 @@ interface Creatable
      * @return void
      */
     public function replace(string $property, $value = null): void;
+
+    /**
+     * Set the associated ad set id
+     *
+     * @param int $adSetId The ad set Id
+     *
+     * @return void
+     */
+    public function setAdSet(int $adSetId): void;
 
     /**
      * Retrieve the assets start date
