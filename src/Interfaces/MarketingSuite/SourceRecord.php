@@ -2,7 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
@@ -16,10 +16,10 @@ use Illuminate\Support\Collection;
 interface SourceRecord
 {
     /**
-     * A source belongs to many ad sets
-     * @return BelongsToMany
+     * A source has many ad sets
+     * @return HasMany
      */
-    public function adSets(): BelongsToMany;
+    public function adSets(): HasMany;
 
     /**
      * A source has many audiences assigned to it
