@@ -39,6 +39,12 @@ interface Creatable
     public function error(string $message): void;
 
     /**
+     * Retrieves the ad set
+     * @return AdSet|null
+     */
+    public function getAdSet(): ?AdSet;
+
+    /**
      * Retrieve a link property value from the asset/asset assetable instance
      *
      * @param string $field The link property name ('link'/'main_link')
@@ -91,6 +97,15 @@ interface Creatable
      * @return void
      */
     public function replace(string $property, $value = null): void;
+
+    /**
+     * Set the associated ad set id
+     *
+     * @param int $adSetId The ad set Id
+     *
+     * @return void
+     */
+    public function setAdSet(int $adSetId): void;
 
     /**
      * Retrieve the assets start date
