@@ -83,7 +83,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
             $original = json_decode(json_encode($original), true);
         }
 
-//        $this->attributes = $this->castAttributes($original ?? []);
         $this->attributes = $original ?? [];
         $this->validator = $validator;
     }
@@ -98,7 +97,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     public function __get(string $property)
     {
         return $this->doAttributeCast($property, $this->attributes[$property] ?? null) ?? null;
-        return $this->attributes[$property] ?? null;
     }
 
     /**
@@ -197,28 +195,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         }
 
         return $payload;
-    }
-
-    /**
-     * Takes in the original data and converts it according to the protected
-     * local property $this->casts
-     *
-     * @param mixed[] $attributes The attributes to transform
-     *
-     * @return mixed[]
-     */
-    private function castAttributes(array $attributes): array
-    {
-        if (!count($this->casts)) {
-            return $attributes;
-        }
-
-        $transformed = [];
-        foreach ($attributes as $property => $value) {
-            $transformed[$property] = $this->doAttributeCast($property, $value);
-        }
-
-        return $transformed;
     }
 
     /**
