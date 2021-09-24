@@ -83,7 +83,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
             $original = json_decode(json_encode($original), true);
         }
 
-        $this->attributes = $this->castAttributes($original ?? []);
+//        $this->attributes = $this->castAttributes($original ?? []);
+        $this->attributes = $original ?? [];
         $this->validator = $validator;
     }
 
@@ -96,6 +97,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      */
     public function __get(string $property)
     {
+        return $this->doAttributeCast($property, $this->attributes[$property] ?? null) ?? null;
         return $this->attributes[$property] ?? null;
     }
 
