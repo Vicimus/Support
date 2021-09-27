@@ -16,8 +16,6 @@ use Vicimus\Support\Traits\AttributeArrayAccess;
  */
 class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 {
-    use AttributeArrayAccess;
-
     /**
      * The read-only properties
      *
@@ -60,6 +58,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      */
     private $errors;
 
+    private $hasBeenCast = [];
+
     /**
      * ImmutableObject constructor.
      *
@@ -96,7 +96,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      */
     public function __get(string $property)
     {
-        return $this->doAttributeCast($property, $this->attributes[$property] ?? null) ?? null;
+        return $this->doAttributeCast($property);
     }
 
     /**
@@ -180,6 +180,68 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         return $this->toArray();
     }
 
+    public function offsetGet($offset)
+    {
+        return $this->doAttributeCast($offset);
+    }
+
+    /**
+     * Whether a offset exists
+     *
+     * @link  https://php.net/manual/en/arrayaccess.offsetexists.php
+     *
+     * @param mixed $offset <p>
+     *                      An offset to check for.
+     *                      </p>
+     *
+     * @return bool true on success or false on failure.
+     * </p>
+     * <p>
+     * The return value will be casted to boolean if non-boolean was returned.
+     * @since 5.0.0
+     */
+    public function offsetExists($offset): bool
+    {
+        return array_key_exists($offset, $this->attributes);
+    }
+
+    /**
+     * Offset to set
+     *
+     * @link  https://php.net/manual/en/arrayaccess.offsetset.php
+     *
+     * @param mixed $offset <p>
+     *                      The offset to assign the value to.
+     *                      </p>
+     * @param mixed $value  <p>
+     *                      The value to set.
+     *                      </p>
+     *
+     * @return void
+     * @since 5.0.0
+     */
+    public function offsetSet($offset, $value): void
+    {
+        $this->$offset = $value;
+    }
+
+    /**
+     * Offset to unset
+     *
+     * @link  https://php.net/manual/en/arrayaccess.offsetunset.php
+     *
+     * @param mixed $offset <p>
+     *                      The offset to unset.
+     *                      </p>
+     *
+     * @return void
+     * @since 5.0.0
+     */
+    public function offsetUnset($offset): void
+    {
+        unset($this->attributes[$offset]);
+    }
+
     /**
      * Get the array representation
      *
@@ -191,7 +253,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         foreach (array_filter($this->attributes, function ($key) {
             return !in_array($key, $this->hidden, false);
         }, ARRAY_FILTER_USE_KEY) as $property => $item) {
-            $payload[$property] = $this->convertArrayItem($item);
+            $payload[$property] = $this->convertArrayItem($item, $property);
         }
 
         return $payload;
@@ -204,14 +266,14 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      *
      * @return mixed|mixed[]
      */
-    private function convertArrayItem($item)
+    private function convertArrayItem($item, $property)
     {
         if ($item instanceof self) {
             return $item->toArray();
         }
 
         if (!is_array($item)) {
-            return $item;
+            return $this->doAttributeCast($property, $item);
         }
 
         return $this->convertToArray($item);
@@ -228,7 +290,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     {
         $payload = [];
         foreach ($items as $property => $item) {
-            $payload[$property] = $this->convertArrayItem($item);
+            $payload[$property] = $this->convertArrayItem($item, $property);
         }
 
         return $payload;
@@ -238,42 +300,29 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      * Cast a specific value
      *
      * @param string|int $property The property being cast
-     * @param mixed      $value    The current value
      *
      * @return mixed
      */
-    private function doAttributeCast($property, $value)
+    private function doAttributeCast($property, $existingValue = null)
     {
+        if (array_key_exists($property, $this->hasBeenCast)) {
+            return $existingValue ?? $this->attributes[$property] ?? null;
+        }
+
+        $this->hasBeenCast[$property] = true;
+        $value = $existingValue ?? $this->attributes[$property] ?? null;
+
         if ($value === null) {
-            return $value;
+            return null;
         }
 
         if (!array_key_exists($property, $this->casts)) {
             return $value;
         }
 
-        $arrayMode = $this->isNumericArray($value);
-        if (!$arrayMode) {
-            $value = [$value];
-        }
-
-        $transformed = [];
-        foreach ($value as $individual) {
-            $transform = $this->casts[$property];
-            if ($this->isScalar($transform)) {
-                settype($individual, $transform);
-                $transformed[] = $individual;
-                continue;
-            }
-
-            $transformed[] = new $transform($individual);
-        }
-
-        if (!$arrayMode) {
-            return $transformed[0];
-        }
-
-        return $transformed;
+        $value = $this->cast($property, $value);
+        $this->attributes[$property] = $value;
+        return $value;
     }
 
     /**
@@ -311,5 +360,31 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         return in_array($value, [
             'int', 'bool', 'string', 'float',
         ]);
+    }
+
+    private function cast($property, $value)
+    {
+        $arrayMode = $this->isNumericArray($value);
+        if (!$arrayMode) {
+            $value = [$value];
+        }
+
+        $transformed = [];
+        foreach ($value as $individual) {
+            $transform = $this->casts[$property];
+            if ($this->isScalar($transform)) {
+                settype($individual, $transform);
+                $transformed[] = $individual;
+                continue;
+            }
+
+            $transformed[] = new $transform($individual);
+        }
+
+        if (!$arrayMode) {
+            return $transformed[0];
+        }
+
+        return $transformed;
     }
 }
