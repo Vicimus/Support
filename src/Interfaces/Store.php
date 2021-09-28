@@ -28,4 +28,11 @@ interface Store
      * @return mixed
      */
     public function property(string $property, $default = null);
+
+    /**
+     * Convert the store into an array of data
+     *
+     * @return mixed
+     */
+    public function toArray();
 }
