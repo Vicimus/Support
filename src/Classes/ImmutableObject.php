@@ -9,7 +9,6 @@ use JsonSerializable;
 use RuntimeException;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
-use Vicimus\Support\Traits\AttributeArrayAccess;
 
 /**
  * Class ImmutableObject
@@ -180,11 +179,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         return $this->toArray();
     }
 
-    public function offsetGet($offset)
-    {
-        return $this->doAttributeCast($offset);
-    }
-
     /**
      * Whether a offset exists
      *
@@ -203,6 +197,18 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->attributes);
+    }
+
+    /**
+     * Get an attribute by offset
+     *
+     * @param mixed $offset The offset
+     *
+     * @return array|mixed|mixed[]|null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->doAttributeCast($offset);
     }
 
     /**
@@ -260,9 +266,44 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     }
 
     /**
+     * Cast a value
+     *
+     * @param string|int $property The property
+     * @param string|int $value    The value to cast
+     *
+     * @return array|mixed
+     */
+    private function cast($property, $value)
+    {
+        $arrayMode = $this->isNumericArray($value);
+        if (!$arrayMode) {
+            $value = [$value];
+        }
+
+        $transformed = [];
+        foreach ($value as $individual) {
+            $transform = $this->casts[$property];
+            if ($this->isScalar($transform)) {
+                settype($individual, $transform);
+                $transformed[] = $individual;
+                continue;
+            }
+
+            $transformed[] = new $transform($individual);
+        }
+
+        if (!$arrayMode) {
+            return $transformed[0];
+        }
+
+        return $transformed;
+    }
+
+    /**
      * Convert a single item
      *
-     * @param ImmutableObject|mixed[]|mixed $item The item
+     * @param ImmutableObject|mixed[]|mixed $item     The item
+     * @param string|int                    $property The property we are dealing with
      *
      * @return mixed|mixed[]
      */
@@ -299,7 +340,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * Cast a specific value
      *
-     * @param string|int $property The property being cast
+     * @param string|int $property      The property being cast
+     * @param string|int $existingValue The existing value to use
      *
      * @return mixed
      */
@@ -360,31 +402,5 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         return in_array($value, [
             'int', 'bool', 'string', 'float',
         ]);
-    }
-
-    private function cast($property, $value)
-    {
-        $arrayMode = $this->isNumericArray($value);
-        if (!$arrayMode) {
-            $value = [$value];
-        }
-
-        $transformed = [];
-        foreach ($value as $individual) {
-            $transform = $this->casts[$property];
-            if ($this->isScalar($transform)) {
-                settype($individual, $transform);
-                $transformed[] = $individual;
-                continue;
-            }
-
-            $transformed[] = new $transform($individual);
-        }
-
-        if (!$arrayMode) {
-            return $transformed[0];
-        }
-
-        return $transformed;
     }
 }
