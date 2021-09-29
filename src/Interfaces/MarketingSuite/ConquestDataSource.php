@@ -225,6 +225,22 @@ interface ConquestDataSource extends PropertyProvider
     public function process(HasSource $campaign, SourceRecord $source, ResultSet $results): void;
 
     /**
+     * A data source can add to a report about the individual ads
+     *
+     * @param SourceRecord           $source The source record
+     * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
+     * @param DateTimeInterface|null $end    The end date to collect info for (if null then today)
+     *
+     * @return Collection
+     * @throws DataSourceException
+     */
+    public function reportAds(
+        SourceRecord $source,
+        ?DateTimeInterface $date = null,
+        ?DateTimeInterface $end = null
+    ): Collection;
+
+    /**
      * A data source can add to a report about the campaign
      *
      * @param SourceRecord           $source The source record
@@ -236,7 +252,7 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @throws DataSourceException
      */
-    public function report(
+    public function reportCampaign(
         SourceRecord $source,
         ConquestReport $report,
         ?DateTimeInterface $date = null,

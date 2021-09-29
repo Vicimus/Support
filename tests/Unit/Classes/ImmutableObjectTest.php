@@ -182,4 +182,15 @@ class ImmutableObjectTest extends TestCase
         $this->assertIsArray($result['children'][0]['grand-children']);
         $this->assertIsArray($result['children'][0]['grand-children'][0]);
     }
+
+    /**
+     * It's really dumb that you need comments
+     * @return void
+     */
+    public function testArrayAccess(): void
+    {
+        $instance = new ImmutableObject(['banana' => 'strawberry']);
+        $this->assertEquals('strawberry', $instance['banana']);
+        $this->assertTrue(isset($instance['banana']));
+    }
 }
