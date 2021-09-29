@@ -46,17 +46,8 @@ interface HasSource
      * Retrieve the error code associated with the campaign being paused
      *
      * @return int|null
-     * @todo I may not need this.. I think we just always re launch
      */
     public function getPausedErrorCode(): ?int;
-
-    /**
-     * Retrieve the error code associated with the campaign being paused
-     *
-     * @return string|null
-     * @todo I may not need this.. I think we just always re launch
-     */
-    public function getPausedMessage(): ?string;
 
     /**
      * Retrieve the identifier of the has source instance
