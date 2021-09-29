@@ -63,7 +63,7 @@ interface HasSource
      *
      * @return int
      */
-    public function id(): int;
+    public function getId(): int;
 
     /**
      * Retrieve the paused state
