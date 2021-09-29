@@ -43,18 +43,18 @@ interface HasSource
     public function contentId(): ?int;
 
     /**
-     * Retrieve the error code associated with the campaign being paused
-     *
-     * @return int|null
-     */
-    public function getPausedErrorCode(): ?int;
-
-    /**
      * Retrieve the identifier of the has source instance
      *
      * @return int
      */
     public function getId(): int;
+
+    /**
+     * Retrieve the error code associated with the campaign being paused
+     *
+     * @return int|null
+     */
+    public function getPausedErrorCode(): ?int;
 
     /**
      * Retrieve the paused state
