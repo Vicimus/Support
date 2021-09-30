@@ -8,6 +8,13 @@ namespace Vicimus\Support\Interfaces\ADF;
 interface ADFVehicle
 {
     /**
+     * Describe the vehicle
+     *
+     * @return string
+     */
+    public function describe(): string;
+
+    /**
      * Returns the exterior color of the vehicle
      *
      * @return string
@@ -36,6 +43,12 @@ interface ADFVehicle
     public function price(): int;
 
     /**
+     * Retrieve the vehicle stock number
+     * @return string
+     */
+    public function stockNumber(): string;
+
+    /**
      * Get an array of meaningful properties about this vehicle
      *
      * @return string[]
@@ -43,9 +56,22 @@ interface ADFVehicle
     public function toAdfArray(): array;
 
     /**
+     * Get the vehicle trim
+     *
+     * @return string
+     */
+    public function trim(): string;
+
+    /**
      * Should return the type of vehicle. Things like showroom, new, used, etc
      *
      * @return string
      */
     public function type(): string;
+
+    /**
+     * Retrieve the vehicle VIN
+     * @return string
+     */
+    public function vin(): string;
 }
