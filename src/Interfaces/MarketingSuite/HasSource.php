@@ -57,6 +57,13 @@ interface HasSource
     public function getPausedErrorCode(): ?int;
 
     /**
+     * Retrieve the error code associated with the campaign being paused
+     *
+     * @return int|null
+     */
+    public function getPausedMessage(): ?string;
+
+    /**
      * Retrieve the paused state
      * @return bool
      */
