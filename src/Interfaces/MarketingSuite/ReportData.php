@@ -9,9 +9,9 @@ interface ReportData
 {
     /**
      * Retrieve the id of the advertiment the stats are for
-     * @return int
+     * @return string|null
      */
-    public function getAdId(): int;
+    public function getAdId(): ?string;
 
     /**
      * Retrieve the name of the ad
