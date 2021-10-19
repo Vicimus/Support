@@ -58,6 +58,16 @@ class ConquestDataSourceInfo extends ImmutableObject
     }
 
     /**
+     * Set the error message
+     *
+     * @param string $error
+     */
+    public function setError(string $error): void
+    {
+        $this->attributes['error'] = $error;
+    }
+
+    /**
      * Set verification details
      *
      * @param object $verify The verification object
