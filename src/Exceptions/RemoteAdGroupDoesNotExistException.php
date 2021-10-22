@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Exceptions;
 
+/**
+ * Class RemoteAdGroupDoesNotExistException
+ */
 class RemoteAdGroupDoesNotExistException extends RestException
 {
     //
