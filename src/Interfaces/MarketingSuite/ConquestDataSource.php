@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestCompatibilityMatrix;
 use Vicimus\Support\Classes\ConquestDataSourceInfo;
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Exceptions\RemoteAdGroupDoesNotExistException;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\BudgetException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\StatusException;
@@ -133,6 +134,7 @@ interface ConquestDataSource extends PropertyProvider
      * @param string[]     $adIdsToRemove The array of data source ad ids to remove
      *
      * @return void
+     * @throws RemoteAdGroupDoesNotExistException
      */
     public function disable(SourceRecord $source, array $adIdsToRemove): void;
 
