@@ -11,6 +11,7 @@ namespace Vicimus\Support\Classes;
  * @property string                      $category
  * @property ConquestCompatibilityMatrix $matrix
  * @property string[]                    $mediums
+ * @property string                      $error
  */
 class ConquestDataSourceInfo extends ImmutableObject
 {
@@ -55,6 +56,18 @@ class ConquestDataSourceInfo extends ImmutableObject
     public function setDetails($details): void
     {
         $this->attributes['details'] = $details;
+    }
+
+    /**
+     * Set the error message
+     *
+     * @param string $error The error message to display
+     *
+     * @return void
+     */
+    public function setError(string $error): void
+    {
+        $this->attributes['error'] = $error;
     }
 
     /**

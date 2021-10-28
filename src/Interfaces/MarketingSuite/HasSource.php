@@ -43,6 +43,33 @@ interface HasSource
     public function contentId(): ?int;
 
     /**
+     * Retrieve the identifier of the has source instance
+     *
+     * @return int
+     */
+    public function getId(): int;
+
+    /**
+     * Retrieve the error code associated with the campaign being paused
+     *
+     * @return int|null
+     */
+    public function getPausedErrorCode(): ?int;
+
+    /**
+     * Retrieve the error code associated with the campaign being paused
+     *
+     * @return int|null
+     */
+    public function getPausedMessage(): ?string;
+
+    /**
+     * Retrieve the paused state
+     * @return bool
+     */
+    public function paused(): bool;
+
+    /**
      * Retrieve the related source
      * @return MorphOne|Source
      */
@@ -55,8 +82,25 @@ interface HasSource
     public function storeId(): int;
 
     /**
+     * Retrieve the title of the has source instance
+     *
+     * @return string
+     */
+    public function title(): string;
+
+    /**
      * Update the models timestamp
      * @return bool|void
      */
     public function touch();
+
+    /**
+     * Update the model in the database.
+     *
+     * @param string[] $attributes The attribute updates
+     * @param string[] $options    Additional options
+     *
+     * @return bool|mixed
+     */
+    public function update(array $attributes = [], array $options = []);
 }

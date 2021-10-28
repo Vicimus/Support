@@ -9,12 +9,15 @@ use JsonSerializable;
 use RuntimeException;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
+use Vicimus\Support\Traits\AttributeArrayAccess;
 
 /**
  * Class ImmutableObject
  */
 class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 {
+    use AttributeArrayAccess;
+
     /**
      * The read-only properties
      *
@@ -57,8 +60,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      */
     private $errors;
 
-    private $hasBeenCast = [];
-
     /**
      * ImmutableObject constructor.
      *
@@ -82,7 +83,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
             $original = json_decode(json_encode($original), true);
         }
 
-        $this->attributes = $original ?? [];
+        $this->attributes = $this->castAttributes($original ?? []);
         $this->validator = $validator;
     }
 
@@ -95,7 +96,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      */
     public function __get(string $property)
     {
-        return $this->doAttributeCast($property);
+        return $this->attributes[$property] ?? null;
     }
 
     /**
@@ -180,75 +181,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     }
 
     /**
-     * Whether a offset exists
-     *
-     * @link  https://php.net/manual/en/arrayaccess.offsetexists.php
-     *
-     * @param mixed $offset <p>
-     *                      An offset to check for.
-     *                      </p>
-     *
-     * @return bool true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
-     * @since 5.0.0
-     */
-    public function offsetExists($offset): bool
-    {
-        return array_key_exists($offset, $this->attributes);
-    }
-
-    /**
-     * Get an attribute by offset
-     *
-     * @param mixed $offset The offset
-     *
-     * @return array|mixed|mixed[]|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->doAttributeCast($offset);
-    }
-
-    /**
-     * Offset to set
-     *
-     * @link  https://php.net/manual/en/arrayaccess.offsetset.php
-     *
-     * @param mixed $offset <p>
-     *                      The offset to assign the value to.
-     *                      </p>
-     * @param mixed $value  <p>
-     *                      The value to set.
-     *                      </p>
-     *
-     * @return void
-     * @since 5.0.0
-     */
-    public function offsetSet($offset, $value): void
-    {
-        $this->$offset = $value;
-    }
-
-    /**
-     * Offset to unset
-     *
-     * @link  https://php.net/manual/en/arrayaccess.offsetunset.php
-     *
-     * @param mixed $offset <p>
-     *                      The offset to unset.
-     *                      </p>
-     *
-     * @return void
-     * @since 5.0.0
-     */
-    public function offsetUnset($offset): void
-    {
-        unset($this->attributes[$offset]);
-    }
-
-    /**
      * Get the array representation
      *
      * @return mixed[]
@@ -259,22 +191,89 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         foreach (array_filter($this->attributes, function ($key) {
             return !in_array($key, $this->hidden, false);
         }, ARRAY_FILTER_USE_KEY) as $property => $item) {
-            $payload[$property] = $this->convertArrayItem($item, $property);
+            $payload[$property] = $this->convertArrayItem($item);
         }
 
         return $payload;
     }
 
     /**
-     * Cast a value
+     * Takes in the original data and converts it according to the protected
+     * local property $this->casts
      *
-     * @param string|int $property The property
-     * @param string|int $value    The value to cast
+     * @param mixed[] $attributes The attributes to transform
      *
-     * @return array|mixed
+     * @return mixed[]
      */
-    private function cast($property, $value)
+    private function castAttributes(array $attributes): array
     {
+        if (!count($this->casts)) {
+            return $attributes;
+        }
+
+        $transformed = [];
+        foreach ($attributes as $property => $value) {
+            $transformed[$property] = $this->doAttributeCast($property, $value);
+        }
+
+        return $transformed;
+    }
+
+    /**
+     * Convert a single item
+     *
+     * @param ImmutableObject|mixed[]|mixed $item The item
+     *
+     * @return mixed|mixed[]
+     */
+    private function convertArrayItem($item)
+    {
+        if ($item instanceof self) {
+            return $item->toArray();
+        }
+
+        if (!is_array($item)) {
+            return $item;
+        }
+
+        return $this->convertToArray($item);
+    }
+
+    /**
+     * Convert recursively to an array
+     *
+     * @param mixed[] $items The items to convert
+     *
+     * @return mixed[]
+     */
+    private function convertToArray(array $items): array
+    {
+        $payload = [];
+        foreach ($items as $property => $item) {
+            $payload[$property] = $this->convertArrayItem($item);
+        }
+
+        return $payload;
+    }
+
+    /**
+     * Cast a specific value
+     *
+     * @param string|int $property The property being cast
+     * @param mixed      $value    The current value
+     *
+     * @return mixed
+     */
+    private function doAttributeCast($property, $value)
+    {
+        if ($value === null) {
+            return $value;
+        }
+
+        if (!array_key_exists($property, $this->casts)) {
+            return $value;
+        }
+
         $arrayMode = $this->isNumericArray($value);
         if (!$arrayMode) {
             $value = [$value];
@@ -297,74 +296,6 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
         }
 
         return $transformed;
-    }
-
-    /**
-     * Convert a single item
-     *
-     * @param ImmutableObject|mixed[]|mixed $item     The item
-     * @param string|int                    $property The property we are dealing with
-     *
-     * @return mixed|mixed[]
-     */
-    private function convertArrayItem($item, $property)
-    {
-        if ($item instanceof self) {
-            return $item->toArray();
-        }
-
-        if (!is_array($item)) {
-            return $this->doAttributeCast($property, $item);
-        }
-
-        return $this->convertToArray($item);
-    }
-
-    /**
-     * Convert recursively to an array
-     *
-     * @param mixed[] $items The items to convert
-     *
-     * @return mixed[]
-     */
-    private function convertToArray(array $items): array
-    {
-        $payload = [];
-        foreach ($items as $property => $item) {
-            $payload[$property] = $this->convertArrayItem($item, $property);
-        }
-
-        return $payload;
-    }
-
-    /**
-     * Cast a specific value
-     *
-     * @param string|int $property      The property being cast
-     * @param string|int $existingValue The existing value to use
-     *
-     * @return mixed
-     */
-    private function doAttributeCast($property, $existingValue = null)
-    {
-        if (array_key_exists($property, $this->hasBeenCast)) {
-            return $existingValue ?? $this->attributes[$property] ?? null;
-        }
-
-        $this->hasBeenCast[$property] = true;
-        $value = $existingValue ?? $this->attributes[$property] ?? null;
-
-        if ($value === null) {
-            return null;
-        }
-
-        if (!array_key_exists($property, $this->casts)) {
-            return $value;
-        }
-
-        $value = $this->cast($property, $value);
-        $this->attributes[$property] = $value;
-        return $value;
     }
 
     /**
