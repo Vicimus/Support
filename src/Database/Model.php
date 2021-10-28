@@ -181,6 +181,15 @@ class Model extends LaravelModel
         self::$noCasts = [];
     }
 
+    public function setAttribute($key, $value)
+    {
+        if (!(self::$noCasts[static::class] ?? false)) {
+            return parent::setAttribute($key, $value);
+        }
+
+        $this->attributes[$key] = $value;
+    }
+
     /**
      * Turn off casting
      *

@@ -21,6 +21,8 @@ interface PurlContract
      * @param int $duration   The time between pings in milliseconds
      *
      * @return void
+     *
+     * @throws PurlException
      */
     public function ping(int $campaignId, int $customerId, int $duration): void;
 
