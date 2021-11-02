@@ -181,6 +181,11 @@ class Model extends LaravelModel
         self::$noCasts = [];
     }
 
+    /**
+     * Override set attribute
+     *
+     * @return mixed
+     */
     public function setAttribute($key, $value)
     {
         if (!(self::$noCasts[static::class] ?? false)) {
