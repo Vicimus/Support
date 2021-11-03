@@ -182,6 +182,23 @@ class Model extends LaravelModel
     }
 
     /**
+     * Override set attribute
+     *
+     * @param string|mixed $key   The key to set
+     * @param mixed        $value The value to set it to
+     *
+     * @return mixed
+     */
+    public function setAttribute($key, $value)
+    {
+        if (!(self::$noCasts[static::class] ?? false)) {
+            return parent::setAttribute($key, $value);
+        }
+
+        $this->attributes[$key] = $value;
+    }
+
+    /**
      * Turn off casting
      *
      * @return void
