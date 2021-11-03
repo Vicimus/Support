@@ -21,9 +21,15 @@ class ModelTest extends TestCase
         $this->assertNull($model->delete());
     }
 
+    /**
+     * @return void
+     */
     public function testSetAttributeWithNoCasts(): void
     {
         $testing = new class extends Model {
+            /**
+             * @var string[]
+             */
             protected $casts = ['id' => 'int'];
         };
 
