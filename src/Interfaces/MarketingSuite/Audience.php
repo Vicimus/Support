@@ -59,6 +59,12 @@ interface Audience extends HasProperties
     public function name(): string;
 
     /**
+     * Retrieve the remote id used by the audience
+     * @return int|null
+     */
+    public function remoteId(): ?int;
+
+    /**
      * Get a target instance representing who the audience targets
      *
      * @param null|Creatable $asset The asset being targeted
