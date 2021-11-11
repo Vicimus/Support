@@ -4,6 +4,8 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 /**
  * Interface CriteriaContract
+ *
+ * @property array $interests
  */
 interface CriteriaContract
 {
@@ -12,6 +14,10 @@ interface CriteriaContract
      * @return string[]|array
      */
     public function biddable(): array;
+
+    public function getInterests(): array;
+
+    public function locations(): array;
 
     /**
      * Retrieve the keywords for setting the ad group criteria
