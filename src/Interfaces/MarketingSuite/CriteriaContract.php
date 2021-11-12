@@ -4,24 +4,26 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 /**
  * Interface CriteriaContract
- *
- * @property array $interests
  */
 interface CriteriaContract
 {
     /**
-     * Retrieve the payload for setting the campaign biddable group criteria
-     * @return string[]|array
+     * Retrieve the custom affinity audiences selected for the audience
+     *
+     * @return string[][]
      */
-    public function biddable(): array;
-
-    public function getInterests(): array;
-
-    public function locations(): array;
+    public function getAffinity(): array;
 
     /**
-     * Retrieve the keywords for setting the ad group criteria
-     * @return string[]|array
+     * Retrieve the user interests used by the audience
+     * @return string[][]
      */
-    public function keywords(): array;
+    public function getInterests(): array;
+
+    /**
+     * Retrieve the location targeting for the audience
+     *
+     * @return string[][]
+     */
+    public function getLocations(): array;
 }
