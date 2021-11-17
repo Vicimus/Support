@@ -118,14 +118,14 @@ interface ConquestDataSource extends PropertyProvider
      * A campaign was deleted and the source needs to clean up after itself.
      * The name clean was already taken.
      *
-     * @param Campaign     $campaign The campaign that was deleted
+     * @param HasSource    $campaign The campaign that was deleted
      * @param SourceRecord $record   The data source record
      *
      * @return void
      *
      * @throws DataSourceException
      */
-    public function destroy(Campaign $campaign, SourceRecord $record): void;
+    public function destroy(HasSource $campaign, SourceRecord $record): void;
 
     /**
      * Disable multiple assets from a data sources campaign

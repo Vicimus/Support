@@ -8,7 +8,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 interface ReportData
 {
     /**
-     * Retrieve the id of the advertiment the stats are for
+     * Retrieve the id of the advertisement the stats are for
      * @return string|null
      */
     public function getAdId(): ?string;
