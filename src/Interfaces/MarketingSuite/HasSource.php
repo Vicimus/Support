@@ -76,6 +76,12 @@ interface HasSource
     public function source();
 
     /**
+     * Get a status string for the campaign
+     * @return string
+     */
+    public function status(): string;
+
+    /**
      * Get the store id for this campaigns
      * @return int
      */
