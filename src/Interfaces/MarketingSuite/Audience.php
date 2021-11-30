@@ -67,10 +67,10 @@ interface Audience extends HasProperties
     /**
      * Get a target instance representing who the audience targets
      *
-     * @param null|Creatable $asset The asset being targeted
-     * @param bool           $pure  Flag to manipulate the target values
+     * @param null|string $placement The asset placement slug
+     * @param bool        $pure      Flag to manipulate the target values
      *
      * @return Target
      */
-    public function target(?Creatable $asset, bool $pure = true): Target;
+    public function target(?string $placement, bool $pure = true): Target;
 }
