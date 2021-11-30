@@ -267,6 +267,8 @@ interface ConquestDataSource extends PropertyProvider
      * @param SourceRecord $source  The data source
      * @param string[]     $payload The update payload
      * @return void
+     *
+     * @throws DataSourceException
      */
     public function reschedule(SourceRecord $source, array $payload): void;
 

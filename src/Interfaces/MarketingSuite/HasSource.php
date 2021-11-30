@@ -16,6 +16,7 @@ use Illuminate\Support\Collection;
  * @property string $title
  * @property Carbon $end
  * @property Carbon $start
+ * @property Carbon $launched_at
  */
 interface HasSource
 {
