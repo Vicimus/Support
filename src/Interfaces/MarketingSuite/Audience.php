@@ -4,7 +4,6 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Vicimus\Support\Interfaces\MarketingSuite\Assets\Creatable;
 
 /**
  * Interface Audience
