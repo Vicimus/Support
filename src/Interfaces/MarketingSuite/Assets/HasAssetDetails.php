@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
+/**
+ * Interface HasAssetDetails
+ */
 interface HasAssetDetails
 {
     /**
