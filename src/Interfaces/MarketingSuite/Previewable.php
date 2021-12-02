@@ -2,10 +2,12 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Shared\Contracts\HasAssets;
+
 /**
  * Represents a campaign which can have it's assets previewed
  */
-interface Previewable
+interface Previewable extends HasAssets
 {
     /**
      * Do we want AC to return fallback assets
@@ -19,6 +21,13 @@ interface Previewable
      * @return string
      */
     public function oem(): string;
+
+    /**
+     * Get the entity to use as the placeholderable. Sometimes this is itself,
+     * but other times it's a relation off the Previewable.
+     * @return Placeholderable
+     */
+    public function placeholderable(): Placeholderable;
 
     /**
      * Get the store id for this campaign
