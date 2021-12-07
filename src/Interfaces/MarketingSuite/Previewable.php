@@ -5,7 +5,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 /**
  * Represents a campaign which can have its assets previewed
  */
-interface Previewable extends HasAssets
+interface Previewable
 {
     /**
      * Do we want AC to return fallback assets
