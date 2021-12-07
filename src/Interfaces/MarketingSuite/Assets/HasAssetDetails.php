@@ -14,5 +14,5 @@ interface HasAssetDetails
      *
      * @return void
      */
-    public function setError(string $message): void;
+    public function error(string $message): void;
 }
