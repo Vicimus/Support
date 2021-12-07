@@ -2,10 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Shared\Contracts\HasAssets;
-
 /**
- * Represents a campaign which can have it's assets previewed
+ * Represents a campaign which can have its assets previewed
  */
 interface Previewable extends HasAssets
 {
