@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Vicimus\Support\Interfaces\MarketingSuite\Assets\HasAssetDetails;
 
 /**
  * Interface HasSource
@@ -20,6 +21,15 @@ use Illuminate\Support\Collection;
  */
 interface HasSource
 {
+    /**
+     * Retrieve the model which contains asset details
+     *
+     * @param string $remoteId The remote id of the placement
+     *
+     * @return HasAssetDetails|null
+     */
+    public function assetDetails(string $remoteId): ?HasAssetDetails;
+
     /**
      * Has many audiences
      * @return MorphMany
