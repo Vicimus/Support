@@ -8,11 +8,11 @@ namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 interface HasAssetDetails
 {
     /**
-     * Asset errored with the provided payload
+     * Set the error on asset details with the provided message
      *
      * @param string $message The error message
      *
      * @return void
      */
-    public function error(string $message): void;
+    public function setError(string $message): void;
 }
