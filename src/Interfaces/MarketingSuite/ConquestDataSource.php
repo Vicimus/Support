@@ -273,6 +273,15 @@ interface ConquestDataSource extends PropertyProvider
     public function reschedule(SourceRecord $source, array $payload): void;
 
     /**
+     * Method triggered on source initial save
+     *
+     * @param SourceRecord $source The source saved
+     *
+     * @return void
+     */
+    public function save(SourceRecord $source): void;
+
+    /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
      *
      * @param AssetRecord $asset The asset
