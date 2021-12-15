@@ -3,7 +3,7 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 /**
- * Represents a campaign which can have it's assets previewed
+ * Represents a campaign which can have its assets previewed
  */
 interface Previewable
 {
@@ -19,6 +19,13 @@ interface Previewable
      * @return string
      */
     public function oem(): string;
+
+    /**
+     * Get the entity to use as the placeholderable. Sometimes this is itself,
+     * but other times it's a relation off the Previewable.
+     * @return Placeholderable
+     */
+    public function placeholderable(): Placeholderable;
 
     /**
      * Get the store id for this campaign
