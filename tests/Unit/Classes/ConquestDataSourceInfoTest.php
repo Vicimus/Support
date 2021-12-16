@@ -27,7 +27,8 @@ class ConquestDataSourceInfoTest extends TestCase
                 'banana' => 'strawberry',
             ]),
             ['facebook_carousel'],
-            'fa-facebook'
+            'fa-facebook',
+            []
         );
 
         $info->setError('Banana!');
