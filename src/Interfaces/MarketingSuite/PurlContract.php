@@ -14,6 +14,14 @@ use Vicimus\Support\Interfaces\Store;
 interface PurlContract
 {
     /**
+     * Retrieve the path to the background image for a campaign
+     *
+     * @param int $campaignId The campaign
+     * @return string
+     */
+    public function background(int $campaignId): string;
+
+    /**
      * Pinging is a way to
      *
      * @param int $campaignId The campaign id
