@@ -12,6 +12,7 @@ namespace Vicimus\Support\Classes;
  * @property ConquestCompatibilityMatrix $matrix
  * @property string[]                    $mediums
  * @property string                      $error
+ * @property string[]                    $supported
  */
 class ConquestDataSourceInfo extends ImmutableObject
 {
@@ -25,6 +26,7 @@ class ConquestDataSourceInfo extends ImmutableObject
      * @param ConquestCompatibilityMatrix $matrix      The compatibility matrix
      * @param string[]                    $mediums     The supported medium types
      * @param string                      $icon        The source icon
+     * @param string[]                    $supported   The campaign types supported by the source
      */
     public function __construct(
         string $name,
@@ -33,7 +35,8 @@ class ConquestDataSourceInfo extends ImmutableObject
         string $category,
         ConquestCompatibilityMatrix $matrix,
         array $mediums,
-        string $icon
+        string $icon,
+        array $supported
     ) {
         parent::__construct([
             'name' => $name,
@@ -43,6 +46,7 @@ class ConquestDataSourceInfo extends ImmutableObject
             'matrix' => $matrix,
             'mediums' => $mediums,
             'icon' => $icon,
+            'supported' => $supported,
         ]);
     }
 
