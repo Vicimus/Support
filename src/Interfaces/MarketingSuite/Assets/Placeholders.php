@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
+use Vicimus\Onyx\Exceptions\OnyxException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\LocaleException;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 
@@ -10,6 +11,18 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
  */
 interface Placeholders
 {
+    /**
+     * Conditionals on elements
+     *
+     * @param string          $content The content
+     * @param PlaceholderData $data    The placeholder data
+     *
+     * @return string
+     * @throws OnyxException
+     * @throws TemplateException
+     */
+    public function editorIfs(string $content, PlaceholderData $data): string;
+
     /**
      * If the placeholder is a custom, determine that it is formatted correctly with it's label
      *
