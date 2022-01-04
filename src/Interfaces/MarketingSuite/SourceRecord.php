@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
  *
  * @property Collection|Audience[] $audiences
  * @property int $id
+ * @property string $budget_type
  */
 interface SourceRecord
 {
