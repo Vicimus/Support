@@ -1,11 +1,14 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
 use Vicimus\Support\Exceptions\MergeException;
 
+/**
+ * A pdf merger is a class that can take multiple pdfs and merge them into one file
+ * through a variety of methods, including zip them up into a single file, or merge
+ * them all into one single master file.
+ */
 interface PdfMerger
 {
     /**
