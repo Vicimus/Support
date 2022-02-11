@@ -282,6 +282,16 @@ interface ConquestDataSource extends PropertyProvider
     public function save(SourceRecord $source): void;
 
     /**
+     * Handle any pre processing setup required by the source
+     *
+     * @param HasSource $hasSource The local campaign
+     * @param ResultSet $resultSet The results to process
+     *
+     * @return void
+     */
+    public function setup(HasSource $hasSource, ResultSet $resultSet): void;
+
+    /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
      *
      * @param AssetRecord $asset The asset
