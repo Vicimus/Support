@@ -237,6 +237,16 @@ interface ConquestDataSource extends PropertyProvider
     public function process(HasSource $campaign, SourceRecord $source, ResultSet $results): void;
 
     /**
+     * Regenerate the ad placements for the provided source/assets
+     *
+     * @param SourceRecord $source The source the assets belong to
+     * @param Collection   $assets The assets to regenerate for
+     *
+     * @return void
+     */
+    public function regenerate(SourceRecord $source, Collection $assets): void;
+
+    /**
      * A data source can add to a report about the individual ads
      *
      * @param SourceRecord           $source The source record
