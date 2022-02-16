@@ -20,6 +20,16 @@ use Vicimus\Support\Interfaces\Store;
 interface ConquestDataSource extends PropertyProvider
 {
     /**
+     * Unpause a campaign, setting it live at it's source
+     *
+     * @param SourceRecord $source The local source
+     *
+     * @return void
+     * @throws DataSourceException
+     */
+    public function activate(SourceRecord $source): void;
+
+    /**
      * Determine if a source has been approved to go live
      *
      * @param Campaign     $campaign The campaign containing the assets
@@ -280,6 +290,16 @@ interface ConquestDataSource extends PropertyProvider
      * @return void
      */
     public function save(SourceRecord $source): void;
+
+    /**
+     * Handle any pre processing setup required by the source
+     *
+     * @param HasSource $hasSource The local campaign
+     * @param ResultSet $resultSet The results to process
+     *
+     * @return void
+     */
+    public function setup(HasSource $hasSource, ResultSet $resultSet): void;
 
     /**
      * Report on the status of an asset. APPROVED, PENDING or REJECTED
