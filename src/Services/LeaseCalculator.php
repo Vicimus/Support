@@ -24,6 +24,8 @@ class LeaseCalculator
      * @param float|HasLeaseRate $residual The residual or HasLeaseRate instance
      *
      * @return float
+     *
+     * @throws InvalidArgumentException
      */
     public function futureValue($price, $residual): float
     {
@@ -57,6 +59,8 @@ class LeaseCalculator
      * @param int               $frequency The number of payments per year
      *
      * @return int
+     *
+     * @throws InvalidArgumentException
      */
     public function nper($term, int $frequency): int
     {
@@ -119,6 +123,23 @@ class LeaseCalculator
     }
 
     /**
+     * Calculates the rate value used in PMT calculations
+     *
+     * @param float|HasRate $rate      The source rate
+     * @param int           $frequency The frequency
+     *
+     * @return float
+     */
+    public function rate($rate, int $frequency = 12): float
+    {
+        if ($rate instanceof HasRate) {
+            $rate = $rate->rate();
+        }
+
+        return round($rate / $frequency, 9);
+    }
+
+    /**
      * @param float|HasPrice       $price     The price
      * @param float|HasDownpayment $down      The downpayment amount
      * @param float|HasIncentive   $incentive The incentive amount
@@ -149,22 +170,5 @@ class LeaseCalculator
         }
 
         return $total - $down - $incentive;
-    }
-
-    /**
-     * Calculates the rate value used in PMT calculations
-     *
-     * @param float|HasRate $rate      The source rate
-     * @param int           $frequency The frequency
-     *
-     * @return float
-     */
-    public function rate($rate, int $frequency = 12): float
-    {
-        if ($rate instanceof HasRate) {
-            $rate = $rate->rate();
-        }
-
-        return round($rate / $frequency, 9);
     }
 }
