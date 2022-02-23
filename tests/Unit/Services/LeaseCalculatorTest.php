@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Throwable;
 use Vicimus\Support\Interfaces\Financial\LeaseItem;
@@ -88,9 +89,39 @@ class LeaseCalculatorTest extends TestCase
             52,
             169,
             47604.17,
-            25107.5
+            25107.5,
         );
 
         $this->assertGreaterThan(0, $payment);
+    }
+
+    /**
+     * @return void
+     */
+    public function testNotFloatPrice(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $calc = new LeaseCalculator();
+        $calc->futureValue('34003', '0.05');
+    }
+
+    /**
+     * @return void
+     */
+    public function testNotFloatResidual(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $calc = new LeaseCalculator();
+        $calc->futureValue(34003, '0.05');
+    }
+
+    /**
+     * @return void
+     */
+    public function testNotFloatPriceNper(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $calc = new LeaseCalculator();
+        $calc->nper('34', 12);
     }
 }

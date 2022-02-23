@@ -2,6 +2,7 @@
 
 namespace Vicimus\Support\Services;
 
+use InvalidArgumentException;
 use Vicimus\Support\Exceptions\CalculatorException;
 use Vicimus\Support\Interfaces\Financial\HasDownpayment;
 use Vicimus\Support\Interfaces\Financial\HasIncentive;
@@ -16,6 +17,66 @@ use Vicimus\Support\Interfaces\Financial\LeaseItem;
  */
 class LeaseCalculator
 {
+    /**
+     * Get the future value of a lease item
+     *
+     * @param float|HasPrice     $price    The price or a HasPrice instance
+     * @param float|HasLeaseRate $residual The residual or HasLeaseRate instance
+     *
+     * @return float
+     *
+     * @throws InvalidArgumentException
+     */
+    public function futureValue($price, $residual): float
+    {
+        if (!($price instanceof HasPrice) && !is_float($price) && !is_int($price)) {
+            throw new InvalidArgumentException(
+                'Price must be an int or float, or instance of HasPrice',
+            );
+        }
+
+        if (!($residual instanceof HasLeaseRate) && !is_float($residual)) {
+            throw new InvalidArgumentException(
+                'Residual must be a float or instance of HasLeaseRate',
+            );
+        }
+
+        if ($price instanceof HasPrice) {
+            $price = $price->msrp();
+        }
+
+        if ($residual instanceof HasLeaseRate) {
+            $residual = $residual->residual();
+        }
+
+        return $price * $residual;
+    }
+
+    /**
+     * Number of periods calculation (part of PMT)
+     *
+     * @param float|int|HasTerm $term      The term
+     * @param int               $frequency The number of payments per year
+     *
+     * @return int
+     *
+     * @throws InvalidArgumentException
+     */
+    public function nper($term, int $frequency): int
+    {
+        if (!($term instanceof HasTerm) && !is_int($term) && !is_float($term)) {
+            throw new InvalidArgumentException(
+                'Term must be an int or float (number of months in the term) or an instance of HasTerm',
+            );
+        }
+
+        if ($term instanceof HasTerm) {
+            $term = $term->term();
+        }
+
+        return (int) round($term / 12 * $frequency, 0, PHP_ROUND_HALF_DOWN);
+    }
+
     /**
      * Calculate a payment
      *
@@ -61,43 +122,21 @@ class LeaseCalculator
         return round($leftSide / $rightSide, 2);
     }
 
-
     /**
-     * Get the future value of a lease item
+     * Calculates the rate value used in PMT calculations
      *
-     * @param float|HasPrice     $price    The price or a HasPrice instance
-     * @param float|HasLeaseRate $residual The residual or HasLeaseRate instance
+     * @param float|HasRate $rate      The source rate
+     * @param int           $frequency The frequency
      *
      * @return float
      */
-    protected function futureValue($price, $residual): float
+    public function rate($rate, int $frequency = 12): float
     {
-        if ($price instanceof HasPrice) {
-            $price = $price->msrp();
+        if ($rate instanceof HasRate) {
+            $rate = $rate->rate();
         }
 
-        if ($residual instanceof HasLeaseRate) {
-            $residual = $residual->residual();
-        }
-
-        return $price * $residual;
-    }
-
-    /**
-     * Number of periods calculation (part of PMT)
-     *
-     * @param float|int|HasTerm $term      The term
-     * @param int               $frequency The number of payments per year
-     *
-     * @return int
-     */
-    protected function nper($term, int $frequency): int
-    {
-        if ($term instanceof HasTerm) {
-            $term = $term->term();
-        }
-
-        return (int) round($term / 12 * $frequency, 0, PHP_ROUND_HALF_DOWN);
+        return round($rate / $frequency, 9);
     }
 
     /**
@@ -131,22 +170,5 @@ class LeaseCalculator
         }
 
         return $total - $down - $incentive;
-    }
-
-    /**
-     * Calculates the rate value used in PMT calculations
-     *
-     * @param float|HasRate $rate      The source rate
-     * @param int           $frequency The frequency
-     *
-     * @return float
-     */
-    protected function rate($rate, int $frequency = 12): float
-    {
-        if ($rate instanceof HasRate) {
-            $rate = $rate->rate();
-        }
-
-        return round($rate / $frequency, 9);
     }
 }
