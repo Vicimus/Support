@@ -52,6 +52,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Campaign as BaseCampaign;
  * @property DateTime $previews_at
  * @property DateTime $generated_at
  * @property bool $subject_customized
+ * @property bool $has_associated
  */
 interface Campaign extends BaseCampaign
 {

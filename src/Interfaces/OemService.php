@@ -15,9 +15,9 @@ interface OemService
      *
      * @param string $slug The Make to get
      *
+     * @return Make
      * @throws RestException
      *
-     * @return Make
      */
     public function get(string $slug): Make;
 }
