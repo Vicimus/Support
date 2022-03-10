@@ -235,7 +235,7 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @return void
      */
-    public function process(HasSource $campaign, SourceRecord $source, ResultSet $results, bool $basic): void;
+    public function process(HasSource $campaign, SourceRecord $source, ResultSet $results, bool $basic = false): void;
 
     /**
      * Regenerate the ad placements for the provided source/assets
