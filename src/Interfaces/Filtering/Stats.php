@@ -21,6 +21,20 @@ use Vicimus\Billing\Classes\CostBreakdown;
  */
 interface Stats extends JsonSerializable
 {
+    public function emails(): int;
+
+    public function invites(): int;
+
+    public function letters(): int;
+
+    public function postcards(): int;
+
+    public function rvms(): int;
+
+    public function sms(): int;
+
+    public function total(): int;
+
     /**
      * Delete the model
      *
