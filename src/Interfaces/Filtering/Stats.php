@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Interfaces\Filtering;
 
 use JsonSerializable;
-use Vicimus\Billing\Classes\CostBreakdown;
 
 /**
  * Interface Stats
@@ -14,26 +13,13 @@ use Vicimus\Billing\Classes\CostBreakdown;
  * @property int $rvms
  * @property int $excluded
  * @property int $total
- * @property CostBreakdown $cost
+ * @property mixed $cost
  * @property mixed[] $breakdown
  * @property Campaign $campaign
  * @property OptOuts $optOuts
  */
 interface Stats extends JsonSerializable
 {
-    public function emails(): int;
-
-    public function invites(): int;
-
-    public function letters(): int;
-
-    public function postcards(): int;
-
-    public function rvms(): int;
-
-    public function sms(): int;
-
-    public function total(): int;
 
     /**
      * Delete the model
@@ -43,8 +29,43 @@ interface Stats extends JsonSerializable
     public function delete(): bool;
 
     /**
+     * @return int
+     */
+    public function emails(): int;
+
+    /**
+     * @return int
+     */
+    public function invites(): int;
+
+    /**
+     * @return int
+     */
+    public function letters(): int;
+
+    /**
+     * @return int
+     */
+    public function postcards(): int;
+
+    /**
+     * @return int
+     */
+    public function rvms(): int;
+
+    /**
+     * @return int
+     */
+    public function sms(): int;
+
+    /**
      * Return all stats as an array of data
      * @return mixed[]
      */
     public function toArray(): array;
+
+    /**
+     * @return int
+     */
+    public function total(): int;
 }

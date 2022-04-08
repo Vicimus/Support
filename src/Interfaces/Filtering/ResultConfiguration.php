@@ -2,7 +2,10 @@
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
+/**
+ * Result configuration
+ */
 interface ResultConfiguration
 {
-
+    //
 }

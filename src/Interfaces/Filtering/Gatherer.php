@@ -19,6 +19,16 @@ interface Gatherer
      */
     public function count(Filter $filter, Campaign $campaign): int;
 
+    /**
+     * Get customer information
+     *
+     * @param Filter|null              $filter         The filter
+     * @param Campaign                 $campaign       The campaign
+     * @param ResultConfiguration|null $customerFilter The customer filter info for paging
+     * @param int                      $preferRecorded Prefer recorded or theoretical
+     *
+     * @return mixed
+     */
     public function customers(
         ?Filter $filter,
         Campaign $campaign,
@@ -36,5 +46,13 @@ interface Gatherer
      */
     public function stats(Filter $filter, Campaign $campaign): Stats;
 
+    /**
+     * Get a customer query object
+     *
+     * @param Filter   $filter   The filter
+     * @param Campaign $campaign The campaign
+     *
+     * @return Builder
+     */
     public function toCustomerQuery(Filter $filter, Campaign $campaign): Builder;
 }
