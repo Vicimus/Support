@@ -40,6 +40,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $send_sms
  * @property Carbon $print_request
  * @property Carbon $sms_at
+ * @property bool $send_postcard
  */
 interface Campaign extends Eloquent
 {
