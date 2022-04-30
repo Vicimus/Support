@@ -13,6 +13,8 @@ use JsonSerializable;
  * @property int $rvms
  * @property int $excluded
  * @property int $total
+ * @property int $sms
+ * @property int $postcards
  * @property mixed $cost
  * @property mixed[] $breakdown
  * @property Campaign $campaign
