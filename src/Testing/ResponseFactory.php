@@ -24,7 +24,7 @@ class ResponseFactory implements ResponseFactoryContract
      */
     public function make($content = '', $status = 200, array $headers = [])
     {
-        return null;
+        return new \Illuminate\Http\Response($content, $status, $headers);
     }
 
     /**
