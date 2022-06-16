@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Interfaces\Filtering;
 
 use JsonSerializable;
+use Vicimus\Support\Interfaces\CostBreakdownContract;
 
 /**
  * Interface Stats
@@ -16,12 +17,17 @@ use JsonSerializable;
  * @property int $sms
  * @property int $postcards
  * @property mixed $cost
- * @property mixed[] $breakdown
+ * @property CostBreakdown|mixed[] $breakdown
  * @property Campaign $campaign
  * @property OptOuts $optOuts
  */
 interface Stats extends JsonSerializable
 {
+    /**
+     * Retrieve the cost breakdown object
+     * @return CostBreakdownContract
+     */
+    public function breakdown(): CostBreakdownContract;
 
     /**
      * Delete the model
