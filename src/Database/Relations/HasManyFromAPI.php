@@ -127,6 +127,8 @@ class HasManyFromAPI
      * @throws InvalidArgumentException
      *
      * @return void
+     *
+     * @deprecated
      */
     public function associate(array $ids, array $additional = []): void
     {
