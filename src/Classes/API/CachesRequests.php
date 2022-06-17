@@ -77,10 +77,10 @@ trait CachesRequests
     /**
      * Clear the cache
      *
-     * @param string      $method  The method used
-     * @param string      $path    The path used
-     * @param string[]    $payload The payload sent
-     * @param string|null $tag     Special tag to use
+     * @param string              $method  The method used
+     * @param string              $path    The path used
+     * @param string[]|string[][] $payload The payload sent
+     * @param string|null         $tag     Special tag to use
      *
      * @return bool
      * @throws RestException
