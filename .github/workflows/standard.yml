@@ -10,9 +10,9 @@ jobs:
       - uses: vicimus/clean-action@master
       - uses: actions/checkout@v2
       - uses: shivammathur/setup-php@v1
+      - name: Install Dependencies
       - with:
           php-version: '7.4'
-      - name: Install Dependencies
         run: |
           composer install --no-interaction
       - name: Execute php linter
@@ -25,9 +25,9 @@ jobs:
       - uses: vicimus/clean-action@master
       - uses: actions/checkout@v2
       - uses: shivammathur/setup-php@v1
+      - name: Install Dependencies
       - with:
           php-version: '7.4'
-      - name: Install Dependencies
         run: |
           composer install --no-interaction
       - name: Set up CodeClimate env
