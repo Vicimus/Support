@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   phpcs:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: vicimus/clean-action@master
       - uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
           vendor/bin/phpcs -p -n src tests --standard=vendor/vicimus/standard/VicimusStandard --report=full
 
   phpunit:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: vicimus/clean-action@master
       - uses: actions/checkout@v2
