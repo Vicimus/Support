@@ -5,10 +5,14 @@ on:
       - master
 jobs:
   phpcs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: vicimus/clean-action@master
       - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
       - name: Install Dependencies
         run: |
           composer install --no-interaction
@@ -17,10 +21,14 @@ jobs:
           vendor/bin/phpcs -p -n src tests --standard=vendor/vicimus/standard/VicimusStandard --report=full
 
   phpunit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: vicimus/clean-action@master
       - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
       - name: Install Dependencies
         run: |
           composer install --no-interaction
