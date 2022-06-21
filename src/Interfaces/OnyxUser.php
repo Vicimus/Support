@@ -6,7 +6,6 @@ namespace Vicimus\Support\Interfaces;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Vicimus\Support\Interfaces\Store;
 
 /**
  * @property int|string $id
