@@ -39,7 +39,7 @@ interface OnyxUser extends Authenticatable
      *
      * @return bool
      */
-    public function hasStoreById(int $id): bool;
+    public function hasStoreById(int $id, bool $ignoreAdmin = false): bool;
 
     /**
      * Is the user an admin.
