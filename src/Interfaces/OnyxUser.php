@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -35,11 +33,12 @@ interface OnyxUser extends Authenticatable
     /**
      * Check if the user belongs to a specific store by ID
      *
-     * @param int $id The store ID to check
+     * @param int  $id          The store ID to check
+     * @param bool $ignoreAdmin Ignore admin and check if the user actually has the store
      *
      * @return bool
      */
-    public function hasStoreById(int $id): bool;
+    public function hasStoreById(int $id, bool $ignoreAdmin = false): bool;
 
     /**
      * Is the user an admin.
