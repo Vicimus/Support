@@ -33,10 +33,10 @@ interface Store
     /**
      * Override set attribute
      *
-     * @param string|mixed $key   The key to set
-     * @param mixed        $value The value to set it to
+     * @param string|int|bool      $key The key to set
+     * @param string|int|bool|null $value The value to set it to
      *
-     * @return mixed
+     * @return void
      */
     public function setAttribute($key, $value);
 
