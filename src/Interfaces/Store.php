@@ -38,7 +38,7 @@ interface Store
      *
      * @return void
      */
-    public function setAttribute($key, $value): void;
+    public function setAttribute($key, $value);
 
     /**
      * Convert the store into an array of data
