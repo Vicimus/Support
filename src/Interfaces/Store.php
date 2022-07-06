@@ -31,6 +31,16 @@ interface Store
     public function property(string $property, $default = null);
 
     /**
+     * Override set attribute
+     *
+     * @param string|int|bool      $key   The key to set
+     * @param string|int|bool|null $value The value to set it to
+     *
+     * @return void
+     */
+    public function setAttribute($key, $value);
+
+    /**
      * Convert the store into an array of data
      *
      * @return mixed
