@@ -220,16 +220,4 @@ class Model extends LaravelModel
     {
         return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
     }
-
-    /**
-     * Prepare a date for array / JSON serialization.
-     *
-     * @param DateTimeInterface $date The date
-     *
-     * @return string
-     */
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }
