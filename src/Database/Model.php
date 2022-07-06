@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Database;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Support\Str;
