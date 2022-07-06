@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Database;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Support\Str;
@@ -219,17 +218,5 @@ class Model extends LaravelModel
     protected function removeTableFromKey($key)
     {
         return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
-    }
-
-    /**
-     * Prepare a date for array / JSON serialization.
-     *
-     * @param DateTimeInterface $date The date
-     *
-     * @return string
-     */
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }
