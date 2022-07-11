@@ -90,6 +90,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool $bucket_vehicles
  * @property int $targeting
  * @property bool $active
+ * @property bool $keep_additions
  */
 interface Filter extends Eloquent
 {
