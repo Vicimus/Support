@@ -22,6 +22,12 @@ interface CustomerAssociation extends Eloquent
     public function campaign(): BelongsTo;
 
     /**
+     * Who initiated the association
+     * @return string|int|null
+     */
+    public function createdBy();
+
+    /**
      * Refresh
      * @return string|int|bool
      */
