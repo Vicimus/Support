@@ -2,8 +2,6 @@
 
 namespace Vicimus\Support\Tests\Unit\Database;
 
-use Illuminate\Support\Carbon;
-use JsonException;
 use Vicimus\Support\Database\Model;
 use Vicimus\Support\Testing\TestCase;
 
@@ -41,17 +39,5 @@ class ModelTest extends TestCase
         $instance->id = '1';
 
         $this->assertSame('1', $instance->id);
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function testSerializeDates(): void
-    {
-        $model = new Model();
-        $model->banana = new Carbon('2022-07-07 11:11:11');
-
-        $payload = json_decode(json_encode($model, JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
-        $this->assertEquals((new Carbon('2022-07-07 11:11:11'))->toISOString(), $payload->banana);
     }
 }
