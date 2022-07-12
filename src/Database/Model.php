@@ -2,8 +2,11 @@
 
 namespace Vicimus\Support\Database;
 
+use Carbon\CarbonImmutable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -218,5 +221,12 @@ class Model extends LaravelModel
     protected function removeTableFromKey($key)
     {
         return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date instanceof \DateTimeImmutable ?
+            CarbonImmutable::instance($date)->toISOString(true) :
+            Carbon::instance($date)->toISOString(true);
     }
 }
