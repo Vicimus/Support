@@ -33,6 +33,16 @@ interface OnyxUser extends Authenticatable
     /**
      * Check if the user belongs to a specific store by ID
      *
+     * @param int  $id          The group ID to check
+     * @param bool $ignoreAdmin Ignore admin and check if the user actually has the store
+     *
+     * @return bool
+     */
+    public function hasGroupById(int $id, bool $ignoreAdmin = false): bool;
+
+    /**
+     * Check if the user belongs to a specific store by ID
+     *
      * @param int  $id          The store ID to check
      * @param bool $ignoreAdmin Ignore admin and check if the user actually has the store
      *
