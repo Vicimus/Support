@@ -200,7 +200,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      */
     public function detectEnvironment(Closure $callback): string
     {
-        return $this->environment = $callback();
+        $this->environment = $callback();
+        return $this->environment;
     }
 
     /**
