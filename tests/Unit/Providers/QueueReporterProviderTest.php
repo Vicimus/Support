@@ -87,7 +87,7 @@ class QueueReporterProviderTest extends TestCase
 
         /* phpcs:enable */
 
-        $this->reporter = new QueueReporterProvider(app());
+        $this->reporter = new QueueReporterProvider($app);
     }
     /**
      * Test failing

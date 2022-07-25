@@ -236,6 +236,10 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      */
     public function environment(...$environments)
     {
+        if (!count($environments)) {
+            return $this->environment;
+        }
+
         return in_array($this->environment, $environments, false);
     }
 
