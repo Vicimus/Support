@@ -200,7 +200,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      */
     public function detectEnvironment(Closure $callback): string
     {
-        return $this->environment = $callback();
+        $this->environment = $callback();
+        return $this->environment;
     }
 
     /**
@@ -235,6 +236,10 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      */
     public function environment(...$environments)
     {
+        if (!count($environments)) {
+            return $this->environment;
+        }
+
         return in_array($this->environment, $environments, false);
     }
 
