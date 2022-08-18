@@ -19,4 +19,10 @@ interface Identifiable
      * @return int
      */
     public function primaryId(): ?int;
+
+    /**
+     * Some identifiables have short urls
+     * @return string|null
+     */
+    public function shortUrl(): ?string;
 }
