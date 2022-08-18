@@ -36,6 +36,7 @@ use Throwable;
  * @method static Builder|static has(string $relationship)
  * @method static bool truncate()
  * @method static int count()
+ * @property int $id
  */
 class Model extends LaravelModel
 {
