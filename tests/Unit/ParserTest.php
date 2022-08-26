@@ -97,6 +97,10 @@ class ParserTest extends TestCase
         $this->assertEquals('US', $result);
 
         $this->assertNull(Parser::parseCountry('banana'));
+
+        $this->assertEquals('UK', Parser::parseCountry('United Kingdom'));
+        $this->assertEquals('UK', Parser::parseCountry('uk'));
+        $this->assertEquals('UK', Parser::parseCountry('united-kingdom'));
     }
 
     /**
