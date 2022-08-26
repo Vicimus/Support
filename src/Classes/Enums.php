@@ -9,7 +9,7 @@ use function key_exists;
  */
 class Enums
 {
-    const STATES = [
+    public const STATES = [
         'CA' => [
             'AB' => 'Alberta',
             'BC' => 'British Columbia',
@@ -103,7 +103,7 @@ class Enums
         return [
             'CA' => '/\b(ca|canada)\b/iu',
             'US' => '/\b(usa?|united[- ]states|[ée]tats[- ]unis)\b/iu',
-            'UK' => '/\b(uk|united[- ]kingdom\b/iu',
+            'UK' => '/\b(uk|united[- ]kingdom)\b/iu',
         ];
     }
 
@@ -197,14 +197,10 @@ class Enums
     public static function states(?string $country = null): ?array
     {
         if (!$country) {
-            return $states;
+            return self::STATES;
         }
 
-        if (!key_exists($country, $states)) {
-            return null;
-        }
-
-        return self::STATES[$country];
+        return self::STATES[$country] ?? null;
     }
 
     /**
