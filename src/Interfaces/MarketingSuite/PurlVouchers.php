@@ -4,6 +4,9 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Http\Request;
 
+/**
+ * Interface PurlVouchers
+ */
 interface PurlVouchers
 {
     /**

@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+/**
+ * Interface PurlDomainContract
+ */
 interface PurlDomainContract
 {
     //

@@ -4,6 +4,9 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/**
+ * Interface HasIdentifiers
+ */
 interface HasIdentifiers
 {
     /**
