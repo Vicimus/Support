@@ -26,6 +26,7 @@ class RenderSpecs extends ImmutableObject
      * @param int|null         $pages    The number of pages
      * @param bool             $letter   The letter
      * @param bool             $postcard The postcard toggle
+     * @param string|null      $format   The page format to use
      */
     public function __construct(
         $width,
@@ -34,7 +35,7 @@ class RenderSpecs extends ImmutableObject
         ?int $pages = null,
         bool $letter = true,
         bool $postcard = false,
-        string $format = null
+        ?string $format = null
     ) {
         if ($width instanceof Request) {
             $pages = (int) $width->get('pages');
