@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
  * @property int $pages
  * @property bool $letter
  * @property bool $postcard
+ * @property string $format
  */
 class RenderSpecs extends ImmutableObject
 {
@@ -32,7 +33,8 @@ class RenderSpecs extends ImmutableObject
         ?int $scale = null,
         ?int $pages = null,
         bool $letter = true,
-        bool $postcard = false
+        bool $postcard = false,
+        string $format = null
     ) {
         if ($width instanceof Request) {
             $pages = (int) $width->get('pages');
@@ -40,6 +42,7 @@ class RenderSpecs extends ImmutableObject
             $scale = (int) $width->get('scale');
             $letter = $width->get('letter');
             $postcard = $width->get('postcard');
+            $format = $width->get('pageType');
             $width = (int) $width->get('width');
         }
 
@@ -50,6 +53,7 @@ class RenderSpecs extends ImmutableObject
             'pages' => $pages,
             'letter' => $letter,
             'postcard' => $postcard,
+            'format' => $format,
         ]);
     }
 }
