@@ -97,7 +97,7 @@ interface HasSource
      *
      * @return string
      */
-    public function title(): string;
+    public function getTitle(): string;
 
     /**
      * Update the models timestamp
