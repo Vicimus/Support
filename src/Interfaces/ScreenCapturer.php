@@ -38,7 +38,7 @@ interface ScreenCapturer
      *
      * @return string
      */
-    public function pdf(string $url, RenderSpecs $specs, string &$command): string;
+    public function pdf(string $url, RenderSpecs $specs, string &$command = ''): string;
 
     /**
      * Convert a URL into a PNG representation of that web-page
