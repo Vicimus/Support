@@ -32,12 +32,13 @@ interface ScreenCapturer
     /**
      * Convert a URL into a PDF representation of that web-page
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs Specifications for how to render
+     * @param string      $url     The URL to capture
+     * @param RenderSpecs $specs   Specifications for how to render
+     * @param string      $command The command run, by reference
      *
      * @return string
      */
-    public function pdf(string $url, RenderSpecs $specs): string;
+    public function pdf(string $url, RenderSpecs $specs, string &$command): string;
 
     /**
      * Convert a URL into a PNG representation of that web-page
