@@ -31,7 +31,7 @@ interface OnyxUser extends Authenticatable
     public function getActiveStore(): ?Store;
 
     /**
-     * Check if the user belongs to a specific store by ID
+     * Check if the user belongs to a specific group by ID
      *
      * @param int  $id          The group ID to check
      * @param bool $ignoreAdmin Ignore admin and check if the user actually has the store
