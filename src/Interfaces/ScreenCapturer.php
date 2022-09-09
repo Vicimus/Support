@@ -24,10 +24,11 @@ interface ScreenCapturer
      *
      * @param string      $url   The URL to capture
      * @param RenderSpecs $specs The render specs
+     * @param string      $command The command run, by reference
      *
      * @return string
      */
-    public function jpg(string $url, ?RenderSpecs $specs = null): string;
+    public function jpg(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 
     /**
      * Convert a URL into a PDF representation of that web-page
@@ -45,8 +46,9 @@ interface ScreenCapturer
      *
      * @param string      $url   The URL to capture
      * @param RenderSpecs $specs The specs
+     * @param string      $command The command run, by reference
      *
      * @return string
      */
-    public function png(string $url, ?RenderSpecs $specs = null): string;
+    public function png(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 }
