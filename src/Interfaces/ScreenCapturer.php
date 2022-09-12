@@ -51,4 +51,14 @@ interface ScreenCapturer
      * @return string
      */
     public function png(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
+
+    /**
+     * Convert a URL into a Web P
+     *
+     * @param string      $url   The URL to capture
+     * @param RenderSpecs $specs The specs
+     * @param string      $command The command run, by reference
+     * @return string
+     */
+    public function webp(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 }
