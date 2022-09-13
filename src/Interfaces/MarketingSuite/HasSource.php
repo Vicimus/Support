@@ -75,6 +75,13 @@ interface HasSource
     public function getPausedMessage(): ?string;
 
     /**
+     * Retrieve the title of the has source instance
+     *
+     * @return string
+     */
+    public function getTitle(): string;
+
+    /**
      * Retrieve the paused state
      * @return bool
      */
@@ -91,13 +98,6 @@ interface HasSource
      * @return int
      */
     public function storeId(): int;
-
-    /**
-     * Retrieve the title of the has source instance
-     *
-     * @return string
-     */
-    public function title(): string;
 
     /**
      * Update the models timestamp

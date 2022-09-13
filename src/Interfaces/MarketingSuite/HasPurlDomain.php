@@ -8,7 +8,7 @@ use Vicimus\Support\Interfaces\Eloquent;
 /**
  * Interface HasPurlDomain
  *
- * @property Eloquent $domain
+ * @property Eloquent|PurlDomainContract $domain
  */
 interface HasPurlDomain
 {
@@ -18,6 +18,12 @@ interface HasPurlDomain
      * @return BelongsTo
      */
     public function domain(): BelongsTo;
+
+    /**
+     * Retrieve the purl domain to use for the instance
+     * @return PurlDomainContract
+     */
+    public function getDomain(): PurlDomainContract;
 
     /**
      * The purl domain id

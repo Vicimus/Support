@@ -11,6 +11,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  * @property bool $testing
  * @property string $referer
  * @property int $ctaId
+ * @property string $customerType
  */
 interface PurlEvent
 {

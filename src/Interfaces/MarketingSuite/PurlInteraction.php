@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Shared\Contracts\Prospect;
+
 /**
  * Interface PurlInteraction
  *
@@ -24,11 +26,18 @@ interface PurlInteraction
      */
     public function customer(): int;
 
+
     /**
      * An explanation of the action
      * @return string
      */
     public function explanation(): ?string;
+
+    /**
+     * Retrieve the prospect associated with the interaction
+     * @return Prospect
+     */
+    public function prospect(): Prospect;
 
     /**
      * The score for the interaction
