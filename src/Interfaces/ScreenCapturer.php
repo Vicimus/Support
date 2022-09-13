@@ -22,9 +22,9 @@ interface ScreenCapturer
     /**
      * Convert a URL into a JPG representation of that web-page
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs The render specs
-     * @param string      $command The command run, by reference
+     * @param string           $url     The URL to capture
+     * @param RenderSpecs|null $specs   The render specs
+     * @param string           $command The command run, by reference
      *
      * @return string
      */
@@ -44,9 +44,9 @@ interface ScreenCapturer
     /**
      * Convert a URL into a PNG representation of that web-page
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs The specs
-     * @param string      $command The command run, by reference
+     * @param string           $url     The URL to capture
+     * @param RenderSpecs|null $specs   The specs
+     * @param string           $command The command run, by reference
      *
      * @return string
      */
@@ -55,9 +55,9 @@ interface ScreenCapturer
     /**
      * Convert a URL into a Web P
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs The specs
-     * @param string      $command The command run, by reference
+     * @param string           $url     The URL to capture
+     * @param RenderSpecs|null $specs   The specs
+     * @param string           $command The command run, by reference
      * @return string
      */
     public function webp(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
