@@ -22,30 +22,43 @@ interface ScreenCapturer
     /**
      * Convert a URL into a JPG representation of that web-page
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs The render specs
+     * @param string           $url     The URL to capture
+     * @param RenderSpecs|null $specs   The render specs
+     * @param string           $command The command run, by reference
      *
      * @return string
      */
-    public function jpg(string $url, ?RenderSpecs $specs = null): string;
+    public function jpg(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 
     /**
      * Convert a URL into a PDF representation of that web-page
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs Specifications for how to render
+     * @param string      $url     The URL to capture
+     * @param RenderSpecs $specs   Specifications for how to render
+     * @param string      $command The command run, by reference
      *
      * @return string
      */
-    public function pdf(string $url, RenderSpecs $specs): string;
+    public function pdf(string $url, RenderSpecs $specs, string &$command = ''): string;
 
     /**
      * Convert a URL into a PNG representation of that web-page
      *
-     * @param string      $url   The URL to capture
-     * @param RenderSpecs $specs The specs
+     * @param string           $url     The URL to capture
+     * @param RenderSpecs|null $specs   The specs
+     * @param string           $command The command run, by reference
      *
      * @return string
      */
-    public function png(string $url, ?RenderSpecs $specs = null): string;
+    public function png(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
+
+    /**
+     * Convert a URL into a Web P
+     *
+     * @param string           $url     The URL to capture
+     * @param RenderSpecs|null $specs   The specs
+     * @param string           $command The command run, by reference
+     * @return string
+     */
+    public function webp(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 }
