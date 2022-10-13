@@ -24,6 +24,11 @@ use Vicimus\Support\Interfaces\Billing\CostBreakdownContract;
 interface Stats extends JsonSerializable
 {
     /**
+     * @return int
+     */
+    public function bdc(): int;
+
+    /**
      * Retrieve the cost breakdown object
      * @return CostBreakdownContract
      */
