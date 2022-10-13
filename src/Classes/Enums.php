@@ -487,6 +487,7 @@ class Enums
     public static function vehicleSaleClassesPatterns(): array
     {
         return [
+            'demo' => '/\b(demo)\b/iu',
             'new' => '/\b(new|neuf)\b/iu',
             'used' => '/\b(used|usag[eé]e?)\b/iu',
         ];
