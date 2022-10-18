@@ -26,7 +26,6 @@ interface PurlEvents
     /**
      * Handle purl submissions
      *
-     * @param ADFInfo  $info    The ADF info
      * @param string[] $request The request payload
      * @param int|null $lead    The lead id to be populated
      * @param bool     $testing Was this a testing submission
@@ -36,7 +35,7 @@ interface PurlEvents
      * @throws PurlSubmissionException
      * @throws RestException
      */
-    public function submission(ADFInfo $info, array $request, ?int &$lead = null, bool $testing = false): Confirmation;
+    public function submission(array $request, ?int &$lead = null, bool $testing = false): Confirmation;
 
     /**
      * Add a temperature to the records
