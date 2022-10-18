@@ -85,7 +85,13 @@ interface Campaign extends BaseCampaign
     public function includes(): HasMany;
 
     /**
-     * Check if an campaign is email only
+     * Check if a campaign is bdc only
+     * @return bool
+     */
+    public function isBdcOnly(): bool;
+
+    /**
+     * Check if a campaign is email only
      *
      * @return bool
      */
