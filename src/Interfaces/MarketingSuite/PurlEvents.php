@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Retention\Exceptions\PurlSubmissionException;
-use Vicimus\ADF\ADFInfo;
 use Vicimus\Leads\Models\Confirmation;
 use Vicimus\Support\Exceptions\RestException;
 
