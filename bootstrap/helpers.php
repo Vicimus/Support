@@ -44,6 +44,28 @@ if (!function_exists('___')) {
     }
 }
 
+if (!function_exists('tran')) {
+    /**
+     * Auto-write to translation files
+     *
+     * @param string|mixed $key       The key to look for
+     * @param string|mixed $default   The default to use
+     * @param mixed[]      $variables Variable placeholders
+     *
+     * @return mixed
+     */
+    function tran($key, $default = null, array $variables = [])
+    {
+        /** @var Translator $translator */
+        $translator = app(Translator::class);
+        try {
+            return $translator->tran($key, $default, $variables);
+        } catch (TranslationFileException $ex) {
+            return $default;
+        }
+    }
+}
+
 if (defined('LARAVEL_START')) {
     return;
 }
@@ -275,28 +297,6 @@ if (!function_exists('now')) {
     function now()
     {
         return Carbon\Carbon::now();
-    }
-}
-
-if (!function_exists('tran')) {
-    /**
-     * Auto-write to translation files
-     *
-     * @param string|mixed $key       The key to look for
-     * @param string|mixed $default   The default to use
-     * @param mixed[]      $variables Variable placeholders
-     *
-     * @return mixed
-     */
-    function tran($key, $default = null, array $variables = [])
-    {
-        /** @var Translator $translator */
-        $translator = app(Translator::class);
-        try {
-            return $translator->tran($key, $default, $variables);
-        } catch (TranslationFileException $ex) {
-            return $default;
-        }
     }
 }
 
