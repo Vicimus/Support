@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-use DealerLive\Config\Services\Configuration;
+use Core\Services\Configuration;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Session\SessionManager;
@@ -63,6 +63,31 @@ if (!function_exists('tran')) {
         } catch (TranslationFileException $ex) {
             return $default;
         }
+    }
+}
+
+if (!function_exists('setting')) {
+    /**
+     * Check a config setting
+     *
+     * @param string $property The property to check
+     *
+     * @return Configuration|mixed
+     */
+    function setting($property = null, $default = null)
+    {
+        /** @var Configuration $service */
+        $service = app(Configuration::class);
+        if (!$property) {
+            return $service;
+        }
+
+        $result = $service->check($property);
+        if ($result === null) {
+            return $default;
+        }
+
+        return $result;
     }
 }
 
@@ -242,31 +267,6 @@ if (!function_exists('event')) {
         }
 
         return app('events')->fire($event, $payload);
-    }
-}
-
-if (!function_exists('setting')) {
-    /**
-     * Check a config setting
-     *
-     * @param string $property The property to check
-     *
-     * @return Configuration|mixed
-     */
-    function setting($property = null, $default = null)
-    {
-        /** @var Configuration $service */
-        $service = app(Configuration::class);
-        if (!$property) {
-            return $service;
-        }
-
-        $result = $service->check($property);
-        if ($result === null) {
-            return $default;
-        }
-
-        return $result;
     }
 }
 
