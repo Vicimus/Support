@@ -14,6 +14,7 @@ use Vicimus\Support\Exceptions\ApiRelationException;
 
 /**
  * Class HasManyFromAPI
+ * @deprecated
  */
 class HasManyFromAPI
 {
