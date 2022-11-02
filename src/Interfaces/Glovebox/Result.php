@@ -15,16 +15,16 @@ interface Result
     public function failed(): bool;
 
     /**
-     * Check if the command succeeded
-     *
-     * @return bool
-     */
-    public function success(): bool;
-
-    /**
      * Get the output from the command
      *
      * @return array
      */
     public function output(): bool;
+
+    /**
+     * Check if the command succeeded
+     *
+     * @return bool
+     */
+    public function success(): bool;
 }
