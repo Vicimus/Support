@@ -91,6 +91,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property int $targeting
  * @property bool $active
  * @property bool $keep_additions
+ * @property bool $scale_mediums
  */
 interface Filter extends Eloquent
 {
@@ -105,7 +106,7 @@ interface Filter extends Eloquent
     /**
      * Get an array of all the filter attributes
      *
-     * @return string[]|mixed
+     * @return string[]
      */
     public function toArray();
 }
