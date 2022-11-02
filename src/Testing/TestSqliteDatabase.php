@@ -157,13 +157,18 @@ trait TestSqliteDatabase
 
         $output = '';
         $size = '';
+        $schemas = '';
 
         if (file_exists(database_path('migrations'))) {
             exec(sprintf('find %s -type f', database_path('migrations')), $output);
             exec(sprintf('du -s %s', database_path('migrations')), $size);
         }
 
-        return md5(json_encode($output) . json_encode($size));
+        if (file_exists(database_path('schema'))) {
+            exec(sprintf('du -s %s', database_path('schema')), $schemas);
+        }
+
+        return md5(json_encode($output) . json_encode($size) . json_encode($schemas));
     }
 
     /**

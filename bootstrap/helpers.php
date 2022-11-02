@@ -1,6 +1,5 @@
 <?php declare(strict_types = 1);
 
-use DealerLive\Config\Services\Configuration;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Session\SessionManager;
@@ -41,6 +40,28 @@ if (!function_exists('___')) {
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('tran')) {
+    /**
+     * Auto-write to translation files
+     *
+     * @param string|mixed $key       The key to look for
+     * @param string|mixed $default   The default to use
+     * @param mixed[]      $variables Variable placeholders
+     *
+     * @return mixed
+     */
+    function tran($key, $default = null, array $variables = [])
+    {
+        /** @var Translator $translator */
+        $translator = app(Translator::class);
+        try {
+            return $translator->tran($key, $default, $variables);
+        } catch (TranslationFileException $ex) {
+            return $default;
+        }
     }
 }
 
@@ -223,31 +244,6 @@ if (!function_exists('event')) {
     }
 }
 
-if (!function_exists('setting')) {
-    /**
-     * Check a config setting
-     *
-     * @param string $property The property to check
-     *
-     * @return Configuration|mixed
-     */
-    function setting($property = null, $default = null)
-    {
-        /** @var Configuration $service */
-        $service = app(Configuration::class);
-        if (!$property) {
-            return $service;
-        }
-
-        $result = $service->check($property);
-        if ($result === null) {
-            return $default;
-        }
-
-        return $result;
-    }
-}
-
 if (!function_exists('redirect')) {
     /**
      * @param string $url The url to redirect to
@@ -275,28 +271,6 @@ if (!function_exists('now')) {
     function now()
     {
         return Carbon\Carbon::now();
-    }
-}
-
-if (!function_exists('tran')) {
-    /**
-     * Auto-write to translation files
-     *
-     * @param string|mixed $key       The key to look for
-     * @param string|mixed $default   The default to use
-     * @param mixed[]      $variables Variable placeholders
-     *
-     * @return mixed
-     */
-    function tran($key, $default = null, array $variables = [])
-    {
-        /** @var Translator $translator */
-        $translator = app(Translator::class);
-        try {
-            return $translator->tran($key, $default, $variables);
-        } catch (TranslationFileException $ex) {
-            return $default;
-        }
     }
 }
 
