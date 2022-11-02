@@ -39,7 +39,7 @@ interface Gatherer
      * @param int                      $preferRecorded Prefer recorded or theoretical
      * @param callable|null            $mutator        Apply constraints to the query
      *
-     * @return mixed
+     * @return CustomerInformation
      */
     public function customers(
         ?Filter $filter,
@@ -47,7 +47,7 @@ interface Gatherer
         ?ResultConfiguration $customerFilter = null,
         int $preferRecorded = 1,
         ?callable $mutator = null
-    );
+    ): CustomerInformation;
 
     /**
      * Get stats for a filter and campaign
@@ -63,10 +63,11 @@ interface Gatherer
     /**
      * Get a customer query object
      *
-     * @param Filter   $filter   The filter
-     * @param Campaign $campaign The campaign
+     * @param Filter        $filter   The filter
+     * @param Campaign      $campaign The campaign
+     * @param callable|null $mutator  Optionally provide a mutator to mutate the query
      *
      * @return Builder
      */
-    public function toCustomerQuery(Filter $filter, Campaign $campaign): Builder;
+    public function toCustomerQuery(Filter $filter, Campaign $campaign, ?callable $mutator = null): Builder;
 }
