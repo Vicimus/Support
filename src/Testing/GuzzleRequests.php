@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Testing;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -15,7 +16,7 @@ trait GuzzleRequests
     /**
      * Get a mock guzzle client
      *
-     * @param Response[] $responses The responses you want
+     * @param Response[]|RequestException[] $responses The responses you want
      *
      * @return Client
      */

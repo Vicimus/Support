@@ -27,14 +27,14 @@ interface Gatherer
      * @param ResultConfiguration|null $customerFilter The customer filter info for paging
      * @param int                      $preferRecorded Prefer recorded or theoretical
      *
-     * @return mixed
+     * @return CustomerInformation
      */
     public function customers(
         ?Filter $filter,
         Campaign $campaign,
         ?ResultConfiguration $customerFilter = null,
         int $preferRecorded = 1
-    );
+    ): CustomerInformation;
 
     /**
      * Get stats for a filter and campaign
@@ -49,10 +49,11 @@ interface Gatherer
     /**
      * Get a customer query object
      *
-     * @param Filter   $filter   The filter
-     * @param Campaign $campaign The campaign
+     * @param Filter        $filter   The filter
+     * @param Campaign      $campaign The campaign
+     * @param callable|null $mutator  Optionally provide a mutator to mutate the query
      *
      * @return Builder
      */
-    public function toCustomerQuery(Filter $filter, Campaign $campaign): Builder;
+    public function toCustomerQuery(Filter $filter, Campaign $campaign, ?callable $mutator = null): Builder;
 }
