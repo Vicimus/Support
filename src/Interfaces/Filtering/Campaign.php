@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Vicimus\Support\Database\Model;
-use Vicimus\Support\Database\Relations\HasManyFromAPI;
 use Vicimus\Support\Interfaces\MarketingSuite\Campaign as BaseCampaign;
 
 /**
@@ -62,13 +61,6 @@ interface Campaign extends BaseCampaign
      * @return HasMany
      */
     public function batches(): HasMany;
-
-    /**
-     * Customers
-     *
-     * @return HasManyFromAPI
-     */
-    public function customers(): HasManyFromAPI;
 
     /**
      * Departments
