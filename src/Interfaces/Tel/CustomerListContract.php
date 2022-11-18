@@ -2,7 +2,10 @@
 
 namespace Vicimus\Support\Interfaces\Tel;
 
+/**
+ * @property int $id
+ */
 interface CustomerListContract
 {
-    
+    //
 }

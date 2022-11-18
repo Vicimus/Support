@@ -28,4 +28,21 @@ interface CustomerListsContract
         ?string $script,
         array $customers
     ): CustomerListContract;
+
+    /**
+     * Update the customer list for a campaign
+     *
+     * @param int   $storeId        The store making the request
+     * @param int   $customerListId The id of the existing customer list
+     * @param int[] $customers      The customers associated with the list
+     *
+     * @return CustomerListContract
+     * @throws GuzzleException
+     */
+    public function update(
+        int $storeId,
+        int $customerListId,
+        array $customers
+    ): CustomerListContract;
+
 }
