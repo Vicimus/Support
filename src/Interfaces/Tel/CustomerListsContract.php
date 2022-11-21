@@ -5,6 +5,9 @@ namespace Vicimus\Support\Interfaces\Tel;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * Customer list service contract
+ */
 interface CustomerListsContract
 {
     /**
@@ -44,5 +47,4 @@ interface CustomerListsContract
         int $customerListId,
         array $customers
     ): CustomerListContract;
-
 }
