@@ -13,12 +13,14 @@ interface CustomerListsContract
     /**
      * Create a new customer list
      *
-     * @param int         $storeId   The store making the request
-     * @param string      $name      The name of the list
-     * @param Carbon      $start     The date the calls tart
-     * @param Carbon      $end       The date the calls end
-     * @param string|null $script    The script read on the call
-     * @param int[]       $customers The customers associated with the list
+     * @param int         $storeId         The store making the request
+     * @param string      $name            The name of the list
+     * @param Carbon      $start           The date the calls tart
+     * @param Carbon      $end             The date the calls end
+     * @param string|null $script          The script read on the call
+     * @param int[]       $customers       The customers associated with the list
+     * @param int         $campaignId      The campaign id
+     * @param int         $originalStoreId The store the campaign belongs to
      *
      * @return CustomerListContract
      * @throws GuzzleException
@@ -29,7 +31,9 @@ interface CustomerListsContract
         Carbon $start,
         Carbon $end,
         ?string $script,
-        array $customers
+        array $customers,
+        int $campaignId,
+        int $originalStoreId
     ): CustomerListContract;
 
     /**
