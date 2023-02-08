@@ -5,6 +5,8 @@ namespace Vicimus\Support\Interfaces;
 /**
  * Interface Store
  * @property string|int $id
+ * @property string|null $url
+ * @property string $name
  */
 interface Store
 {
