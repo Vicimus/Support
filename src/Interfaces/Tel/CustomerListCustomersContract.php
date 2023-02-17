@@ -2,7 +2,6 @@
 
 namespace Vicimus\Support\Interfaces\Tel;
 
-use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -13,9 +12,9 @@ interface CustomerListCustomersContract
     /**
      * Update the customer list for a campaign
      *
-     * @param int   $storeId    The store making the request
-     * @param int   $prospectId The prospect id of the associated customer
-     * @param string[] $data    The data to update with
+     * @param int      $storeId    The store making the request
+     * @param int      $prospectId The prospect id of the associated customer
+     * @param string[] $data       The data to update with
      *
      * @return CustomerListContract
      * @throws GuzzleException
