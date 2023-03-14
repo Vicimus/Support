@@ -22,7 +22,7 @@ interface PlaceholderData
      * Get the identifiable entity
      * @return Identifiable
      */
-    public function identifiable(): Identifiable;
+    public function identifiable(): ?Identifiable;
 
     /**
      * Indicates if there are injections or not
