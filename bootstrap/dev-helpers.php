@@ -279,13 +279,22 @@ if (!function_exists('tran')) {
      */
     function tran($key, $default = null, array $variables = [])
     {
+        $key = md5(sprintf('%s_%s', $key, json_encode($variables)));
+        if (\Illuminate\Support\Facades\Cache::has($key)) {
+            return \Illuminate\Support\Facades\Cache::get($key);
+        }
+
         /** @var Translator $translator */
         $translator = app(Translator::class);
+        $result = $default;
         try {
-            return $translator->tran($key, $default, $variables);
+            $result = $translator->tran($key, $default, $variables);
         } catch (TranslationFileException $ex) {
-            return $default;
+            $result = $default;
         }
+
+        \Illuminate\Support\Facades\Cache::put($key, $result);
+        return $result;
     }
 }
 
