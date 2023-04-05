@@ -70,6 +70,7 @@ if (!function_exists('tran')) {
         if (\Illuminate\Support\Facades\Cache::has($key)) {
             return \Illuminate\Support\Facades\Cache::get($key);
         }
+
         /** @var Translator $translator */
         $translator = app(Translator::class);
         $result = $default;
