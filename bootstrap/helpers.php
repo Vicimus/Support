@@ -55,13 +55,33 @@ if (!function_exists('tran')) {
      */
     function tran($key, $default = null, array $variables = [])
     {
-        /** @var Translator $translator */
-        $translator = app(Translator::class);
-        try {
-            return $translator->tran($key, $default, $variables);
-        } catch (TranslationFileException $ex) {
+        // This is real dirty but it works so come at me/
+        // Improves loading speed of larger pages (inventory, etc) by around 33%
+        global $__LOCALE;
+        if (!$__LOCALE) {
+            $__LOCALE = app()->getLocale();
+        }
+
+        if ($__LOCALE === 'en' && $default && !count($variables)) {
             return $default;
         }
+
+        $key = md5(sprintf('%s_%s', $key, json_encode($variables)));
+        if (\Illuminate\Support\Facades\Cache::has($key)) {
+            return \Illuminate\Support\Facades\Cache::get($key);
+        }
+
+        /** @var Translator $translator */
+        $translator = app(Translator::class);
+        $result = $default;
+        try {
+            $result = $translator->tran($key, $default, $variables);
+        } catch (TranslationFileException $ex) {
+            $result = $default;
+        }
+
+        \Illuminate\Support\Facades\Cache::put($key, $result);
+        return $result;
     }
 }
 
