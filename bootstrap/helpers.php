@@ -76,11 +76,11 @@ if (!function_exists('tran')) {
         $result = $default;
         try {
             $result = $translator->tran($key, $default, $variables);
-            \Illuminate\Support\Facades\Cache::put($hash, $result);
         } catch (TranslationFileException $ex) {
             $result = $default;
         }
 
+        \Illuminate\Support\Facades\Cache::put($hash, $result);
         return $result;
     }
 }
