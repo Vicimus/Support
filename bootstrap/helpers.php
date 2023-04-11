@@ -66,9 +66,9 @@ if (!function_exists('tran')) {
             return $default;
         }
 
-        $key = md5(sprintf('%s_%s', $key, json_encode($variables)));
-        if (\Illuminate\Support\Facades\Cache::has($key)) {
-            return \Illuminate\Support\Facades\Cache::get($key);
+        $hash = md5(sprintf('%s_%s', $key, json_encode($variables)));
+        if (\Illuminate\Support\Facades\Cache::has($hash)) {
+            return \Illuminate\Support\Facades\Cache::get($hash);
         }
 
         /** @var Translator $translator */
@@ -80,7 +80,7 @@ if (!function_exists('tran')) {
             $result = $default;
         }
 
-        \Illuminate\Support\Facades\Cache::put($key, $result);
+        \Illuminate\Support\Facades\Cache::put($hash, $result);
         return $result;
     }
 }
