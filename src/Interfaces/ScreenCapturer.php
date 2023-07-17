@@ -41,6 +41,8 @@ interface ScreenCapturer
      */
     public function pdf(string $url, RenderSpecs $specs, string &$command = ''): string;
 
+    public function pdfBatch(string $baseUrl, string $uuid, string &$command = ''): void;
+
     /**
      * Convert a URL into a PNG representation of that web-page
      *
