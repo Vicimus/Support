@@ -35,7 +35,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property string $subject
  * @property Carbon $email_at
  * @property Carbon $print_at
- * @property bool $send_optimization
+ * @property bool|int $send_optimization
  * @property bool|int $send_bdc
  * @property bool|int $send_sms
  * @property Carbon $print_request
