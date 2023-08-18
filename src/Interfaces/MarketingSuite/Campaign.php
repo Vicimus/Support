@@ -26,9 +26,9 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property Carbon $created_at
  * @property string $live_site
  * @property string $purl_background
- * @property bool $send_email
- * @property bool $send_letter
- * @property bool $send_voice
+ * @property bool|int $send_email
+ * @property bool|int $send_letter
+ * @property bool|int $send_voice
  * @property ScriptContract $script
  * @property mixed $letter
  * @property mixed $postcard
@@ -40,7 +40,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property bool|int $send_sms
  * @property Carbon $print_request
  * @property Carbon $sms_at
- * @property bool $send_postcard
+ * @property bool|int $send_postcard
  */
 interface Campaign extends Eloquent
 {
