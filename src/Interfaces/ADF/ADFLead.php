@@ -37,6 +37,13 @@ interface ADFLead
     public function customer(): ?ADFCustomer;
 
     /**
+     * Retrieve the name of the form used with the submission
+     *
+     * @return string|null
+     */
+    public function formType(): ?string;
+
+    /**
      * This should be a unique identifier for the lead.  Most likely the primary
      * key from the database
      *
