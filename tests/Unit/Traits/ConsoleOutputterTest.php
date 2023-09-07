@@ -126,7 +126,8 @@ class ConsoleOutputterTest extends TestCase
 
     /**
      * Assert the too few argument exception is caught when calling vsprintf without args provided
-     * @returnv void
+     *
+     * @return void
      */
     public function testOutputCleans(): void
     {
