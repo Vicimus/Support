@@ -4,7 +4,6 @@ namespace Vicimus\Support\Tests\Unit\Traits;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Vicimus\Support\Classes\StandardOutput;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
@@ -125,6 +124,10 @@ class ConsoleOutputterTest extends TestCase
         $std->bind($output);
     }
 
+    /**
+     * Assert the too few argument exception is caught when calling vsprintf without args provided
+     * @returnv void
+     */
     public function testOutputCleans(): void
     {
         /** @var ConsoleOutputter|MockObject $std */
