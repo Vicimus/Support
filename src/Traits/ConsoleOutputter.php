@@ -57,7 +57,7 @@ trait ConsoleOutputter
             return;
         }
 
-        $this->output->comment(vsprintf($output, $args));
+        $this->output->comment($this->cleanOutput($output, $args));
     }
 
     /**
@@ -74,7 +74,7 @@ trait ConsoleOutputter
             return;
         }
 
-        $this->output->error(vsprintf($output, $args));
+        $this->output->error($this->cleanOutput($output, $args));
     }
 
     /**
@@ -91,7 +91,7 @@ trait ConsoleOutputter
             return;
         }
 
-        $this->output->info(vsprintf($output, $args));
+        $this->output->info($this->cleanOutput($output, $args));
     }
 
     /**
@@ -108,7 +108,7 @@ trait ConsoleOutputter
             return;
         }
 
-        $this->output->line(vsprintf($output, $args));
+        $this->output->line($this->cleanOutput($output, $args));
     }
 
     /**
@@ -125,7 +125,7 @@ trait ConsoleOutputter
             return;
         }
 
-        $this->output->linePermanent(vsprintf($output, $args));
+        $this->output->linePermanent($this->cleanOutput($output, $args));
     }
 
     /**
@@ -139,5 +139,14 @@ trait ConsoleOutputter
     {
         $this->onBind = $action;
         return $this;
+    }
+
+    private function cleanOutput($output, $args): string
+    {
+        try {
+            return vsprintf($output, $args);
+        } catch (\ErrorException $ex) {
+            return $output;
+        }
     }
 }
