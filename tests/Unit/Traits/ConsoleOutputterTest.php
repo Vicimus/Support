@@ -4,6 +4,7 @@ namespace Vicimus\Support\Tests\Unit\Traits;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Vicimus\Support\Classes\StandardOutput;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
@@ -122,5 +123,18 @@ class ConsoleOutputterTest extends TestCase
         });
 
         $std->bind($output);
+    }
+
+    public function testOutputCleans(): void
+    {
+        /** @var ConsoleOutputter|MockObject $std */
+        $std = $this->getMockForTrait(ConsoleOutputter::class);
+
+        /** @var ConsoleOutput|MockObject $output */
+        $output = $this->getMockBuilder(ConsoleOutput::class)->getMock();
+        $output->expects($this->once())
+            ->method('error')->with('te%sting');
+
+        $std->bind($output)->error('te%sting');
     }
 }

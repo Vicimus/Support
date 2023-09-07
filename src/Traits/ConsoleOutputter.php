@@ -2,6 +2,8 @@
 
 namespace Vicimus\Support\Traits;
 
+use ErrorException;
+use RuntimeException;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 
 /**
@@ -141,11 +143,19 @@ trait ConsoleOutputter
         return $this;
     }
 
-    private function cleanOutput($output, $args): string
+    /**
+     * Check the output for character mismatch
+     *
+     * @param string   $output The output string
+     * @param string[] $args   The replacement arguments
+     *
+     * @return string
+     */
+    private function cleanOutput(string $output, array $args): string
     {
         try {
             return vsprintf($output, $args);
-        } catch (\ErrorException $ex) {
+        } catch (RuntimeException | ErrorException $ex) {
             return $output;
         }
     }
