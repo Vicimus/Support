@@ -19,7 +19,7 @@ interface Result
      *
      * @return array
      */
-    public function output(): bool;
+    public function output(): array;
 
     /**
      * Check if the command succeeded
