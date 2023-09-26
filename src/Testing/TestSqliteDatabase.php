@@ -3,7 +3,6 @@
 namespace Vicimus\Support\Testing;
 
 use Illuminate\Support\Facades\DB;
-use Inventory\Models\Incentives\Incentive;
 use RuntimeException;
 use Vicimus\Support\Classes\Benchmark;
 use Vicimus\Support\Classes\NullOutput;
@@ -50,6 +49,7 @@ trait TestSqliteDatabase
      *
      * @return void
      * @throws TestException
+     * @throws RuntimeException
      */
     public function setupDatabases(string $path, array $external = [], array $aliases = []): void
     {
