@@ -3,6 +3,7 @@
 namespace Vicimus\Support\Testing;
 
 use Illuminate\Support\Facades\DB;
+use RuntimeException;
 use Vicimus\Support\Classes\Benchmark;
 use Vicimus\Support\Classes\NullOutput;
 use Vicimus\Support\Classes\StandardOutput;
@@ -48,6 +49,7 @@ trait TestSqliteDatabase
      *
      * @return void
      * @throws TestException
+     * @throws RuntimeException
      */
     public function setupDatabases(string $path, array $external = [], array $aliases = []): void
     {
@@ -75,7 +77,9 @@ trait TestSqliteDatabase
                 $this->doOneTimeSetup($database, $secondStub, $stub);
             }
 
-            copy($secondStub, $test);
+            if (!copy($secondStub, $test)) {
+                throw new RuntimeException('Test database was unable to be copied');
+            }
 
             if (!$database || isset($this->attached[$database])) {
                 continue;
