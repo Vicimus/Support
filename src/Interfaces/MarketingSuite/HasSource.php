@@ -4,6 +4,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\HasAssetDetails;
@@ -21,6 +22,13 @@ use Vicimus\Support\Interfaces\MarketingSuite\Assets\HasAssetDetails;
  */
 interface HasSource
 {
+    /**
+     * Retrieve the display ad stats relationship
+     *
+     * @return Relation
+     */
+    public function adStats(): Relation;
+
     /**
      * Retrieve the model which contains asset details
      *
