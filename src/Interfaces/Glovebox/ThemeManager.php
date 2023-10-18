@@ -12,5 +12,5 @@ interface ThemeManager
      *
      * @return Result
      */
-    public function refresh(): Result;
+    public function refresh(string $command): Result;
 }
