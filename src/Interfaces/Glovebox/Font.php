@@ -24,7 +24,6 @@ interface Font extends JsonSerializable
     /**
      * Get the url to the font file
      *
-     * @param string           $oem  The name of the oem
      * @param string[][]|array $file The file information
      *
      * @return string
