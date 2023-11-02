@@ -35,12 +35,13 @@ interface Placeholders
     /**
      * Check if a given placeholder is a valid placeholder
      *
-     * @param string $placeholder The placeholder to check
-     * @param string $type        The type of campaign making the request
+     * @param string $placeholder      The placeholder to check
+     * @param string $type             The type of campaign making the request
+     * @param bool   $containsFallback Flag to indicate fallback is provided
      *
      * @return bool
      */
-    public function isValidPlaceholder(string $placeholder, string $type): bool;
+    public function isValidPlaceholder(string $placeholder, string $type, bool $containsFallback): bool;
 
     /**
      * Get a placeholder value
