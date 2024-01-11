@@ -15,7 +15,7 @@ use Throwable;
  * Base class we can use in most of our projects
  *
  * @method static Builder orderBy($column, $ascending = true)
- * @method static static find($id)
+ * @method static static|null find($id)
  * @method static static findOrFail($id)
  * @method static Builder|static where($c, $v = null, $v = null, $b = 'and')
  * @method static Builder|static whereNotNull($c)
@@ -86,7 +86,7 @@ class Model extends LaravelModel
      *
      * @return bool|null
      */
-    public function delete(bool $throw = false): ?bool
+    public function delete(bool $throw = true): ?bool
     {
         // phpcs:enable
         try {
