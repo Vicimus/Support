@@ -40,6 +40,8 @@ use Throwable;
  */
 class Model extends LaravelModel
 {
+    public static $throwDeleteErrors = true;
+
     /**
      * Properties protected from mass assignment
      *
@@ -82,12 +84,14 @@ class Model extends LaravelModel
      * phpcs:disable
      *
      * @noinspection PhpDocMissingThrowsInspection
-     * @param bool $throw Optionally throw on error or ignore
+     * @param bool|null $throw Optionally throw on error or ignore
      *
      * @return bool|null
      */
-    public function delete(bool $throw = true): ?bool
+    public function delete(?bool $throw = null): ?bool
     {
+        $throw ??= self::$throwDeleteErrors;
+
         // phpcs:enable
         try {
             $result = parent::delete();
