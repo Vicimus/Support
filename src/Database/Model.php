@@ -40,7 +40,7 @@ use Throwable;
  */
 class Model extends LaravelModel
 {
-    static public $throwDeleteErrors = true;
+    public static $throwDeleteErrors = true;
 
     /**
      * Properties protected from mass assignment
