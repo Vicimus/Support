@@ -88,6 +88,12 @@ class Parser
             return null;
         }
 
+        $simple = Enums::getSimplePaymentTypes();
+        $mapped = $simple[strtoupper($input)] ?? '';
+        if ($mapped) {
+            return $mapped;
+        }
+
         foreach (Enums::paymentTypesPatterns() as $key => $pattern) {
             if (preg_match($pattern, $input)) {
                 return $key;

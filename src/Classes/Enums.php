@@ -108,6 +108,20 @@ class Enums
     }
 
     /**
+     * Simplified payment type placeholders
+     *
+     * @return string[]
+     */
+    public static function getSimplePaymentTypes(): array
+    {
+        return [
+            'C' => 'cash',
+            'F' => 'finance',
+            'L' => 'lease',
+        ];
+    }
+
+    /**
      * Return languages definitions
      *
      * @return string[]
