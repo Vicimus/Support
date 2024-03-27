@@ -138,12 +138,6 @@ interface Campaign extends BaseCampaign
     public function stats(): HasOne;
 
     /**
-     * Determine if the emails should only go to active customers
-     * @return bool
-     */
-    public function useOnlyEmailActive(): bool;
-
-    /**
      * Determine if customer preference should be used
      * @return bool
      */
@@ -154,6 +148,12 @@ interface Campaign extends BaseCampaign
      * @return bool
      */
     public function useExcludeBounced(): bool;
+
+    /**
+     * Determine if the emails should only go to active customers
+     * @return bool
+     */
+    public function useOnlyEmailActive(): bool;
 
     /**
      * Determine if launch process should scale mediums
