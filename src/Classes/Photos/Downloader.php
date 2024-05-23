@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -13,7 +15,6 @@ interface Downloader
      *
      * @param DownloadRequest $request The request to process
      *
-     * @return mixed
      */
-    public function download(DownloadRequest $request);
+    public function download(DownloadRequest $request): mixed;
 }

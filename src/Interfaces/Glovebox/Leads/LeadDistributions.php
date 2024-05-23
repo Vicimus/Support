@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox\Leads;
 
@@ -14,7 +16,6 @@ interface LeadDistributions extends EloquentRepository
      *
      * @param LeadType $type The type to get by
      *
-     * @return LeadDistribution|null
      */
     public function byType(LeadType $type): ?LeadDistribution;
 
@@ -23,7 +24,6 @@ interface LeadDistributions extends EloquentRepository
      *
      * @param mixed[] $attributes The attributes
      *
-     * @return LeadDistribution
      */
     public function create(array $attributes): LeadDistribution;
 
@@ -32,7 +32,6 @@ interface LeadDistributions extends EloquentRepository
      *
      * @param int $id The id of the type to get
      *
-     * @return LeadDistribution|null
      */
     public function find(int $id): ?LeadDistribution;
 
@@ -41,7 +40,6 @@ interface LeadDistributions extends EloquentRepository
      *
      * @param mixed[] $attributes The attributes
      *
-     * @return LeadDistribution
      */
     public function firstOrCreate(array $attributes): LeadDistribution;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -17,30 +19,26 @@ class AsyncPhotoRequest implements AsyncRequest
     /**
      * The photo
      *
-     * @var Photo
      */
-    protected $photo;
+    protected Photo $photo;
 
     /**
      * The photo this request is for
      *
-     * @var PhotoStatus
      */
-    protected $status;
+    protected PhotoStatus $status;
 
     /**
      * The vehicle this is for
      *
-     * @var Vehicle
      */
-    protected $vehicle;
+    protected Vehicle $vehicle;
 
     /**
      * The verb to use
      *
-     * @var string
      */
-    protected $verb;
+    protected string $verb;
 
     /**
      * AsyncPhotoRequest constructor.
@@ -63,9 +61,8 @@ class AsyncPhotoRequest implements AsyncRequest
      *
      * @param string $property The property to try and get
      *
-     * @return mixed
      */
-    public function get(string $property)
+    public function get(string $property): mixed
     {
         if (!property_exists($this, $property)) {
             return null;
@@ -77,7 +74,6 @@ class AsyncPhotoRequest implements AsyncRequest
     /**
      * Get the request to make
      *
-     * @return Request
      */
     public function getRequest(): Request
     {
@@ -92,9 +88,8 @@ class AsyncPhotoRequest implements AsyncRequest
      *
      * @param Response $response THe response from the request
      *
-     * @return mixed
      */
-    public function process(Response $response)
+    public function process(Response $response): mixed
     {
         $status = $this->photo->status(new Headers($response), $this->vehicle);
         if ($status->isOutdated()) {
@@ -108,7 +103,6 @@ class AsyncPhotoRequest implements AsyncRequest
      *
      * @param string $verb The verb to set
      *
-     * @return void
      */
     public function verb(string $verb): void
     {

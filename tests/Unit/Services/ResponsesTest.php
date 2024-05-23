@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
@@ -14,7 +16,6 @@ class ResponsesTest extends TestCase
     /**
      * Test json
      *
-     * @return void
      */
     public function testJson(): void
     {
@@ -28,7 +29,6 @@ class ResponsesTest extends TestCase
     /**
      * Test make
      *
-     * @return void
      */
     public function testMake(): void
     {

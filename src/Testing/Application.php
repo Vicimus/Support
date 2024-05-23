@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -25,49 +27,43 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * The request class used by the application.
      *
-     * @var string
      */
-    protected static $requestClass = Request::class;
+    protected static string $requestClass = Request::class;
 
     /**
      * The custom application path defined by the developer.
      *
-     * @var string
      */
-    protected $appPath;
+    protected string $appPath;
 
     /**
      * The custom database path defined by the developer.
      *
-     * @var string
      */
-    protected $databasePath;
+    protected string $databasePath;
 
     /**
      * The custom environment path defined by the developer.
      *
-     * @var string
      */
-    protected $environmentPath;
+    protected string $environmentPath;
 
     /**
      * Providers
      * @var string[]
      */
-    protected $providers = [];
+    protected array $providers = [];
 
     /**
      * The custom storage path defined by the developer.
      *
-     * @var string
      */
-    protected $storagePath;
+    protected string $storagePath;
 
     /**
      * Testing
-     * @var string
      */
-    private $environment = 'testing';
+    private string $environment = 'testing';
 
     /**
      * Application constructor.
@@ -88,22 +84,20 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string $path Optionally, a path to append to the base path
      *
-     * @return string
      *
      * @codingStandardsIgnoreStart
      */
     public function basePath($path = ''): string
     {
         // @codingStandardsIgnoreEnd
-        return realpath($this->basePath.(($path) ? DIRECTORY_SEPARATOR.$path : $path));
+        return realpath($this->basePath . (($path) ? DIRECTORY_SEPARATOR . $path : $path));
     }
 
     /**
      * Boot the application's service providers.
      *
-     * @return void|mixed
      */
-    public function boot()
+    public function boot(): mixed
     {
         //  Implement boot() method.
     }
@@ -113,9 +107,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param mixed $callback The callback
      *
-     * @return void|mixed
      */
-    public function booted($callback)
+    public function booted(mixed $callback): mixed
     {
         // Implement booted() method.
     }
@@ -127,7 +120,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return void|mixed
      */
-    public function booting($callback): void
+    public function booting(mixed $callback): void
     {
         // Implement booting() method.
     }
@@ -137,11 +130,10 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|mixed $path Optionally, a path to append to the bootstrap path
      *
-     * @return string
      */
-    public function bootstrapPath($path = ''): string
+    public function bootstrapPath(mixed $path = ''): string
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'bootstrap'.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
+        return $this->basePath . DIRECTORY_SEPARATOR . 'bootstrap' . (($path) ? DIRECTORY_SEPARATOR . $path : $path);
     }
 
     /**
@@ -149,7 +141,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param mixed[] $classes Array of bootstrap classes
      *
-     * @return void
      */
     public function bootstrapWith(array $classes): void
     {
@@ -161,18 +152,15 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|mixed $path Optionally, a path to append to the config path
      *
-     * @return string
      */
-    public function configPath($path = ''): string
+    public function configPath(mixed $path = ''): string
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'config'.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
+        return $this->basePath . DIRECTORY_SEPARATOR . 'config' . (($path) ? DIRECTORY_SEPARATOR . $path : $path);
     }
-
 
     /**
      * Determine if the application configuration is cached.
      *
-     * @return bool
      */
     public function configurationIsCached(): bool
     {
@@ -183,12 +171,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      * Get the path to the database directory.
      *
      * @param string|mixed $path Optionally, a path to append to the database path
-     * @return string
      */
-    public function databasePath($path = ''): string
+    public function databasePath(mixed $path = ''): string
     {
-        return (($this->databasePath) ?: $this->basePath.DIRECTORY_SEPARATOR.'database') .
-            (($path) ? DIRECTORY_SEPARATOR.$path : $path);
+        return (($this->databasePath) ?: $this->basePath . DIRECTORY_SEPARATOR . 'database') .
+            (($path) ? DIRECTORY_SEPARATOR . $path : $path);
     }
 
     /**
@@ -196,7 +183,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param Closure $callback Closure to detect environment
      *
-     * @return string
      */
     public function detectEnvironment(Closure $callback): string
     {
@@ -209,7 +195,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param Request $request The request
      *
-     * @return Response
      */
     public function dispatch(Request $request): Response
     {
@@ -232,9 +217,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param mixed ...$environments The environments
      *
-     * @return string|mixed
      */
-    public function environment(...$environments)
+    public function environment(mixed ...$environments): mixed
     {
         if (!count($environments)) {
             return $this->environment;
@@ -246,7 +230,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the environment file the application is using.
      *
-     * @return string
      */
     public function environmentFile(): string
     {
@@ -256,7 +239,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the fully qualified path to the environment file.
      *
-     * @return string
      */
     public function environmentFilePath(): string
     {
@@ -266,7 +248,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the environment file directory.
      *
-     * @return string
      */
     public function environmentPath(): string
     {
@@ -276,7 +257,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the configuration cache file.
      *
-     * @return string
      */
     public function getCachedConfigPath(): string
     {
@@ -286,9 +266,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the cached packages.php file.
      *
-     * @return string|mixed|void
      */
-    public function getCachedPackagesPath()
+    public function getCachedPackagesPath(): mixed
     {
         return $this->storagePath() . '/cache';
     }
@@ -296,7 +275,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the routes cache file.
      *
-     * @return string
      */
     public function getCachedRoutesPath(): string
     {
@@ -306,9 +284,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the cached services.php file.
      *
-     * @return string|mixed|void
      */
-    public function getCachedServicesPath()
+    public function getCachedServicesPath(): mixed
     {
         return $this->storagePath() . '/cache';
     }
@@ -316,7 +293,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the current application locale.
      *
-     * @return string
      */
     public function getLocale(): string
     {
@@ -326,7 +302,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the application namespace.
      *
-     * @return string
      */
     public function getNamespace(): string
     {
@@ -340,7 +315,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return mixed[]
      */
-    public function getProviders($provider): array
+    public function getProviders(ServiceProvider|string $provider): array
     {
         if ($provider) {
             $this->providers[] = $provider;
@@ -360,14 +335,13 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      * @param int|mixed      $type    The type of call
      * @param bool|mixed     $catch   Should catch
      *
-     * @return Response
      *
      * @throws Throwable
      */
     public function handle(
         SymfonyRequest $request,
-        $type = HttpKernelInterface::MASTER_REQUEST,
-        $catch = true
+        mixed $type = HttpKernelInterface::MASTER_REQUEST,
+        mixed $catch = true
     ): Response {
         try {
             $request = Request::createFromBase($request);
@@ -388,7 +362,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Determine if the application has been bootstrapped before.
      *
-     * @return bool
      */
     public function hasBeenBootstrapped(): bool
     {
@@ -398,9 +371,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Determine if the application is currently down for maintenance.
      *
-     * @return bool|mixed
      */
-    public function isDownForMaintenance()
+    public function isDownForMaintenance(): mixed
     {
         return false;
     }
@@ -408,17 +380,15 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the language files.
      *
-     * @return string
      */
     public function langPath(): string
     {
-        return $this->resourcePath().DIRECTORY_SEPARATOR.'lang';
+        return $this->resourcePath() . DIRECTORY_SEPARATOR . 'lang';
     }
 
     /**
      * Load and boot all of the remaining deferred providers.
      *
-     * @return void
      */
     public function loadDeferredProviders(): void
     {
@@ -430,9 +400,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|mixed $file Load the file
      *
-     * @return self
      */
-    public function loadEnvironmentFrom($file): self
+    public function loadEnvironmentFrom(mixed $file): self
     {
         return $this;
     }
@@ -443,9 +412,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      * @param string  $method     The method
      * @param mixed[] $parameters Parameters
      *
-     * @return mixed
      */
-    public static function onRequest(string $method, array $parameters = [])
+    public static function onRequest(string $method, array $parameters = []): mixed
     {
         return forward_static_call_array([static::requestClass(), $method], $parameters);
     }
@@ -455,12 +423,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string $path The path to get
      *
-     * @return string
      */
     public function path(string $path = ''): string
     {
-        $appPath = ($this->appPath) ?: $this->basePath.DIRECTORY_SEPARATOR.'app';
-        return $appPath.(($path) ? DIRECTORY_SEPARATOR.$path : $path);
+        $appPath = ($this->appPath) ?: $this->basePath . DIRECTORY_SEPARATOR . 'app';
+        return $appPath . (($path) ? DIRECTORY_SEPARATOR . $path : $path);
     }
 
     /**
@@ -468,7 +435,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param Request $request The request instance
      *
-     * @return Request
      */
     public function prepareRequest(Request $request): Request
     {
@@ -484,9 +450,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param mixed $value A value
      *
-     * @return Response
      */
-    public function prepareResponse($value): Response
+    public function prepareResponse(mixed $value): Response
     {
         if (!$value instanceof SymfonyResponse) {
             $value = new IlluminateResponse($value);
@@ -498,11 +463,10 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the public / web directory.
      *
-     * @return string
      */
     public function publicPath(): string
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'public';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'public';
     }
 
     /**
@@ -513,7 +477,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return ServiceProvider|mixed|void
      */
-    public function register($provider, $force = false): void
+    public function register(ServiceProvider|string $provider, mixed $force = false): void
     {
         $this->providers[] = $provider;
         if (!$force) {
@@ -524,9 +488,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Register all of the configured providers.
      *
-     * @return void|mixed
      */
-    public function registerConfiguredProviders()
+    public function registerConfiguredProviders(): mixed
     {
         // Implement registerConfiguredProviders() method when necessary
     }
@@ -539,7 +502,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return void|mixed
      */
-    public function registerDeferredProvider($provider, $service = null): void
+    public function registerDeferredProvider(mixed $provider, mixed $service = null): void
     {
         // Implement registerDeferredProvider() method.
     }
@@ -549,7 +512,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|null $class Optionally provide a class to use
      *
-     * @return string
      */
     public static function requestClass(?string $class = null): string
     {
@@ -565,9 +527,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|mixed $provider The provider class
      *
-     * @return ServiceProvider
      */
-    public function resolveProvider($provider): ServiceProvider
+    public function resolveProvider(mixed $provider): ServiceProvider
     {
         return app($provider);
     }
@@ -577,9 +538,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|mixed $path Add a relative path
      *
-     * @return string
      */
-    public function resourcePath($path = ''): string
+    public function resourcePath(mixed $path = ''): string
     {
         return $this->basePath('resources/' . $path);
     }
@@ -587,7 +547,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Determine if the application routes are cached.
      *
-     * @return bool
      */
     public function routesAreCached(): bool
     {
@@ -597,9 +556,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Determine if the application is running in the console.
      *
-     * @return bool|mixed
      */
-    public function runningInConsole()
+    public function runningInConsole(): mixed
     {
         return false;
     }
@@ -607,9 +565,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Determine if the application is running unit tests.
      *
-     * @return bool|mixed
      */
-    public function runningUnitTests()
+    public function runningUnitTests(): mixed
     {
         return true;
     }
@@ -619,7 +576,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string $basePath The base path to set
      *
-     * @return self
      */
     public function setBasePath(string $basePath): self
     {
@@ -648,9 +604,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param string|mixed $locale The locale
      *
-     * @return void
      */
-    public function setLocale($locale): void
+    public function setLocale(mixed $locale): void
     {
         //Implement setLocale() method.
     }
@@ -658,7 +613,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Determine if middleware has been disabled for the application.
      *
-     * @return bool
      */
     public function shouldSkipMiddleware(): bool
     {
@@ -668,17 +622,15 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the path to the storage directory.
      *
-     * @return string
      */
     public function storagePath(): string
     {
-        return ($this->storagePath) ?: $this->basePath.DIRECTORY_SEPARATOR.'storage';
+        return ($this->storagePath) ?: $this->basePath . DIRECTORY_SEPARATOR . 'storage';
     }
 
     /**
      * Terminate the application.
      *
-     * @return void
      */
     public function terminate(): void
     {
@@ -688,9 +640,8 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Get the version number of the application.
      *
-     * @return string|mixed|void
      */
-    public function version()
+    public function version(): mixed
     {
         // Implement version
     }
@@ -698,7 +649,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     /**
      * Bind all of the application paths in the container.
      *
-     * @return void
      */
     protected function bindPathsInContainer(): void
     {
@@ -718,7 +668,6 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @param Request $request The request instance
      *
-     * @return void
      */
     protected function refreshRequest(Request $request): void
     {

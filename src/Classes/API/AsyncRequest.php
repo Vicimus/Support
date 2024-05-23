@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
@@ -15,14 +17,12 @@ interface AsyncRequest
      *
      * @param string $property The property to try and get
      *
-     * @return mixed
      */
-    public function get(string $property);
+    public function get(string $property): mixed;
 
     /**
      * Get the request to make
      *
-     * @return Request
      */
     public function getRequest(): Request;
 
@@ -34,9 +34,8 @@ interface AsyncRequest
      *
      * @param Response $response THe response from the request
      *
-     * @return mixed
      */
-    public function process(Response $response);
+    public function process(Response $response): mixed;
 
     /**
      * Calling this method will set the request verb. How that is implemented
@@ -44,7 +43,6 @@ interface AsyncRequest
      *
      * @param string $verb The verb to set
      *
-     * @return void
      */
     public function verb(string $verb): void;
 }

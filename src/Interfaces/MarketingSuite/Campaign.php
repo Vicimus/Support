@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -47,7 +49,6 @@ interface Campaign extends Eloquent
     /**
      * A campaign has many acknowledgements
      *
-     * @return MorphMany
      */
     public function acknowledgements(): MorphMany;
 
@@ -55,47 +56,40 @@ interface Campaign extends Eloquent
      * Retrieve an asset from the campaign
      *
      * @param string $type The type of the asset
-     * @return AssetContract|null
      */
     public function asset(string $type): ?AssetContract;
 
     /**
      * A campaign has many assets
-     * @return MorphMany
      */
     public function assets(): MorphMany;
 
     /**
      * Retrieve a Carbon Copy for a campaign
      *
-     * @return Prospect|null
      */
     public function copy(): ?Prospect;
 
     /**
      * Retrieve the form id to use for the purl
      *
-     * @return int
      */
     public function formId(): ?int;
 
     /**
      * Has the campaign portfolio been modified at all, even a single time
-     * @return bool
      */
     public function hasPortfolioBeenModified(): bool;
 
     /**
      * Is the campaign email only
      *
-     * @return bool
      */
     public function isEmailOnly(): bool;
 
     /**
      * Is the campaign purl only
      *
-     * @return bool
      */
     public function isPurlOnly(): bool;
 
@@ -106,7 +100,6 @@ interface Campaign extends Eloquent
      *
      * @param string $slug The asset type slug
      *
-     * @return bool
      */
     public function medium(string $slug): bool;
 
@@ -119,7 +112,6 @@ interface Campaign extends Eloquent
 
     /**
      * Get the OEM for this campaign
-     * @return string
      */
     public function oem(): string;
 
@@ -136,14 +128,12 @@ interface Campaign extends Eloquent
      * @param string          $name    The property to look for
      * @param string|int|bool $default The default value to return if the property doesn't exist
      *
-     * @return int|string|bool|null
      */
-    public function property(string $name, $default = null);
+    public function property(string $name, string|int|bool|null $default = null): int|string|bool|null;
 
     /**
      * A campaign has many prospects
      *
-     * @return HasMany
      */
     public function prospects(): HasMany;
 
@@ -154,11 +144,10 @@ interface Campaign extends Eloquent
      * @param string|int|bool|null $value    If set, will record a property rather than get
      * @param bool                 $hidden   The hidden state of a property
      *
-     * @return void
      *
      * @throws JsonException
      */
-    public function record(string $property, $value = null, bool $hidden = false): void;
+    public function record(string $property, string|int|bool|null $value = null, bool $hidden = false): void;
 
     /**
      * A campaign can have one script
@@ -170,20 +159,17 @@ interface Campaign extends Eloquent
     /**
      * Get the store id for this campaigns
      *
-     * @return int
      */
     public function storeId(): int;
 
     /**
      * Temperatures exist on a campaign
      *
-     * @return MorphMany
      */
     public function temperatures(): MorphMany;
 
     /**
      * Campaign version
-     * @return int
      */
     public function version(): int;
 }

@@ -25,7 +25,7 @@
         "phpunit/phpunit": "^9",
         "symfony/browser-kit": "^4.3",
         "symfony/var-dumper": "^4.2",
-        "vicimus/standard": "^4.1.2"
+        "vicimus/standard": "^6"
     },
     "suggest": {
         "laravel/lumen": "Required to use LumenRouter",

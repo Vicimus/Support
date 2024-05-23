@@ -1,9 +1,10 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
@@ -18,9 +19,8 @@ abstract class TestCase extends PHPUnitTestCase
      *
      * @param string $class The class to mock
      *
-     * @return MockObject|mixed
      */
-    public function basicMock(string $class)
+    public function basicMock(string $class): mixed
     {
         return $this->getMockBuilder($class)
             ->disableOriginalConstructor()
@@ -34,7 +34,6 @@ abstract class TestCase extends PHPUnitTestCase
      *
      * @throws InvalidArgumentException
      *
-     * @return void
      */
     public function wasExpectingException(string $exception): void
     {

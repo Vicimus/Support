@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,9 +14,8 @@ class LoggerOutput implements ConsoleOutput
     /**
      * The path to the file
      *
-     * @var string
      */
-    protected $path;
+    protected string $path;
 
     /**
      * LoggerOutput constructor.
@@ -31,7 +32,6 @@ class LoggerOutput implements ConsoleOutput
      *
      * @param string $output The comment to output
      *
-     * @return void
      */
     public function comment(string $output): void
     {
@@ -43,7 +43,6 @@ class LoggerOutput implements ConsoleOutput
      *
      * @param string $output The error to output
      *
-     * @return void
      */
     public function error(string $output): void
     {
@@ -55,7 +54,6 @@ class LoggerOutput implements ConsoleOutput
      *
      * @param string $output The info to output
      *
-     * @return void
      */
     public function info(string $output): void
     {
@@ -67,7 +65,6 @@ class LoggerOutput implements ConsoleOutput
      *
      * @param string $output The text to output
      *
-     * @return void
      */
     public function line(string $output): void
     {
@@ -79,7 +76,6 @@ class LoggerOutput implements ConsoleOutput
      *
      * @param string $output The text to output
      *
-     * @return void
      */
     public function linePermanent(string $output): void
     {
@@ -92,7 +88,6 @@ class LoggerOutput implements ConsoleOutput
      * @param string $type    The type of message
      * @param string $message The message
      *
-     * @return void
      */
     protected function write(string $type, string $message): void
     {

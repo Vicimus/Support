@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Exceptions;
 
@@ -15,9 +17,9 @@ class InvalidArgumentException extends InvalidArgument
      * @param mixed    $got           The argument that was invalid
      * @param string[] ...$acceptable What would have been acceptable
      */
-    public function __construct($got, string ...$acceptable)
+    public function __construct(mixed $got, string ...$acceptable)
     {
-        $type = is_object($got) ? get_class($got) : gettype($got);
+        $type = is_object($got) ? $got::class : gettype($got);
         $message = sprintf(
             'Invalid argument supplied. Received %s but expected %s',
             $type,

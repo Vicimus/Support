@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -26,7 +28,6 @@ interface Gatherer
      * @param Filter   $filter   The filter to use to get the data with
      * @param Campaign $campaign Use a campaign to improve accuracy
      *
-     * @return int
      */
     public function count(Filter $filter, Campaign $campaign): int;
 
@@ -39,7 +40,6 @@ interface Gatherer
      * @param int                      $preferRecorded Prefer recorded or theoretical
      * @param callable|null            $mutator        Apply constraints to the query
      *
-     * @return CustomerInformation
      */
     public function customers(
         ?Filter $filter,
@@ -56,7 +56,6 @@ interface Gatherer
      * @param Campaign $campaign        The campaign to use
      * @param bool     $queryAssociated Should just query associated customers for stats
      *
-     * @return Stats
      */
     public function stats(Filter $filter, Campaign $campaign, bool $queryAssociated = false): Stats;
 
@@ -67,7 +66,6 @@ interface Gatherer
      * @param Campaign      $campaign The campaign
      * @param callable|null $mutator  Optionally provide a mutator to mutate the query
      *
-     * @return Builder
      */
     public function toCustomerQuery(Filter $filter, Campaign $campaign, ?callable $mutator = null): Builder;
 }

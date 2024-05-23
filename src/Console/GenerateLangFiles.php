@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Console;
 
@@ -13,16 +15,14 @@ class GenerateLangFiles extends Command
 {
     /**
      * The signature
-     * @var string
      */
-    protected $signature = 'locale:generate {locales=en}';
+    protected string $signature = 'locale:generate {locales=en}';
 
     /**
      * Generate lang files
      *
      * @param LangGenerator $generator The generator
      *
-     * @return void
      * @throws \Vicimus\Support\Exceptions\DuplicateTranslationException
      */
     public function handle(LangGenerator $generator): void

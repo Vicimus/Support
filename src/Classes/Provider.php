@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -49,7 +51,6 @@ abstract class Provider
     /**
      * Return any UI information
      *
-     * @return UserInterface
      */
     public function ui(): ?UserInterface
     {
@@ -59,20 +60,18 @@ abstract class Provider
     /**
      * Get the path to the applications public directory
      *
-     * @return string
      */
     final protected function public(): string
     {
-        return __DIR__.'/../../../../public';
+        return __DIR__ . '/../../../../public';
     }
 
     /**
      * Get the path to the applications storage public directory
      *
-     * @return string
      */
     final protected function storage(): string
     {
-        return __DIR__.'/../../../../storage/app/public';
+        return __DIR__ . '/../../../../storage/app/public';
     }
 }

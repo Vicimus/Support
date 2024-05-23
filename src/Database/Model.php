@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Database;
 
@@ -47,29 +49,27 @@ class Model extends LaravelModel
      *
      * @var string[]
      */
-    protected $guarded = [
+    protected array $guarded = [
         'id', 'updated_at', 'created_at',
     ];
 
     /**
      * Should we cast or not
      *
-     * @var bool
      */
-    private static $noCasts = [];
+    private static bool $noCasts = [];
 
     /**
      * Store the columns
      * @var string[]
      */
-    private $columns = [];
+    private array $columns = [];
 
     /**
      * Respect no casts rule
      *
-     * @return mixed
      */
-    public function attributesToArray()
+    public function attributesToArray(): mixed
     {
         if (!(self::$noCasts[static::class] ?? false)) {
             return parent::attributesToArray();
@@ -112,9 +112,8 @@ class Model extends LaravelModel
      *
      * @param string|mixed $key The key to get
      *
-     * @return mixed
      */
-    public function getAttribute($key)
+    public function getAttribute(mixed $key): mixed
     {
         if (!(self::$noCasts[static::class] ?? false)) {
             return parent::getAttribute($key);
@@ -158,7 +157,6 @@ class Model extends LaravelModel
      *
      * @param string $column The column
      *
-     * @return bool
      */
     public function hasColumn(string $column): bool
     {
@@ -172,9 +170,8 @@ class Model extends LaravelModel
      *
      * @param string $relative The relative to get
      *
-     * @return mixed
      */
-    public function relation(string $relative)
+    public function relation(string $relative): mixed
     {
         return $this->$relative;
     }
@@ -182,7 +179,6 @@ class Model extends LaravelModel
     /**
      * Reset all
      *
-     * @return void
      */
     public static function resetAll(): void
     {
@@ -195,9 +191,8 @@ class Model extends LaravelModel
      * @param string|mixed $key   The key to set
      * @param mixed        $value The value to set it to
      *
-     * @return mixed
      */
-    public function setAttribute($key, $value)
+    public function setAttribute(mixed $key, mixed $value): mixed
     {
         if (!(self::$noCasts[static::class] ?? false)) {
             return parent::setAttribute($key, $value);
@@ -209,7 +204,6 @@ class Model extends LaravelModel
     /**
      * Turn off casting
      *
-     * @return void
      */
     public static function withoutCasts(): void
     {
@@ -222,9 +216,8 @@ class Model extends LaravelModel
      * Overrides Laravels version which broke between 7.20 and 7.25
      *
      * @param string|int $key The key to check
-     * @return string
      */
-    protected function removeTableFromKey($key)
+    protected function removeTableFromKey(string|int $key): string
     {
         return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
     }
@@ -234,7 +227,6 @@ class Model extends LaravelModel
      *
      * @param DateTimeInterface $date The date object
      *
-     * @return string|null
      */
     protected function serializeDate(DateTimeInterface $date): ?string
     {

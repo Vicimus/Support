@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes\API;
 
@@ -13,14 +15,12 @@ class AsyncRequestPoolTest extends TestCase
 {
     /**
      * The pool
-     * @var AsyncRequestPool
      */
-    private $pool;
+    private AsyncRequestPool $pool;
 
     /**
      * Set the test up
      *
-     * @return void
      */
     public function setup(): void
     {
@@ -31,7 +31,6 @@ class AsyncRequestPoolTest extends TestCase
     /**
      * Test add
      *
-     * @return void
      */
     public function testAdd(): void
     {
@@ -55,7 +54,6 @@ class AsyncRequestPoolTest extends TestCase
     /**
      * Test the counter
      *
-     * @return void
      */
     public function testCounter(): void
     {

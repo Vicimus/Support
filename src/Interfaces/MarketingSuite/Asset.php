@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -18,14 +20,12 @@ interface Asset extends AssetContract
     /**
      * Determine if an asset has been approved
      *
-     * @return bool
      */
     public function active(): bool;
 
     /**
      * Determine if an asset has been approved
      *
-     * @return bool
      */
     public function approved(): bool;
 
@@ -37,7 +37,6 @@ interface Asset extends AssetContract
 
     /**
      * Get the height
-     * @return int
      */
     public function height(): int;
 
@@ -52,13 +51,11 @@ interface Asset extends AssetContract
 
     /**
      * The intent of the Asset, conquest|retention
-     * @return string
      */
     public function intent(): string;
 
     /**
      * Get the rendered markup
-     * @return string
      */
     public function rendered(): string;
 
@@ -70,7 +67,6 @@ interface Asset extends AssetContract
 
     /**
      * Get the slug or type of asset this represents
-     * @return string
      */
     public function type(): string;
 
@@ -80,7 +76,6 @@ interface Asset extends AssetContract
      * @param string[]  $errors    The errors found
      * @param Validator $validator Optionally provide a validator to use
      *
-     * @return bool
      *
      * @throws TemplateException
      */
@@ -88,7 +83,6 @@ interface Asset extends AssetContract
 
     /**
      * The width of this asset
-     * @return int
      */
     public function width(): int;
 }

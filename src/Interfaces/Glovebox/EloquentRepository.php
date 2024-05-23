@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -12,25 +14,22 @@ interface EloquentRepository
      *
      * @param mixed[] $attributes The attributes
      *
-     * @return mixed
      */
-    public function create(array $attributes);
+    public function create(array $attributes): mixed;
 
     /**
      * Get the type by id
      *
      * @param int $id The id of the type to get
      *
-     * @return mixed|null
      */
-    public function find(int $id);
+    public function find(int $id): mixed;
 
     /**
      * Find or create
      *
      * @param mixed[] $attributes The attributes
      *
-     * @return mixed
      */
-    public function firstOrCreate(array $attributes);
+    public function firstOrCreate(array $attributes): mixed;
 }

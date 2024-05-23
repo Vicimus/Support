@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -17,19 +19,16 @@ interface CustomerAssociation extends Eloquent
     /**
      * The campaign the job is for
      *
-     * @return BelongsTo
      */
     public function campaign(): BelongsTo;
 
     /**
      * Who initiated the association
-     * @return string|int|null
      */
-    public function createdBy();
+    public function createdBy(): string|int|null;
 
     /**
      * Refresh
-     * @return string|int|bool
      */
-    public function refresh();
+    public function refresh(): string|int|bool;
 }

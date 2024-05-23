@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
@@ -16,7 +18,6 @@ interface Validator
      * @param string|null $content The content to validate
      * @param string[]    $invalid The matches found
      *
-     * @return bool
      */
     public function hasInvalidPlaceholders(?string $content, array &$invalid = []): bool;
 
@@ -27,9 +28,8 @@ interface Validator
      * @param string[]     $errors The errors array to fill with info
      * @param string       $type   The type of campaign using the validator
      *
-     * @return bool
      *
      * @throws TemplateException
      */
-    public function validate($asset, array &$errors, string $type): bool;
+    public function validate(Asset|string $asset, array &$errors, string $type): bool;
 }

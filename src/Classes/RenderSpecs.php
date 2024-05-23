@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -29,7 +31,7 @@ class RenderSpecs extends ImmutableObject
      * @param string|null      $format   The page format to use
      */
     public function __construct(
-        $width,
+        Request|int|null $width,
         ?int $height = null,
         ?int $scale = null,
         ?int $pages = null,

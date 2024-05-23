@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -10,7 +12,6 @@ interface ChangeLoggable
     /**
      * Retrieve the output for a model in the change log.
      *
-     * @return mixed[]|mixed
      */
-    public function getChangeHeader();
+    public function getChangeHeader(): mixed;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -13,16 +15,14 @@ class SingleDownload implements DownloadRequest
     /**
      * The photo
      *
-     * @var PhotoStatus
      */
-    protected $photo;
+    protected PhotoStatus $photo;
 
     /**
      * The vehicle
      *
-     * @var Vehicle
      */
-    protected $vehicle;
+    protected Vehicle $vehicle;
 
     /**
      * SingleDownload constructor.
@@ -41,7 +41,6 @@ class SingleDownload implements DownloadRequest
      *
      * @throws DownloadException
      *
-     * @return AsyncRequestPool
      */
     public function getAsyncPool(): AsyncRequestPool
     {
@@ -51,7 +50,6 @@ class SingleDownload implements DownloadRequest
     /**
      * Get the single photo status
      *
-     * @return PhotoStatus
      */
     public function getSinglePhotoStatus(): PhotoStatus
     {
@@ -61,7 +59,6 @@ class SingleDownload implements DownloadRequest
     /**
      * Get the single download vehicle unit
      *
-     * @return Vehicle
      */
     public function getSingleVehicle(): Vehicle
     {
@@ -71,7 +68,6 @@ class SingleDownload implements DownloadRequest
     /**
      * Is your download request an async request or a single download
      *
-     * @return bool
      */
     public function isAsynchronous(): bool
     {

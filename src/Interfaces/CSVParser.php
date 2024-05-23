@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -24,7 +26,6 @@ interface CSVParser
     /**
      * Get the hash value of the file specified in the parser
      *
-     * @return string
      */
     public function hash(): string;
 
@@ -33,7 +34,6 @@ interface CSVParser
      *
      * @param string[] $headers The headers to set the columns to
      *
-     * @return CSVParser
      */
     public function headers(array $headers): CSVParser;
 
@@ -43,7 +43,6 @@ interface CSVParser
      * @param string   $file    The file to parse
      * @param string[] $options Any options to set
      *
-     * @return CSVParser
      */
     public function make(string $file, array $options = []): CSVParser;
 
@@ -53,7 +52,6 @@ interface CSVParser
      * @param string   $file    The file to parse
      * @param string[] $options Any options to set
      *
-     * @return CSVParser
      */
     public function parse(string $file, array $options = []): CSVParser;
 }

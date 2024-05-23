@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -10,10 +12,8 @@ use Vicimus\Support\Interfaces\Eloquent;
  */
 interface HasValues extends Eloquent, HasDatatype, HasHash
 {
-
     /**
      * A property can have many values
-     * @return HasMany
      */
     public function values(): HasMany;
 }

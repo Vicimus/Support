@@ -1,8 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
 use Closure;
+use DateInterval;
+use DateTimeInterface;
 use Illuminate\Contracts\Cache\Repository;
 
 /**
@@ -14,7 +18,7 @@ class BasicCache implements Repository
      * Cache store
      * @var mixed[]
      */
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * BasicCache constructor.
@@ -33,9 +37,8 @@ class BasicCache implements Repository
      * @param  mixed                                      $value   The value
      * @param  \DateTimeInterface|\DateInterval|float|int $minutes The minutes
      *
-     * @return bool|mixed
      */
-    public function add($key, $value, $minutes = null)
+    public function add(mixed $key, mixed $value, DateTimeInterface|DateInterval|float|int|null $minutes = null): mixed
     {
         // TODO: Implement add() method
     }
@@ -45,7 +48,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True on success and false on failure.
      */
-    public function clear()
+    public function clear(): mixed
     {
         $this->cache = [];
     }
@@ -56,9 +59,8 @@ class BasicCache implements Repository
      * @param  string|mixed $key   The key
      * @param  mixed        $value The value
      *
-     * @return int|bool|mixed
      */
-    public function decrement($key, $value = 1)
+    public function decrement(mixed $key, mixed $value = 1): mixed
     {
         // TODO: Implement decrement() method.
     }
@@ -70,7 +72,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True if the item was successfully removed. False if there was an error.
      */
-    public function delete($key)
+    public function delete(mixed $key): mixed
     {
         unset($this->cache[$key]);
     }
@@ -82,7 +84,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True if the items were successfully removed. False if there was an error.
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple(mixed $keys): mixed
     {
         // TODO: Implement deleteMultiple() method.
     }
@@ -93,9 +95,8 @@ class BasicCache implements Repository
      * @param  string|mixed $key   The key
      * @param  mixed        $value The value
      *
-     * @return void|mixed
      */
-    public function forever($key, $value)
+    public function forever(mixed $key, mixed $value): mixed
     {
         // TODO: Implement forever() method.
     }
@@ -105,9 +106,8 @@ class BasicCache implements Repository
      *
      * @param string|mixed $key The key
      *
-     * @return bool|mixed
      */
-    public function forget($key)
+    public function forget(mixed $key): mixed
     {
         unset($this->cache[$key]);
         return !array_key_exists($key, $this->cache);
@@ -119,9 +119,8 @@ class BasicCache implements Repository
      * @param  string|mixed $key     The key to get
      * @param  mixed        $default The default to return
      *
-     * @return mixed
      */
-    public function get($key, $default = null)
+    public function get(mixed $key, mixed $default = null): mixed
     {
         return $this->cache[$key] ?? $default;
     }
@@ -135,7 +134,7 @@ class BasicCache implements Repository
      * @return mixed A list of key => value pairs. Cache keys that do not exist or
      *                        are stale will have $default as value.
      */
-    public function getMultiple($keys, $default = null)
+    public function getMultiple(mixed $keys, mixed $default = null): mixed
     {
         // TODO: Implement getMultiple() method.
     }
@@ -143,9 +142,8 @@ class BasicCache implements Repository
     /**
      * Get the cache store implementation.
      *
-     * @return \Illuminate\Contracts\Cache\Store|mixed
      */
-    public function getStore()
+    public function getStore(): mixed
     {
         // TODO: Implement getStore() method.
     }
@@ -155,9 +153,8 @@ class BasicCache implements Repository
      *
      * @param string|mixed $key They key to check
      *
-     * @return bool|mixed
      */
-    public function has($key)
+    public function has(mixed $key): mixed
     {
         return isset($this->cache[$key]);
     }
@@ -168,9 +165,8 @@ class BasicCache implements Repository
      * @param  string|mixed $key   The key
      * @param  mixed        $value The value
      *
-     * @return int|bool|mixed
      */
-    public function increment($key, $value = 1)
+    public function increment(mixed $key, mixed $value = 1): mixed
     {
         // TODO: Implement increment() method.
     }
@@ -181,9 +177,8 @@ class BasicCache implements Repository
      * @param string|mixed $key     The key to pull out
      * @param mixed        $default The default value
      *
-     * @return mixed
      */
-    public function pull($key, $default = null)
+    public function pull(mixed $key, mixed $default = null): mixed
     {
         // TODO: Implement pull() method.
     }
@@ -195,9 +190,8 @@ class BasicCache implements Repository
      * @param  mixed                                      $value   The value
      * @param  \DateTimeInterface|\DateInterval|float|int $minutes The time
      *
-     * @return void|mixed
      */
-    public function put($key, $value, $minutes = null)
+    public function put(mixed $key, mixed $value, DateTimeInterface|DateInterval|float|int|null $minutes = null): mixed
     {
         $this->cache[$key] = $value;
     }
@@ -209,9 +203,8 @@ class BasicCache implements Repository
      * @param  \DateTimeInterface|\DateInterval|float|int $minutes  The minutes
      * @param  \Closure                                   $callback The callback
      *
-     * @return mixed
      */
-    public function remember($key, $minutes, Closure $callback)
+    public function remember(mixed $key, DateTimeInterface|DateInterval|float|int $minutes, Closure $callback): mixed
     {
         return $callback();
     }
@@ -222,9 +215,8 @@ class BasicCache implements Repository
      * @param string|mixed $key      The key
      * @param \Closure     $callback The closure
      *
-     * @return mixed
      */
-    public function rememberForever($key, Closure $callback)
+    public function rememberForever(mixed $key, Closure $callback): mixed
     {
         return $callback();
     }
@@ -235,9 +227,8 @@ class BasicCache implements Repository
      * @param string|mixed $key      The key
      * @param Closure      $callback The callback
      *
-     * @return mixed
      */
-    public function sear($key, Closure $callback)
+    public function sear(mixed $key, Closure $callback): mixed
     {
         // TODO: Implement sear() method.
     }
@@ -253,7 +244,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True on success and false on failure.
      */
-    public function set($key, $value, $ttl = null)
+    public function set(mixed $key, mixed $value, int|DateInterval|null $ttl = null): mixed
     {
         $this->cache[$key] = $value;
         return true;
@@ -269,7 +260,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True on success and false on failure.
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple(mixed $values, int|DateInterval|null $ttl = null): mixed
     {
         // TODO: Implement setMultiple() method.
     }

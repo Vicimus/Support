@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Http;
 
@@ -14,7 +16,6 @@ class RequestTest extends TestCase
     /**
      * Test select
      *
-     * @return void
      */
     public function testSelect(): void
     {
@@ -34,7 +35,6 @@ class RequestTest extends TestCase
     /**
      * Test with
      *
-     * @return void
      */
     public function testFields(): void
     {
@@ -51,7 +51,6 @@ class RequestTest extends TestCase
     /**
      * Test params
      *
-     * @return void
      */
     public function testParams(): void
     {
@@ -70,7 +69,6 @@ class RequestTest extends TestCase
     /**
      * Test complex query
      *
-     * @return void
      */
     public function testIsComplex(): void
     {
@@ -84,7 +82,6 @@ class RequestTest extends TestCase
     /**
      * Test the bind method
      *
-     * @return void
      */
     public function testBind(): void
     {
@@ -92,15 +89,12 @@ class RequestTest extends TestCase
 
         $this->assertFalse($request->isComplexQuery());
 
-        $this->assertNotNull($request->bind('banana', static function () {
-            return 'strawberry';
-        }));
+        $this->assertNotNull($request->bind('banana', static fn () => 'strawberry'));
     }
 
     /**
      * Test get
      *
-     * @return void
      */
     public function testGet(): void
     {
@@ -117,7 +111,6 @@ class RequestTest extends TestCase
     /**
      * Test the built in order by stuff
      *
-     * @return void
      */
     public function testOrderBy(): void
     {
@@ -140,7 +133,6 @@ class RequestTest extends TestCase
     /**
      * Test except excludes
      *
-     * @return void
      */
     public function testExcept(): void
     {
@@ -163,7 +155,6 @@ class RequestTest extends TestCase
     /**
      * Test has
      *
-     * @return void
      */
     public function testHas(): void
     {
@@ -178,7 +169,6 @@ class RequestTest extends TestCase
     /**
      * Test receiving the illuminate request
      *
-     * @return void
      */
     public function testToRequest(): void
     {

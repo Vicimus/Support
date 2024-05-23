@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -15,7 +17,6 @@ interface ScreenCapturer
      * @param string           $url   The url to capture
      * @param RenderSpecs|null $specs The specs
      *
-     * @return string
      */
     public function html(string $url, ?RenderSpecs $specs = null): string;
 
@@ -26,7 +27,6 @@ interface ScreenCapturer
      * @param RenderSpecs|null $specs   The render specs
      * @param string           $command The command run, by reference
      *
-     * @return string
      */
     public function jpg(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 
@@ -37,7 +37,6 @@ interface ScreenCapturer
      * @param RenderSpecs $specs   Specifications for how to render
      * @param string      $command The command run, by reference
      *
-     * @return string
      */
     public function pdf(string $url, RenderSpecs $specs, string &$command = ''): string;
 
@@ -48,7 +47,6 @@ interface ScreenCapturer
      * @param string $uuid    The batch uuid
      * @param string $command The command that was run
      *
-     * @return void
      */
     public function pdfBatch(string $baseUrl, string $uuid, string &$command = ''): void;
 
@@ -59,7 +57,6 @@ interface ScreenCapturer
      * @param RenderSpecs|null $specs   The specs
      * @param string           $command The command run, by reference
      *
-     * @return string
      */
     public function png(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 
@@ -69,7 +66,6 @@ interface ScreenCapturer
      * @param string           $url     The URL to capture
      * @param RenderSpecs|null $specs   The specs
      * @param string           $command The command run, by reference
-     * @return string
      */
     public function webp(string $url, ?RenderSpecs $specs = null, string &$command = ''): string;
 }

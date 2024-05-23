@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -14,7 +16,6 @@ class Parser
      *
      * @param string $input The country input
      *
-     * @return string|null
      */
     public static function parseCountry(?string $input): ?string
     {
@@ -36,7 +37,6 @@ class Parser
      *
      * @param string $input The language input
      *
-     * @return string|null
      */
     public static function parseLanguage(?string $input): ?string
     {
@@ -58,7 +58,6 @@ class Parser
      *
      * @param string $input The mileage unit input
      *
-     * @return string|null
      */
     public static function parseMileageUnit(?string $input): ?string
     {
@@ -80,7 +79,6 @@ class Parser
      *
      * @param string $input The payment type input
      *
-     * @return string|null
      */
     public static function parsePaymentType(?string $input): ?string
     {
@@ -109,7 +107,6 @@ class Parser
      * @param string $input   The state input
      * @param string $country In which country
      *
-     * @return null|string
      */
     public static function parseState(?string $input, ?string $country): ?string
     {
@@ -131,7 +128,6 @@ class Parser
      *
      * @param string $input The timezone input
      *
-     * @return string|null
      */
     public static function parseTimezone(?string $input): ?string
     {
@@ -153,7 +149,6 @@ class Parser
      *
      * @param string $input The make input
      *
-     * @return string|null
      */
     public static function parseVehicleMake(?string $input): ?string
     {
@@ -175,7 +170,6 @@ class Parser
      *
      * @param string $input The sale class input
      *
-     * @return string|null
      */
     public static function parseVehicleSaleClass(?string $input): ?string
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -6,6 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
+use stdClass;
 use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
@@ -25,28 +28,25 @@ class APIService
      *
      * @var string[]
      */
-    protected $additional = [];
+    protected array $additional = [];
 
     /**
      * The guzzle client
      *
-     * @var ClientInterface
      */
-    protected $client;
+    protected ClientInterface $client;
 
     /**
      * The base url of the api
      *
-     * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * Credentials for sending api requests
      *
-     * @var string
      */
-    private $cred;
+    private string $cred;
 
     /**
      * APIService constructor.
@@ -80,9 +80,8 @@ class APIService
      * @throws UnauthorizedException on 401
      * @throws ServerException on 500
      *
-     * @return mixed
      */
-    public function multipart(string $path, array $payload, string $verb = 'POST')
+    public function multipart(string $path, array $payload, string $verb = 'POST'): mixed
     {
         $this->validate($payload);
 
@@ -140,7 +139,7 @@ class APIService
      * @throws RestException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function request(string $method, string $path, $payload = [], ?string $tag = null)
+    public function request(string $method, string $path, array|object $payload = [], ?string $tag = null): array|stdClass
     {
         $path = str_replace($this->url, '', $path);
         if (strpos($path, '/') !== 0) {
@@ -214,7 +213,7 @@ class APIService
      *
      * @return mixed[]
      */
-    protected function payload($payload): array
+    protected function payload(mixed $payload): array
     {
         if (!is_array($payload)) {
             $payload = json_decode(json_encode($payload), true);
@@ -230,7 +229,6 @@ class APIService
      *
      * @throws InvalidArgumentException
      *
-     * @return void
      */
     protected function validate(array $payload): void
     {

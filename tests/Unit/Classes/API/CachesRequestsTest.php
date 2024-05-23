@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Classes\API;
 
@@ -14,14 +16,12 @@ class CachesRequestsTest extends TestCase
 {
     /**
      * Instance
-     * @var CachesRequests
      */
-    private $instance;
+    private CachesRequests $instance;
 
     /**
      * Set up
      *
-     * @return void
      * @throws \Throwable
      */
     public function setup(): void
@@ -32,7 +32,6 @@ class CachesRequestsTest extends TestCase
 
             /**
              * Get the cache time for testing
-             * @return int
              */
             public function getCacheTime(): int
             {
@@ -50,7 +49,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Cache match
      *
-     * @return void
      */
     public function testCacheMatch(): void
     {
@@ -65,7 +63,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Test clearing the cache
      *
-     * @return void
      * @throws \Throwable
      */
     public function testClearCache(): void
@@ -78,7 +75,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Test cache time
      *
-     * @return void
      */
     public function testCacheTime(): void
     {
@@ -88,7 +84,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Clear cache
      *
-     * @return void
      */
     public function testClearException(): void
     {

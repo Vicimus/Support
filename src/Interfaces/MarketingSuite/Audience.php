@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -18,13 +20,11 @@ interface Audience extends HasProperties
     /**
      * Get the thing that owns this audience
      *
-     * @return MorphTo
      */
     public function audienceable(): MorphTo;
 
     /**
      * Retrieve the criteria from the audience
-     * @return CriteriaContract|null
      */
     public function criteria(): ?CriteriaContract;
 
@@ -39,27 +39,23 @@ interface Audience extends HasProperties
     /**
      * A unique hash to describe the audience state
      *
-     * @return string
      */
     public function hash(): string;
 
     /**
      * Is extending another audience or not
      *
-     * @return bool
      */
     public function isExtending(): bool;
 
     /**
      * Get a name for this audience
      *
-     * @return string
      */
     public function name(): string;
 
     /**
      * Retrieve the remote id used by the audience
-     * @return int|null
      */
     public function remoteId(): ?int;
 
@@ -69,7 +65,6 @@ interface Audience extends HasProperties
      * @param null|string $placement The asset placement slug
      * @param bool        $pure      Flag to manipulate the target values
      *
-     * @return Target
      */
     public function target(?string $placement, bool $pure = true): Target;
 }

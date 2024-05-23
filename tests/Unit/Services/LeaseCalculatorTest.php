@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
@@ -16,15 +18,13 @@ class LeaseCalculatorTest extends TestCase
 {
     /**
      * Test payments
-     *
-     * @return void
      * @throws Throwable
      */
     public function testPayments(): void
     {
         $calc = new LeaseCalculator();
         $payment = $calc->payment(
-            0.004158333,
+            0.004_158_333,
             12,
             40,
             35094.17,
@@ -37,7 +37,6 @@ class LeaseCalculatorTest extends TestCase
     /**
      * Easy mode
      *
-     * @return void
      * @throws Throwable
      */
     public function testEasyMode(): void
@@ -64,7 +63,7 @@ class LeaseCalculatorTest extends TestCase
 
         $vehicle->expects($this->once())
             ->method('rate')
-            ->willReturn(0.0499);
+            ->willReturn(0.0_499);
 
         $vehicle->expects($this->once())
             ->method('term')
@@ -78,8 +77,6 @@ class LeaseCalculatorTest extends TestCase
 
     /**
      * This is breaking get your toyota
-     *
-     * @return void
      */
     public function testDivisionByZeroIssues(): void
     {
@@ -93,35 +90,5 @@ class LeaseCalculatorTest extends TestCase
         );
 
         $this->assertGreaterThan(0, $payment);
-    }
-
-    /**
-     * @return void
-     */
-    public function testNotFloatPrice(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $calc = new LeaseCalculator();
-        $calc->futureValue('34003', '0.05');
-    }
-
-    /**
-     * @return void
-     */
-    public function testNotFloatResidual(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $calc = new LeaseCalculator();
-        $calc->futureValue(34003, '0.05');
-    }
-
-    /**
-     * @return void
-     */
-    public function testNotFloatPriceNper(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $calc = new LeaseCalculator();
-        $calc->nper('34', 12);
     }
 }

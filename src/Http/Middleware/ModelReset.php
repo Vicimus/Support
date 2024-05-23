@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Http\Middleware;
 
@@ -17,9 +19,8 @@ class ModelReset
      * @param Request $request The request instance
      * @param Closure $next    The next middleware in the stack
      *
-     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         return $next($request);
     }
@@ -27,7 +28,6 @@ class ModelReset
     /**
      * Reset model events
      *
-     * @return void
      */
     public function terminate(): void
     {

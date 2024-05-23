@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -14,7 +16,6 @@ trait PersistsOutput
      *
      * @param string $method The method to use for output
      *
-     * @return self
      */
     public function persist(string $method = 'comment'): self
     {

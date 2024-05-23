@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -12,13 +14,11 @@ interface PropertyRecord
 {
     /**
      * Get the value of the property
-     * @return mixed
      */
     public function getValue(): mixed;
 
     /**
      * Retrieve the name of the property
-     * @return string
      */
     public function name(): string;
 
@@ -27,7 +27,6 @@ interface PropertyRecord
      *
      * @param mixed $value The value to validate
      *
-     * @return void
      */
     public function validate(mixed $value): void;
 }

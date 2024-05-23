@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -20,42 +22,37 @@ class Benchmark
      *
      * @var callable[]
      */
-    protected $customs = [];
+    protected array $customs = [];
 
     /**
      * Track the amount of memory in use when the benchmark finished
      *
-     * @var int
      */
-    protected $dinit = 0;
+    protected int $dinit = 0;
 
     /**
      * Track the starting memory
      *
-     * @var int
      */
-    protected $init = 0;
+    protected int $init = 0;
 
     /**
      * Get the highest level of memory used during the benchmark
      *
-     * @var int
      */
-    protected $peak = 0;
+    protected int $peak = 0;
 
     /**
      * Track the time the benchmark has started
      *
-     * @var int
      */
-    protected $start = 0;
+    protected int $start = 0;
 
     /**
      * Track the time when the benchmark has finished
      *
-     * @var int
      */
-    protected $stop = 0;
+    protected int $stop = 0;
 
     /**
      * Add a custom benchmark
@@ -63,7 +60,6 @@ class Benchmark
      * @param callable $init The method to be called on init
      * @param callable $stop The method to be called on stop
      *
-     * @return Benchmark
      */
     public function custom(callable $init, callable $stop): Benchmark
     {
@@ -82,9 +78,9 @@ class Benchmark
      */
     public function get(): array
     {
-        $memory = round(($this->dinit - $this->init) / 1024 / 1024).'MB';
-        $time = round($this->stop - $this->start, 2).'S';
-        $peak = round($this->peak / 1024 / 1024).'MB';
+        $memory = round(($this->dinit - $this->init) / 1024 / 1024) . 'MB';
+        $time = round($this->stop - $this->start, 2) . 'S';
+        $peak = round($this->peak / 1024 / 1024) . 'MB';
         $customs = [];
 
         foreach ($this->customs as $custom) {
@@ -102,7 +98,6 @@ class Benchmark
     /**
      * Begin the benchmarking
      *
-     * @return Benchmark
      */
     public function init(): Benchmark
     {
@@ -119,14 +114,13 @@ class Benchmark
     /**
      * Output the benchmark statistics
      *
-     * @return void
      */
     public function output(): void
     {
         $results = $this->get();
-        $this->info('Time: '.$results['time']);
-        $this->info('Memory: '.$results['memory']);
-        $this->info('Peak: '.$results['peak']);
+        $this->info('Time: ' . $results['time']);
+        $this->info('Memory: ' . $results['memory']);
+        $this->info('Peak: ' . $results['peak']);
 
         foreach ($this->customs as $custom) {
             $this->info($custom['results']);
@@ -136,7 +130,6 @@ class Benchmark
     /**
      * Stop the benchmark
      *
-     * @return Benchmark
      */
     public function stop(): Benchmark
     {

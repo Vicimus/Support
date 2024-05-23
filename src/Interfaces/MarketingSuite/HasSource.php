@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -25,7 +27,6 @@ interface HasSource
     /**
      * Retrieve the display ad stats relationship
      *
-     * @return Relation
      */
     public function adStats(): Relation;
 
@@ -34,13 +35,11 @@ interface HasSource
      *
      * @param string $remoteId The remote id of the placement
      *
-     * @return HasAssetDetails|null
      */
     public function assetDetails(string $remoteId): ?HasAssetDetails;
 
     /**
      * Has many audiences
-     * @return MorphMany
      */
     public function audiences(): MorphMany;
 
@@ -57,21 +56,18 @@ interface HasSource
      * literally has nothing to do with assets. Things
      * using hasSource require the content id be there.
      *
-     * @return int|null
      */
     public function contentId(): ?int;
 
     /**
      * Retrieve the identifier of the has source instance
      *
-     * @return int
      */
     public function getId(): int;
 
     /**
      * Retrieve the error code associated with the campaign being paused
      *
-     * @return int|null
      */
     public function getPausedErrorCode(): ?int;
 
@@ -85,33 +81,28 @@ interface HasSource
     /**
      * Retrieve the title of the has source instance
      *
-     * @return string
      */
     public function getTitle(): string;
 
     /**
      * Retrieve the paused state
-     * @return bool
      */
     public function paused(): bool;
 
     /**
      * Retrieve the related source
-     * @return MorphOne|Source
      */
-    public function source();
+    public function source(): MorphOne|Source;
 
     /**
      * Get the store id for this campaigns
-     * @return int
      */
     public function storeId(): int;
 
     /**
      * Update the models timestamp
-     * @return bool|void
      */
-    public function touch();
+    public function touch(): bool|null;
 
     /**
      * Update the model in the database.
@@ -119,7 +110,6 @@ interface HasSource
      * @param string[] $attributes The attribute updates
      * @param string[] $options    Additional options
      *
-     * @return bool|mixed
      */
-    public function update(array $attributes = [], array $options = []);
+    public function update(array $attributes = [], array $options = []): mixed;
 }

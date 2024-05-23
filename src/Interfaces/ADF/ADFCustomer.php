@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\ADF;
 
@@ -19,21 +21,18 @@ interface ADFCustomer
     /**
      * Get the firstname of this customer
      *
-     * @return string
      */
     public function firstname(): string;
 
     /**
      * Get the lastname of this customer
      *
-     * @return string
      */
     public function lastname(): string;
 
     /**
      * Get the id of this customer
      *
-     * @return int
      */
     public function primaryId(): ?int;
 
@@ -41,7 +40,6 @@ interface ADFCustomer
      * Get the street address of the customer if available.
      * Return null if it is not available
      *
-     * @return string
      */
     public function street(): ?string;
 

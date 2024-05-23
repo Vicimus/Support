@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Database;
 
@@ -18,9 +20,8 @@ class ComplexQueryParser
      *
      * @param mixed $value The value of the query property
      *
-     * @return bool
      */
-    public function isComplexQuery($value): bool
+    public function isComplexQuery(mixed $value): bool
     {
         if (!is_string($value)) {
             return false;
@@ -50,9 +51,8 @@ class ComplexQueryParser
      * @param string           $property The property being manipulated
      * @param string           $value    The complex query string
      *
-     * @return Builder|Relation
      */
-    public function query($query, string $property, string $value)
+    public function query(Builder|Relation $query, string $property, string $value): Builder|Relation
     {
         $this->typeCheck($query);
         list($type, $statement) = explode(':', $value);
@@ -67,9 +67,8 @@ class ComplexQueryParser
      * @param string           $property  The property being manipulated
      * @param string           $statement The complex query string
      *
-     * @return Builder|Relation
      */
-    protected function gt($query, string $property, string $statement)
+    protected function gt(Builder|Relation $query, string $property, string $statement): Builder|Relation
     {
         if ($statement === 'now') {
             $statement = new DateTime();
@@ -85,9 +84,8 @@ class ComplexQueryParser
      * @param string           $property  The property being manipulated
      * @param string           $statement The complex query string
      *
-     * @return Builder|Relation
      */
-    protected function in($query, string $property, string $statement)
+    protected function in(Builder|Relation $query, string $property, string $statement): Builder|Relation
     {
         $hasNull = false;
         $possibilities = array_map(static function ($value) use (&$hasNull) {
@@ -116,9 +114,8 @@ class ComplexQueryParser
      * @param string           $property  The property being manipulated
      * @param string           $statement The complex query string
      *
-     * @return Builder|Relation
      */
-    protected function like($query, string $property, string $statement)
+    protected function like(Builder|Relation $query, string $property, string $statement): Builder|Relation
     {
         $query->where($property, 'LIKE', $statement);
         return $query;
@@ -131,9 +128,8 @@ class ComplexQueryParser
      * @param string           $property  The property being manipulated
      * @param string           $statement The complex query string
      *
-     * @return Builder|Relation
      */
-    protected function lt($query, string $property, string $statement)
+    protected function lt(Builder|Relation $query, string $property, string $statement): Builder|Relation
     {
         if ($statement === 'now') {
             $statement = new DateTime();
@@ -148,9 +144,8 @@ class ComplexQueryParser
      * @param mixed $object The object to inspect
      *
      * @throws InvalidArgumentException if the object was not appropriate
-     * @return void
      */
-    private function typeCheck($object): void
+    private function typeCheck(mixed $object): void
     {
         if (!$object instanceof Builder && !$object instanceof Relation && !$object instanceof EloquentBuilder) {
             throw new InvalidArgumentException($object, EloquentBuilder::class, Builder::class, Relation::class);

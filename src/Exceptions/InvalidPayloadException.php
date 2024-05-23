@@ -1,10 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Exceptions;
 
 use InvalidArgumentException as InvalidArgument;
 
-use function get_class;
 use function is_object;
 
 /**
@@ -19,13 +20,13 @@ class InvalidPayloadException extends InvalidArgument
      * @param string         $parameter     The parameter we want to describe
      * @param string[]|mixed ...$acceptable What would have been acceptable
      */
-    public function __construct(mixed $got, string $parameter, ...$acceptable)
+    public function __construct(mixed $got, string $parameter, mixed ...$acceptable)
     {
         if ($parameter) {
             $parameter = sprintf(' for %s parameter', $parameter);
         }
 
-        $type = is_object($got) ? get_class($got) : gettype($got);
+        $type = is_object($got) ? $got::class : gettype($got);
         $message = sprintf(
             'Invalid argument supplied. Received %s but expected %s%s',
             $type,

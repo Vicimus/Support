@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -17,7 +19,6 @@ interface PageController
      *
      * @param string[] $args Arguments containing a page to show
      *
-     * @return Response
      */
     public function show(array $args = []): Response;
 }

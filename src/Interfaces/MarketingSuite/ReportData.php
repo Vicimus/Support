@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -9,14 +11,12 @@ interface ReportData
 {
     /**
      * Retrieve the id of the advertisement the stats are for
-     * @return string|null
      */
     public function getAdId(): ?string;
 
     /**
      * Retrieve the name of the ad
      *
-     * @return string
      */
     public function getName(): string;
 

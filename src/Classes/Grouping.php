@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -47,7 +49,6 @@ class Grouping extends ImmutableObject
      * @param Campaign $campaign The campaign
      * @param mixed[]  $payload  The parameters that were updated
      *
-     * @return void
      */
     public function onUpdate(Campaign $campaign, array $payload): void
     {
@@ -59,7 +60,6 @@ class Grouping extends ImmutableObject
      *
      * @param string $property The property name to retrieve
      *
-     * @return Property
      */
     public function property(string $property): ?Property
     {

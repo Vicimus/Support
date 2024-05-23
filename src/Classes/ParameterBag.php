@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,7 +14,6 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     /**
      * Checksum of the value of the parameters
      *
-     * @return string
      */
     public function checksum(): string
     {
@@ -25,9 +26,8 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      * @param string $property The property to get
      * @param mixed  $default  A default to use if nothing is found
      *
-     * @return mixed
      */
-    public function get(string $property, $default = null)
+    public function get(string $property, mixed $default = null): mixed
     {
         return $this->attributes[$property] ?? $default;
     }
@@ -38,9 +38,8 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      * @param string $property The property to get and unset
      * @param mixed  $default  The default to use if nothing is found
      *
-     * @return mixed
      */
-    public function grab(string $property, $default = null)
+    public function grab(string $property, mixed $default = null): mixed
     {
         $value = $this->get($property, $default);
         unset($this->attributes[$property]);
@@ -52,7 +51,6 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      *
      * @param string $property The property to check existence of
      *
-     * @return bool
      */
     public function has(string $property): bool
     {
@@ -65,7 +63,6 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      * @param mixed $offset The offset to set
      * @param mixed $value  The value to set it to
      *
-     * @return void
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -78,9 +75,8 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      * @param string $property The property to add
      * @param mixed  $value    The value to add
      *
-     * @return void
      */
-    public function put(string $property, $value): void
+    public function put(string $property, mixed $value): void
     {
         $this->attributes[$property] = $value;
     }
@@ -91,7 +87,6 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      * @param string $original The original column
      * @param string $updated  The new column
      *
-     * @return void
      */
     public function rename(string $original, string $updated): void
     {

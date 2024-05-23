@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -17,7 +19,6 @@ interface PurlContract
      * Retrieve the path to the background image for a campaign
      *
      * @param int $campaignId The campaign
-     * @return string
      */
     public function background(int $campaignId): string;
 
@@ -28,7 +29,6 @@ interface PurlContract
      * @param int $customerId The customer id
      * @param int $duration   The time between pings in milliseconds
      *
-     * @return void
      *
      * @throws PurlException
      */
@@ -39,7 +39,6 @@ interface PurlContract
      *
      * @param Request $request The request
      *
-     * @return PurlResponse
      *
      * @throws TemplateException
      * @throws PurlException
@@ -51,7 +50,6 @@ interface PurlContract
      *
      * @param string|null $subdomain The subdomain to use in the search
      *
-     * @return Store
      * @throws OnyxException
      * @throws PurlException
      */

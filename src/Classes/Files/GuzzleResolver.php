@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Files;
 
@@ -16,16 +18,14 @@ class GuzzleResolver implements FileResolver
     /**
      * The guzzle client
      *
-     * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
      * Path to store stuff
      *
-     * @var string
      */
-    private $path;
+    private string $path;
 
     /**
      * GuzzleResolver constructor.

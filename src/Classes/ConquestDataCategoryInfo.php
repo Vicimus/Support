@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -28,7 +30,7 @@ class ConquestDataCategoryInfo extends ImmutableObject
      */
     public function __construct(
         string $name,
-        $description,
+        View|string $description,
         string $image,
         string $class,
         Collection $sources

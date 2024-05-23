@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -25,14 +27,13 @@ trait TestSqliteDatabase
     /**
      * @var bool[]
      */
-    private $attached = [];
+    private array $attached = [];
 
     /**
      * Set how we migrate the databases
      *
      * @param callable $migrate The migration callable
      *
-     * @return self
      */
     public function setMigration(callable $migrate): self
     {
@@ -47,7 +48,6 @@ trait TestSqliteDatabase
      * @param string[] $external A list of external databases
      * @param string[] $aliases  Aliases for the main database
      *
-     * @return void
      * @throws TestException
      * @throws RuntimeException
      */
@@ -95,7 +95,6 @@ trait TestSqliteDatabase
     /**
      * Execute the migration
      *
-     * @return void
      */
     protected function doMigration(): void
     {
@@ -112,7 +111,6 @@ trait TestSqliteDatabase
      *
      * @throws TestException
      *
-     * @return void
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
@@ -151,7 +149,6 @@ trait TestSqliteDatabase
      *
      * @param string|null $database The name of the database
      *
-     * @return string
      */
     private function checksum(?string $database): ?string
     {
@@ -184,7 +181,6 @@ trait TestSqliteDatabase
      *
      * @throws TestException
      *
-     * @return void
      */
     private function finish(?string $database, string $stub, string $secondStub): void
     {
@@ -205,7 +201,6 @@ trait TestSqliteDatabase
      *
      * @param string|null $database The database to check
      *
-     * @return bool
      */
     private function isOutdated(?string $database): bool
     {
@@ -220,7 +215,6 @@ trait TestSqliteDatabase
     /**
      * Get the output
      *
-     * @return ConsoleOutput
      */
     private function output(): ConsoleOutput
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Incentives;
 
@@ -14,7 +16,6 @@ interface ResidualCollection
      *
      * @param int $term The term in months
      *
-     * @return float|null
      * @throws IncentiveException
      * @throws RuntimeException
      */

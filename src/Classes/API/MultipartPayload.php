@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
@@ -20,7 +22,7 @@ class MultipartPayload extends ImmutableObject
      */
     public function __construct(
         string $name,
-        $contents,
+        mixed $contents,
         ?string $filename = null,
         ?string $mime = null
     ) {
@@ -59,7 +61,6 @@ class MultipartPayload extends ImmutableObject
     /**
      * Check if the payload has a file or not
      *
-     * @return bool
      */
     public function hasFile(): bool
     {

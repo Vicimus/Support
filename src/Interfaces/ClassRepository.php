@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -12,7 +14,6 @@ interface ClassRepository
      *
      * @param string $source The source to check
      *
-     * @return bool
      */
     public function isRegistered(string $source): bool;
 
@@ -21,7 +22,6 @@ interface ClassRepository
      *
      * @param string|string[] $classes Register one or many data sources
      *
-     * @return void
      */
-    public function register($classes): void;
+    public function register(string|array $classes): void;
 }

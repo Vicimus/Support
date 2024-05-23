@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Timezones;
 
@@ -15,9 +17,8 @@ class Timezones
     /**
      * The cache repository
      *
-     * @var Repository
      */
-    private $cache;
+    private Repository $cache;
 
     /**
      * Timezones constructor.
@@ -32,13 +33,10 @@ class Timezones
     /**
      * Get all timezones
      *
-     * @return Collection
      */
     public function all(): Collection
     {
-        return $this->cache->rememberForever('timezones', function () {
-            return $this->payload();
-        });
+        return $this->cache->rememberForever('timezones', fn () => $this->payload());
     }
 
     /**

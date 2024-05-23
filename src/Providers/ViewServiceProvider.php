@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Providers;
 
@@ -12,10 +14,9 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
-     * @return void
      */
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'support');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'support');
     }
 }

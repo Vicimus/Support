@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes\API;
 
@@ -14,7 +16,6 @@ class MultipartPayloadTest extends TestCase
     /**
      * Format the payload
      *
-     * @return void
      */
     public function testFormat(): void
     {
@@ -41,7 +42,6 @@ class MultipartPayloadTest extends TestCase
     /**
      * Format the payload
      *
-     * @return void
      */
     public function testFormatWithFile(): void
     {

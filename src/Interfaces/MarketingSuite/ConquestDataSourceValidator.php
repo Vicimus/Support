@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -27,7 +29,6 @@ interface ConquestDataSourceValidator
      *
      * @throws BudgetException
      *
-     * @return void
      */
     public function budget(Audience $audience, SourceRecord $source, int $amount): void;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -14,7 +16,7 @@ class IterableArray implements Iterator
      *
      * @var mixed[]
      */
-    private $source;
+    private array $source;
 
     /**
      * IterableArray constructor
@@ -29,7 +31,6 @@ class IterableArray implements Iterator
     /**
      * Current point
      *
-     * @return mixed
      */
     public function current(): mixed
     {
@@ -39,7 +40,6 @@ class IterableArray implements Iterator
     /**
      * Key to the iterator
      *
-     * @return mixed
      */
     public function key(): mixed
     {
@@ -69,7 +69,6 @@ class IterableArray implements Iterator
     /**
      * Check if the iterator is still valid
      *
-     * @return bool
      */
     public function valid(): bool
     {

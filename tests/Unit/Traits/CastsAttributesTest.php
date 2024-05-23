@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Traits;
 
@@ -13,7 +15,6 @@ class CastsAttributesTest extends TestCase
 {
     /**
      * Do casts
-     * @return void
      */
     public function testDoCasts(): void
     {
@@ -23,7 +24,7 @@ class CastsAttributesTest extends TestCase
             /**
              * @var string[]
              */
-            protected $casts = [
+            protected array $casts = [
                 'banana' => 'int',
                 'strawberry' => ImmutableObject::class,
             ];
@@ -32,7 +33,6 @@ class CastsAttributesTest extends TestCase
              * Cast a value
              * @param mixed $value The value to cast
              *
-             * @return mixed
              */
             public function get(mixed $value): mixed
             {
@@ -44,7 +44,6 @@ class CastsAttributesTest extends TestCase
              *
              * @param mixed $value The value
              *
-             * @return mixed
              */
             public function noCast(mixed $value): mixed
             {
@@ -56,7 +55,6 @@ class CastsAttributesTest extends TestCase
              *
              * @param mixed $value The value to cast
              *
-             * @return mixed
              */
             public function strawberry(mixed $value): mixed
             {

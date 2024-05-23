@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -13,14 +15,12 @@ interface Photo
     /**
      * Get the etag for this photo resource
      *
-     * @return string
      */
     public function etag(): ?string;
 
     /**
      * Get the local stored path for the photo
      *
-     * @return string
      */
     public function local(): ?string;
 
@@ -29,7 +29,6 @@ interface Photo
      * it could be the same as the local url if it wasn't sourced
      * from somewhere.
      *
-     * @return string
      */
     public function origin(): string;
 
@@ -38,7 +37,6 @@ interface Photo
      *
      * Arguments are supplied in the following order:
      *
-     * @return string
      */
     public function pathFormat(): string;
 
@@ -48,7 +46,6 @@ interface Photo
      * @param Headers $headers The headers that will define the status
      * @param Vehicle $vehicle The vehicle related to this photo
      *
-     * @return PhotoStatus
      */
     public function status(Headers $headers, Vehicle $vehicle): PhotoStatus;
 
@@ -58,7 +55,6 @@ interface Photo
      * @param string[] $attributes Attributes to update
      * @param string[] $options    Additional options
      *
-     * @return bool|mixed
      */
-    public function update(array $attributes = [], array $options = []);
+    public function update(array $attributes = [], array $options = []): mixed;
 }

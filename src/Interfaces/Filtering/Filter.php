@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -108,5 +110,5 @@ interface Filter extends Eloquent
      *
      * @return string[]
      */
-    public function toArray();
+    public function toArray(): array;
 }

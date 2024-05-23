@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -14,7 +16,6 @@ class Response extends LaravelResponse
      *
      * @param int $code The response code
      *
-     * @return void
      */
     public function assertResponseStatus(int $code): void
     {

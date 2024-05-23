@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -13,9 +15,8 @@ class LumenRouter
     /**
      * Holds the Lumen application
      *
-     * @var Application
      */
-    protected $app;
+    protected Application $app;
 
     /**
      * Pass in the application instance
@@ -33,9 +34,8 @@ class LumenRouter
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
      *
-     * @return void
      */
-    public function delete(string $path, $controller): void
+    public function delete(string $path, mixed $controller): void
     {
         $this->app->delete($path, $controller);
     }
@@ -46,9 +46,8 @@ class LumenRouter
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
      *
-     * @return void
      */
-    public function get(string $path, $controller): void
+    public function get(string $path, mixed $controller): void
     {
         $this->app->get($path, $controller);
     }
@@ -59,9 +58,8 @@ class LumenRouter
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
      *
-     * @return void
      */
-    public function patch(string $path, $controller): void
+    public function patch(string $path, mixed $controller): void
     {
         $this->app->patch($path, $controller);
     }
@@ -72,9 +70,8 @@ class LumenRouter
      * @param string $path       The path
      * @param mixed  $controller The controller and method to handle it
      *
-     * @return void
      */
-    public function post(string $path, $controller): void
+    public function post(string $path, mixed $controller): void
     {
         $this->app->post($path, $controller);
     }
@@ -85,18 +82,17 @@ class LumenRouter
      * @param string $resource   The resource to bind
      * @param string $controller The name of the controller that will handle
      *
-     * @return void
      */
     public function resource(string $resource, string $controller): void
     {
         $base = $this->plural($resource);
-        $entity = '/{'.$resource.'}';
+        $entity = '/{' . $resource . '}';
 
-        $this->app->get($base, $controller.'@index');
-        $this->app->post($base, $controller.'@store');
-        $this->app->get($base.$entity, $controller.'@show');
-        $this->app->patch($base.$entity, $controller.'@update');
-        $this->app->delete($base.$entity, $controller.'@destroy');
+        $this->app->get($base, $controller . '@index');
+        $this->app->post($base, $controller . '@store');
+        $this->app->get($base . $entity, $controller . '@show');
+        $this->app->patch($base . $entity, $controller . '@update');
+        $this->app->delete($base . $entity, $controller . '@destroy');
     }
 
     /**
@@ -104,7 +100,6 @@ class LumenRouter
      *
      * @param string $resource The resource
      *
-     * @return string
      */
     protected function plural(string $resource): string
     {
@@ -113,6 +108,6 @@ class LumenRouter
             return $resource;
         }
 
-        return $resource.'s';
+        return $resource . 's';
     }
 }

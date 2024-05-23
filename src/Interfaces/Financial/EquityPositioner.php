@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Financial;
 
@@ -16,7 +18,7 @@ interface EquityPositioner
      *
      * @return int
      */
-    public function finance(int $value, int $paymentsRemaining, $paymentValue): float;
+    public function finance(int $value, int $paymentsRemaining, int|float $paymentValue): float;
 
     /**
      * Calculate equity position for lease
@@ -28,5 +30,5 @@ interface EquityPositioner
      *
      * @return int
      */
-    public function lease(int $value, int $paymentsRemaining, $paymentValue, $residual): float;
+    public function lease(int $value, int $paymentsRemaining, int|float $paymentValue, int|float $residual): float;
 }

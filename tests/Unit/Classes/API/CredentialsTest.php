@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Classes\API;
 
@@ -13,7 +15,6 @@ class CredentialsTest extends TestCase
     /**
      * Test the constructor
      *
-     * @return void
      */
     public function testMake(): void
     {

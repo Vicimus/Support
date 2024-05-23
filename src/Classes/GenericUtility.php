@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -21,16 +23,14 @@ class GenericUtility implements Utility
     /**
      * The description for the utility
      *
-     * @var string
      */
-    protected $desc;
+    protected string $desc;
 
     /**
      * The name of the utility
      *
-     * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Construct a generic utility
@@ -53,9 +53,8 @@ class GenericUtility implements Utility
      *
      * @throws UtilityException
      *
-     * @return mixed
      */
-    public function call(?array $flags = null)
+    public function call(?array $flags = null): mixed
     {
         $method = $this->call;
         try {
@@ -68,7 +67,6 @@ class GenericUtility implements Utility
     /**
      * A description of what this utility does
      *
-     * @return string
      */
     public function description(): string
     {
@@ -77,7 +75,6 @@ class GenericUtility implements Utility
 
     /**
      * The name of the utility
-     * @return string
      */
     public function name(): string
     {
@@ -87,7 +84,6 @@ class GenericUtility implements Utility
     /**
      * Returns a confirmation prompt for the utility.
      *
-     * @return string
      */
     public function prompt(): string
     {
@@ -99,9 +95,8 @@ class GenericUtility implements Utility
      *
      * @param string|string[] $payload OPTIONAL Anything needed to construct the results
      *
-     * @return mixed
      */
-    public function results($payload = null)
+    public function results(string|array|null $payload = null): mixed
     {
         return $payload;
     }

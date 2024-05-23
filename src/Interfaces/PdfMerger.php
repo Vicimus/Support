@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -18,7 +20,6 @@ interface PdfMerger
      * @param string|null $name    Optionally, a name to assign the file
      * @param string|null $file    Optionally, the file path to use
      *
-     * @return void
      */
     public function add(string $content, ?string $name = null, ?string $file = null): void;
 
@@ -30,13 +31,11 @@ interface PdfMerger
      *
      * @throws \Vicimus\PDF\Exceptions\MergeException
      *
-     * @return void
      */
     public function addFile(string $file, ?string $name = null): void;
 
     /**
      * How many files in the merger
-     * @return int
      */
     public function count(): int;
 
@@ -47,7 +46,6 @@ interface PdfMerger
      * @param int $sizeOfOne     The size of one file
      * @param int $numberOfItems The total number of items
      *
-     * @return int
      */
     public function getNumberOfChunks(int $chunkSize, int $sizeOfOne, int $numberOfItems): int;
 
@@ -56,7 +54,6 @@ interface PdfMerger
      *
      * @param int $zipOrMerge The specified mode but the merger can change it
      *
-     * @return int
      */
     public function getStorageMethod(int $zipOrMerge): int;
 
@@ -64,7 +61,6 @@ interface PdfMerger
      * Merge all PDFs into a single PDF
      *
      * @param bool $returnRawContent Should return raw content or a file path
-     * @return string
      *
      * @throws MergeException
      */

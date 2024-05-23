@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -12,14 +14,12 @@ interface CSVWriter
      *
      * @param string $pathToFile The path to the file
      *
-     * @return CSVWriter
      */
     public function file(string $pathToFile): CSVWriter;
 
     /**
      * Writes the headers to the file
      *
-     * @return CSVWriter
      */
     public function withHeaders(): CSVWriter;
 
@@ -28,7 +28,6 @@ interface CSVWriter
      *
      * @param string[] $rows The rows to write
      *
-     * @return CSVWriter
      */
     public function write(array $rows): CSVWriter;
 }

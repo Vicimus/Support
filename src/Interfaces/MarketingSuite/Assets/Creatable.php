@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
@@ -12,20 +14,17 @@ interface Creatable
     /**
      * Determine if an asset is active
      *
-     * @return bool
      */
     public function active(): bool;
 
     /**
      * Retrieve a unique identifier for the asset
-     * @return string
      */
     public function creativeName(): string;
 
     /**
      * Retrieve the assets end date
      *
-     * @return DateTimeInterface|null
      */
     public function end(): ?DateTimeInterface;
 
@@ -34,13 +33,11 @@ interface Creatable
      *
      * @param string $message The error message
      *
-     * @return void
      */
     public function error(string $message): void;
 
     /**
      * Retrieves the ad set
-     * @return AdSet|null
      */
     public function getAdSet(): ?AdSet;
 
@@ -49,21 +46,18 @@ interface Creatable
      *
      * @param string $field The link property name ('link'/'main_link')
      *
-     * @return string
      */
     public function link(string $field): ?string;
 
     /**
      * Determine if the asset type requires a render
      *
-     * @return bool
      */
     public function needsRender(): bool;
 
     /**
      * Retrieve a path to the rendered pdf of the asset
      *
-     * @return string
      */
     public function path(): ?string;
 
@@ -73,9 +67,8 @@ interface Creatable
      * @param string          $name    The property to look for
      * @param string|int|bool $default The default value to return if the property doesn't exist
      *
-     * @return int|string|bool|null
      */
-    public function property(string $name, $default = null);
+    public function property(string $name, string|int|bool|null $default = null): int|string|bool|null;
 
     /**
      * Record a property value
@@ -84,9 +77,8 @@ interface Creatable
      * @param string|int|bool|null $value    The value to save
      * @param bool                 $hidden   The hidden state of a property
      *
-     * @return void
      */
-    public function record(string $property, $value = null, bool $hidden = false): void;
+    public function record(string $property, string|int|bool|null $value = null, bool $hidden = false): void;
 
     /**
      * Record a property value, maintaining the old value if one exists.
@@ -94,30 +86,26 @@ interface Creatable
      * @param string               $property The property to set
      * @param string|int|bool|null $value    The value to save
      *
-     * @return void
      */
-    public function replace(string $property, $value = null): void;
+    public function replace(string $property, string|int|bool|null $value = null): void;
 
     /**
      * Set the associated ad set id
      *
      * @param int $adSetId The ad set Id
      *
-     * @return void
      */
     public function setAdSet(int $adSetId): void;
 
     /**
      * Retrieve the assets start date
      *
-     * @return DateTimeInterface|null
      */
     public function start(): ?DateTimeInterface;
 
     /**
      * Retrieve the slug type of the asset
      *
-     * @return string
      */
     public function type(): string;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -38,7 +40,6 @@ class ConquestCompatibilityMatrix extends ImmutableObject
      *
      * @param mixed[] $matrix The matrix
      *
-     * @return void
      */
     public function add(array $matrix): void
     {
@@ -69,7 +70,6 @@ class ConquestCompatibilityMatrix extends ImmutableObject
      *
      * @param string $source The source to validate
      *
-     * @return bool
      */
     private function isValidSource(string $source): bool
     {
@@ -92,9 +92,8 @@ class ConquestCompatibilityMatrix extends ImmutableObject
      *
      * @param string|View $description The description to render
      *
-     * @return string
      */
-    private function render($description): string
+    private function render(string|View $description): string
     {
         if ($description instanceof View) {
             $description = $description->render();

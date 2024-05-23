@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\FrontEnd;
 
@@ -19,30 +21,26 @@ class ScriptCache implements ConsoleOutput
 
     /**
      * The app name
-     * @var null|string
      */
-    private $appName;
+    private ?string $appName = null;
 
     /**
      * The cache repository
      *
-     * @var Repository
      */
-    private $cache;
+    private Repository $cache;
 
     /**
      * Path to the front end files
      *
-     * @var string
      */
-    private $pathToFrontEnd;
+    private string $pathToFrontEnd;
 
     /**
      * Relative path
      *
-     * @var string
      */
-    private $relativeFrontEnd;
+    private string $relativeFrontEnd;
 
     /**
      * ScriptCache constructor.
@@ -64,7 +62,6 @@ class ScriptCache implements ConsoleOutput
      *
      * @param string $locale The locale to check
      *
-     * @return bool
      */
     public function areUnhealthy(string $locale = 'en'): bool
     {
@@ -76,7 +73,6 @@ class ScriptCache implements ConsoleOutput
      *
      * @param string $locale The locale
      *
-     * @return string
      */
     public function baseHref(string $locale = 'en'): string
     {
@@ -86,7 +82,6 @@ class ScriptCache implements ConsoleOutput
     /**
      * Read the script directory and cache the file names
      *
-     * @return void
      */
     public function cache(): void
     {
@@ -144,13 +139,9 @@ class ScriptCache implements ConsoleOutput
             }
 
             // Split up the scripts and styles
-            $scripts = array_filter($cached, static function ($name): bool {
-                return substr($name, -2) === 'js';
-            });
+            $scripts = array_filter($cached, static fn ($name): bool => substr($name, -2) === 'js');
 
-            $styles = array_filter($cached, static function ($name): bool {
-                return substr($name, -3) === 'css';
-            });
+            $styles = array_filter($cached, static fn ($name): bool => substr($name, -3) === 'css');
 
             usort($scripts, function ($aPath, $bPath) use ($order) {
                 $aName = $this->getName($aPath);
@@ -174,7 +165,6 @@ class ScriptCache implements ConsoleOutput
     /**
      * Clear the cache
      *
-     * @return void
      */
     public function forget(): void
     {
@@ -194,7 +184,6 @@ class ScriptCache implements ConsoleOutput
      *
      * @param string $filename The full filename
      *
-     * @return string
      */
     protected function extract(string $filename): string
     {
@@ -206,7 +195,6 @@ class ScriptCache implements ConsoleOutput
      *
      * @param string $filename The filename to look at
      *
-     * @return string
      */
     private function getName(string $filename): string
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -19,7 +21,6 @@ interface Incentives
      * @param string $vin        The vin
      * @param string $type       finance|lease
      *
-     * @return string
      * @throws JsonException
      */
     public function rateValue(string $postalCode, string $vin, string $type): ?string;
@@ -31,7 +32,6 @@ interface Incentives
      * @param string $vin        The vin
      * @param string $type       finance|lease
      *
-     * @return RateCollection
      * @throws JsonException
      */
     public function rates(string $postalCode, string $vin, string $type = 'finance'): RateCollection;
@@ -42,7 +42,6 @@ interface Incentives
      * @param string $postalCode The postal code
      * @param string $vin        The vin to get residuals for
      *
-     * @return ResidualCollection
      * @throws JsonException
      * @throws InvalidArgumentException
      */

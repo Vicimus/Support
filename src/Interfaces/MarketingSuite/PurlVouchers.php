@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -15,7 +17,6 @@ interface PurlVouchers
      * @param int     $campaignId The id of campaign the voucher belongs to
      * @param Request $request    The request object
      *
-     * @return string
      */
     public function download(int $campaignId, Request $request): string;
 
@@ -24,7 +25,6 @@ interface PurlVouchers
      *
      * @param Request $request The request object
      *
-     * @return bool
      */
     public function email(Request $request): bool;
 }

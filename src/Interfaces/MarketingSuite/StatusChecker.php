@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -12,7 +14,6 @@ interface StatusChecker
      *
      * @param Campaign $campaign The campaign
      *
-     * @return string
      */
     public function statusString(Campaign $campaign): string;
 }

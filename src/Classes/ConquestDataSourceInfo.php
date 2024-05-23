@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -55,9 +57,8 @@ class ConquestDataSourceInfo extends ImmutableObject
      *
      * @param object|string[][] $details Details object
      *
-     * @return void
      */
-    public function setDetails($details): void
+    public function setDetails(object|array $details): void
     {
         $this->attributes['details'] = $details;
     }
@@ -67,7 +68,6 @@ class ConquestDataSourceInfo extends ImmutableObject
      *
      * @param string $error The error message to display
      *
-     * @return void
      */
     public function setError(string $error): void
     {
@@ -79,7 +79,6 @@ class ConquestDataSourceInfo extends ImmutableObject
      *
      * @param object $verify The verification object
      *
-     * @return void
      */
     public function setVerification(object $verify): void
     {

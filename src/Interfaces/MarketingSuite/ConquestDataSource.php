@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -24,7 +26,6 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param SourceRecord $source The local source
      *
-     * @return void
      * @throws DataSourceException
      */
     public function activate(SourceRecord $source): void;
@@ -35,7 +36,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param Campaign     $campaign The campaign containing the assets
      * @param SourceRecord $source   The related data source
      *
-     * @return bool
      */
     public function approved(Campaign $campaign, SourceRecord $source): bool;
 
@@ -57,14 +57,12 @@ interface ConquestDataSource extends PropertyProvider
      * @param SourceRecord $record   The source record
      * @param int          $amount   The amount
      *
-     * @return void
      */
     public function budget(Audience $audience, SourceRecord $record, int $amount): void;
 
     /**
      * Get the category for this data source
      *
-     * @return string
      */
     public function category(): string;
 
@@ -74,7 +72,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param Audience     $audience The audience that is being deleted
      * @param SourceRecord $record   The record
      *
-     * @return void
      *
      * @throws DataSourceException
      */
@@ -86,14 +83,12 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @see https://vicimus.atlassian.net/wiki/spaces/SP/pages/578519054/Functionality+LP
      *
-     * @return int
      */
     public function code(): int;
 
     /**
      * Get a matrix of compatibility information
      *
-     * @return ConquestCompatibilityMatrix
      */
     public function compatibility(): ConquestCompatibilityMatrix;
 
@@ -103,7 +98,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param HasSource    $campaign The local campaign
      * @param SourceRecord $source   The campaign source
      *
-     * @return void
      * @throws DataSourceException
      */
     public function create(HasSource $campaign, SourceRecord $source): void;
@@ -113,14 +107,12 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param Store $store The store
      *
-     * @return ConquestDataSourceCredentials
      */
     public function credentials(Store $store): ConquestDataSourceCredentials;
 
     /**
      * An informative description
      *
-     * @return string
      */
     public function description(): string;
 
@@ -131,7 +123,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param HasSource    $campaign The campaign that was deleted
      * @param SourceRecord $record   The data source record
      *
-     * @return void
      *
      * @throws DataSourceException
      */
@@ -143,7 +134,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param SourceRecord $source        The data source
      * @param string[]     $adIdsToRemove The array of data source ad ids to remove
      *
-     * @return void
      * @throws RemoteAdGroupDoesNotExistException
      */
     public function disable(SourceRecord $source, array $adIdsToRemove): void;
@@ -156,7 +146,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param Audience     $audience The audience to estimate
      * @param SourceRecord $record   The source record
      *
-     * @return int
      *
      * @throws BudgetException
      * @throws DataSourceException
@@ -169,7 +158,6 @@ interface ConquestDataSource extends PropertyProvider
      * many assets. Specifically, Facebook has many assets that all share
      * specific properties.
      *
-     * @return Grouping
      */
     public function grouping(): Grouping;
 
@@ -178,21 +166,18 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param SourceRecord $sourceRecord The source to validate
      *
-     * @return bool
      */
     public function hasValidCredentials(SourceRecord $sourceRecord): bool;
 
     /**
      * Get a font-awesome icon to use to represent this on the front end
      *
-     * @return string
      */
     public function icon(): string;
 
     /**
      * Get information on this data source
      *
-     * @return ConquestDataSourceInfo
      */
     public function info(): ConquestDataSourceInfo;
 
@@ -203,7 +188,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param SourceRecord $source   The recorded use of a source with details
      * @param Collection   $assets   The collection of assets to launch
      *
-     * @return void
      *
      * @throws DataSourceException
      */
@@ -214,14 +198,12 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param SourceRecord $source The source related to the update
      *
-     * @return void
      */
     public function mediumsUpdated(SourceRecord $source): void;
 
     /**
      * The name of the data source as it should be displayed to clients
      *
-     * @return string
      */
     public function name(): string;
 
@@ -233,7 +215,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param ResultSet    $results  The actions results
      * @param bool         $basic    Flag to just do the basic launch process
      *
-     * @return void
      */
     public function process(HasSource $campaign, SourceRecord $source, ResultSet $results, bool $basic = false): void;
 
@@ -243,7 +224,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param SourceRecord $source The source the assets belong to
      * @param Collection   $assets The assets to regenerate for
      *
-     * @return void
      */
     public function regenerate(SourceRecord $source, Collection $assets): void;
 
@@ -254,7 +234,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
      * @param DateTimeInterface|null $end    The end date to collect info for (if null then today)
      *
-     * @return Collection
      * @throws DataSourceException
      */
     public function reportAds(
@@ -271,7 +250,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param DateTimeInterface|null $date   The date to collect info for (if null then today)
      * @param DateTimeInterface|null $end    The end date to collect info for (if null then today)
      *
-     * @return void
      *
      * @throws DataSourceException
      */
@@ -287,7 +265,6 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param SourceRecord $source  The data source
      * @param string[]     $payload The update payload
-     * @return void
      *
      * @throws DataSourceException
      */
@@ -298,7 +275,6 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param SourceRecord $source The source saved
      *
-     * @return void
      */
     public function save(SourceRecord $source): void;
 
@@ -308,7 +284,6 @@ interface ConquestDataSource extends PropertyProvider
      * @param HasSource $hasSource The local campaign
      * @param ResultSet $resultSet The results to process
      *
-     * @return void
      */
     public function setup(HasSource $hasSource, ResultSet $resultSet): void;
 
@@ -317,7 +292,6 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param AssetRecord $asset The asset
      *
-     * @return int
      *
      * @throws StatusException
      */
@@ -329,14 +303,12 @@ interface ConquestDataSource extends PropertyProvider
      * @param Audience     $audience The audience which was updated
      * @param SourceRecord $source   The source the audience relates to
      *
-     * @return void
      * @throws UpdateException
      */
     public function update(Audience $audience, SourceRecord $source): void;
 
     /**
      * Get a validator to validate certain things
-     * @return ConquestDataSourceValidator
      */
     public function validator(): ConquestDataSourceValidator;
 
@@ -345,7 +317,6 @@ interface ConquestDataSource extends PropertyProvider
      *
      * @param int $storeId The store id to verify
      *
-     * @return ConquestDataSourceVerificationResponse
      */
     public function verify(int $storeId): ConquestDataSourceVerificationResponse;
 }

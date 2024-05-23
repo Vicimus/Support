@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Rates;
 
@@ -20,7 +22,6 @@ interface RateCollection
      *
      * @param int $term The term for the financing
      *
-     * @return float
      */
     public function finance(int $term): ?float;
 
@@ -38,7 +39,6 @@ interface RateCollection
      *
      * @param int $term The term for the lease
      *
-     * @return float
      */
     public function lease(int $term): ?float;
 

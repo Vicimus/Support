@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
@@ -22,9 +24,8 @@ trait ConsoleOutputter
      * This stores the ConsoleOutput interface implementation to which the
      * output will be referred. If one is not set, the output is just ignored.
      *
-     * @var ConsoleOutput
      */
-    protected $output = null;
+    protected ConsoleOutput $output = null;
 
     /**
      * Bind a ConsoleOutput interface implementation to this class. This
@@ -51,9 +52,8 @@ trait ConsoleOutputter
      * @param string $output  The comment to output
      * @param mixed  ...$args Additional arguments for output
      *
-     * @return void
      */
-    public function comment(string $output, ...$args): void
+    public function comment(string $output, mixed ...$args): void
     {
         if (!$this->output) {
             return;
@@ -68,9 +68,8 @@ trait ConsoleOutputter
      * @param string $output  The error to output
      * @param mixed  ...$args Additional arguments for vsprint
      *
-     * @return void
      */
-    public function error(string $output, ...$args): void
+    public function error(string $output, mixed ...$args): void
     {
         if (!$this->output) {
             return;
@@ -85,9 +84,8 @@ trait ConsoleOutputter
      * @param string $output  The info to output
      * @param mixed  ...$args Additional arguments for vsprint
      *
-     * @return void
      */
-    public function info(string $output, ...$args): void
+    public function info(string $output, mixed ...$args): void
     {
         if (!$this->output) {
             return;
@@ -102,9 +100,8 @@ trait ConsoleOutputter
      * @param string $output  The text to output
      * @param mixed  ...$args Additional arguments for output
      *
-     * @return void
      */
-    public function line(string $output, ...$args): void
+    public function line(string $output, mixed ...$args): void
     {
         if (!$this->output) {
             return;
@@ -119,9 +116,8 @@ trait ConsoleOutputter
      * @param string $output  The output to send
      * @param mixed  ...$args The args
      *
-     * @return void
      */
-    public function linePermanent(string $output, ...$args): void
+    public function linePermanent(string $output, mixed ...$args): void
     {
         if (!$this->output) {
             return;
@@ -149,7 +145,6 @@ trait ConsoleOutputter
      * @param string   $output The output string
      * @param string[] $args   The replacement arguments
      *
-     * @return string
      */
     private function cleanOutput(string $output, array $args): string
     {

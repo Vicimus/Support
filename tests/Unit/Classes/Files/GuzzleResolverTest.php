@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes\Files;
 
@@ -16,14 +18,12 @@ class GuzzleResolverTest extends GuzzleTestCase
     /**
      * The resolver
      *
-     * @var GuzzleResolver
      */
-    private $instance;
+    private GuzzleResolver $instance;
 
     /**
      * Set the test up
      *
-     * @return void
      */
     public function setup(): void
     {
@@ -37,7 +37,6 @@ class GuzzleResolverTest extends GuzzleTestCase
     /**
      * Test open
      *
-     * @return void
      *
      * @throws Throwable
      */
@@ -51,7 +50,6 @@ class GuzzleResolverTest extends GuzzleTestCase
     /**
      * Test opening a remote file
      *
-     * @return void
      *
      * @throws Throwable
      */
@@ -65,7 +63,6 @@ class GuzzleResolverTest extends GuzzleTestCase
     /**
      * Remote exceptions
      *
-     * @return void
      */
     public function testOpenRemoteException(): void
     {

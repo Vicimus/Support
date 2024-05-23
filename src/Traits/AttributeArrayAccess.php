@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
@@ -58,7 +60,6 @@ trait AttributeArrayAccess
      *                      The value to set.
      *                      </p>
      *
-     * @return void
      * @since 5.0.0
      */
     public function offsetSet(mixed $offset, mixed $value): void
@@ -75,7 +76,6 @@ trait AttributeArrayAccess
      *                      The offset to unset.
      *                      </p>
      *
-     * @return void
      * @since 5.0.0
      */
     public function offsetUnset(mixed $offset): void

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -17,7 +19,6 @@ interface Font extends JsonSerializable
      *
      * @param string[] $file The files to include
      *
-     * @return string
      */
     public function src(array $file): string;
 
@@ -26,7 +27,6 @@ interface Font extends JsonSerializable
      *
      * @param string[][]|array $file The file information
      *
-     * @return string
      */
     public function url(array $file): string;
 }

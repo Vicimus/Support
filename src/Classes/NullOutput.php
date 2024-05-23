@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -14,7 +16,6 @@ class NullOutput implements ConsoleOutput
      *
      * @param string $output The comment to output
      *
-     * @return void
      */
     public function comment(string $output): void
     {
@@ -26,7 +27,6 @@ class NullOutput implements ConsoleOutput
      *
      * @param string $output The error to output
      *
-     * @return void
      */
     public function error(string $output): void
     {
@@ -38,7 +38,6 @@ class NullOutput implements ConsoleOutput
      *
      * @param string $output The info to output
      *
-     * @return void
      */
     public function info(string $output): void
     {
@@ -50,7 +49,6 @@ class NullOutput implements ConsoleOutput
      *
      * @param string $output The text to output
      *
-     * @return void
      */
     public function line(string $output): void
     {
@@ -62,7 +60,6 @@ class NullOutput implements ConsoleOutput
      *
      * @param string $output The text to output
      *
-     * @return void
      */
     public function linePermanent(string $output): void
     {
