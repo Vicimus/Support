@@ -19,7 +19,7 @@ class InvalidPayloadException extends InvalidArgument
      * @param string         $parameter     The parameter we want to describe
      * @param string[]|mixed ...$acceptable What would have been acceptable
      */
-    public function __construct($got, string $parameter, ...$acceptable)
+    public function __construct(mixed $got, string $parameter, ...$acceptable)
     {
         if ($parameter) {
             $parameter = sprintf(' for %s parameter', $parameter);

@@ -12,11 +12,13 @@ interface Eloquent
     /**
      * Load a relation or relations
      *
-     * @param mixed $relations The relations to load
+     * @param string[]|string $relations The relations to load
      *
      * @return mixed
+     *
+     * @phpcsSuppress
      */
-    public function load($relations);
+    public function load($relations): Eloquent;
 
     /**
      * Get the query object

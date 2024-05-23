@@ -14,7 +14,7 @@ interface PropertyRecord
      * Get the value of the property
      * @return mixed
      */
-    public function getValue();
+    public function getValue(): mixed;
 
     /**
      * Retrieve the name of the property
@@ -29,5 +29,5 @@ interface PropertyRecord
      *
      * @return void
      */
-    public function validate($value): void;
+    public function validate(mixed $value): void;
 }

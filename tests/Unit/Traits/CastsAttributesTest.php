@@ -34,7 +34,7 @@ class CastsAttributesTest extends TestCase
              *
              * @return mixed
              */
-            public function get($value)
+            public function get(mixed $value): mixed
             {
                 return $this->doAttributeCast('banana', $value);
             }
@@ -46,7 +46,7 @@ class CastsAttributesTest extends TestCase
              *
              * @return mixed
              */
-            public function noCast($value)
+            public function noCast(mixed $value): mixed
             {
                 return $this->doAttributeCast('not-found', $value);
             }
@@ -58,7 +58,7 @@ class CastsAttributesTest extends TestCase
              *
              * @return mixed
              */
-            public function strawberry($value)
+            public function strawberry(mixed $value): mixed
             {
                 return $this->doAttributeCast('strawberry', $value);
             }

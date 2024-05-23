@@ -16,5 +16,5 @@ interface VehicleProvider
      *
      * @return Collection
      */
-    public function get(...$args): Collection;
+    public function get(mixed ...$args): Collection;
 }
