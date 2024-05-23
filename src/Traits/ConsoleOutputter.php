@@ -153,6 +153,10 @@ trait ConsoleOutputter
      */
     private function cleanOutput(string $output, array $args): string
     {
+        if (!count($args)) {
+            return $output;
+        }
+
         try {
             return vsprintf($output, $args);
         } catch (RuntimeException | ErrorException $ex) {

@@ -2,13 +2,12 @@
     "name": "vicimus/support",
     "type": "library",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.2",
         "ext-json": "*",
         "ext-pdo": "*"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.8",
-        "guzzlehttp/guzzle": "~6",
+        "guzzlehttp/guzzle": "*",
         "illuminate/auth": "*",
         "illuminate/cache": "*",
         "illuminate/config": "*",

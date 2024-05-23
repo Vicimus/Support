@@ -5,3 +5,4 @@ composer.lock
 /.idea
 /report
 .phpunit.result.cache
+.phpunit.cache

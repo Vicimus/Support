@@ -60,30 +60,6 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     }
 
     /**
-     * Whether a offset exists
-     *
-     * @param mixed $offset The offset to check if it exists
-     *
-     * @return bool true on success or false on failure.
-     */
-    public function offsetExists($offset): bool
-    {
-        return array_key_exists($offset, $this->attributes);
-    }
-
-    /**
-     * Offset to retrieve
-     *
-     * @param mixed $offset The offset to get
-     *
-     * @return mixed Can return all value types.
-     */
-    public function offsetGet($offset)
-    {
-        return $this->get($offset);
-    }
-
-    /**
      * Offset to set
      *
      * @param mixed $offset The offset to set
@@ -91,21 +67,9 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->attributes[$offset] = $value;
-    }
-
-    /**
-     * Offset to unset
-     *
-     * @param mixed $offset The offset to unset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset): void
-    {
-        unset($this->attributes[$offset]);
     }
 
     /**

@@ -107,9 +107,7 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
-
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
@@ -134,9 +132,8 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
@@ -163,9 +160,8 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
@@ -192,9 +188,8 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('marshmallows', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('marshmallows', 422)));
     }
 
     /**
@@ -222,9 +217,8 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
