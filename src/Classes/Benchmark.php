@@ -46,13 +46,13 @@ class Benchmark
      * Track the time the benchmark has started
      *
      */
-    protected int $start = 0;
+    protected float $start = 0;
 
     /**
      * Track the time when the benchmark has finished
      *
      */
-    protected int $stop = 0;
+    protected float $stop = 0;
 
     /**
      * Add a custom benchmark

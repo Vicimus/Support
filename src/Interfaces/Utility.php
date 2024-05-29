@@ -41,5 +41,5 @@ interface Utility
      * @param mixed $payload OPTIONAL Anything needed to construct the results
      *
      */
-    public function results(mixed $payload = null): mixed;
+    public function results($payload = null): mixed;
 }

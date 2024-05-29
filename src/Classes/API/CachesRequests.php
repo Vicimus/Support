@@ -19,7 +19,7 @@ trait CachesRequests
      * Cache repository
      *
      */
-    protected Repository $cache;
+    protected ?Repository $cache = null;
 
     /**
      * Bind a cache repository

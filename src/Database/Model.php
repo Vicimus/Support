@@ -49,7 +49,7 @@ class Model extends LaravelModel
      *
      * @var string[]
      */
-    protected array $guarded = [
+    protected $guarded = [
         'id', 'updated_at', 'created_at',
     ];
 
@@ -57,7 +57,7 @@ class Model extends LaravelModel
      * Should we cast or not
      *
      */
-    private static bool $noCasts = [];
+    private static array $noCasts = [];
 
     /**
      * Store the columns
@@ -192,13 +192,14 @@ class Model extends LaravelModel
      * @param mixed        $value The value to set it to
      *
      */
-    public function setAttribute(mixed $key, mixed $value): mixed
+    public function setAttribute(mixed $key, mixed $value): self
     {
         if (!(self::$noCasts[static::class] ?? false)) {
             return parent::setAttribute($key, $value);
         }
 
         $this->attributes[$key] = $value;
+        return $this;
     }
 
     /**

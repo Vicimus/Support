@@ -96,7 +96,7 @@ class GenericUtility implements Utility
      * @param string|string[] $payload OPTIONAL Anything needed to construct the results
      *
      */
-    public function results(string|array|null $payload = null): mixed
+    public function results(mixed $payload = null): mixed
     {
         return $payload;
     }

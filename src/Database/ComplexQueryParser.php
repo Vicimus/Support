@@ -47,14 +47,13 @@ class ComplexQueryParser
     /**
      * Build a complex query based off of a submitted value
      *
-     * @param Builder|Relation $query    The query to add on to
+     * @param EloquentBuilder|Builder|Relation $query    The query to add on to
      * @param string           $property The property being manipulated
      * @param string           $value    The complex query string
      *
      */
-    public function query(Builder|Relation $query, string $property, string $value): Builder|Relation
+    public function query(EloquentBuilder|Builder|Relation $query, string $property, string $value): Builder|Relation
     {
-        $this->typeCheck($query);
         list($type, $statement) = explode(':', $value);
 
         return $this->$type($query, $property, $statement);
@@ -136,19 +135,5 @@ class ComplexQueryParser
         }
 
         return $query->where($property, '<', $statement);
-    }
-
-    /**
-     * Check if the parameter was a valid type
-     *
-     * @param mixed $object The object to inspect
-     *
-     * @throws InvalidArgumentException if the object was not appropriate
-     */
-    private function typeCheck(mixed $object): void
-    {
-        if (!$object instanceof Builder && !$object instanceof Relation && !$object instanceof EloquentBuilder) {
-            throw new InvalidArgumentException($object, EloquentBuilder::class, Builder::class, Relation::class);
-        }
     }
 }

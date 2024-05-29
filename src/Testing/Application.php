@@ -315,7 +315,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return mixed[]
      */
-    public function getProviders(ServiceProvider|string $provider): array
+    public function getProviders($provider): array
     {
         if ($provider) {
             $this->providers[] = $provider;
@@ -477,7 +477,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return ServiceProvider|mixed|void
      */
-    public function register(ServiceProvider|string $provider, mixed $force = false): void
+    public function register($provider, $force = false): void
     {
         $this->providers[] = $provider;
         if (!$force) {

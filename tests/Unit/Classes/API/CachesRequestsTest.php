@@ -16,8 +16,10 @@ class CachesRequestsTest extends TestCase
 {
     /**
      * Instance
+     *
+     * @var CachesRequests
      */
-    private CachesRequests $instance;
+    private $instance;
 
     /**
      * Set up

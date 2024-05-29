@@ -30,7 +30,7 @@ class ModelTest extends TestCase
             /**
              * @var string[]
              */
-            protected array $casts = ['id' => 'int'];
+            protected $casts = ['id' => 'int'];
         };
 
         $testing::withoutCasts();

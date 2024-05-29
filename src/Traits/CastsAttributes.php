@@ -59,7 +59,7 @@ trait CastsAttributes
      * @param mixed $value The value to inspect
      *
      */
-    private function isNumericArray(mixed $value): bool
+    private function isNumericArray($value): bool
     {
         if (!is_array($value)) {
             return false;

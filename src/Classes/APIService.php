@@ -139,7 +139,7 @@ class APIService
      * @throws RestException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function request(string $method, string $path, array|object $payload = [], ?string $tag = null): array|stdClass
+    public function request(string $method, string $path, null|array|object $payload = [], ?string $tag = null): array|stdClass
     {
         $path = str_replace($this->url, '', $path);
         if (strpos($path, '/') !== 0) {

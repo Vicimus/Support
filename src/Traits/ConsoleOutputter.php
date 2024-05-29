@@ -23,9 +23,8 @@ trait ConsoleOutputter
     /**
      * This stores the ConsoleOutput interface implementation to which the
      * output will be referred. If one is not set, the output is just ignored.
-     *
      */
-    protected ConsoleOutput $output = null;
+    protected ?ConsoleOutput $output = null;
 
     /**
      * Bind a ConsoleOutput interface implementation to this class. This
