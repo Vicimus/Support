@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -19,7 +21,7 @@ class AutocompleteItem extends ImmutableObject
      * @param string|null     $detailsIcon       An icon to display
      * @param mixed|null      $additionalDetails Can literally be anything else we need
      */
-    public function __construct($id, string $name, $details, ?string $detailsIcon, $additionalDetails = null)
+    public function __construct(string|int $id, string $name, int|string|null $details, ?string $detailsIcon, mixed $additionalDetails = null)
     {
         parent::__construct([
             'id' => $id,

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox\Promotions;
 
@@ -9,7 +11,6 @@ interface Promotion
 {
     /**
      * Check if the promotion is expired
-     * @return bool
      */
     public function expired(): bool;
 
@@ -18,7 +19,6 @@ interface Promotion
      *
      * @param PromotionIncentive $incentive The incentive to set
      *
-     * @return void
      */
     public function setIncentive(PromotionIncentive $incentive): void;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -12,7 +14,6 @@ class ResponsesTest extends TestCase
 {
     /**
      * Test Json
-     * @return void
      */
     public function testJson(): void
     {
@@ -21,10 +22,8 @@ class ResponsesTest extends TestCase
         $this->assertStringContainsString('banana', $json->getContent());
     }
 
-
     /**
      * Test Make
-     * @return void
      */
     public function testMake(): void
     {

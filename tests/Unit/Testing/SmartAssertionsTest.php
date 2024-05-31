@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Testing;
 
@@ -17,7 +19,6 @@ class SmartAssertionsTest extends TestCase
     /**
      * Test
      *
-     * @return void
      *
      * @throws Throwable
      */
@@ -83,7 +84,6 @@ class SmartAssertionsTest extends TestCase
     /**
      * Test filtering
      *
-     * @return void
      *
      * @throws Throwable
      */
@@ -92,9 +92,7 @@ class SmartAssertionsTest extends TestCase
         /** @var TestCase|SmartAssertions|MockObject $test */
         $test = $this->getMockForAbstractClass(TestCase::class);
 
-        $test->filterFilePath(static function (string $file): string {
-            return str_replace('banana', 'strawberry', $file);
-        });
+        $test->filterFilePath(static fn (string $file): string => str_replace('banana', 'strawberry', $file));
 
         $result = '';
 

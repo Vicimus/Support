@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Providers;
 
@@ -20,13 +22,11 @@ class QueueReporterProviderTest extends TestCase
     /**
      * The queue reporter provider
      *
-     * @var QueueReporterProvider
      */
-    private $reporter;
+    private QueueReporterProvider $reporter;
 
     /**
      * Set up
-     * @return void
      */
     public function setup(): void
     {
@@ -89,10 +89,10 @@ class QueueReporterProviderTest extends TestCase
 
         $this->reporter = new QueueReporterProvider($app);
     }
+
     /**
      * Test failing
      *
-     * @return void
      */
     public function testFailing(): void
     {
@@ -107,15 +107,12 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
-
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
      * This should not be logged
      *
-     * @return void
      */
     public function testFailingIgnoredJob(): void
     {
@@ -134,15 +131,13 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
      * This should not be logged
      *
-     * @return void
      */
     public function testFailingIgnoredJobWithSpecificMessage(): void
     {
@@ -163,15 +158,13 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
      * This should not be logged
      *
-     * @return void
      */
     public function testFailingIgnoredJobWithWildcard(): void
     {
@@ -192,15 +185,13 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('marshmallows', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('marshmallows', 422)));
     }
 
     /**
      * Exceptions work too
      *
-     * @return void
      */
     public function testFailingIgnoredException(): void
     {
@@ -222,15 +213,13 @@ class QueueReporterProviderTest extends TestCase
         $job = $this->basicMock(Job::class);
         $job->method('resolveName')
             ->willReturn('ProspectToken');
-        $job->exception = new RestException('Bad thing', 422);
 
-        $queue->fail(new JobFailed('banana', $job, $job->exception));
+        $queue->fail(new JobFailed('banana', $job, new RestException('Bad thing', 422)));
     }
 
     /**
      * If not production ensure we don't do stuff
      *
-     * @return void
      */
     public function testBootOnlyInProduction(): void
     {

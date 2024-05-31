@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -16,7 +18,6 @@ class ImmutableModelTest extends TestCase
     /**
      * Test the constructor
      *
-     * @return void
      */
     public function testConstructor(): void
     {

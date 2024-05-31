@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Blocks;
 
@@ -14,7 +16,6 @@ interface Block
     /**
      * How many instances of your block can be on a single page
      *
-     * @return int
      */
     public function getLimit(): int;
 
@@ -23,14 +24,12 @@ interface Block
      *
      * @param BlockModel $model The raw model row
      *
-     * @return Model
      */
     public function getModel(BlockModel $model): Model;
 
     /**
      * Get the name of the block
      *
-     * @return string
      */
     public function getName(): string;
 
@@ -44,7 +43,6 @@ interface Block
     /**
      * Path on the disk where this block layouts live
      *
-     * @return string
      */
     public function layoutPath(): string;
 
@@ -58,14 +56,12 @@ interface Block
     /**
      * Convert the instance into a json object
      *
-     * @return stdClass
      */
     public function toFrontEnd(): stdClass;
 
     /**
      * Translate internal properties
      *
-     * @return void
      */
     public function translate(): void;
 }

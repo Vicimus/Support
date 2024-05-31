@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -10,43 +12,38 @@ use Vicimus\Support\Traits\ConsoleOutputter;
  */
 class DownloadProgress implements ConsoleOutput
 {
-    use ConsoleOutputter, PersistsOutput;
+    use ConsoleOutputter;
+    use PersistsOutput;
 
     /**
      * Auto increment mode
-     * @var bool
      */
-    protected $autoIncrement = false;
+    protected bool $autoIncrement = false;
 
     /**
      * Bytes
-     * @var int
      */
-    protected $bytes = 0;
+    protected int $bytes = 0;
 
     /**
      * Errors
-     * @var int
      */
-    protected $errors = 0;
+    protected int $errors = 0;
 
     /**
      * Previous output
-     * @var string
      */
-    protected $previous = '';
+    protected string $previous = '';
 
     /**
      * The number of successes
-     * @var int
      */
-    protected $successes = 0;
+    protected int $successes = 0;
 
     /**
      * Total
-     * @var int
      */
-    protected $total = 0;
+    protected int $total = 0;
 
     /**
      * DownloadProgress constructor
@@ -126,7 +123,6 @@ class DownloadProgress implements ConsoleOutput
     /**
      * Autoincrement
      *
-     * @return void
      */
     protected function autoIncrement(): void
     {
@@ -136,7 +132,6 @@ class DownloadProgress implements ConsoleOutput
     /**
      * Calculate bytes
      *
-     * @return float
      */
     protected function calculateBytes(): float
     {

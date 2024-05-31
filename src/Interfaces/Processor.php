@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -23,7 +25,6 @@ interface Processor
      *
      * @param string $output The comment to output
      *
-     * @return void
      */
     public function comment(string $output): void;
 
@@ -32,7 +33,6 @@ interface Processor
      *
      * @param string $output The error to output
      *
-     * @return void
      */
     public function error(string $output): void;
 
@@ -41,7 +41,6 @@ interface Processor
      *
      * @param string $output The info to output
      *
-     * @return void
      */
     public function info(string $output): void;
 
@@ -50,7 +49,6 @@ interface Processor
      *
      * @param string $output The text to output
      *
-     * @return void
      */
     public function line(string $output): void;
 
@@ -59,9 +57,8 @@ interface Processor
      *
      * @param string $name The name of the option to get
      *
-     * @return mixed
      */
-    public function option(string $name);
+    public function option(string $name): mixed;
 
     /**
      * Set the options for this service
@@ -79,14 +76,12 @@ interface Processor
      *
      * The scale should be 1 to 10.
      *
-     * @return int
      */
     public function priority(): int;
 
     /**
      * Init the process
      *
-     * @return bool
      */
     public function process(): bool;
 }

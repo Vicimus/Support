@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -18,23 +20,20 @@ class PhotoStatus
     /**
      * The headers to determine status
      *
-     * @var Headers
      */
-    protected $headers;
+    protected Headers $headers;
 
     /**
      * The photo this status represents
      *
-     * @var Photo
      */
-    protected $photo;
+    protected Photo $photo;
 
     /**
      * The vehicle related to the photo status
      *
-     * @var Vehicle
      */
-    protected $vehicle;
+    protected Vehicle $vehicle;
 
     /**
      * PhotoStatus constructor
@@ -55,9 +54,8 @@ class PhotoStatus
      *
      * @param string $property The property to get
      *
-     * @return mixed
      */
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
         return $this->$property;
     }
@@ -65,7 +63,6 @@ class PhotoStatus
     /**
      * Get a download request for the photo this is about
      *
-     * @return Downloadable
      */
     public function download(): Downloadable
     {
@@ -75,7 +72,6 @@ class PhotoStatus
     /**
      * Is the photo outdated
      *
-     * @return bool
      */
     public function isOutdated(): bool
     {

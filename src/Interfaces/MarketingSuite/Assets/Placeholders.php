@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
@@ -17,7 +19,6 @@ interface Placeholders
      * @param string          $content The content
      * @param PlaceholderData $data    The placeholder data
      *
-     * @return string
      * @throws OnyxException
      * @throws TemplateException
      */
@@ -28,7 +29,6 @@ interface Placeholders
      *
      * @param string $placeholder The placeholder to check
      *
-     * @return bool
      */
     public function isValidCustomPlaceholder(string $placeholder): bool;
 
@@ -39,7 +39,6 @@ interface Placeholders
      * @param string $type             The type of campaign making the request
      * @param bool   $containsFallback Flag to indicate fallback is provided
      *
-     * @return bool
      */
     public function isValidPlaceholder(string $placeholder, string $type, bool $containsFallback): bool;
 
@@ -49,7 +48,6 @@ interface Placeholders
      * @param string          $placeholder The placeholder ie. {{DEALER.NAME}}
      * @param PlaceholderData $data        The placeholder data
      *
-     * @return string
      * @throws TemplateException
      */
     public function placeholderValue(string $placeholder, PlaceholderData $data): string;
@@ -71,7 +69,6 @@ interface Placeholders
      * @param string          $default The default value
      * @param int             $depth   The depth of recursion
      *
-     * @return string
      * @throws TemplateException
      */
     public function recursive(string $mapping, PlaceholderData $data, string $default = '', int $depth = 0): string;
@@ -81,7 +78,6 @@ interface Placeholders
      *
      * @param string $locale The locale to set
      *
-     * @return void
      *
      * @throws LocaleException
      */
@@ -92,7 +88,6 @@ interface Placeholders
      *
      * @param string $placeholder The placeholder to strip
      *
-     * @return string
      */
     public function strip(string $placeholder): string;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -13,16 +15,13 @@ class BenchmarkTest extends TestCase
     /**
      * Custom set
      *
-     * @return void
      */
     public function testCustomSetting(): void
     {
         $bench = new Benchmark();
         $bench->custom(static function ($bench): void {
             //
-        }, static function (): string {
-            return 'banana';
-        });
+        }, static fn (): string => 'banana');
 
         $bench->init()->stop();
         $results = $bench->get();

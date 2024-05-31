@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -16,9 +18,8 @@ interface Translator
      * @param string   $default   The default to use if not found
      * @param string[] $variables Any variables to use for placeholders
      *
-     * @return mixed
      *
      * @throws TranslationFileException
      */
-    public function tran(string $key, ?string $default = null, array $variables = []);
+    public function tran(string $key, ?string $default = null, array $variables = []): mixed;
 }

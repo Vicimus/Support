@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -13,7 +15,6 @@ interface Configuration
      * @param string     $property The property to check
      * @param string|int $default  The default value
      *
-     * @return mixed
      */
-    public function check(string $property, $default = null);
+    public function check(string $property, string|int|null $default = null): mixed;
 }

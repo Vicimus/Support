@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -15,7 +17,6 @@ interface Vehicle
      * @param bool $thumbnail   Pass true to get a thumbnail size
      * @param bool $checkExists Pass true to verify the photo exists
      *
-     * @return string
      */
     public function getMainPhoto(bool $thumbnail = false, bool $checkExists = false): string;
 
@@ -25,7 +26,6 @@ interface Vehicle
      *
      * @param string $source OPTIONAL Source string to be added to the URL
      *
-     * @return string
      */
     public function getUrl(?string $source = null): string;
 }

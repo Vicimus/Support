@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -10,51 +12,45 @@ use Vicimus\Support\Traits\ConsoleOutputter;
  */
 class ProcessProgress implements ConsoleOutput
 {
-    use ConsoleOutputter, PersistsOutput;
+    use ConsoleOutputter;
+    use PersistsOutput;
 
     /**
      * Auto increment mode
-     * @var bool
      */
-    protected $autoIncrement = false;
+    protected bool $autoIncrement = false;
 
     /**
      * The number of created
      *
-     * @var int
      */
-    protected $created = 0;
+    protected int $created = 0;
 
     /**
      * The number of errors
-     * @var int
      */
-    protected $errors = 0;
+    protected int $errors = 0;
 
     /**
      * The previous
-     * @var string
      */
-    protected $previous = '';
+    protected string $previous = '';
 
     /**
      * Number of skipped
-     * @var int
      */
-    protected $skipped = 0;
+    protected int $skipped = 0;
 
     /**
      * The total
-     * @var int
      */
-    protected $total = 0;
+    protected int $total = 0;
 
     /**
      * The number updated
      *
-     * @var int
      */
-    protected $updated = 0;
+    protected int $updated = 0;
 
     /**
      * ProcessProgress constructor
@@ -154,7 +150,6 @@ class ProcessProgress implements ConsoleOutput
     /**
      * Auto increment
      *
-     * @return void
      */
     protected function autoIncrement(): void
     {

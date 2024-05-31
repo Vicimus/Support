@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
@@ -12,23 +14,21 @@ class AsyncRequestPool
     /**
      * The number of completed requests
      *
-     * @var int
      */
-    protected $counter = 0;
+    protected int $counter = 0;
 
     /**
      * Requests to make
      *
      * @var AsyncRequest[]
      */
-    protected $requests = [];
+    protected array $requests = [];
 
     /**
      * The verb this pool will be using
      *
-     * @var string
      */
-    protected $verb;
+    protected string $verb;
 
     /**
      * AsyncRequestPool constructor
@@ -45,7 +45,6 @@ class AsyncRequestPool
      *
      * @param AsyncRequest $request The request to add
      *
-     * @return void
      */
     public function add(AsyncRequest $request): void
     {
@@ -58,7 +57,6 @@ class AsyncRequestPool
      *
      * @param int $index The index to get
      *
-     * @return AsyncRequest
      */
     public function at(int $index): AsyncRequest
     {
@@ -68,7 +66,6 @@ class AsyncRequestPool
     /**
      * Counter
      *
-     * @return int
      */
     public function counter(): int
     {
@@ -78,7 +75,6 @@ class AsyncRequestPool
     /**
      * Get requests
      *
-     * @return Generator
      */
     public function requests(): Generator
     {
@@ -90,7 +86,6 @@ class AsyncRequestPool
     /**
      * The total number of requests
      *
-     * @return int
      */
     public function total(): int
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -21,7 +23,6 @@ class ImmutableObjectTest extends TestCase
     /**
      * Test the constructor
      *
-     * @return void
      */
     public function testConstructor(): void
     {
@@ -45,7 +46,6 @@ class ImmutableObjectTest extends TestCase
     /**
      * Test toString
      *
-     * @return void
      */
     public function testToString(): void
     {
@@ -58,7 +58,6 @@ class ImmutableObjectTest extends TestCase
     /**
      * Validation
      *
-     * @return void
      */
     public function testValidation(): void
     {
@@ -98,7 +97,6 @@ class ImmutableObjectTest extends TestCase
     /**
      * Must bind a factory
      *
-     * @return void
      */
     public function testValidationNoneSet(): void
     {
@@ -121,7 +119,6 @@ class ImmutableObjectTest extends TestCase
     /**
      * Test casting
      *
-     * @return void
      */
     public function testCasting(): void
     {
@@ -151,7 +148,6 @@ class ImmutableObjectTest extends TestCase
     /**
      * Recursive Arrays
      *
-     * @return void
      */
     public function testRecursiveArrays(): void
     {
@@ -185,7 +181,6 @@ class ImmutableObjectTest extends TestCase
 
     /**
      * It's really dumb that you need comments
-     * @return void
      */
     public function testArrayAccess(): void
     {

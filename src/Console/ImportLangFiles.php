@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Console;
 
@@ -13,16 +15,14 @@ class ImportLangFiles extends Command
 {
     /**
      * The commands signature
-     * @var string
      */
-    protected $signature = 'locale:import {path} {locale}';
+    protected string $signature = 'locale:import {path} {locale}';
 
     /**
      * Export the files
      *
      * @param LangGenerator $generator The lang generator service
      *
-     * @return void
      */
     public function handle(LangGenerator $generator): void
     {

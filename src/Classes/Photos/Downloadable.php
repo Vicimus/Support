@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -12,14 +14,12 @@ interface Downloadable
     /**
      * Must return a photo status object
      *
-     * @return PhotoStatus
      */
     public function status(): PhotoStatus;
 
     /**
      * Must return the vehicle this download is associated with
      *
-     * @return Vehicle
      */
     public function vehicle(): Vehicle;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
@@ -15,12 +17,11 @@ class BaseClassRepository implements ClassRepository
      *
      * @var string[]
      */
-    private $repo = [];
+    private array $repo = [];
 
     /**
      * Get all instances that have been registered
      *
-     * @return Collection
      */
     public function get(): Collection
     {
@@ -37,7 +38,6 @@ class BaseClassRepository implements ClassRepository
      *
      * @param string $source The source to check
      *
-     * @return bool
      */
     public function isRegistered(string $source): bool
     {
@@ -49,9 +49,8 @@ class BaseClassRepository implements ClassRepository
      *
      * @param string|string[] $classes Register one or many data sources
      *
-     * @return void
      */
-    public function register($classes): void
+    public function register(string|array $classes): void
     {
         $this->repo = array_merge($this->repo, (array) $classes);
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -16,7 +18,6 @@ interface ConquestDataSourceRepository extends ClassRepository
      *
      * @param string $category The category
      *
-     * @return Collection
      */
     public function category(string $category): Collection;
 

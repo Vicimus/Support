@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -54,69 +56,63 @@ class ApplicationTestCase extends TestCase
     /**
      * The instance of an application that we use
      *
-     * @var self
      */
-    private static $application;
+    private static self $application;
 
     /**
      * The application
      *
-     * @var Application
      */
-    protected $app;
+    protected Application $app;
 
     /**
      * The base path
-     * @var string
      */
-    protected $basePath;
+    protected string $basePath;
 
     /**
      * The database path
      *
-     * @var string
      */
-    protected $database;
+    protected string $database;
 
     /**
      * Migrations
      *
      * @var string[]
      */
-    protected $migrations = [];
+    protected array $migrations = [];
 
     /**
      * Base path for storage
      *
-     * @var string
      */
-    protected $path;
+    protected string $path;
 
     /**
      * The paths
      * @var string[]
      */
-    protected $paths = [];
+    protected array $paths = [];
 
     /**
      * Providers to load
      *
      * @var string[]
      */
-    protected $providers = [];
+    protected array $providers = [];
 
     /**
      * The routes
      * @var string[]
      */
-    protected $routes = [];
+    protected array $routes = [];
 
     /**
      * The testing client
      *
-     * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
      * Act as a logged in user
@@ -124,9 +120,8 @@ class ApplicationTestCase extends TestCase
      * @param string|null $driver Driver to use
      * @param mixed       $user   User
      *
-     * @return void
      */
-    public function beSomebody(?string $driver = null, $user = null): void
+    public function beSomebody(?string $driver = null, mixed $user = null): void
     {
         if (!$user) {
             $user = new stdClass();
@@ -140,7 +135,6 @@ class ApplicationTestCase extends TestCase
      * Set up
      *
      * @noinspection PhpDocMissingThrowsInspection
-     * @return void
      */
     public function setup(): void
     {
@@ -157,7 +151,6 @@ class ApplicationTestCase extends TestCase
     /**
      * Tear down
      *
-     * @return void
      */
     public function tearDown(): void
     {
@@ -170,7 +163,6 @@ class ApplicationTestCase extends TestCase
      *
      * @param Application|mixed $app The application
      *
-     * @return void
      */
     protected function bindings(Application $app): void
     {
@@ -182,7 +174,6 @@ class ApplicationTestCase extends TestCase
      *
      * @param Application|mixed $app The application
      *
-     * @return void
      */
     protected function booted(Application $app): void
     {
@@ -226,7 +217,6 @@ class ApplicationTestCase extends TestCase
      *
      * @param ServiceProvider[] $providers Providers
      *
-     * @return void
      *
      * @throws ReflectionException
      * @throws BindingResolutionException
@@ -239,7 +229,7 @@ class ApplicationTestCase extends TestCase
                 continue;
             }
 
-            $method = new ReflectionMethod(get_class($provider), 'boot');
+            $method = new ReflectionMethod($provider::class, 'boot');
             $params = [];
             foreach ($method->getParameters() as $param) {
                 if (!$param->getType()) {
@@ -255,7 +245,6 @@ class ApplicationTestCase extends TestCase
     /**
      * Create the testing application
      *
-     * @return void
      *
      * @throws BindingResolutionException
      * @throws ReflectionException
@@ -272,9 +261,7 @@ class ApplicationTestCase extends TestCase
         Facade::setFacadeApplication($app);
         $app->setBasePath($this->basePath);
 
-        $app->singleton('app', static function () use ($app) {
-            return $app;
-        });
+        $app->singleton('app', static fn () => $app);
 
         if ($this->path && !count($this->paths)) {
             foreach (['', 'storage', 'view', 'public', 'base'] as $part) {
@@ -324,42 +311,28 @@ class ApplicationTestCase extends TestCase
         $this->booted($app);
 
         self::$application = $this->app;
-        $this->client = new Client(static function ($verb, $payload) {
-            return Application::onRequest($verb, $payload);
-        }, $this->app);
+        $this->client = new Client(static fn ($verb, $payload) => Application::onRequest($verb, $payload), $this->app);
     }
+
     /**
      * Bind things
      *
      * @param Application $app The application instance
      *
-     * @return void
      */
     private function executeBindings(Application $app): void
     {
-        $app->singleton(EloquentFactory::class, static function () {
-            return new EloquentFactory(FakerFactory::create());
-        });
+        $app->singleton(EloquentFactory::class, static fn () => new EloquentFactory(FakerFactory::create()));
 
-        $app->singleton('auth', static function ($app) {
-            return new AuthManager($app);
-        });
+        $app->singleton('auth', static fn ($app) => new AuthManager($app));
 
-        $app->singleton('artisan', static function ($app) {
-            return $app;
-        });
+        $app->singleton('artisan', static fn ($app) => $app);
 
-        $app->singleton('cache', static function () {
-            return new BasicCache();
-        });
+        $app->singleton('cache', static fn () => new BasicCache());
 
-        $app->singleton(CacheManager::class, static function ($app) {
-            return new CacheManager($app);
-        });
+        $app->singleton(CacheManager::class, static fn ($app) => new CacheManager($app));
 
-        $app->bind('request', static function () {
-            return new Request();
-        });
+        $app->bind('request', static fn () => new Request());
 
         $app->bind('url', static function ($app) {
             /** @var Router $router */
@@ -368,23 +341,15 @@ class ApplicationTestCase extends TestCase
             return new UrlGenerator($routes, $app['request']);
         });
 
-        $app->singleton('events', static function ($container) {
-            return new Dispatcher($container);
-        });
+        $app->singleton('events', static fn ($container) => new Dispatcher($container));
 
-        $app->bind('mailer', function () {
-            return $this->getMockBuilder(Mailer::class)
+        $app->bind('mailer', fn () => $this->getMockBuilder(Mailer::class)
                 ->disableOriginalConstructor()
-                ->getMock();
-        });
+                ->getMock());
 
-        $app->bind('files', static function () {
-            return new Filesystem();
-        });
+        $app->bind('files', static fn () => new Filesystem());
 
-        $app->singleton('session.store', static function ($app) {
-            return $app['session'];
-        });
+        $app->singleton('session.store', static fn ($app) => $app['session']);
 
         $app->bind('validator', static function ($app) {
             $factory = new Factory($app['translator'], $app);
@@ -392,9 +357,7 @@ class ApplicationTestCase extends TestCase
             return $factory;
         });
 
-        $app->bind('cookie', static function () {
-            return new CookieJar();
-        });
+        $app->bind('cookie', static fn () => new CookieJar());
 
         $app->singleton('session', static function () {
             $repo = new CacheRepository(new ArrayStore());
@@ -408,17 +371,11 @@ class ApplicationTestCase extends TestCase
             return $redirector;
         });
 
-        $app->bind('translator', function () {
-            return $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock();
-        });
+        $app->bind('translator', fn () => $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock());
 
-        $app->singleton('lang', static function ($app) {
-            return $app['translator'];
-        });
+        $app->singleton('lang', static fn ($app) => $app['translator']);
 
-        $app->bind('hash', static function () {
-            return new BcryptHasher();
-        });
+        $app->bind('hash', static fn () => new BcryptHasher());
 
         $app->singleton('config', function () {
             $config = new ConfigRepository([]);
@@ -428,20 +385,15 @@ class ApplicationTestCase extends TestCase
             return $config;
         });
 
-        $app->singleton('router', static function ($app) {
-            return new Router($app['events'], $app);
-        });
+        $app->singleton('router', static fn ($app) => new Router($app['events'], $app));
 
-        $app->bind(VicimusTranslator::class, function () {
-            return $this->getMockBuilder(VicimusTranslator::class)->disableOriginalConstructor()->getMock();
-        });
+        $app->bind(VicimusTranslator::class, fn () => $this->getMockBuilder(VicimusTranslator::class)->disableOriginalConstructor()->getMock());
     }
 
     /**
      * Refresh the application instead of creating a whole new instance.
      * This improves testing speeds by over 9000 percent
      *
-     * @return void
      */
     private function refreshApplication(): void
     {
@@ -453,9 +405,7 @@ class ApplicationTestCase extends TestCase
         Facade::setFacadeApplication($this->app);
         Facade::clearResolvedInstances();
 
-        $this->client = new Client(static function ($verb, $payload) {
-            return Application::onRequest($verb, $payload);
-        }, $this->app);
+        $this->client = new Client(static fn ($verb, $payload) => Application::onRequest($verb, $payload), $this->app);
     }
 
     /**
@@ -463,7 +413,6 @@ class ApplicationTestCase extends TestCase
      *
      * @param Application $app The application
      *
-     * @return void
      *
      * @throws RuntimeException
      */
@@ -509,9 +458,7 @@ class ApplicationTestCase extends TestCase
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
-        $app->singleton('db', static function () use ($capsule) {
-            return $capsule->getDatabaseManager();
-        });
+        $app->singleton('db', static fn () => $capsule->getDatabaseManager());
 
         /** @var DatabaseManager $db */
         $db = app('db');

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -12,7 +14,6 @@ interface ThemeManager
      *
      * @param string $command The command to run
      *
-     * @return Result
      */
     public function refresh(string $command): Result;
 }

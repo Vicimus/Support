@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Properties;
 
@@ -14,9 +16,8 @@ class Validator extends Finder
 {
     /**
      * Illuminate validator
-     * @var Factory
      */
-    private $factory;
+    private Factory $factory;
 
     /**
      * Validator constructor
@@ -38,7 +39,7 @@ class Validator extends Finder
      * @return void
      * @throws RestException
      */
-    public function validate(PropertyProvider $provider, PropertyRecord $property, $value): bool
+    public function validate(PropertyProvider $provider, PropertyRecord $property, mixed $value): bool
     {
         $prop = $this->find($provider, $property);
         if (!$prop || !$prop->restrictions()) {

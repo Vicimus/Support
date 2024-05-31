@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
@@ -17,7 +19,7 @@ trait TransformsResponses
      *
      * @return Collection|ImmutableObject[]|ImmutableObject
      */
-    public function transformResponse($response, string $class, ?string $mode = null)
+    public function transformResponse(Response|stdClass|array $response, string $class, ?string $mode = null): Collection|array|ImmutableObject
     {
         if ($response instanceof Response) {
             $response = (string) $response->getBody();

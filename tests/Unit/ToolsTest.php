@@ -1,9 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Vicimus\Support\Classes\Tools;
+
 use function count;
 use function getdate;
 use function key;
@@ -16,7 +19,6 @@ class ToolsTest extends TestCase
     /**
      * Test years tools function.
      *
-     * @return void
      */
     public function testLatestYears(): void
     {
@@ -32,7 +34,6 @@ class ToolsTest extends TestCase
     /**
      * Test get country from state function.
      *
-     * @return void
      */
     public function testGetCountryFromState(): void
     {
@@ -55,7 +56,6 @@ class ToolsTest extends TestCase
     /**
      * Test isCompany.
      *
-     * @return void
      */
     public function testIsCompany(): void
     {
@@ -105,7 +105,6 @@ class ToolsTest extends TestCase
     /**
      * Test detecting date format.
      *
-     * @return void
      */
     public function testDetectDateFormat(): void
     {

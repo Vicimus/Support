@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Http\Middleware;
 
@@ -16,9 +18,8 @@ class Booleanify
      * @param Request $request The request
      * @param Closure $next    The next middleware on the stack
      *
-     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $input = $request->all();
         foreach ($input as $property => $value) {

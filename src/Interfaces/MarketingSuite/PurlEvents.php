@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -16,7 +18,6 @@ interface PurlEvents
      *
      * @param PurlEvent $event The event code
      *
-     * @return bool
      *
      * @throws RestException
      */
@@ -29,7 +30,6 @@ interface PurlEvents
      * @param int|null $lead    The lead id to be populated
      * @param bool     $testing Was this a testing submission
      *
-     * @return Confirmation
      *
      * @throws PurlSubmissionException
      * @throws RestException
@@ -42,7 +42,6 @@ interface PurlEvents
      * @param PurlInteraction $modify Modification information
      * @param PurlFiredEvent  $event  The purl event
      *
-     * @return void
      */
     public function temperature(PurlInteraction $modify, PurlFiredEvent $event): void;
 }

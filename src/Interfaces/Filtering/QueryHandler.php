@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -16,7 +18,6 @@ interface QueryHandler
      * @param Filter       $filter  The filter
      * @param QueryTracker $tracker Track things
      *
-     * @return void
      */
     public function handle(Builder $query, Filter $filter, ?QueryTracker $tracker): void;
 
@@ -25,7 +26,6 @@ interface QueryHandler
      *
      * @param Filter $filter The filter
      *
-     * @return bool
      */
     public function handles(Filter $filter): bool;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
@@ -13,7 +15,6 @@ class FinanceCalculator
      * @param float $presentValue     The present value (price of the car)
      * @param int   $numberOfPayments The total number of payments
      *
-     * @return float
      */
     public function payment(float $rate, int $frequency, float $presentValue, int $numberOfPayments): float
     {

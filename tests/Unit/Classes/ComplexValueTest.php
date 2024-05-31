@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -12,7 +14,6 @@ class ComplexValueTest extends TestCase
 {
     /**
      * Constructor test
-     * @return void
      */
     public function testConstructor(): void
     {

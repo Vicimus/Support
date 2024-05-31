@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,7 +14,6 @@ class Session
      *
      * @param string $property The property to forget
      *
-     * @return void
      */
     public function forget(string $property): void
     {
@@ -24,9 +25,8 @@ class Session
      *
      * @param string $property Which property to get
      *
-     * @return mixed
      */
-    public function get(string $property)
+    public function get(string $property): mixed
     {
         if (!$this->has($property)) {
             return null;
@@ -40,7 +40,6 @@ class Session
      *
      * @param string $property The property to get
      *
-     * @return bool
      */
     public function has(string $property): bool
     {
@@ -52,9 +51,8 @@ class Session
      *
      * @param string $property The property to pull
      *
-     * @return mixed
      */
-    public function pull(string $property)
+    public function pull(string $property): mixed
     {
         $value = $this->get($property);
         if ($value === null) {
@@ -71,9 +69,8 @@ class Session
      * @param string $property The property to put
      * @param mixed  $value    The value to put
      *
-     * @return void
      */
-    public function put(string $property, $value): void
+    public function put(string $property, mixed $value): void
     {
         $_SESSION[$property] = $value;
     }

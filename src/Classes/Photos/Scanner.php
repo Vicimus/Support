@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -22,5 +24,5 @@ interface Scanner extends ConsoleOutput
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
      */
-    public function scan(Client $client);
+    public function scan(Client $client): PhotoStatus|array;
 }

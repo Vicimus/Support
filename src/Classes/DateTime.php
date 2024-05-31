@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -11,6 +13,7 @@ use DateTimeZone;
 class DateTime extends Date
 {
     /** @noinspection PhpDocMissingThrowsInspection */
+
     /**
      * DateTime constructor.
      *
@@ -30,7 +33,6 @@ class DateTime extends Date
      * Replace time zones in a date string
      *
      * @param string $time The string to replace
-     * @return string
      */
     protected function replace(string $time): string
     {

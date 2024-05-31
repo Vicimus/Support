@@ -44,8 +44,8 @@ class Tools
                 unset($count);
                 $dt = DateTime::createFromFormat($format, $value);
                 if ($dt === false ||
-                    DateTime::getLastErrors()['warning_count'] > 0 ||
-                    strpos($dt->format('Y'), '00') === 0) {
+                    (DateTime::getLastErrors()['warning_count'] ?? 0) > 0 ||
+                    str_starts_with($dt->format('Y'), '00')) {
                     continue;
                 }
 

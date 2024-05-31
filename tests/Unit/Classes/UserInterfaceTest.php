@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -12,7 +14,6 @@ class UserInterfaceTest extends TestCase
 {
     /**
      * Assert extracting dependency node from file
-     * @return void
      */
     public function testDependancies(): void
     {

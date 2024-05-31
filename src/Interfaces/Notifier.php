@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -52,7 +54,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function basic(string $title, string $message, array $options): Collection;
 
@@ -63,7 +64,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function error(string $title, string $message, array $options): Collection;
 
@@ -77,7 +77,6 @@ interface Notifier
      * @param string $tone    The specific tone
      * @param bool   $expired Include expired notifications
      *
-     * @return Collection
      */
     public function get(
         int $userid,
@@ -95,7 +94,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function info(string $title, string $message, array $options): Collection;
 
@@ -106,7 +104,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function notify(string $title, string $message, array $options): Collection;
 
@@ -117,7 +114,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function question(string $title, string $message, array $options): Collection;
 
@@ -126,7 +122,6 @@ interface Notifier
      *
      * @param int $id The ID to mark as read
      *
-     * @return bool
      */
     public function read(int $id): bool;
 
@@ -137,7 +132,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function success(string $title, string $message, array $options): Collection;
 
@@ -148,7 +142,6 @@ interface Notifier
      * @param string   $message The message body of the notification
      * @param string[] $options Any other advanced options for the notification
      *
-     * @return Collection
      */
     public function warning(string $title, string $message, array $options): Collection;
 }

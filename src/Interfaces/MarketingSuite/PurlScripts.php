@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -15,7 +17,6 @@ interface PurlScripts
      *
      * @param Request $request The request object
      *
-     * @return View
      */
     public function handle(Request $request): View;
 }

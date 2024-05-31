@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
@@ -14,7 +16,7 @@ trait Processing
      *
      * @var string[]
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Set the options for this service
@@ -34,9 +36,8 @@ trait Processing
      *
      * @param string $name The name of the option to get
      *
-     * @return mixed
      */
-    public function option(string $name)
+    public function option(string $name): mixed
     {
         if (!array_key_exists($name, $this->options)) {
             return null;
@@ -48,7 +49,6 @@ trait Processing
     /**
      * Return the priority of your processor
      *
-     * @return int
      */
     public function priority(): int
     {

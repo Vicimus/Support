@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -58,106 +60,90 @@ interface Campaign extends BaseCampaign
     /**
      * A campaign can have many batches
      *
-     * @return HasMany
      */
     public function batches(): HasMany;
 
     /**
      * Departments
      *
-     * @return MorphToMany
      */
     public function departments(): MorphToMany;
 
     /**
      * Campaigns allowed to share customers
      *
-     * @return HasMany
      */
     public function includes(): HasMany;
 
     /**
      * Check if a campaign is bdc only
-     * @return bool
      */
     public function isBdcOnly(): bool;
 
     /**
      * Check if a campaign is email only
      *
-     * @return bool
      */
     public function isEmailOnly(): bool;
 
     /**
      * Is the campaign letter only
      *
-     * @return bool
      */
     public function isLetterOnly(): bool;
 
     /**
      * Is the campaign sms only
-     * @return bool
      */
     public function isSmsOnly(): bool;
 
     /**
      * Is the campaign voice only
      *
-     * @return bool
      */
     public function isVoiceOnly(): bool;
 
     /**
      * The logs method
      *
-     * @return HasMany
      */
     public function logs(): HasMany;
 
     /**
      * A campaign can have many notes associated with it
      *
-     * @return MorphMany
      */
     public function notes(): MorphMany;
 
     /**
      * A campaign may have a staggered medium schedule
      *
-     * @return HasMany|null
      */
     public function staggers(): ?HasMany;
 
     /**
      * Campaigns have stats
      *
-     * @return HasOne
      */
     public function stats(): HasOne;
 
     /**
      * Determine if customer preference should be used
-     * @return bool
      */
     public function useCustomerPreference(): bool;
 
     /**
      * Determine if bounced customers should be excluded
-     * @return bool
      */
     public function useExcludeBounced(): bool;
 
     /**
      * Determine if the emails should only go to active customers
-     * @return bool
      */
     public function useOnlyEmailActive(): bool;
 
     /**
      * Determine if launch process should scale mediums
-     * @return bool
      */
     public function useScaleMediums(): bool;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -15,7 +17,7 @@ class ConquestBudget extends ImmutableObject
      *
      * @param mixed|mixed[] $original The original data
      */
-    public function __construct($original)
+    public function __construct(mixed $original)
     {
         parent::__construct(array_merge(['spend' => null, 'total' => null], (array) $original));
     }
@@ -25,7 +27,6 @@ class ConquestBudget extends ImmutableObject
      *
      * @param float $spend The spend to set
      *
-     * @return void
      */
     public function setSpend(float $spend): void
     {

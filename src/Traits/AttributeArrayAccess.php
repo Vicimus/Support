@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
@@ -24,7 +26,7 @@ trait AttributeArrayAccess
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->attributes);
     }
@@ -41,7 +43,7 @@ trait AttributeArrayAccess
      * @return mixed Can return all value types.
      * @since 5.0.0
      */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->attributes[$offset] ?? null;
     }
@@ -58,10 +60,9 @@ trait AttributeArrayAccess
      *                      The value to set.
      *                      </p>
      *
-     * @return void
      * @since 5.0.0
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->$offset = $value;
     }
@@ -75,10 +76,9 @@ trait AttributeArrayAccess
      *                      The offset to unset.
      *                      </p>
      *
-     * @return void
      * @since 5.0.0
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->attributes[$offset]);
     }

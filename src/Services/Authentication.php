@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
@@ -15,9 +17,8 @@ class Authentication
     /**
      * The auth manager
      *
-     * @var Factory
      */
-    protected $manager;
+    protected Factory $manager;
 
     /**
      * Authentication constructor.
@@ -32,7 +33,6 @@ class Authentication
     /**
      * Forward the request on to the facade
      *
-     * @return bool
      */
     public function check(): bool
     {

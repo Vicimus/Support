@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -16,7 +18,6 @@ class ConquestCompatibilityTest extends TestCase
     /**
      * Test constructor
      *
-     * @return void
      * @throws Throwable
      */
     public function testConstructor(): void
@@ -24,14 +25,13 @@ class ConquestCompatibilityTest extends TestCase
         $class = $this->getMockBuilder(ConquestDataSource::class)
             ->getMock();
 
-        $info = new ConquestCompatibility(get_class($class));
-        $this->assertEquals(get_class($class), $info->class);
+        $info = new ConquestCompatibility($class::class);
+        $this->assertEquals($class::class, $info->class);
     }
 
     /**
      * Test failure
      *
-     * @return void
      */
     public function testConstructorInvalid(): void
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Locale;
 
@@ -22,9 +24,8 @@ class NgLocaleSniffer
     /**
      * The messages file
      *
-     * @var string
      */
-    private $messages;
+    private string $messages;
 
     /**
      * NgLocaleSniffer constructor.
@@ -103,7 +104,6 @@ class NgLocaleSniffer
     /**
      * The path to the messages file
      *
-     * @return string
      */
     public function path(): string
     {
@@ -116,7 +116,6 @@ class NgLocaleSniffer
      * @param string $source The source value
      * @param string $target The target value
      *
-     * @return bool
      */
     private function shouldSkip(string $source, string $target): bool
     {

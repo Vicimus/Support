@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -13,7 +15,6 @@ class ParameterBagTest extends TestCase
     /**
      * Renaming removes the original property and assigns it to a new one
      *
-     * @return void
      */
     public function testRename(): void
     {
@@ -36,7 +37,6 @@ class ParameterBagTest extends TestCase
     /**
      * Parameter Bag
      *
-     * @return void
      */
     public function testGrab(): void
     {
@@ -54,7 +54,6 @@ class ParameterBagTest extends TestCase
     /**
      * Test put
      *
-     * @return void
      */
     public function testPut(): void
     {
@@ -70,7 +69,6 @@ class ParameterBagTest extends TestCase
     /**
      * Treat it like an array
      *
-     * @return void
      */
     public function testArrayAccess(): void
     {
@@ -93,7 +91,6 @@ class ParameterBagTest extends TestCase
     /**
      * Test checksumming bags
      *
-     * @return void
      */
     public function testChecksum(): void
     {

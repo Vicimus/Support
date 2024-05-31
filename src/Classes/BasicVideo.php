@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,16 +14,14 @@ class BasicVideo implements Video
     /**
      * The type of video ie/ youtube, flick-fusion, etc.
      *
-     * @var string
      */
-    protected $type = '';
+    protected string $type = '';
 
     /**
      * The value for the video
      *
-     * @var string
      */
-    protected $value = '';
+    protected string $value = '';
 
     /**
      * Create a BasicVideo Instance
@@ -38,7 +38,6 @@ class BasicVideo implements Video
     /**
      * Get the type of video ie/ youtube, flick-fusion, etc.
      *
-     * @return string
      */
     public function videoType(): string
     {
@@ -48,7 +47,6 @@ class BasicVideo implements Video
     /**
      * Get the value for the video
      *
-     * @return string
      */
     public function videoValue(): string
     {

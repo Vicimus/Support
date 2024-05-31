@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -66,7 +68,6 @@ class Client extends HttpKernelBrowser
      *
      * @param DomRequest $request The request
      *
-     * @return Request
      */
     protected function filterRequest(DomRequest $request): Request
     {

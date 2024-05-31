@@ -1,6 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace Vicimus\Support\Tests\Classes\API;
+declare(strict_types=1);
+
+namespace Vicimus\Support\Tests\Unit\Classes\API;
 
 use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Exceptions\RestException;
@@ -14,14 +16,15 @@ class CachesRequestsTest extends TestCase
 {
     /**
      * Instance
+     *
      * @var CachesRequests
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     private $instance;
 
     /**
      * Set up
      *
-     * @return void
      * @throws \Throwable
      */
     public function setup(): void
@@ -32,7 +35,6 @@ class CachesRequestsTest extends TestCase
 
             /**
              * Get the cache time for testing
-             * @return int
              */
             public function getCacheTime(): int
             {
@@ -50,7 +52,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Cache match
      *
-     * @return void
      */
     public function testCacheMatch(): void
     {
@@ -65,7 +66,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Test clearing the cache
      *
-     * @return void
      * @throws \Throwable
      */
     public function testClearCache(): void
@@ -78,7 +78,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Test cache time
      *
-     * @return void
      */
     public function testCacheTime(): void
     {
@@ -88,7 +87,6 @@ class CachesRequestsTest extends TestCase
     /**
      * Clear cache
      *
-     * @return void
      */
     public function testClearException(): void
     {

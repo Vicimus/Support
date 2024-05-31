@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -41,7 +43,6 @@ trait BasicMock
      *
      * @throws InvalidArgumentException
      *
-     * @return void
      */
     public function wasExpectingException(string $exception, string $method = ''): void
     {

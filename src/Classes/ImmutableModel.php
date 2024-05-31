@@ -1,9 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 use InvalidArgumentException;
 use Vicimus\Support\Database\Model;
+
 use function is_array;
 
 /**
@@ -19,7 +22,7 @@ class ImmutableModel extends ImmutableObject
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($original = [], ?Model $model = null)
+    public function __construct(mixed $original = [], ?Model $model = null)
     {
         $this->merge($original, $model);
 
@@ -44,9 +47,8 @@ class ImmutableModel extends ImmutableObject
      * @param mixed $payload The payload provided to manipulate
      * @param Model $model   The model to merge with
      *
-     * @return void
      */
-    protected function merge(&$payload, ?Model $model): void
+    protected function merge(mixed &$payload, ?Model $model): void
     {
         if (!$model) {
             return;
@@ -68,7 +70,6 @@ class ImmutableModel extends ImmutableObject
      * @param mixed[] $payload   The provided payload
      * @param Model   $model     The model providing a fallback value
      *
-     * @return void
      */
     private function check(string $attribute, array &$payload, Model $model): void
     {

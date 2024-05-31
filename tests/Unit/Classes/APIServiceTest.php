@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -20,7 +22,6 @@ class APIServiceTest extends GuzzleTestCase
      *
      * @throws \Throwable
      *
-     * @return void
      */
     public function testRequest(): void
     {
@@ -37,7 +38,6 @@ class APIServiceTest extends GuzzleTestCase
      *
      * @throws \Throwable
      *
-     * @return void
      */
     public function testMultiPart(): void
     {
@@ -57,7 +57,6 @@ class APIServiceTest extends GuzzleTestCase
      *
      * @throws \Throwable
      *
-     * @return void
      */
     public function testRequestException(): void
     {
@@ -79,7 +78,6 @@ class APIServiceTest extends GuzzleTestCase
      *
      * @throws \Throwable
      *
-     * @return void
      */
     public function testMultiPartPatch(): void
     {
@@ -99,7 +97,6 @@ class APIServiceTest extends GuzzleTestCase
      *
      * @throws \Throwable
      *
-     * @return void
      */
     public function testMultiPartExceptions(): void
     {
@@ -145,7 +142,6 @@ class APIServiceTest extends GuzzleTestCase
      *
      * @throws RestException
      *
-     * @return void
      */
     public function testRequestVariations(): void
     {

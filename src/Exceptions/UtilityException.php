@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Exceptions;
 
@@ -22,7 +24,7 @@ class UtilityException extends Exception
         $message = sprintf(
             'Utility [%s] (%s) threw an exception during execution. The message: %s in file %s on line %s',
             $utility->name(),
-            get_class($utility),
+            $utility::class,
             $original->getMessage(),
             $original->getFile(),
             $original->getLine()

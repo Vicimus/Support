@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
@@ -14,9 +16,8 @@ class Responses
 {
     /**
      * The view factory
-     * @var Factory
      */
-    private $view;
+    private Factory $view;
 
     /**
      * Responses constructor.
@@ -33,7 +34,6 @@ class Responses
      *
      * @param string $path The path to the file
      *
-     * @return BinaryFileResponse
      */
     public function download(string $path): BinaryFileResponse
     {
@@ -46,9 +46,8 @@ class Responses
      * @param mixed $body The body of the response
      * @param int   $code The response code
      *
-     * @return JsonResponse
      */
-    public function json($body = null, int $code = 200): JsonResponse
+    public function json(mixed $body = null, int $code = 200): JsonResponse
     {
         return new JsonResponse($body, $code);
     }
@@ -59,9 +58,8 @@ class Responses
      * @param mixed $body The body of the response
      * @param int   $code The response code
      *
-     * @return Response
      */
-    public function make($body = null, int $code = 200): Response
+    public function make(mixed $body = null, int $code = 200): Response
     {
         return new Response($body, $code);
     }
@@ -74,7 +72,6 @@ class Responses
      * @param int     $status  The status
      * @param mixed[] $headers Any headers
      *
-     * @return Response
      */
     public function view(string $view, array $data = [], int $status = 200, array $headers = []): Response
     {

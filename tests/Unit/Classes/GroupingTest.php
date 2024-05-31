@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -16,7 +18,6 @@ class GroupingTest extends TestCase
 {
     /**
      * Asset grouping validates it's properties
-     * @return void
      */
     public function testGroupingThrows(): void
     {
@@ -30,7 +31,6 @@ class GroupingTest extends TestCase
 
     /**
      * Assert Grouping constructor
-     * @return void
      */
     public function testGrouping(): void
     {
@@ -43,7 +43,6 @@ class GroupingTest extends TestCase
 
     /**
      * Assert retrieving a property from a grouping
-     * @return void
      */
     public function testProperty(): void
     {
@@ -59,7 +58,6 @@ class GroupingTest extends TestCase
 
     /**
      * Assert retrieving a property from a grouping
-     * @return void
      */
     public function testNotOwnedProperty(): void
     {
@@ -74,7 +72,6 @@ class GroupingTest extends TestCase
     /**
      * On Update exists
      *
-     * @return void
      */
     public function testOnUpdate(): void
     {

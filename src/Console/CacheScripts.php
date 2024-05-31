@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Console;
 
@@ -14,23 +16,20 @@ class CacheScripts extends Command
     /**
      * The script cache
      *
-     * @var ScriptCache
      */
-    protected $cache;
+    protected ScriptCache $cache;
 
     /**
      * The description
      *
-     * @var string
      */
-    protected $description = 'Read and cache script names';
+    protected string $description = 'Read and cache script names';
 
     /**
      * Command signature
      *
-     * @var string
      */
-    protected $signature = 'scripts:cache';
+    protected string $signature = 'scripts:cache';
 
     /**
      * CacheScripts constructor
@@ -46,7 +45,6 @@ class CacheScripts extends Command
     /**
      * Fire the command
      *
-     * @return void
      */
     public function handle(): void
     {

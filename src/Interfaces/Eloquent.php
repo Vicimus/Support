@@ -1,8 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
-
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Interface Eloquent
@@ -12,27 +12,27 @@ interface Eloquent
     /**
      * Load a relation or relations
      *
-     * @param mixed $relations The relations to load
+     * @param string[]|string $relations The relations to load
      *
-     * @return mixed
+     * @return self
+     *
+     * @phpcsSuppress
      */
-    public function load($relations);
+    public function load(array|string $relations): Eloquent;
 
     /**
      * Get the query object
      *
-     * @return Builder|mixed
      */
-    public static function query();
+    public static function query(): mixed;
 
     /**
      * Save the model to the database.
      *
      * @param string[] $options The options to pass along
      *
-     * @return bool|mixed
      */
-    public function save(array $options = []);
+    public function save(array $options = []): mixed;
 
     /**
      * Update the model in the database.
@@ -40,7 +40,6 @@ interface Eloquent
      * @param string[] $attributes The attribute updates
      * @param string[] $options    Additional options
      *
-     * @return bool|mixed
      */
-    public function update(array $attributes = [], array $options = []);
+    public function update(array $attributes = [], array $options = []): mixed;
 }

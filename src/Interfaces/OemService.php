@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -15,7 +17,6 @@ interface OemService
      *
      * @param string $slug The Make to get
      *
-     * @return Make
      * @throws RestException
      *
      */

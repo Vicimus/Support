@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
@@ -16,7 +18,6 @@ interface PropertyProvider
      * many assets. Specifically, Facebook has many assets that all share
      * specific properties.
      *
-     * @return Grouping
      */
     public function grouping(): Grouping;
 

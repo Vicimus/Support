@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Exceptions;
 
@@ -12,16 +14,14 @@ class PhotoException extends RestException
     /**
      * The stock that threw the exception
      *
-     * @var Vehicle
      */
-    protected $stock;
+    protected Vehicle $stock;
 
     /**
      * THe url that threw the exception
      *
-     * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * PhotoException constructor

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Locale;
 
@@ -13,30 +15,26 @@ class Compiler
     /**
      * Cache repository
      *
-     * @var Repository
      */
-    private $cache;
+    private Repository $cache;
 
     /**
      * The environment
      *
-     * @var string
      */
-    private $env;
+    private string $env;
 
     /**
      * The file to read
      *
-     * @var string
      */
-    private $file;
+    private string $file;
 
     /**
      * The path to the lang files
      *
-     * @var string
      */
-    private $pathToLang;
+    private string $pathToLang;
 
     /**
      * Compiler constructor.
@@ -70,9 +68,7 @@ class Compiler
         }
 
         $key = sprintf('i18n-%s', $locale);
-        return $this->cache->remember($key, 30, function () use ($locale) {
-            return $this->getLocale($locale);
-        });
+        return $this->cache->remember($key, 30, fn () => $this->getLocale($locale));
     }
 
     /**

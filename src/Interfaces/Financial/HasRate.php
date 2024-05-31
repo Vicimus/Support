@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Financial;
 
@@ -10,7 +12,6 @@ interface HasRate
     /**
      * Get the rate
      *
-     * @return float
      */
     public function rate(): float;
 }

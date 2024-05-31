@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -12,13 +14,11 @@ interface Store
 {
     /**
      * Get the primary identifier for the store
-     * @return string|int
      */
-    public function identifier();
+    public function identifier(): string|int;
 
     /**
      * Get the name of the store
-     * @return string
      */
     public function name(): string;
 
@@ -28,9 +28,8 @@ interface Store
      * @param string $property The property
      * @param mixed  $default  The property default
      *
-     * @return mixed
      */
-    public function property(string $property, $default = null);
+    public function property(string $property, mixed $default = null): mixed;
 
     /**
      * Override set attribute
@@ -38,14 +37,12 @@ interface Store
      * @param string|int|bool      $key   The key to set
      * @param string|int|bool|null $value The value to set it to
      *
-     * @return void
      */
-    public function setAttribute($key, $value);
+    public function setAttribute(string|int|bool $key, string|int|bool|null $value): void;
 
     /**
      * Convert the store into an array of data
      *
-     * @return mixed
      */
-    public function toArray();
+    public function toArray(): mixed;
 }

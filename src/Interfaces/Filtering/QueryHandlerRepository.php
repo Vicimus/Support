@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -17,7 +19,6 @@ interface QueryHandlerRepository
      * @param null|QueryTracker $tracker A tracker instance
      * @param string            $type    The type of query being handled
      *
-     * @return Builder
      */
     public function handle(Builder $query, Filter $filter, ?QueryTracker $tracker, string $type): Builder;
 }

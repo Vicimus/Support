@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
@@ -38,7 +40,6 @@ class Headers extends ImmutableObject
      *
      * @param string $header The header to get
      *
-     * @return string
      */
     public function get(string $header): ?string
     {

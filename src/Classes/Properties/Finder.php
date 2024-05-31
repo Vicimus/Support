@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Properties;
 
@@ -18,7 +20,6 @@ class Finder
      * @param PropertyRecord   $property Property to search for
      * @param int|null         $storeId  The store Id
      *
-     * @return Property|null
      *
      * @todo
      * - Does this need access to the asset owning the property to see if its a part of the grouping
