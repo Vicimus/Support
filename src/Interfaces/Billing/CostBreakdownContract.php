@@ -8,8 +8,8 @@ namespace Vicimus\Support\Interfaces\Billing;
  * @property string $total
  * @property string $subTotal
  * @property string $tax
- * @property mixed[] $taxInfo
- * @property mixed[] $items
+ * @property string[] $taxInfo
+ * @property string[][] $items
  */
 interface CostBreakdownContract
 {

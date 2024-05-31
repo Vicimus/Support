@@ -14,7 +14,7 @@ interface Eloquent
      *
      * @param string[]|string $relations The relations to load
      *
-     * @return mixed
+     * @return self
      *
      * @phpcsSuppress
      */

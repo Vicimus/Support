@@ -27,7 +27,7 @@ interface DataSource
     /**
      * Return an array of data points
      *
-     * @return mixed[]
+     * @return string[][]
      */
     public function points(): array;
 

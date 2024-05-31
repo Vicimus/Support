@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vicimus\Support\Tests\Classes\API;
+namespace Vicimus\Support\Tests\Unit\Classes\API;
 
 use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Exceptions\RestException;
@@ -18,6 +18,7 @@ class CachesRequestsTest extends TestCase
      * Instance
      *
      * @var CachesRequests
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     private $instance;
 

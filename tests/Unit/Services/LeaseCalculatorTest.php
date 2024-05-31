@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Throwable;
 use Vicimus\Support\Interfaces\Financial\LeaseItem;
