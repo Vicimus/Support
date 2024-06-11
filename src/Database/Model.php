@@ -26,7 +26,7 @@ use Throwable;
  * @method static Builder|static whereNotIn($column, $items)
  * @method static Builder|static orWhereNotIn($column, $items)
  * @method static Builder|static withTrashed()
- * @method static LaravelModel|static firstOrCreate($attributes)
+ * @method static LaravelModel|static firstOrCreate(...$attributes)
  * @method static Builder|static query()
  * @method static LaravelModel|static firstOrFail()
  * @method static LaravelModel|static first()
