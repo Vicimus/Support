@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -13,7 +15,6 @@ class ProgressBarTest extends TestCase
     /**
      * Progress bar test
      *
-     * @return void
      */
     public function testProgressBar(): void
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Database;
 
@@ -13,7 +15,6 @@ class ModelTest extends TestCase
     /**
      * Test delete
      *
-     * @return void
      */
     public function testDelete(): void
     {
@@ -22,7 +23,6 @@ class ModelTest extends TestCase
     }
 
     /**
-     * @return void
      */
     public function testSetAttributeWithNoCasts(): void
     {
@@ -30,7 +30,7 @@ class ModelTest extends TestCase
             /**
              * @var string[]
              */
-            protected $casts = ['id' => 'int'];
+            protected array $casts = ['id' => 'int'];
         };
 
         $testing::withoutCasts();

@@ -1,13 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Providers;
 
 use Illuminate\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\Queue\Job;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\Facades\Facade;
 use Psr\Log\LoggerInterface;
-use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Providers\QueueReporterProvider;
 use Vicimus\Support\Testing\Application;
 use Vicimus\Support\Testing\TestCase;
@@ -20,13 +20,11 @@ class QueueReporterProviderTest extends TestCase
     /**
      * The queue reporter provider
      *
-     * @var QueueReporterProvider
      */
-    private $reporter;
+    private QueueReporterProvider $reporter;
 
     /**
      * Set up
-     * @return void
      */
     public function setup(): void
     {
@@ -93,7 +91,6 @@ class QueueReporterProviderTest extends TestCase
     /**
      * If not production ensure we don't do stuff
      *
-     * @return void
      */
     public function testBootOnlyInProduction(): void
     {

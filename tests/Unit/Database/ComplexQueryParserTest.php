@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Database;
 
@@ -16,7 +18,6 @@ class ComplexQueryParserTest extends TestCase
     /**
      * Test isComplexQuery
      *
-     * @return void
      */
     public function testIsComplexQuery(): void
     {
@@ -31,7 +32,6 @@ class ComplexQueryParserTest extends TestCase
     /**
      * Test complex
      *
-     * @return void
      */
     public function testComplex(): void
     {

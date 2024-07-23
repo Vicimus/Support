@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -15,14 +17,12 @@ class LumenRouterTest extends TestCase
     /**
      * The router we'll be testing
      *
-     * @var LumenRouter
      */
-    protected $router;
+    protected LumenRouter $router;
 
     /**
      * Test delete
      *
-     * @return void
      */
     public function testDelete(): void
     {
@@ -43,7 +43,6 @@ class LumenRouterTest extends TestCase
     /**
      * Test delete
      *
-     * @return void
      */
     public function testPost(): void
     {
@@ -64,7 +63,6 @@ class LumenRouterTest extends TestCase
     /**
      * Test delete
      *
-     * @return void
      */
     public function testPatch(): void
     {
@@ -85,7 +83,6 @@ class LumenRouterTest extends TestCase
     /**
      * Test delete
      *
-     * @return void
      */
     public function testGet(): void
     {
@@ -106,7 +103,6 @@ class LumenRouterTest extends TestCase
     /**
      * Test the resource route
      *
-     * @return void
      */
     public function testResource(): void
     {

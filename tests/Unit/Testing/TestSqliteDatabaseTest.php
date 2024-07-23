@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Unit\Testing;
 
@@ -18,7 +20,6 @@ class TestSqliteDatabaseTest extends TestCase
     /**
      * Set the test up
      *
-     * @return void
      */
     public function setup(): void
     {
@@ -26,20 +27,16 @@ class TestSqliteDatabaseTest extends TestCase
         $app = new Application();
         Facade::setFacadeApplication($app);
 
-        $app->bind('path.base', static function () {
-            return __DIR__ . '/../../../resources/testing';
-        });
+        $app->bind('path.base', static fn () => __DIR__ . '/../../../resources/testing');
 
-        $app->bind('path.database', static function () {
-            return __DIR__ . '/../../../resources/testing';
-        });
+        $app->bind('path.database', static fn () => __DIR__ . '/../../../resources/testing');
 
         putenv('VICIMUS_TEST_NO_DATABASE_OUTPUT=1');
     }
+
     /**
      * Test setup
      *
-     * @return void
      */
     public function testSetup(): void
     {
