@@ -31,7 +31,7 @@ class IterableArray implements Iterator
      *
      * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->source);
     }
@@ -41,7 +41,7 @@ class IterableArray implements Iterator
      *
      * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->source);
     }
@@ -51,9 +51,9 @@ class IterableArray implements Iterator
      *
      * @return mixed
      */
-    public function next()
+    public function next(): void
     {
-        return next($this->source);
+        next($this->source);
     }
 
     /**
@@ -61,9 +61,9 @@ class IterableArray implements Iterator
      *
      * @return mixed
      */
-    public function rewind()
+    public function rewind(): void
     {
-        return reset($this->source);
+        reset($this->source);
     }
 
     /**

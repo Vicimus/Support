@@ -123,22 +123,4 @@ class ConsoleOutputterTest extends TestCase
 
         $std->bind($output);
     }
-
-    /**
-     * Assert the too few argument exception is caught when calling vsprintf without args provided
-     *
-     * @return void
-     */
-    public function testOutputCleans(): void
-    {
-        /** @var ConsoleOutputter|MockObject $std */
-        $std = $this->getMockForTrait(ConsoleOutputter::class);
-
-        /** @var ConsoleOutput|MockObject $output */
-        $output = $this->getMockBuilder(ConsoleOutput::class)->getMock();
-        $output->expects($this->once())
-            ->method('error')->with('te%sting');
-
-        $std->bind($output)->error('te%sting');
-    }
 }

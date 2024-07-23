@@ -2,12 +2,10 @@
 
 namespace Vicimus\Support\Classes;
 
-use ArrayAccess;
-
 /**
  * Class ParameterBag
  */
-class ParameterBag extends ImmutableObject implements ArrayAccess
+class ParameterBag extends ImmutableObject
 {
     /**
      * Checksum of the value of the parameters
@@ -69,18 +67,6 @@ class ParameterBag extends ImmutableObject implements ArrayAccess
     public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->attributes);
-    }
-
-    /**
-     * Offset to retrieve
-     *
-     * @param mixed $offset The offset to get
-     *
-     * @return mixed Can return all value types.
-     */
-    public function offsetGet($offset)
-    {
-        return $this->get($offset);
     }
 
     /**
