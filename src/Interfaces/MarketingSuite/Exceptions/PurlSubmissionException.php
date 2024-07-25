@@ -6,7 +6,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite\Exceptions;
 
 use Throwable;
 
-interface LocaleException extends Throwable
+interface PurlSubmissionException extends Throwable
 {
     //
 }

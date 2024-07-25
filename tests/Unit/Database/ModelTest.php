@@ -7,30 +7,22 @@ namespace Vicimus\Support\Tests\Unit\Database;
 use Vicimus\Support\Database\Model;
 use Vicimus\Support\Testing\TestCase;
 
-/**
- * Class ModelTest
- */
 class ModelTest extends TestCase
 {
-    /**
-     * Test delete
-     *
-     */
     public function testDelete(): void
     {
         $model = new Model();
         $this->assertNull($model->delete());
     }
 
-    /**
-     */
     public function testSetAttributeWithNoCasts(): void
     {
         $testing = new class extends Model {
             /**
              * @var string[]
+             * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
              */
-            protected array $casts = ['id' => 'int'];
+            protected $casts = ['id' => 'int'];
         };
 
         $testing::withoutCasts();
