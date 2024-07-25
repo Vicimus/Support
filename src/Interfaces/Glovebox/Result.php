@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
@@ -9,22 +11,18 @@ interface Result
 {
     /**
      * Check if the command failed or not
-     *
-     * @return bool
      */
     public function failed(): bool;
 
     /**
      * Get the output from the command
      *
-     * @return array
+     * @return string[][]
      */
     public function output(): array;
 
     /**
      * Check if the command succeeded
-     *
-     * @return bool
      */
     public function success(): bool;
 }

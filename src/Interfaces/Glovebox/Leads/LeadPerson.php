@@ -1,17 +1,17 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox\Leads;
 
 /**
- * Interface LeadPeople
- *
  * @property string $email
  */
 interface LeadPerson
 {
     /**
      * Convert entity into an array
-     * @return mixed[]
+     * @return string[][]
      */
     public function toArray(): array;
 }
