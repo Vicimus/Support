@@ -1,20 +1,15 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Vicimus\Support\Classes\ConquestDataCategoryInfo;
 
-/**
- * Interface ConquestDataCategory
- */
 interface ConquestDataCategory
 {
     /**
      * Get info about this category
-     *
-     * @param ConquestDataSourceRepository $repo In case it needs data source info
-     *
-     * @return ConquestDataCategoryInfo
      */
     public function info(ConquestDataSourceRepository $repo): ConquestDataCategoryInfo;
 }

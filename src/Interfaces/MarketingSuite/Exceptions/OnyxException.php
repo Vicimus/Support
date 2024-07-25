@@ -6,7 +6,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite\Exceptions;
 
 use Throwable;
 
-interface TemplateException extends Throwable
+interface OnyxException extends Throwable
 {
     //
 }
