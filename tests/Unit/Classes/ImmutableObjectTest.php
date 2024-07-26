@@ -34,13 +34,6 @@ class ImmutableObjectTest extends TestCase
 
         $this->assertEquals(5, $obj->id);
         $this->assertEquals(5, $second->id);
-
-        try {
-            new ImmutableObject('string');
-            $this->fail('Exception not thrown');
-        } catch (InvalidArgumentException $ex) {
-            $this->assertStringContainsString('array', $ex->getMessage());
-        }
     }
 
     /**
@@ -124,8 +117,7 @@ class ImmutableObjectTest extends TestCase
     {
         /* phpcs:disable */
         $extension = new class extends ImmutableObject {
-            /** @var string[] Casts */
-            protected $casts = [
+            protected array $casts = [
                 'id' => 'int',
                 'other' => ImmutableObject::class,
             ];

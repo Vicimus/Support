@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vicimus\Support\Classes;
 
 use InvalidArgumentException;
+use stdClass;
 use Vicimus\Support\Database\Model;
 
 use function is_array;
@@ -18,7 +19,7 @@ class ImmutableModel extends ImmutableObject
      * ImmutableModel constructor.
      * @throws InvalidArgumentException
      */
-    public function __construct(mixed $original = [], ?Model $model = null)
+    public function __construct(stdClass | array $original = [], ?Model $model = null)
     {
         $this->merge($original, $model);
 

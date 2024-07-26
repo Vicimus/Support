@@ -12,14 +12,8 @@ use function is_string;
 
 trait CachesRequests
 {
-    protected ?Repository $cache;
+    protected ?Repository $cache = null;
 
-    /**
-     * Bind a cache repository
-     *
-     * @param Repository $cache The cache repository
-     *
-     */
     public function bindCache(?Repository $cache): void
     {
         $this->cache = $cache;

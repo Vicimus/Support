@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
-use Laravel\Lumen\Application;
 use Laravel\Lumen\Routing\Router;
 
 /**
@@ -12,7 +11,7 @@ use Laravel\Lumen\Routing\Router;
  */
 class LumenRouter
 {
-    protected Application $app;
+    protected Router $app;
 
     public function __construct(Router $app)
     {

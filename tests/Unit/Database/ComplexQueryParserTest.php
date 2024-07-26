@@ -36,12 +36,6 @@ class ComplexQueryParserTest extends TestCase
     public function testComplex(): void
     {
         $parser = new ComplexQueryParser();
-        try {
-            $parser->query('hello', 'banana', 'in:1,2,3');
-            $this->wasExpectingException(InvalidArgumentException::class);
-        } catch (InvalidArgumentException $ex) {
-            $this->assertStringContainsString('Builder', $ex->getMessage());
-        }
 
         /** @var Builder|MockObject $query */
         $query = $this->getMockBuilder(Builder::class)

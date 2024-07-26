@@ -12,17 +12,8 @@ use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Testing\GuzzleTestCase;
 
-/**
- * Class APIServiceTest
- */
 class APIServiceTest extends GuzzleTestCase
 {
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     */
     public function testRequest(): void
     {
         $api = new APIService($this->guzzle([
@@ -33,12 +24,6 @@ class APIServiceTest extends GuzzleTestCase
         $this->assertNotNull($response);
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     */
     public function testMultiPart(): void
     {
         $api = new APIService($this->guzzle([
@@ -52,12 +37,6 @@ class APIServiceTest extends GuzzleTestCase
         $this->assertNotNull($response);
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     */
     public function testRequestException(): void
     {
         $api = new APIService($this->guzzle([
@@ -73,12 +52,6 @@ class APIServiceTest extends GuzzleTestCase
         }
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     */
     public function testMultiPartPatch(): void
     {
         $api = new APIService($this->guzzle([
@@ -92,12 +65,6 @@ class APIServiceTest extends GuzzleTestCase
         $this->assertNotNull($response);
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     */
     public function testMultiPartExceptions(): void
     {
         $api = new APIService($this->guzzle([
@@ -137,12 +104,6 @@ class APIServiceTest extends GuzzleTestCase
         }
     }
 
-    /**
-     * Test varations on request
-     *
-     * @throws RestException
-     *
-     */
     public function testRequestVariations(): void
     {
         $api = new APIService($this->guzzle([

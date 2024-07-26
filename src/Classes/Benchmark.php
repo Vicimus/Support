@@ -22,9 +22,9 @@ class Benchmark
 
     protected int $peak = 0;
 
-    protected int $start = 0;
+    protected float $start = 0;
 
-    protected int $stop = 0;
+    protected float $stop = 0;
 
     public function custom(callable $init, callable $stop): Benchmark
     {

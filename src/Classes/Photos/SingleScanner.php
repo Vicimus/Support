@@ -32,7 +32,7 @@ class SingleScanner implements Scanner
      * @throws UnauthorizedPhotoException
      * @throws GuzzleException
      */
-    public function scan(Client $client): mixed
+    public function scan(Client $client): PhotoStatus | array
     {
         $headers = $this->headers($client, $this->stock, $this->photo);
         return $this->photo->status($headers, $this->stock);

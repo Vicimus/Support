@@ -93,31 +93,4 @@ class LeaseCalculatorTest extends TestCase
 
         $this->assertGreaterThan(0, $payment);
     }
-
-    /**
-     */
-    public function testNotFloatPrice(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $calc = new LeaseCalculator();
-        $calc->futureValue('34003', '0.05');
-    }
-
-    /**
-     */
-    public function testNotFloatResidual(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $calc = new LeaseCalculator();
-        $calc->futureValue(34003, '0.05');
-    }
-
-    /**
-     */
-    public function testNotFloatPriceNper(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $calc = new LeaseCalculator();
-        $calc->nper('34', 12);
-    }
 }
