@@ -9,6 +9,8 @@ namespace Vicimus\Support\Interfaces;
  */
 interface Vehicle
 {
+    public function getStockNumber(): ?string;
+
     /**
      * Get the description of the type of vehicle (new, used, showroom, banana)
      */

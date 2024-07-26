@@ -1,22 +1,20 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 
-/**
- * Class Booleanify
- */
 class Booleanify
 {
     /**
      * Handle an incoming request.
      *
-     * @param Request $request The request
-     * @param Closure $next    The next middleware on the stack
-     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      */
     public function handle(Request $request, Closure $next)
     {

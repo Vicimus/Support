@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
@@ -8,24 +10,15 @@ use Vicimus\Support\Exceptions\RestException;
 
 use function is_string;
 
-/**
- * Trait CachesRequests
- */
 trait CachesRequests
 {
-    /**
-     * Cache repository
-     *
-     * @var Repository
-     */
-    protected $cache;
+    protected ?Repository $cache;
 
     /**
      * Bind a cache repository
      *
      * @param Repository $cache The cache repository
      *
-     * @return void
      */
     public function bindCache(?Repository $cache): void
     {
@@ -34,17 +27,9 @@ trait CachesRequests
 
     /**
      * Try to find a cache match
-     *
-     * @param string      $method  The method being used
-     * @param string      $path    The path being requested
-     * @param mixed       $payload The payload being sent
-     * @param string|null $tag     A special tag to use
-     *
-     * @return mixed|null
-     *
      * @throws InvalidArgumentException
      */
-    public function cacheMatch(string $method, string $path, $payload, ?string $tag = null)
+    public function cacheMatch(string $method, string $path, mixed $payload, ?string $tag = null): mixed
     {
         if (!$this->cache || strtolower($method) !== 'get') {
             return null;
@@ -66,8 +51,6 @@ trait CachesRequests
     /**
      * Overload this method with your own timeout number. This returns
      * the number of minutes a response should be cached.
-     *
-     * @return int
      */
     protected function cacheTime(): int
     {
@@ -82,7 +65,6 @@ trait CachesRequests
      * @param string[]|string[][] $payload The payload sent
      * @param string|null         $tag     Special tag to use
      *
-     * @return bool
      * @throws RestException
      */
     public function clearCache(string $method, string $path, array $payload, ?string $tag = null): bool
@@ -97,29 +79,14 @@ trait CachesRequests
 
     /**
      * Try to find a cache match
-     *
-     * @param string $hash The hash
-     *
-     * @return mixed
-     *
      * @throws InvalidArgumentException
      */
-    protected function findCacheMatch(string $hash)
+    protected function findCacheMatch(string $hash): mixed
     {
         return $this->cache->get($hash);
     }
 
-    /**
-     * Generate a hash to use as a key
-     *
-     * @param string      $method  The HTTP method
-     * @param string      $path    The path that was requested
-     * @param mixed       $payload The payload of data being sent
-     * @param string|null $tag     A special tag to use
-     *
-     * @return string
-     */
-    protected function generateCacheHash(string $method, string $path, $payload, ?string $tag = null): string
+    protected function generateCacheHash(string $method, string $path, mixed $payload, ?string $tag = null): string
     {
         if ($tag) {
             return md5(sprintf('%s:%s', CachesRequests::class, $tag));

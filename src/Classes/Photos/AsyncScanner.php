@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -12,53 +14,24 @@ use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**
- * Class AsyncScanner
- *
  * Used to make async head requests
  */
 class AsyncScanner implements Scanner
 {
     use ConsoleOutputter;
 
-    /**
-     * The pool to use with the requests
-     *
-     * @var AsyncRequestPool
-     */
-    protected $async;
+    protected AsyncRequestPool $async;
 
-    /**
-     * Client
-     *
-     * @var Client
-     */
-    protected $client;
+    protected Client $client;
 
-    /**
-     * Track progress and output it to the screen
-     *
-     * @var ScannerProgress
-     */
-    protected $progress;
+    protected ScannerProgress $progress;
 
-    /**
-     * AsyncScanner constructor.
-     *
-     * @param AsyncRequestPool $async The pool to scan through
-     */
     public function __construct(AsyncRequestPool $async)
     {
         $this->async = $async;
     }
 
-    /**
-     * Scan the photos for photo status
-     *
-     * @param Client $client The client to use for requests
-     *
-     * @return mixed|Collection|PhotoStatus[]
-     */
-    public function scan(Client $client)
+    public function scan(Client $client): PhotoStatus | array
     {
         $this->progress = (new ScannerProgress($this->async->total()))->bind($this->output);
 

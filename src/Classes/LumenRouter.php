@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -10,18 +12,8 @@ use Laravel\Lumen\Routing\Router;
  */
 class LumenRouter
 {
-    /**
-     * Holds the Lumen application
-     *
-     * @var Application
-     */
-    protected $app;
+    protected Application $app;
 
-    /**
-     * Pass in the application instance
-     *
-     * @param Router $app The application router
-     */
     public function __construct(Router $app)
     {
         $this->app = $app;
@@ -29,90 +21,61 @@ class LumenRouter
 
     /**
      * Bind a delete route
-     *
-     * @param string $path       The path
-     * @param mixed  $controller The controller and method to handle it
-     *
-     * @return void
      */
-    public function delete(string $path, $controller): void
+    public function delete(string $path, mixed $controller): void
     {
         $this->app->delete($path, $controller);
     }
 
     /**
      * Bind a get route
-     *
-     * @param string $path       The path
-     * @param mixed  $controller The controller and method to handle it
-     *
-     * @return void
      */
-    public function get(string $path, $controller): void
+    public function get(string $path, mixed $controller): void
     {
         $this->app->get($path, $controller);
     }
 
     /**
      * Bind a patch route
-     *
-     * @param string $path       The path
-     * @param mixed  $controller The controller and method to handle it
-     *
-     * @return void
      */
-    public function patch(string $path, $controller): void
+    public function patch(string $path, mixed $controller): void
     {
         $this->app->patch($path, $controller);
     }
 
     /**
      * Bind a post route
-     *
-     * @param string $path       The path
-     * @param mixed  $controller The controller and method to handle it
-     *
-     * @return void
      */
-    public function post(string $path, $controller): void
+    public function post(string $path, mixed $controller): void
     {
         $this->app->post($path, $controller);
     }
 
     /**
      * Create a resource binding
-     *
-     * @param string $resource   The resource to bind
-     * @param string $controller The name of the controller that will handle
-     *
-     * @return void
      */
     public function resource(string $resource, string $controller): void
     {
         $base = $this->plural($resource);
-        $entity = '/{'.$resource.'}';
+        $entity = '/{' . $resource . '}';
 
-        $this->app->get($base, $controller.'@index');
-        $this->app->post($base, $controller.'@store');
-        $this->app->get($base.$entity, $controller.'@show');
-        $this->app->patch($base.$entity, $controller.'@update');
-        $this->app->delete($base.$entity, $controller.'@destroy');
+        $this->app->get($base, $controller . '@index');
+        $this->app->post($base, $controller . '@store');
+        $this->app->get($base . $entity, $controller . '@show');
+        $this->app->patch($base . $entity, $controller . '@update');
+        $this->app->delete($base . $entity, $controller . '@destroy');
     }
 
     /**
      * Get the plural form of the resource
-     *
-     * @param string $resource The resource
-     *
-     * @return string
      */
     protected function plural(string $resource): string
     {
         $resource = strtolower($resource);
-        if (substr($resource, -1) === 's') {
+        if (str_ends_with($resource, 's')) {
             return $resource;
         }
 
-        return $resource.'s';
+        return $resource . 's';
     }
 }

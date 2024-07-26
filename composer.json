@@ -4,7 +4,8 @@
     "require": {
         "php": "^8.2",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-dom": "*"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "*",
