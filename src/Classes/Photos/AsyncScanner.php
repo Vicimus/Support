@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vicimus\Support\Classes\Photos;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
@@ -31,7 +31,7 @@ class AsyncScanner implements Scanner
         $this->async = $async;
     }
 
-    public function scan(Client $client): PhotoStatus | array
+    public function scan(Client $client): Collection
     {
         $this->progress = (new ScannerProgress($this->async->total()))->bind($this->output);
 
@@ -53,7 +53,7 @@ class AsyncScanner implements Scanner
                     $this->progress->incUpToDate();
                 }
             },
-            'rejected' => function (RequestException $reason, $index): void {
+            'rejected' => function (GuzzleException $reason, $index): void {
                 $this->progress->incError();
                 $response = $reason->getResponse();
                 $status = 500;

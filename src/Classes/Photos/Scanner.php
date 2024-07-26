@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vicimus\Support\Classes\Photos;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Collection;
 use Vicimus\Support\Exceptions\PhotoException;
 use Vicimus\Support\Exceptions\UnauthorizedPhotoException;
 use Vicimus\Support\Interfaces\ConsoleOutput;
@@ -16,5 +17,5 @@ interface Scanner extends ConsoleOutput
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
      */
-    public function scan(Client $client): PhotoStatus | array;
+    public function scan(Client $client): PhotoStatus | Collection;
 }

@@ -11,14 +11,11 @@ use Vicimus\Support\Classes\API\Headers;
 use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Interfaces\Vehicle;
 
-/**
- * Class AsyncPhotoRequest
- */
 class AsyncPhotoRequest implements AsyncRequest
 {
     protected Photo $photo;
 
-    protected PhotoStatus $status;
+    protected ?PhotoStatus $status;
 
     protected Vehicle $vehicle;
 

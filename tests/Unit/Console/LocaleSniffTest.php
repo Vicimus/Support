@@ -8,9 +8,7 @@ use Illuminate\Console\OutputStyle;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\Input;
-use Symfony\Component\Console\Output\Output;
 use Vicimus\Support\Console\LocaleSniff;
-use Vicimus\Support\Locale\LangGenerator;
 use Vicimus\Support\Locale\NgLocaleSniffer;
 
 class LocaleSniffTest extends TestCase

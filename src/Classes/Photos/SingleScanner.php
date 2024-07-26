@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\API\Headers;
 use Vicimus\Support\Exceptions\PhotoException;
 use Vicimus\Support\Exceptions\UnauthorizedPhotoException;
@@ -32,7 +33,7 @@ class SingleScanner implements Scanner
      * @throws UnauthorizedPhotoException
      * @throws GuzzleException
      */
-    public function scan(Client $client): PhotoStatus | array
+    public function scan(Client $client): PhotoStatus | Collection
     {
         $headers = $this->headers($client, $this->stock, $this->photo);
         return $this->photo->status($headers, $this->stock);
