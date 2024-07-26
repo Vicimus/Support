@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Vicimus\Support\Classes\ImmutableModel;

@@ -7,7 +7,6 @@ namespace Vicimus\Support\Tests\Unit\Classes;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\MessageBag;
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -15,15 +14,8 @@ use Throwable;
 use Vicimus\Support\Classes\ImmutableObject;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 
-/**
- * Class ImmutableObjectTest
- */
 class ImmutableObjectTest extends TestCase
 {
-    /**
-     * Test the constructor
-     *
-     */
     public function testConstructor(): void
     {
         $std = new stdClass();
@@ -36,10 +28,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertEquals(5, $second->id);
     }
 
-    /**
-     * Test toString
-     *
-     */
     public function testToString(): void
     {
         $obj = new ImmutableObject(['id' => 5]);
@@ -48,10 +36,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertEquals((string) $obj, json_encode($array));
     }
 
-    /**
-     * Validation
-     *
-     */
     public function testValidation(): void
     {
         $errors = '';
@@ -87,10 +71,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertIsString($errors);
     }
 
-    /**
-     * Must bind a factory
-     *
-     */
     public function testValidationNoneSet(): void
     {
         $obj = new ImmutableObject(['id' => 5]);
@@ -109,10 +89,6 @@ class ImmutableObjectTest extends TestCase
         }
     }
 
-    /**
-     * Test casting
-     *
-     */
     public function testCasting(): void
     {
         /* phpcs:disable */
@@ -137,10 +113,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertEquals('kiwi', $instance->fruit);
     }
 
-    /**
-     * Recursive Arrays
-     *
-     */
     public function testRecursiveArrays(): void
     {
         $instance = new ImmutableObject([
@@ -171,9 +143,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertIsArray($result['children'][0]['grand-children'][0]);
     }
 
-    /**
-     * It's really dumb that you need comments
-     */
     public function testArrayAccess(): void
     {
         $instance = new ImmutableObject(['banana' => 'strawberry']);

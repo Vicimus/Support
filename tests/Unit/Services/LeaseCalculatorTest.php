@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
-use Throwable;
 use Vicimus\Support\Interfaces\Financial\LeaseItem;
 use Vicimus\Support\Services\LeaseCalculator;
 use Vicimus\Support\Testing\TestCase;
@@ -16,11 +14,6 @@ use Vicimus\Support\Testing\TestCase;
  */
 class LeaseCalculatorTest extends TestCase
 {
-    /**
-     * Test payments
-     *
-     * @throws Throwable
-     */
     public function testPayments(): void
     {
         $calc = new LeaseCalculator();
@@ -35,11 +28,6 @@ class LeaseCalculatorTest extends TestCase
         $this->assertEquals(412.19, $payment);
     }
 
-    /**
-     * Easy mode
-     *
-     * @throws Throwable
-     */
     public function testEasyMode(): void
     {
         /** @var LeaseItem|MockObject $vehicle */
@@ -76,10 +64,6 @@ class LeaseCalculatorTest extends TestCase
         $this->assertEquals(412.19, $payment);
     }
 
-    /**
-     * This is breaking get your toyota
-     *
-     */
     public function testDivisionByZeroIssues(): void
     {
         $calc = new LeaseCalculator();

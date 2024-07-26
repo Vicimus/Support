@@ -7,7 +7,6 @@ namespace Vicimus\Support\Tests\Unit\Database;
 use Illuminate\Database\Query\Builder;
 use PHPUnit\Framework\MockObject\MockObject;
 use Vicimus\Support\Database\ComplexQueryParser;
-use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Testing\TestCase;
 
 /**
