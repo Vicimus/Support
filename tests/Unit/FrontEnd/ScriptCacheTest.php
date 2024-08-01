@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\FrontEnd;
 
@@ -19,7 +21,6 @@ class ScriptCacheTest extends TestCase
     /**
      * Setup
      *
-     * @return void
      */
     public function setup(): void
     {
@@ -28,19 +29,14 @@ class ScriptCacheTest extends TestCase
         $app = new Application();
         Facade::setFacadeApplication($app);
 
-        $app->bind('path.public', static function () {
-            return __DIR__ . '/../../../resources/testing';
-        });
+        $app->bind('path.public', static fn () => __DIR__ . '/../../../resources/testing');
 
-        $app->bind('url', static function () {
-            return new UrlGenerator(new RouteCollection(), new Request());
-        });
+        $app->bind('url', static fn () => new UrlGenerator(new RouteCollection(), new Request()));
     }
 
     /**
      * Test make
      *
-     * @return void
      */
     public function testMake(): void
     {
@@ -55,7 +51,6 @@ class ScriptCacheTest extends TestCase
     /**
      * Test are unhealthy
      *
-     * @return void
      */
     public function testUnhealthy(): void
     {
@@ -74,7 +69,6 @@ class ScriptCacheTest extends TestCase
     /**
      * Test cache
      *
-     * @return void
      */
     public function testCache(): void
     {

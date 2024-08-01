@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Console;
 
@@ -6,48 +8,28 @@ use Illuminate\Console\Command;
 use Vicimus\Support\Classes\StandardOutput;
 use Vicimus\Support\FrontEnd\ScriptCache;
 
-/**
- * Class CacheScripts
- */
 class CacheScripts extends Command
 {
-    /**
-     * The script cache
-     *
-     * @var ScriptCache
-     */
-    protected $cache;
+    protected ScriptCache $cache;
 
     /**
-     * The description
-     *
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $description = 'Read and cache script names';
 
     /**
-     * Command signature
-     *
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $signature = 'scripts:cache';
 
-    /**
-     * CacheScripts constructor
-     *
-     * @param ScriptCache $cache The script cache object
-     */
     public function __construct(ScriptCache $cache)
     {
         parent::__construct();
         $this->cache = $cache;
     }
 
-    /**
-     * Fire the command
-     *
-     * @return void
-     */
     public function handle(): void
     {
         $this->cache->bind(new StandardOutput());

@@ -1,14 +1,16 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
-/**
- * Interface EloquentRepository
- */
 interface EloquentRepository
 {
     /**
      * Create a new type record
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      *
      * @param mixed[] $attributes The attributes
      *
@@ -19,6 +21,9 @@ interface EloquentRepository
     /**
      * Get the type by id
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     *
      * @param int $id The id of the type to get
      *
      * @return mixed|null
@@ -27,6 +32,9 @@ interface EloquentRepository
 
     /**
      * Find or create
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      *
      * @param mixed[] $attributes The attributes
      *

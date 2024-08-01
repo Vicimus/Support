@@ -1,12 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 use Illuminate\Http\Request;
 
 /**
- * Class RenderSpecs
- *
  * @property int $width
  * @property int $height
  * @property int $scale
@@ -17,19 +17,8 @@ use Illuminate\Http\Request;
  */
 class RenderSpecs extends ImmutableObject
 {
-    /**
-     * RenderSpecs constructor.
-     *
-     * @param Request|int|null $width    The width of the pdf element
-     * @param int|null         $height   The height of the pdf element
-     * @param int|null         $scale    The scale to use
-     * @param int|null         $pages    The number of pages
-     * @param bool             $letter   The letter
-     * @param bool             $postcard The postcard toggle
-     * @param string|null      $format   The page format to use
-     */
     public function __construct(
-        $width,
+        Request | int | null $width,
         ?int $height = null,
         ?int $scale = null,
         ?int $pages = null,

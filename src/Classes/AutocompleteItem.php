@@ -1,26 +1,23 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 /**
- * Class AutocompleteItem
- *
+ * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
  * @property int $id
  * @property mixed[] $additionalDetails
  */
 class AutocompleteItem extends ImmutableObject
 {
-    /**
-     * AutocompleteItem constructor
-     *
-     * @param string|int      $id                The id of the item
-     * @param string          $name              The name to display
-     * @param int|string|null $details           Optionally details
-     * @param string|null     $detailsIcon       An icon to display
-     * @param mixed|null      $additionalDetails Can literally be anything else we need
-     */
-    public function __construct($id, string $name, $details, ?string $detailsIcon, $additionalDetails = null)
-    {
+    public function __construct(
+        string | int $id,
+        string $name,
+        mixed $details,
+        ?string $detailsIcon,
+        mixed $additionalDetails = null,
+    ) {
         parent::__construct([
             'id' => $id,
             'name' => $name,

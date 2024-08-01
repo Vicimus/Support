@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -13,7 +15,6 @@ class IterableArrayTest extends TestCase
     /**
      * Make sure you can for each over this class
      *
-     * @return void
      */
     public function testForEaching(): void
     {
