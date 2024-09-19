@@ -26,6 +26,9 @@ interface Utility
      */
     public function name(): string;
 
+    /**
+     * @return string[]
+     */
     public function options(): array;
 
     /**

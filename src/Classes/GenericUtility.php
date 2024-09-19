@@ -55,6 +55,14 @@ class GenericUtility implements Utility
         return $this->name;
     }
 
+    /**
+     * @return string[]
+     */
+    public function options(): array
+    {
+        return [];
+    }
+
     public function prompt(): string
     {
         return '';
