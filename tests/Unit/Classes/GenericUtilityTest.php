@@ -91,4 +91,13 @@ class GenericUtilityTest extends TestCase
         });
         $this->assertEquals('', $utility->prompt());
     }
+
+    public function testOptions(): void
+    {
+        $utility = new GenericUtility('Test Utility', 'Testing', static function (): void {
+            //
+        });
+
+        $this->assertCount(0, $utility->options());
+    }
 }
