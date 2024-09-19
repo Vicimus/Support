@@ -30,6 +30,8 @@ interface Utility
      */
     public function name(): string;
 
+    public function options(): array;
+
     /**
      * Returns a confirmation prompt for the utility.
      *
