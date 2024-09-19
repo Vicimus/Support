@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -8,17 +10,10 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 
-/**
- * Trait GuzzleRequests
- */
 trait GuzzleRequests
 {
     /**
-     * Get a mock guzzle client
-     *
      * @param Response[]|RequestException[] $responses The responses you want
-     *
-     * @return Client
      */
     protected function guzzle(array $responses = []): Client
     {

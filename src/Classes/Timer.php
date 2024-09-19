@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -7,47 +9,31 @@ use RuntimeException;
 use function call_user_func;
 
 /**
- * Class Timer
- *
  * Enforces a minimum amount of time between executions of a method
  */
 class Timer
 {
     /**
      * The closure to execute
-     *
      * @var callable
      */
     private $closure;
 
     /**
      * An invoker string that can be used to invoke
-     *
-     * @var string
      */
-    private $invoker;
+    private string $invoker;
 
     /**
      * The time of the last call
-     *
-     * @var int
      */
-    private $lastCall;
+    private int $lastCall;
 
     /**
      * The seconds between calls
-     *
-     * @var float
      */
-    private $seconds;
+    private float $seconds;
 
-    /**
-     * Timer constructor.
-     *
-     * @param string   $invoker The invoker label
-     * @param callable $closure The closure to execute
-     * @param float    $seconds The seconds delay
-     */
     public function __construct(string $invoker, callable $closure, float $seconds)
     {
         $this->invoker = $invoker;
@@ -58,15 +44,9 @@ class Timer
 
     /**
      * Handle the magic call to the invoker label
-     *
-     * @param string $call The call name
-     * @param mixed  $args Arguments
-     *
-     * @return void
-     *
      * @throws RuntimeException
      */
-    public function __call(string $call, $args): void
+    public function __call(string $call, mixed $args): void
     {
         if ($call !== $this->invoker) {
             throw new RuntimeException(sprintf('Call to undefined method %s', $call));
@@ -78,8 +58,6 @@ class Timer
     /**
      * Invoke the method. Will only execute if the correct number of seconds
      * have elapsed
-     *
-     * @return void
      */
     public function invoke(): void
     {

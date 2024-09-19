@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -9,16 +11,12 @@ use Vicimus\Support\Interfaces\MarketingSuite\ConquestDataSource;
 use Vicimus\Support\Interfaces\MarketingSuite\ConquestDataSourceRepository;
 
 /**
- * Class ConquestCompatibilityMatrix
- *
  * @property ConquestCompatibility[] $matrix
  */
 class ConquestCompatibilityMatrix extends ImmutableObject
 {
     /**
-     * ConquestCompatibilityMatrix constructor.
-     *
-     * @param mixed[] $matrix An array of compatibility info
+     * @param string[][]|string[] $matrix
      */
     public function __construct(array $matrix = [])
     {
@@ -36,9 +34,7 @@ class ConquestCompatibilityMatrix extends ImmutableObject
     /**
      * Add some compatibility information
      *
-     * @param mixed[] $matrix The matrix
-     *
-     * @return void
+     * @param string[][]|string[] $matrix The matrix
      */
     public function add(array $matrix): void
     {
@@ -55,8 +51,6 @@ class ConquestCompatibilityMatrix extends ImmutableObject
     }
 
     /**
-     * To array
-     *
      * @return ConquestCompatibilityMatrix[]
      */
     public function toArray(): array
@@ -66,10 +60,6 @@ class ConquestCompatibilityMatrix extends ImmutableObject
 
     /**
      * Check if a source is valid
-     *
-     * @param string $source The source to validate
-     *
-     * @return bool
      */
     private function isValidSource(string $source): bool
     {
@@ -89,12 +79,8 @@ class ConquestCompatibilityMatrix extends ImmutableObject
 
     /**
      * Render or just return the string
-     *
-     * @param string|View $description The description to render
-     *
-     * @return string
      */
-    private function render($description): string
+    private function render(View | string $description): string
     {
         if ($description instanceof View) {
             $description = $description->render();

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Locale;
 
@@ -7,9 +9,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use function in_array;
 
-/**
- * Class NgLocaleSniffer
- */
 class NgLocaleSniffer
 {
     /**
@@ -19,18 +18,8 @@ class NgLocaleSniffer
         'Bumper',
     ];
 
-    /**
-     * The messages file
-     *
-     * @var string
-     */
-    private $messages;
+    private string $messages;
 
-    /**
-     * NgLocaleSniffer constructor.
-     *
-     * @param null|string $path The path to the file to use
-     */
     public function __construct(?string $path)
     {
         $this->messages = $path;
@@ -38,9 +27,6 @@ class NgLocaleSniffer
 
     /**
      * Get missing keys
-     *
-     * @param string $path The path
-     *
      * @return MissingTranslation[]
      */
     public function missing(string $path): array
@@ -83,9 +69,6 @@ class NgLocaleSniffer
 
     /**
      * Parse out keys from a file
-     *
-     * @param string $path The path to the content to parse from
-     *
      * @return string[]
      */
     public function parseKeysFromContent(string $path): array
@@ -100,30 +83,19 @@ class NgLocaleSniffer
         return $lines;
     }
 
-    /**
-     * The path to the messages file
-     *
-     * @return string
-     */
     public function path(): string
     {
         return $this->messages;
     }
 
-    /**
-     * Should skip
-     *
-     * @param string $source The source value
-     * @param string $target The target value
-     *
-     * @return bool
-     */
     private function shouldSkip(string $source, string $target): bool
     {
         if ($source !== $target) {
             return true;
         }
 
+        // These need to be non-strict because of case sensitivity
+        // phpcs:disable
         if (in_array($source, self::BLACKLIST, false)) {
             return true;
         }

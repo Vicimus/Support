@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -15,7 +17,6 @@ class ValuesTest extends TestCase
 {
     /**
      * Assert values are found
-     * @return void
      */
     public function testValues(): void
     {

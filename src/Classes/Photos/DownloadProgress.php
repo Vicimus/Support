@@ -1,61 +1,29 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
-/**
- * Class DownloadProgress
- */
 class DownloadProgress implements ConsoleOutput
 {
-    use ConsoleOutputter, PersistsOutput;
+    use ConsoleOutputter;
+    use PersistsOutput;
 
-    /**
-     * Auto increment mode
-     * @var bool
-     */
-    protected $autoIncrement = false;
+    protected bool $autoIncrement = false;
 
-    /**
-     * Bytes
-     * @var int
-     */
-    protected $bytes = 0;
+    protected int $bytes = 0;
 
-    /**
-     * Errors
-     * @var int
-     */
-    protected $errors = 0;
+    protected int $errors = 0;
 
-    /**
-     * Previous output
-     * @var string
-     */
-    protected $previous = '';
+    protected string $previous = '';
 
-    /**
-     * The number of successes
-     * @var int
-     */
-    protected $successes = 0;
+    protected int $successes = 0;
 
-    /**
-     * Total
-     * @var int
-     */
-    protected $total = 0;
-
-    /**
-     * DownloadProgress constructor
-     *
-     * @param int $total The total
-     */
-    public function __construct(int $total)
+    public function __construct(protected int $total)
     {
-        $this->total = $total;
         if ($this->total) {
             return;
         }
@@ -63,46 +31,24 @@ class DownloadProgress implements ConsoleOutput
         $this->autoIncrement = true;
     }
 
-    /**
-     * Add bytes
-     *
-     * @param int $amount The number of bytes to add
-     *
-     * @return DownloadProgress
-     */
     public function bytes(int $amount): self
     {
         $this->bytes += $amount;
         return $this->output();
     }
 
-    /**
-     * Increment error
-     *
-     * @return DownloadProgress
-     */
     public function incError(): self
     {
         $this->errors++;
         return $this->output();
     }
 
-    /**
-     * Increment success
-     *
-     * @return DownloadProgress
-     */
     public function incSuccess(): self
     {
         $this->successes++;
         return $this->output();
     }
 
-    /**
-     * Output
-     *
-     * @return DownloadProgress
-     */
     public function output(): self
     {
         if ($this->autoIncrement) {
@@ -123,21 +69,11 @@ class DownloadProgress implements ConsoleOutput
         return $this;
     }
 
-    /**
-     * Autoincrement
-     *
-     * @return void
-     */
     protected function autoIncrement(): void
     {
         $this->total = $this->successes + $this->errors;
     }
 
-    /**
-     * Calculate bytes
-     *
-     * @return float
-     */
     protected function calculateBytes(): float
     {
         return round($this->bytes / 1024 / 1024, 2);

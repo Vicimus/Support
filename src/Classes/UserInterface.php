@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,26 +14,20 @@ class UserInterface
 {
     /**
      * Node dependencies
-     *
      * @var string[]
      */
-    protected $dependencies = [];
+    protected array $dependencies = [];
 
     /**
      * Public dependencies
-     *
      * @var string[]
      */
-    protected $public = [];
+    protected array $public = [];
 
     /**
      * Get a protected property
-     *
-     * @param string $property The property to get
-     *
-     * @return mixed
      */
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
         return $this->$property;
     }

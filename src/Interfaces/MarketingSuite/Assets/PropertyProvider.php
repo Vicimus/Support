@@ -1,13 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
 use Vicimus\Support\Classes\Grouping;
 use Vicimus\Support\Interfaces\Property;
 
-/**
- * Interface PropertyProvider
- */
 interface PropertyProvider
 {
     /**
@@ -15,8 +14,6 @@ interface PropertyProvider
      * was created was for us to be able to handle shared properties across
      * many assets. Specifically, Facebook has many assets that all share
      * specific properties.
-     *
-     * @return Grouping
      */
     public function grouping(): Grouping;
 
@@ -28,8 +25,6 @@ interface PropertyProvider
 
     /**
      * Retrieve a list of properties which are shared across items
-     *
-     * @param int|null $storeId The associated store id
      *
      * @return Property[]
      */
