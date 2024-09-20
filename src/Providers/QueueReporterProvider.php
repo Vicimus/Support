@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Providers;
 
@@ -18,15 +20,8 @@ class QueueReporterProvider extends ServiceProvider
      * Ignore these errors
      * @var string[][]
      */
-    private $ignore = [];
+    private array $ignore = [];
 
-    /**
-     * Boot
-     *
-     * @param LoggerInterface $logger The application logger
-     *
-     * @return bool
-     */
     public function boot(LoggerInterface $logger): bool
     {
         if (app()->environment() !== 'production') {
@@ -57,10 +52,6 @@ class QueueReporterProvider extends ServiceProvider
 
     /**
      * Is ignored name
-     *
-     * @param string $job       The job
-     * @param string $exception The exception
-     *
      * @return string[]
      */
     private function isIgnoredItem(string $job, string $exception): array
@@ -79,11 +70,6 @@ class QueueReporterProvider extends ServiceProvider
 
     /**
      * Check if a key is a match
-     *
-     * @param string    $key   The key we are checking
-     * @param JobFailed $event The failure
-     *
-     * @return bool
      */
     private function isKeyMatch(string $key, JobFailed $event): bool
     {
@@ -108,8 +94,6 @@ class QueueReporterProvider extends ServiceProvider
      *
      * @param JobFailed $event   The event
      * @param string[]  $matches The matches
-     *
-     * @return bool
      */
     private function matchInArray(JobFailed $event, array $matches): bool
     {
@@ -123,13 +107,6 @@ class QueueReporterProvider extends ServiceProvider
         return false;
     }
 
-    /**
-     * Should ignore event
-     *
-     * @param JobFailed $event The failed event
-     *
-     * @return bool
-     */
     private function shouldIgnore(JobFailed $event): bool
     {
         $job = $event->job->resolveName();
@@ -148,8 +125,6 @@ class QueueReporterProvider extends ServiceProvider
      *
      * @param string[]  $keys  The keys to check
      * @param JobFailed $event The event
-     *
-     * @return bool
      */
     private function shouldIgnoreFromKeys(array $keys, JobFailed $event): bool
     {

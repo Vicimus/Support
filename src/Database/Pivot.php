@@ -1,12 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Database;
 
 use Illuminate\Database\Eloquent\Relations\Pivot as LaravelPivot;
 
 /**
- * Class Pivot
- *
  * @method static \Illuminate\Database\Eloquent\Builder orderBy($column, $ascending = true)
  * @method static \Illuminate\Database\Eloquent\Model|static find($id)
  * @method static \Illuminate\Database\Eloquent\Model|static findOrFail($id)

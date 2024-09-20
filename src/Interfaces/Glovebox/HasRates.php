@@ -1,18 +1,17 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
-/**
- * Interface HasRates
- */
 interface HasRates
 {
     /**
      * Retrieve the rate values of all rates for this vehicle.
      *
-     * @param bool $lease Get lease rates or financing rates
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
-     * @return mixed[]
+     * @return mixed[][]|mixed[]
      */
     public function getAllRates(bool $lease = false): array;
 }

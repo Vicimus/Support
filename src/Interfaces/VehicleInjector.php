@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -13,8 +15,6 @@ interface VehicleInjector
      * Look at an array of input and return an ADFVehicle or null
      *
      * @param string[] $input The input to inspect
-     *
-     * @return ADFVehicle
      */
     public function vehicle(array $input): ?ADFVehicle;
 }

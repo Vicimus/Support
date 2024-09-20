@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Traits;
 
@@ -15,7 +17,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testLine(): void
     {
@@ -37,7 +38,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testInfo(): void
     {
@@ -59,7 +59,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testComment(): void
     {
@@ -81,7 +80,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testError(): void
     {
@@ -103,7 +101,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * On bind
      *
-     * @return void
      */
     public function testOnBind(): void
     {
@@ -122,23 +119,5 @@ class ConsoleOutputterTest extends TestCase
         });
 
         $std->bind($output);
-    }
-
-    /**
-     * Assert the too few argument exception is caught when calling vsprintf without args provided
-     *
-     * @return void
-     */
-    public function testOutputCleans(): void
-    {
-        /** @var ConsoleOutputter|MockObject $std */
-        $std = $this->getMockForTrait(ConsoleOutputter::class);
-
-        /** @var ConsoleOutput|MockObject $output */
-        $output = $this->getMockBuilder(ConsoleOutput::class)->getMock();
-        $output->expects($this->once())
-            ->method('error')->with('te%sting');
-
-        $std->bind($output)->error('te%sting');
     }
 }

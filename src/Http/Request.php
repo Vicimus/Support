@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Http;
 
@@ -8,9 +10,6 @@ use Throwable;
 
 use function is_array;
 
-/**
- * Class Request
- */
 class Request
 {
     /** Used to detect complex queries */
@@ -18,25 +17,22 @@ class Request
 
     /**
      * Handlers to execute against different operations
-     *
      * @var callable[]
      */
-    protected $handlers = [];
+    protected array $handlers = [];
 
     /**
      * An instance of the Illuminate Request which is where we'll
      * get most of our information from
-     *
-     * @var IllRequest
      */
-    protected $request;
+    protected IllRequest $request;
 
     /**
-     * Request constructor
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
-     * @param IllRequest|mixed[] $request Illuminate request instance
+     * @param IllRequest|mixed[][] $request Illuminate request instance
      */
-    public function __construct($request)
+    public function __construct(IllRequest | array $request)
     {
         if (is_array($request)) {
             $request = new IllRequest($request);
@@ -57,11 +53,6 @@ class Request
 
     /**
      * Add some special behaviour to a specific request
-     *
-     * @param string   $operation The operation
-     * @param callable $modifier  The modifier
-     *
-     * @return Request
      */
     public function bind(string $operation, callable $modifier): self
     {
@@ -78,9 +69,10 @@ class Request
      *
      * @param string|string[] $properties The properties to exclude
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
-    public function except($properties): array
+    public function except(string | array $properties): array
     {
         if (!is_array($properties)) {
             $properties = [$properties];
@@ -91,14 +83,8 @@ class Request
 
     /**
      * Get a specific property
-     *
-     * @param string $property The property to get
-     * @param mixed  $default  The default
-     * @param string $cast     The type to cast to
-     *
-     * @return mixed
      */
-    public function get(string $property, $default = null, ?string $cast = null)
+    public function get(string $property, mixed $default = null, ?string $cast = null): mixed
     {
         $value = $this->request->get($property, $default);
         if ($cast === null || $value === null) {
@@ -110,10 +96,6 @@ class Request
 
     /**
      * Check if the request has a param
-     *
-     * @param string $property The property to check
-     *
-     * @return bool
      */
     public function has(string $property): bool
     {
@@ -122,8 +104,6 @@ class Request
 
     /**
      * Checks for key aspects that may indicate this is a 'complex query'
-     *
-     * @return bool
      */
     public function isComplexQuery(): bool
     {
@@ -160,8 +140,6 @@ class Request
      *
      * @param Builder  $builder         The builder object
      * @param string[] $mandatorySelect Things we have to select no matter what
-     *
-     * @return Builder
      */
     public function query(Builder $builder, array $mandatorySelect = []): Builder
     {
@@ -188,8 +166,6 @@ class Request
 
     /**
      * Retrieve the illuminate request object
-     *
-     * @return IllRequest
      */
     public function toRequest(): IllRequest
     {
@@ -199,11 +175,11 @@ class Request
     /**
      * Get the with values
      *
-     * @param mixed ...$default The default with
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
      * @return mixed[]
      */
-    public function with(...$default): array
+    public function with(mixed ...$default): array
     {
         if (!$this->request->has('with')) {
             return $default;
@@ -218,13 +194,8 @@ class Request
 
     /**
      * Cast the provided property to its type
-     *
-     * @param mixed  $value The value to cast
-     * @param string $cast  The type to cast to
-     *
-     * @return mixed
      */
-    private function cast($value, string $cast)
+    private function cast(mixed $value, string $cast): mixed
     {
         try {
             settype($value, $cast);
@@ -237,12 +208,8 @@ class Request
 
     /**
      * Check for a complex string
-     *
-     * @param string|int|mixed $value The value to check
-     *
-     * @return bool
      */
-    private function checkForComplex($value): bool
+    private function checkForComplex(mixed $value): bool
     {
         foreach (self::COMPLEX_INDICATORS as $check) {
             if (strpos((string) $value, $check) !== false) {

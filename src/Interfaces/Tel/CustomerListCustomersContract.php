@@ -1,12 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Tel;
 
 use GuzzleHttp\Exception\GuzzleException;
 
-/**
- * Customer list customer service contract
- */
 interface CustomerListCustomersContract
 {
     /**
@@ -16,7 +15,6 @@ interface CustomerListCustomersContract
      * @param int      $prospectId The prospect id of the associated customer
      * @param string[] $data       The data to update with
      *
-     * @return CustomerListContract
      * @throws GuzzleException
      */
     public function update(

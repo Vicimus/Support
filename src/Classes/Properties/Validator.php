@@ -1,22 +1,18 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Properties;
 
 use Illuminate\Contracts\Validation\Factory;
+use JsonException;
 use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\PropertyProvider;
 use Vicimus\Support\Interfaces\PropertyRecord;
 
-/**
- * Validates properties
- */
 class Validator extends Finder
 {
-    /**
-     * Illuminate validator
-     * @var Factory
-     */
-    private $factory;
+    private Factory $factory;
 
     /**
      * Validator constructor
@@ -30,15 +26,9 @@ class Validator extends Finder
 
     /**
      * Validate a property
-     *
-     * @param PropertyProvider $provider The property provider
-     * @param PropertyRecord   $property The property to validate
-     * @param mixed            $value    The value to validate
-     *
-     * @return void
      * @throws RestException
      */
-    public function validate(PropertyProvider $provider, PropertyRecord $property, $value): bool
+    public function validate(PropertyProvider $provider, PropertyRecord $property, mixed $value): bool
     {
         $prop = $this->find($provider, $property);
         if (!$prop || !$prop->restrictions()) {
@@ -54,8 +44,8 @@ class Validator extends Finder
      * @param string[] $data  Data to validate
      * @param string[] $rules Rules to use
      *
-     * @return void
      * @throws RestException
+     * @throws JsonException
      */
     private function check(array $data, array $rules): bool
     {
@@ -63,7 +53,7 @@ class Validator extends Finder
 
         if ($validator->fails()) {
             throw new RestException(
-                json_encode($validator->errors()->all()),
+                json_encode($validator->errors()->all(), JSON_THROW_ON_ERROR),
                 422
             );
         }
