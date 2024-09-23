@@ -125,8 +125,6 @@ interface Campaign extends BaseCampaign
      * Determine if bounced customers should be excluded
      *
      * @param bool $default The default value to use if explicitly set
-     *
-     * @return bool
      */
     public function useExcludeBounced(bool $default): bool;
 
