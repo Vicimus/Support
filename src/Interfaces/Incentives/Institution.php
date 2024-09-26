@@ -2,6 +2,9 @@
 
 namespace Vicimus\Support\Interfaces\Incentives;
 
+/**
+ * Represents an institution
+ */
 interface Institution
 {
     //

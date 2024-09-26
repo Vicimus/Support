@@ -32,16 +32,16 @@ interface Incentive
     public function highestTerm(): Term;
 
     /**
-     * Is this residuals
-     * @return bool
-     */
-    public function isResiduals(): bool;
-
-    /**
      * Get the institution
      * @return Institution
      */
     public function institution(): Institution;
+
+    /**
+     * Is this residuals
+     * @return bool
+     */
+    public function isResiduals(): bool;
 
     /**
      * Get the lowest rate in the program
