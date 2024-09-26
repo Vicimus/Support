@@ -1,12 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
-use function key_exists;
-
-/**
- * Definitions that we can reuse for storing data or for display.
- */
 class Enums
 {
     public const STATES = [
@@ -301,7 +298,7 @@ class Enums
             return $states;
         }
 
-        if (!key_exists($country, $states)) {
+        if (!array_key_exists($country, $states)) {
             return [];
         }
 

@@ -1,90 +1,49 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 use Vicimus\Support\Interfaces\ConsoleOutput;
 
-/**
- * Standard output with basic color coding
- */
 class StandardOutput implements ConsoleOutput
 {
     public const COLOR_GREEN = "\033[32m";
     public const COLOR_NONE = "\033[0m";
     public const COLOR_YELLOW = "\033[33m";
 
-    /**
-     * Line length
-     *
-     * @var int
-     */
-    protected $lineLength;
+    protected int $lineLength;
 
-    /**
-     * StandardOutput constructor
-     *
-     * @param int $lineLength Keep lines this length
-     */
     public function __construct(int $lineLength = 80)
     {
         $this->lineLength = $lineLength;
     }
 
-    /**
-     * Output a comment (yellow text)
-     *
-     * @param string $output The comment to output
-     *
-     * @return void
-     */
     public function comment(string $output): void
     {
         $this->line('');
-        echo "\033[1;34m".$output."\033[0m".PHP_EOL;
+        echo "\033[1;34m" . $output . "\033[0m" . PHP_EOL;
     }
 
-    /**
-     * Output an error (red text)
-     *
-     * @param string $output The error to output
-     *
-     * @return void
-     */
     public function error(string $output): void
     {
         $this->line('');
-        $output = explode("\n", $output);
-        $output = array_map(function (string $value): string {
-            return str_pad($value, $this->lineLength);
-        }, $output);
+        $exploded = explode("\n", $output);
+        $exploded = array_map(fn (string $value): string => str_pad($value, $this->lineLength), $exploded);
 
-        $output = implode("\n", $output);
-        echo "\033[41m".$this->pad($output)."\033[0m".PHP_EOL.PHP_EOL;
+        $exploded = implode("\n", $exploded);
+        echo "\033[41m" . $this->pad($exploded) . "\033[0m" . PHP_EOL . PHP_EOL;
     }
 
-    /**
-     * Output information (green text)
-     *
-     * @param string $output The info to output
-     *
-     * @return void
-     */
     public function info(string $output): void
     {
         $this->line('');
-        echo "\033[32m".$this->pad($output)."\033[0m".PHP_EOL;
+        echo "\033[32m" . $this->pad($output) . "\033[0m" . PHP_EOL;
     }
 
-    /**
-     * Output text (grey text)
-     *
-     * @param string $output The text to output
-     *
-     * @return void
-     */
     public function line(string $output): void
     {
-        echo str_pad("\r".$output, $this->lineLength);
+        echo str_pad("\r" . $output, $this->lineLength);
         if ($output) {
             return;
         }
@@ -92,26 +51,12 @@ class StandardOutput implements ConsoleOutput
         echo "\r";
     }
 
-    /**
-     * Output text (grey text)
-     *
-     * @param string $output The text to output
-     *
-     * @return void
-     */
     public function linePermanent(string $output): void
     {
         $this->line('');
-        echo $this->pad($output).PHP_EOL;
+        echo $this->pad($output) . PHP_EOL;
     }
 
-    /**
-     * Make a line a specific length
-     *
-     * @param string $line The line
-     *
-     * @return string
-     */
     protected function pad(string $line): string
     {
         return str_pad($line, $this->lineLength);

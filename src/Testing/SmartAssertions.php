@@ -1,15 +1,16 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
-/**
- * Trait SmartAssertions
- */
+use Illuminate\Http\Response as IlluminateResponse;
+use stdClass;
+
 trait SmartAssertions
 {
     /**
      * Filter the file path
-     *
      * @var callable
      */
     protected $filterFilePath;
@@ -17,12 +18,8 @@ trait SmartAssertions
     /**
      * Assert successful response, and print the response if
      * it wasn't successful.
-     *
-     * @param mixed $response The response from the request
-     *
-     * @return mixed
      */
-    public function assertStatusOk($response)
+    public function assertStatusOk(IlluminateResponse $response): stdClass | array
     {
         $code = $response->getStatusCode();
         if ($code !== 200) {
@@ -42,10 +39,6 @@ trait SmartAssertions
 
     /**
      * Pass the file path through a filter before returning it
-     *
-     * @param callable $filter The callable to apply
-     *
-     * @return self
      */
     public function filterFilePath(callable $filter): self
     {
@@ -55,15 +48,11 @@ trait SmartAssertions
 
     /**
      * Generate a user friendly message from an error
-     *
-     * @param mixed $response The response from the server
-     *
-     * @return string
      */
-    private function generateMessageFromError($response): string
+    private function generateMessageFromError(stdClass | array | string $response): string
     {
         if (!is_array($response)) {
-            return "\033[1;31m".$response."\033[0m";
+            return "\033[1;31m" . $response . "\033[0m";
         }
 
         if (!isset($response['error'])) {
@@ -71,7 +60,7 @@ trait SmartAssertions
         }
 
         if (isset($response['error']) && !isset($response['type'], $response['file'], $response['line'])) {
-            return "\033[1;31m".$response['error']."\033[0m";
+            return "\033[1;31m" . $response['error'] . "\033[0m";
         }
 
         $file = $response['file'];
@@ -80,9 +69,9 @@ trait SmartAssertions
             $file = $method($file);
         }
 
-        return '['."\033[31m".$response['type']."\033[0m".'] encountered'.
-            ' on line ['."\033[35m".$response['line']."\033[0m".'] of '.PHP_EOL.
-            '['."\033[1;34m".$file."\033[0m".'] with message: '.PHP_EOL.PHP_EOL.
-            "\033[1;31m".$response['error']."\033[0m";
+        return '[' . "\033[31m" . $response['type'] . "\033[0m" . '] encountered' .
+            ' on line [' . "\033[35m" . $response['line'] . "\033[0m" . '] of ' . PHP_EOL .
+            '[' . "\033[1;34m" . $file . "\033[0m" . '] with message: ' . PHP_EOL . PHP_EOL .
+            "\033[1;31m" . $response['error'] . "\033[0m";
     }
 }

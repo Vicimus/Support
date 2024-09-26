@@ -1,74 +1,33 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
 use Vicimus\Support\Interfaces\ConsoleOutput;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
-/**
- * Class ScannerProgress
- */
 class ScannerProgress implements ConsoleOutput
 {
-    use ConsoleOutputter, PersistsOutput;
+    use ConsoleOutputter;
+    use PersistsOutput;
 
-    /**
-     * Auto increment mode
-     * @var bool
-     */
-    protected $autoIncrement = false;
+    protected bool $autoIncrement = false;
 
-    /**
-     * Bytes
-     * @var int
-     */
-    protected $bytes = 0;
+    protected int $bytes = 0;
 
-    /**
-     * Errors
-     * @var int
-     */
-    protected $errors = 0;
+    protected int $errors = 0;
 
-    /**
-     * Outdated count
-     * @var int
-     */
-    protected $outdated = 0;
+    protected int $outdated = 0;
 
-    /**
-     * Previous
-     * @var string
-     */
-    protected $previous = '';
+    protected string $previous = '';
 
-    /**
-     * Successful downloads
-     *
-     * @var int
-     */
-    protected $successes = 0;
+    protected int $successes = 0;
 
-    /**
-     * Total
-     * @var int
-     */
-    protected $total = 0;
+    protected int $upToDate = 0;
 
-    /**
-     * Up to date photos
-     * @var int
-     */
-    protected $upToDate = 0;
-
-    /**
-     * ScannerProgress constructor
-     *
-     * @param int $total The total
-     */
-    public function __construct(int $total)
+    public function __construct(protected int $total)
     {
-        $this->total = $total;
         if ($this->total) {
             return;
         }
@@ -78,10 +37,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Increment the bytes
-     *
-     * @param int $amount The amount to increment by
-     *
-     * @return ScannerProgress
      */
     public function bytes(int $amount): self
     {
@@ -91,8 +46,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Increment errors
-     *
-     * @return ScannerProgress
      */
     public function incError(): self
     {
@@ -102,8 +55,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Increment outdated
-     *
-     * @return ScannerProgress
      */
     public function incOutdated(): self
     {
@@ -113,8 +64,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Increment success count
-     *
-     * @return ScannerProgress
      */
     public function incSuccess(): self
     {
@@ -123,9 +72,7 @@ class ScannerProgress implements ConsoleOutput
     }
 
     /**
-     * Increment up to date progress
-     *
-     * @return ScannerProgress
+     * Increment up-to-date progress
      */
     public function incUpToDate(): self
     {
@@ -135,8 +82,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Display the output
-     *
-     * @return ScannerProgress
      */
     public function output(): self
     {
@@ -162,10 +107,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Output text that will persist on the screen
-     *
-     * @param string $method The method to persist with
-     *
-     * @return ScannerProgress
      */
     public function persist(string $method = 'comment'): self
     {
@@ -175,8 +116,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Auto increment
-     *
-     * @return void
      */
     protected function autoIncrement(): void
     {
@@ -185,8 +124,6 @@ class ScannerProgress implements ConsoleOutput
 
     /**
      * Calculate the bytes
-     *
-     * @return float
      */
     protected function calculateBytes(): float
     {

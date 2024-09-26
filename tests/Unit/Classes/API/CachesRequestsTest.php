@@ -1,39 +1,29 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace Vicimus\Support\Tests\Classes\API;
+declare(strict_types=1);
+
+namespace Vicimus\Support\Tests\Unit\Classes\API;
 
 use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Testing\BasicCache;
 use Vicimus\Support\Testing\TestCase;
 
-/**
- * Class CachesRequestsTest
- */
 class CachesRequestsTest extends TestCase
 {
     /**
-     * Instance
      * @var CachesRequests
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     private $instance;
 
-    /**
-     * Set up
-     *
-     * @return void
-     * @throws \Throwable
-     */
     public function setup(): void
     {
         parent::setUp();
+
         $anonymous = new class {
             use CachesRequests;
 
-            /**
-             * Get the cache time for testing
-             * @return int
-             */
             public function getCacheTime(): int
             {
                 return $this->cacheTime();
@@ -47,11 +37,6 @@ class CachesRequestsTest extends TestCase
         $this->instance->bindCache($cache);
     }
 
-    /**
-     * Cache match
-     *
-     * @return void
-     */
     public function testCacheMatch(): void
     {
         $match = $this->instance->cacheMatch('GET', '/api', ['id' => 1], 'banana');
@@ -62,12 +47,6 @@ class CachesRequestsTest extends TestCase
         $this->assertNull($this->instance->cacheMatch('GET', '/api', ['id' => 1]));
     }
 
-    /**
-     * Test clearing the cache
-     *
-     * @return void
-     * @throws \Throwable
-     */
     public function testClearCache(): void
     {
         $this->assertNotNull($this->instance->cacheMatch('GET', '', [], 'banana'));
@@ -75,21 +54,11 @@ class CachesRequestsTest extends TestCase
         $this->assertNull($this->instance->cacheMatch('', '', [], 'banana'));
     }
 
-    /**
-     * Test cache time
-     *
-     * @return void
-     */
     public function testCacheTime(): void
     {
         $this->assertGreaterThan(0, $this->instance->getCacheTime());
     }
 
-    /**
-     * Clear cache
-     *
-     * @return void
-     */
     public function testClearException(): void
     {
         $this->instance->bindCache(null);

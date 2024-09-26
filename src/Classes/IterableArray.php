@@ -1,23 +1,24 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 use Iterator;
 
-/**
- * Simple implementation of Iterator for basic arrays
- */
 class IterableArray implements Iterator
 {
     /**
      * The array we will iterate over
-     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @var mixed[]
      */
-    private $source;
+    private array $source;
 
     /**
      * IterableArray constructor
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
      * @param mixed[] $source The source array
      */
@@ -28,48 +29,38 @@ class IterableArray implements Iterator
 
     /**
      * Current point
-     *
-     * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->source);
     }
 
     /**
      * Key to the iterator
-     *
-     * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->source);
     }
 
     /**
      * Get the next iterator point
-     *
-     * @return mixed
      */
-    public function next()
+    public function next(): void
     {
-        return next($this->source);
+        next($this->source);
     }
 
     /**
      * Rewind the iterator
-     *
-     * @return mixed
      */
-    public function rewind()
+    public function rewind(): void
     {
-        return reset($this->source);
+        reset($this->source);
     }
 
     /**
      * Check if the iterator is still valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {

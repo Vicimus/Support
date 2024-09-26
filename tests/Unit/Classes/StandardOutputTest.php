@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -13,7 +15,6 @@ class StandardOutputTest extends TestCase
     /**
      * Test the comment
      *
-     * @return void
      */
     public function testComment(): void
     {
@@ -32,7 +33,6 @@ class StandardOutputTest extends TestCase
     /**
      * Test the comment
      *
-     * @return void
      */
     public function testError(): void
     {
@@ -51,7 +51,6 @@ class StandardOutputTest extends TestCase
     /**
      * Test the info
      *
-     * @return void
      */
     public function testInfo(): void
     {
@@ -70,7 +69,6 @@ class StandardOutputTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testLine(): void
     {
@@ -88,7 +86,6 @@ class StandardOutputTest extends TestCase
     /**
      * Test line length
      *
-     * @return void
      */
     public function testLineLength(): void
     {

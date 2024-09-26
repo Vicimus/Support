@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Exceptions;
 
@@ -13,7 +15,6 @@ class RestExceptionTest extends TestCase
     /**
      * Test json serialized
      *
-     * @return void
      */
     public function testJson(): void
     {
