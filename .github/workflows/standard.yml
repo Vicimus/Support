@@ -2,7 +2,7 @@ name: Standard Build
 on:
   pull_request:
     branches:
-      - master
+      - php74
 jobs:
   phpcs:
     runs-on: ubuntu-latest
@@ -52,4 +52,3 @@ jobs:
           ./cc-test-reporter after-build -t clover
         env:
           CC_TEST_REPORTER_ID: 5796fc8424f8c41b1abbd0e6a5bbf53107d51f996387e377809193a760556b0d
-
