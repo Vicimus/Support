@@ -9,14 +9,10 @@ use Illuminate\Contracts\Validation\Factory;
 use InvalidArgumentException;
 use JsonSerializable;
 use RuntimeException;
-use stdClass;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
 use Vicimus\Support\Traits\AttributeArrayAccess;
 
-/**
- * Class ImmutableObject
- */
 class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 {
     use AttributeArrayAccess;
@@ -60,7 +56,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(stdClass | array $original = [], ?Factory $validator = null)
+    public function __construct(object | array $original = [], ?Factory $validator = null)
     {
         if (!is_array($original) && !is_object($original)) {
             $type = gettype($original);
