@@ -136,7 +136,7 @@ class APIService
      * @throws GuzzleException
      * @throws CacheInvalidArgumentException
      */
-    public function request(string $method, string $path, mixed $payload = [], ?string $tag = null): array | stdClass
+    public function request(string $method, string $path, mixed $payload = [], ?string $tag = null): mixed
     {
         $path = str_replace($this->url, '', $path);
         if (strpos($path, '/') !== 0) {
