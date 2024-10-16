@@ -60,6 +60,8 @@ interface Asset extends AssetContract
      */
     public function rendered(): string;
 
+    public function structureId(): string | int | null;
+
     /**
      * Convert the asset into an array that is easy to send over the network
      *

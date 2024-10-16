@@ -14,6 +14,8 @@ interface Previewable
      */
     public function fallback(): bool;
 
+    public function getId(): string | int | null;
+
     /**
      * The oem this campaign is associated with
      */
