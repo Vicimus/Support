@@ -26,6 +26,8 @@ interface Placeholderable
      */
     public function formTitle(): string;
 
+    public function getTitle(): string | null;
+
     /**
      * Retrieve the oem name from the implementation
      */
