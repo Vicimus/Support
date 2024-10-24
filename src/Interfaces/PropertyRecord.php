@@ -12,6 +12,8 @@ namespace Vicimus\Support\Interfaces;
  */
 interface PropertyRecord
 {
+    public function getId(): string | int | null;
+
     public function getValue(): mixed;
 
     public function name(): string;
