@@ -1,37 +1,21 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
 use Vicimus\Support\Classes\API\AsyncRequestPool;
 use Vicimus\Support\Interfaces\Vehicle;
 
-/**
- * Class AsyncDownload
- */
 class AsyncDownload implements DownloadRequest
 {
-    /**
-     * The async pool
-     *
-     * @var AsyncRequestPool
-     */
-    protected $pool;
+    protected AsyncRequestPool $pool;
 
-    /**
-     * AsyncDownload constructor.
-     *
-     * @param AsyncRequestPool $pool The async pool for this
-     */
     public function __construct(AsyncRequestPool $pool)
     {
         $this->pool = $pool;
     }
 
-    /**
-     * Get the async request pool
-     *
-     * @return AsyncRequestPool
-     */
     public function getAsyncPool(): AsyncRequestPool
     {
         return $this->pool;
@@ -39,10 +23,7 @@ class AsyncDownload implements DownloadRequest
 
     /**
      * Get the single photo status
-     *
      * @throws DownloadException
-     *
-     * @return PhotoStatus
      */
     public function getSinglePhotoStatus(): PhotoStatus
     {
@@ -53,10 +34,7 @@ class AsyncDownload implements DownloadRequest
 
     /**
      * Get the single download vehicle unit
-     *
      * @throws DownloadException
-     *
-     * @return Vehicle
      */
     public function getSingleVehicle(): Vehicle
     {
@@ -67,8 +45,6 @@ class AsyncDownload implements DownloadRequest
 
     /**
      * Is your download request an async request or a single download
-     *
-     * @return bool
      */
     public function isAsynchronous(): bool
     {

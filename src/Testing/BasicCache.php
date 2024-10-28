@@ -1,20 +1,27 @@
-<?php declare(strict_types = 1);
+<?php
+
+/* phpcs:disable */
+/*
+ * This is phpcs disabled because I'm lazy, sue me.
+ * Tons of it would fail sniffing and not be able to be fixed to meet Laravel's
+ * interface, so every single method would be multiple phpcs suppress comments
+ * and none of it would matter anyway.
+ */
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
 use Closure;
 use Illuminate\Contracts\Cache\Repository;
 
-/**
- * Class BasicCache
- */
 class BasicCache implements Repository
 {
     /**
-     * Cache store
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @var mixed[]
      */
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * BasicCache constructor.

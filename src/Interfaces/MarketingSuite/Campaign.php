@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -6,12 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
-use Shared\Contracts\Prospect;
+use JsonException;
 use Vicimus\Support\Interfaces\Eloquent;
 
 /**
- * Interface Campaign
- *
+ * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
  * @property int $id
  * @property string $oem
  * @property string $title
@@ -46,56 +47,41 @@ interface Campaign extends Eloquent
 {
     /**
      * A campaign has many acknowledgements
-     *
-     * @return MorphMany
      */
     public function acknowledgements(): MorphMany;
 
     /**
      * Retrieve an asset from the campaign
-     *
-     * @param string $type The type of the asset
-     * @return AssetContract|null
      */
     public function asset(string $type): ?AssetContract;
 
     /**
      * A campaign has many assets
-     * @return MorphMany
      */
     public function assets(): MorphMany;
 
     /**
      * Retrieve a Carbon Copy for a campaign
-     *
-     * @return Prospect|null
      */
     public function copy(): ?Prospect;
 
     /**
      * Retrieve the form id to use for the purl
-     *
-     * @return int
      */
     public function formId(): ?int;
 
     /**
      * Has the campaign portfolio been modified at all, even a single time
-     * @return bool
      */
     public function hasPortfolioBeenModified(): bool;
 
     /**
      * Is the campaign email only
-     *
-     * @return bool
      */
     public function isEmailOnly(): bool;
 
     /**
      * Is the campaign purl only
-     *
-     * @return bool
      */
     public function isPurlOnly(): bool;
 
@@ -103,23 +89,19 @@ interface Campaign extends Eloquent
      * This method should return if the campaign is utilizing a specific
      * medium. Is it sending letters, sending emails, using facebook carousel,
      * etc.
-     *
-     * @param string $slug The asset type slug
-     *
-     * @return bool
      */
     public function medium(string $slug): bool;
 
     /**
      * Return an array of campaign medium toggles with their associated datetime value
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function mediumAssociations(): array;
 
     /**
      * Get the OEM for this campaign
-     * @return string
      */
     public function oem(): string;
 
@@ -132,33 +114,20 @@ interface Campaign extends Eloquent
 
     /**
      * Find a property value or return null
-     *
-     * @param string          $name    The property to look for
-     * @param string|int|bool $default The default value to return if the property doesn't exist
-     *
-     * @return int|string|bool|null
      */
-    public function property(string $name, $default = null);
+    public function property(string $name, mixed $default = null): mixed;
 
     /**
      * A campaign has many prospects
-     *
-     * @return HasMany
      */
     public function prospects(): HasMany;
 
     /**
      * Check if there is a property value
      *
-     * @param string               $property The property to set
-     * @param string|int|bool|null $value    If set, will record a property rather than get
-     * @param bool                 $hidden   The hidden state of a property
-     *
-     * @return void
-     *
      * @throws JsonException
      */
-    public function record(string $property, $value = null, bool $hidden = false): void;
+    public function record(string $property, mixed $value = null, bool $hidden = false): void;
 
     /**
      * A campaign can have one script
@@ -169,21 +138,16 @@ interface Campaign extends Eloquent
 
     /**
      * Get the store id for this campaigns
-     *
-     * @return int
      */
     public function storeId(): int;
 
     /**
      * Temperatures exist on a campaign
-     *
-     * @return MorphMany
      */
     public function temperatures(): MorphMany;
 
     /**
      * Campaign version
-     * @return int
      */
     public function version(): int;
 }

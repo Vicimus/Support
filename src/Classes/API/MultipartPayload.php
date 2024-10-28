@@ -1,26 +1,17 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
 use Illuminate\Http\File;
 use Vicimus\Support\Classes\ImmutableObject;
 
-/**
- * Class MultipartPayload
- */
 class MultipartPayload extends ImmutableObject
 {
-    /**
-     * MultipartPayload constructor.
-     *
-     * @param string      $name     The name of this payload line
-     * @param File|mixed  $contents The content (string or file resource)
-     * @param null|string $filename The filename (Optional)
-     * @param null|string $mime     The mime type
-     */
     public function __construct(
         string $name,
-        $contents,
+        mixed $contents,
         ?string $filename = null,
         ?string $mime = null
     ) {
@@ -35,6 +26,7 @@ class MultipartPayload extends ImmutableObject
     /**
      * Format an instance into a valid multipart transmission format
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function format(): array
@@ -58,8 +50,6 @@ class MultipartPayload extends ImmutableObject
 
     /**
      * Check if the payload has a file or not
-     *
-     * @return bool
      */
     public function hasFile(): bool
     {

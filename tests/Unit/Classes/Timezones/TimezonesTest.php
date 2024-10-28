@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Classes\Timezones;
 
@@ -15,7 +17,6 @@ class TimezonesTest extends TestCase
     /**
      * Test getting all time zones
      *
-     * @return void
      */
     public function testAll(): void
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
@@ -11,8 +13,6 @@ interface Validatable
 {
     /**
      * Retrieve the lead type id assigned to the campaign
-     *
-     * @return int|null
      */
     public function leadTypeId(): ?int;
 
@@ -20,10 +20,6 @@ interface Validatable
      * This method should return if the campaign is utilizing a specific
      * medium. Is it sending letters, sending emails, using facebook carousel,
      * etc.
-     *
-     * @param string $slug The asset type slug
-     *
-     * @return bool
      */
     public function medium(string $slug): bool;
 
@@ -36,8 +32,6 @@ interface Validatable
 
     /**
      * Get the store id for this campaigns
-     *
-     * @return int
      */
     public function storeId(): int;
 }

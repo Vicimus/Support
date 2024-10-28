@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -19,7 +21,6 @@ class ValidatorTest extends TestCase
 {
     /**
      * Assert validate
-     * @return void
      * @throws RestException
      */
     public function testValidateInvalid(): void
@@ -49,9 +50,9 @@ class ValidatorTest extends TestCase
             $this->assertSame(422, $ex->getCode());
         }
     }
+
     /**
      * Assert validate
-     * @return void
      * @throws RestException
      */
     public function testValidateValid(): void
@@ -78,7 +79,6 @@ class ValidatorTest extends TestCase
 
     /**
      * Assert validate
-     * @return void
      * @throws RestException
      */
     public function testValidateSkipped(): void

@@ -1,11 +1,16 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException as GuzzleServerException;
 use GuzzleHttp\Psr7\Response;
+use Psr\SimpleCache\InvalidArgumentException as CacheInvalidArgumentException;
+use stdClass;
 use Vicimus\Support\Classes\API\CachesRequests;
 use Vicimus\Support\Classes\API\MultipartPayload;
 use Vicimus\Support\Exceptions\InvalidArgumentException;
@@ -13,48 +18,38 @@ use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Exceptions\ServerException;
 use Vicimus\Support\Exceptions\UnauthorizedException;
 
-/**
- * Class APIService
- */
 class APIService
 {
     use CachesRequests;
 
     /**
      * These additional parameters will be sent with all requests
-     *
      * @var string[]
      */
-    protected $additional = [];
+    protected array $additional = [];
 
     /**
      * The guzzle client
-     *
-     * @var ClientInterface
      */
-    protected $client;
+    protected ClientInterface $client;
 
     /**
      * The base url of the api
-     *
-     * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * Credentials for sending api requests
-     *
-     * @var string
      */
-    private $cred;
+    private string $cred;
 
     /**
      * APIService constructor.
      *
      * @param ClientInterface $client     The guzzle client
      * @param string          $url        The base url for the api
-     * @param string          $id         The ID for the API
-     * @param string          $secret     The Secret for the API
+     * @param string|null     $id         The ID for the API
+     * @param string|null     $secret     The Secret for the API
      * @param string[]        $additional Additional parameters to send with all requests
      */
     public function __construct(
@@ -79,10 +74,8 @@ class APIService
      *
      * @throws UnauthorizedException on 401
      * @throws ServerException on 500
-     *
-     * @return mixed
      */
-    public function multipart(string $path, array $payload, string $verb = 'POST')
+    public function multipart(string $path, array $payload, string $verb = 'POST'): mixed
     {
         $this->validate($payload);
 
@@ -136,11 +129,14 @@ class APIService
      * @param string[]|object $payload The payload to send
      * @param string|null     $tag     A special tag to use for caching
      *
-     * @return mixed[]|\stdClass
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @return mixed[]|stdClass
+     *
      * @throws RestException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
+     * @throws CacheInvalidArgumentException
      */
-    public function request(string $method, string $path, $payload = [], ?string $tag = null)
+    public function request(string $method, string $path, mixed $payload = [], ?string $tag = null): mixed
     {
         $path = str_replace($this->url, '', $path);
         if (strpos($path, '/') !== 0) {
@@ -195,6 +191,7 @@ class APIService
      *
      * @param MultipartPayload[] $payload The payload to format
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     protected function format(array $payload): array
@@ -210,11 +207,11 @@ class APIService
     /**
      * Convert, validate and transform
      *
-     * @param mixed $payload Payload to send with request
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
      * @return mixed[]
      */
-    protected function payload($payload): array
+    protected function payload(mixed $payload): array
     {
         if (!is_array($payload)) {
             $payload = json_decode(json_encode($payload), true);
@@ -229,8 +226,6 @@ class APIService
      * @param MultipartPayload[] $payload The payload to validate
      *
      * @throws InvalidArgumentException
-     *
-     * @return void
      */
     protected function validate(array $payload): void
     {
