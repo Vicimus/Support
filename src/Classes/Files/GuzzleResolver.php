@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Files;
 
@@ -8,31 +10,12 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Str;
 use Vicimus\Support\Interfaces\FileResolver;
 
-/**
- * Class GuzzleResolver
- */
 class GuzzleResolver implements FileResolver
 {
-    /**
-     * The guzzle client
-     *
-     * @var Client
-     */
-    private $client;
+    private Client $client;
 
-    /**
-     * Path to store stuff
-     *
-     * @var string
-     */
-    private $path;
+    private string $path;
 
-    /**
-     * GuzzleResolver constructor.
-     *
-     * @param Client      $client The guzzle client
-     * @param string|null $path   The path to store files
-     */
     public function __construct(Client $client, ?string $path = null)
     {
         $this->client = $client;
@@ -41,12 +24,7 @@ class GuzzleResolver implements FileResolver
 
     /**
      * Open a file and get the handle
-     *
-     * @param string $path The path to open
-     * @param string $mode The mode to use
-     *
-     * @return resource
-     *
+     * @return resource | false
      * @throws ErrorException
      */
     public function open(string $path, string $mode)

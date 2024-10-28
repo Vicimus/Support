@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -16,8 +18,6 @@ use Vicimus\Support\Interfaces\ConsoleOutput;
 trait TestSqliteDatabase
 {
     /**
-     * How we migrate
-     *
      * @var callable
      */
     protected $migrate;
@@ -25,14 +25,10 @@ trait TestSqliteDatabase
     /**
      * @var bool[]
      */
-    private $attached = [];
+    private array $attached = [];
 
     /**
      * Set how we migrate the databases
-     *
-     * @param callable $migrate The migration callable
-     *
-     * @return self
      */
     public function setMigration(callable $migrate): self
     {
@@ -47,7 +43,6 @@ trait TestSqliteDatabase
      * @param string[] $external A list of external databases
      * @param string[] $aliases  Aliases for the main database
      *
-     * @return void
      * @throws TestException
      * @throws RuntimeException
      */
@@ -94,8 +89,6 @@ trait TestSqliteDatabase
 
     /**
      * Execute the migration
-     *
-     * @return void
      */
     protected function doMigration(): void
     {
@@ -106,13 +99,7 @@ trait TestSqliteDatabase
     /**
      * Do the one time setup of the database
      *
-     * @param string $database   The database
-     * @param string $secondStub The second stub
-     * @param string $stub       The first stub
-     *
      * @throws TestException
-     *
-     * @return void
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
@@ -148,10 +135,6 @@ trait TestSqliteDatabase
 
     /**
      * Get a migration checksum
-     *
-     * @param string|null $database The name of the database
-     *
-     * @return string
      */
     private function checksum(?string $database): ?string
     {
@@ -176,15 +159,7 @@ trait TestSqliteDatabase
     }
 
     /**
-     * Finish set up
-     *
-     * @param string|null $database   The database
-     * @param string      $stub       The stub
-     * @param string      $secondStub The second stub
-     *
      * @throws TestException
-     *
-     * @return void
      */
     private function finish(?string $database, string $stub, string $secondStub): void
     {
@@ -202,10 +177,6 @@ trait TestSqliteDatabase
 
     /**
      * Out dated
-     *
-     * @param string|null $database The database to check
-     *
-     * @return bool
      */
     private function isOutdated(?string $database): bool
     {
@@ -217,11 +188,6 @@ trait TestSqliteDatabase
         return $this->checksum($database) !== file_get_contents(base_path('.vicimus.test.cache'));
     }
 
-    /**
-     * Get the output
-     *
-     * @return ConsoleOutput
-     */
     private function output(): ConsoleOutput
     {
         $output = new NullOutput();

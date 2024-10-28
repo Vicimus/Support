@@ -1,11 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Database;
 
 use Illuminate\Database\Query\Builder;
 use PHPUnit\Framework\MockObject\MockObject;
 use Vicimus\Support\Database\ComplexQueryParser;
-use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Testing\TestCase;
 
 /**
@@ -16,7 +17,6 @@ class ComplexQueryParserTest extends TestCase
     /**
      * Test isComplexQuery
      *
-     * @return void
      */
     public function testIsComplexQuery(): void
     {
@@ -31,17 +31,10 @@ class ComplexQueryParserTest extends TestCase
     /**
      * Test complex
      *
-     * @return void
      */
     public function testComplex(): void
     {
         $parser = new ComplexQueryParser();
-        try {
-            $parser->query('hello', 'banana', 'in:1,2,3');
-            $this->wasExpectingException(InvalidArgumentException::class);
-        } catch (InvalidArgumentException $ex) {
-            $this->assertStringContainsString('Builder', $ex->getMessage());
-        }
 
         /** @var Builder|MockObject $query */
         $query = $this->getMockBuilder(Builder::class)

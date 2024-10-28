@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -10,18 +12,8 @@ use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Exceptions\RestException;
 use Vicimus\Support\Testing\GuzzleTestCase;
 
-/**
- * Class APIServiceTest
- */
 class APIServiceTest extends GuzzleTestCase
 {
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     * @return void
-     */
     public function testRequest(): void
     {
         $api = new APIService($this->guzzle([
@@ -32,13 +24,6 @@ class APIServiceTest extends GuzzleTestCase
         $this->assertNotNull($response);
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     * @return void
-     */
     public function testMultiPart(): void
     {
         $api = new APIService($this->guzzle([
@@ -52,13 +37,6 @@ class APIServiceTest extends GuzzleTestCase
         $this->assertNotNull($response);
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     * @return void
-     */
     public function testRequestException(): void
     {
         $api = new APIService($this->guzzle([
@@ -74,13 +52,6 @@ class APIServiceTest extends GuzzleTestCase
         }
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     * @return void
-     */
     public function testMultiPartPatch(): void
     {
         $api = new APIService($this->guzzle([
@@ -94,13 +65,6 @@ class APIServiceTest extends GuzzleTestCase
         $this->assertNotNull($response);
     }
 
-    /**
-     * Test basic request
-     *
-     * @throws \Throwable
-     *
-     * @return void
-     */
     public function testMultiPartExceptions(): void
     {
         $api = new APIService($this->guzzle([
@@ -140,13 +104,6 @@ class APIServiceTest extends GuzzleTestCase
         }
     }
 
-    /**
-     * Test varations on request
-     *
-     * @throws RestException
-     *
-     * @return void
-     */
     public function testRequestVariations(): void
     {
         $api = new APIService($this->guzzle([

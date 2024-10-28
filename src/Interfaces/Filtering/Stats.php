@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -6,8 +8,7 @@ use JsonSerializable;
 use Vicimus\Support\Interfaces\Billing\CostBreakdownContract;
 
 /**
- * Interface Stats
- *
+ * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
  * @property int $invites
  * @property int $emails
  * @property int $letters
@@ -23,62 +24,31 @@ use Vicimus\Support\Interfaces\Billing\CostBreakdownContract;
  */
 interface Stats extends JsonSerializable
 {
-    /**
-     * @return int
-     */
     public function bdc(): int;
 
-    /**
-     * Retrieve the cost breakdown object
-     * @return CostBreakdownContract
-     */
     public function breakdown(): CostBreakdownContract;
 
-    /**
-     * Delete the model
-     *
-     * @return bool
-     */
     public function delete(): bool;
 
-    /**
-     * @return int
-     */
     public function emails(): int;
 
-    /**
-     * @return int
-     */
     public function invites(): int;
 
-    /**
-     * @return int
-     */
     public function letters(): int;
 
-    /**
-     * @return int
-     */
     public function postcards(): int;
 
-    /**
-     * @return int
-     */
     public function rvms(): int;
 
-    /**
-     * @return int
-     */
     public function sms(): int;
 
     /**
      * Return all stats as an array of data
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function toArray(): array;
 
-    /**
-     * @return int
-     */
     public function total(): int;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\FrontEnd;
 
@@ -10,47 +12,18 @@ use Vicimus\Support\Traits\ConsoleOutputter;
 
 use function array_search;
 
-/**
- * Class ScriptCache
- */
 class ScriptCache implements ConsoleOutput
 {
     use ConsoleOutputter;
 
-    /**
-     * The app name
-     * @var null|string
-     */
-    private $appName;
+    private ?string $appName;
 
-    /**
-     * The cache repository
-     *
-     * @var Repository
-     */
-    private $cache;
+    private Repository $cache;
 
-    /**
-     * Path to the front end files
-     *
-     * @var string
-     */
-    private $pathToFrontEnd;
+    private string $pathToFrontEnd;
 
-    /**
-     * Relative path
-     *
-     * @var string
-     */
-    private $relativeFrontEnd;
+    private string $relativeFrontEnd;
 
-    /**
-     * ScriptCache constructor.
-     *
-     * @param Repository  $cache          The cache repository
-     * @param string      $pathToFrontEnd The path to where front end locales are (Must be public)
-     * @param null|string $appName        Optionally provide a name for the app
-     */
     public function __construct(Repository $cache, string $pathToFrontEnd, ?string $appName = null)
     {
         $this->appName = $appName ?? md5($pathToFrontEnd);
@@ -59,35 +32,16 @@ class ScriptCache implements ConsoleOutput
         $this->relativeFrontEnd = str_replace(public_path() . '/', '', $pathToFrontEnd);
     }
 
-    /**
-     * Check if cache exists
-     *
-     * @param string $locale The locale to check
-     *
-     * @return bool
-     */
     public function areUnhealthy(string $locale = 'en'): bool
     {
         return !$this->cache->has(sprintf('%s-cache-%s', $this->appName, $locale));
     }
 
-    /**
-     * Get the base href for the scripts
-     *
-     * @param string $locale The locale
-     *
-     * @return string
-     */
     public function baseHref(string $locale = 'en'): string
     {
         return $this->pathToFrontEnd . '/' . $locale;
     }
 
-    /**
-     * Read the script directory and cache the file names
-     *
-     * @return void
-     */
     public function cache(): void
     {
         $order = [
@@ -109,7 +63,7 @@ class ScriptCache implements ConsoleOutput
             $fileFinder->files()->in($locale->getRealPath())->name('*.js')->depth(0);
             foreach ($fileFinder as $file) {
                 $name = $this->extract($file->getRelativePathname());
-                if (is_numeric(substr($name, 0, 1))) {
+                if (is_numeric($name[0])) {
                     continue;
                 }
 
@@ -144,13 +98,9 @@ class ScriptCache implements ConsoleOutput
             }
 
             // Split up the scripts and styles
-            $scripts = array_filter($cached, static function ($name): bool {
-                return substr($name, -2) === 'js';
-            });
+            $scripts = array_filter($cached, static fn ($name): bool => substr($name, -2) === 'js');
 
-            $styles = array_filter($cached, static function ($name): bool {
-                return substr($name, -3) === 'css';
-            });
+            $styles = array_filter($cached, static fn ($name): bool => substr($name, -3) === 'css');
 
             usort($scripts, function ($aPath, $bPath) use ($order) {
                 $aName = $this->getName($aPath);
@@ -171,11 +121,6 @@ class ScriptCache implements ConsoleOutput
         }
     }
 
-    /**
-     * Clear the cache
-     *
-     * @return void
-     */
     public function forget(): void
     {
         $finder = new Finder();
@@ -188,26 +133,11 @@ class ScriptCache implements ConsoleOutput
         }
     }
 
-    /**
-     * Extract the simple name of the script. This will be used as the cache
-     * key
-     *
-     * @param string $filename The full filename
-     *
-     * @return string
-     */
     protected function extract(string $filename): string
     {
         return substr($filename, 0, strpos($filename, '.'));
     }
 
-    /**
-     * Get the name from a path
-     *
-     * @param string $filename The filename to look at
-     *
-     * @return string
-     */
     private function getName(string $filename): string
     {
         if (stripos($filename, 'main')) {

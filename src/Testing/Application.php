@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -18,7 +20,11 @@ use Throwable;
 /**
  * Class Application
  *
- * @SuppressWarnings(PHPMD)
+ * This is phpcs disabled because it's an extension of Laravel's application which does
+ * not typehint properly, and it would just be a massive headache trying to make our implementation
+ * meet our coding standards while not breaking it.
+ *
+ * @phpcs:disable
  */
 class Application extends Container implements LaravelApp, HttpKernelInterface
 {
@@ -89,12 +95,9 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      * @param string $path Optionally, a path to append to the base path
      *
      * @return string
-     *
-     * @codingStandardsIgnoreStart
      */
     public function basePath($path = ''): string
     {
-        // @codingStandardsIgnoreEnd
         return realpath($this->basePath.(($path) ? DIRECTORY_SEPARATOR.$path : $path));
     }
 
@@ -151,7 +154,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return void
      */
-    public function bootstrapWith(array $classes): void
+    public function bootstrapWith(array $bootstrappers): void
     {
         // Implement bootstrapWith() method.
     }

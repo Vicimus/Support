@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
@@ -13,11 +15,6 @@ use Vicimus\Support\Classes\ImmutableObject;
  */
 class Headers extends ImmutableObject
 {
-    /**
-     * Headers constructor
-     *
-     * @param Response $response A response from the server
-     */
     public function __construct(Response $response)
     {
         $headers = $response->getHeaders();
@@ -33,13 +30,6 @@ class Headers extends ImmutableObject
         parent::__construct($payload);
     }
 
-    /**
-     * For headers you can't access magically because of dashes
-     *
-     * @param string $header The header to get
-     *
-     * @return string
-     */
     public function get(string $header): ?string
     {
         return $this->attributes[$header] ?? null;

@@ -1,28 +1,22 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\API;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Vicimus\Support\Classes\Photos\PhotoStatus;
 
-/**
- * Interface AsyncRequest
- */
 interface AsyncRequest
 {
     /**
      * Get a property of the request or null if it has not been set
-     *
-     * @param string $property The property to try and get
-     *
-     * @return mixed
      */
-    public function get(string $property);
+    public function get(string $property): mixed;
 
     /**
      * Get the request to make
-     *
-     * @return Request
      */
     public function getRequest(): Request;
 
@@ -31,20 +25,12 @@ interface AsyncRequest
      * to the response collection.
      *
      * If NULL is returned, the response will be ignored
-     *
-     * @param Response $response THe response from the request
-     *
-     * @return mixed
      */
-    public function process(Response $response);
+    public function process(Response $response): ?PhotoStatus;
 
     /**
      * Calling this method will set the request verb. How that is implemented
      * is up to the developer
-     *
-     * @param string $verb The verb to set
-     *
-     * @return void
      */
     public function verb(string $verb): void;
 }

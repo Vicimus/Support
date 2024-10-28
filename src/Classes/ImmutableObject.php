@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -11,9 +13,6 @@ use Vicimus\Support\Exceptions\ImmutableObjectException;
 use Vicimus\Support\Interfaces\WillValidate;
 use Vicimus\Support\Traits\AttributeArrayAccess;
 
-/**
- * Class ImmutableObject
- */
 class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 {
     use AttributeArrayAccess;
@@ -21,54 +20,43 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * The read-only properties
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @var mixed[][]
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * Any properties to convert into other types
-     *
      * @var string[]
      */
-    protected $casts = [];
+    protected array $casts = [];
 
     /**
      * Properties to hide from json encoding and toArray calls
-     *
      * @var string[]
      */
-    protected $hidden = [];
+    protected array $hidden = [];
 
     /**
      * Validation rules
-     *
      * @var string[]
      */
-    protected $rules = [];
+    protected array $rules = [];
 
     /**
      * Holds a validator factory
-     *
-     * @var Factory|null
      */
-    protected $validator;
+    protected ?Factory $validator;
 
     /**
      * The last error messages
-     *
-     * @var string
      */
-    private $errors;
+    private string $errors;
 
     /**
-     * ImmutableObject constructor.
-     *
-     * @param mixed   $original  The original attributes
-     * @param Factory $validator The validator factory
-     *
      * @throws InvalidArgumentException
      */
-    public function __construct($original = [], ?Factory $validator = null)
+    public function __construct(object | array $original = [], ?Factory $validator = null)
     {
         if (!is_array($original) && !is_object($original)) {
             $type = gettype($original);
@@ -89,35 +77,22 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 
     /**
      * Read an attribute
-     *
-     * @param string $property The property to get
-     *
-     * @return mixed
      */
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
         return $this->attributes[$property] ?? null;
     }
 
     /**
-     * Handle set
-     *
-     * @param string $property The property to set
-     * @param mixed  $value    The value to set it to
-     *
-     * @return void
-     *
      * @throws RuntimeException
      */
-    public function __set(string $property, $value): void
+    public function __set(string $property, mixed $value): void
     {
         throw new RuntimeException('Cannot set the value of an ImmutableObject');
     }
 
     /**
      * Convert to a string
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -128,15 +103,13 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
      * Get the last validation message
      *
      * @throws ImmutableObjectException
-     *
-     * @return null|string
      */
     public function getValidationMessage(): ?string
     {
         if (!$this->validator) {
             $class = Factory::class;
             throw new ImmutableObjectException(
-                'Cannot use getValidationMessage without passing a '.$class.' to the constructor'
+                'Cannot use getValidationMessage without passing a ' . $class . ' to the constructor',
             );
         }
 
@@ -145,22 +118,18 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 
     /**
      * Is the object valid?
-     *
-     * @param Factory|null $validator A validator factory
-     *
-     * @return bool
      * @throws ImmutableObjectException
      */
-    public function isValid(?Factory $validator = null): bool
+    public function isValid(?Factory $factory = null): bool
     {
-        if (!$this->validator && $validator) {
-            $this->validator = $validator;
+        if (!$this->validator && $factory) {
+            $this->validator = $factory;
         }
 
         if (!$this->validator) {
             $class = Factory::class;
             throw new ImmutableObjectException(
-                'Cannot use isValid without passing a '.$class.' to the constructor'
+                'Cannot use isValid without passing a ' . $class . ' to the constructor'
             );
         }
 
@@ -173,6 +142,7 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * Implement jsonSerialize
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function jsonSerialize(): array
@@ -183,14 +153,19 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * Get the array representation
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function toArray(): array
     {
         $payload = [];
-        foreach (array_filter($this->attributes, function ($key) {
-            return !in_array($key, $this->hidden, false);
-        }, ARRAY_FILTER_USE_KEY) as $property => $item) {
+        $filtered = array_filter(
+            $this->attributes,
+            fn ($key) => !in_array($key, $this->hidden, true),
+            ARRAY_FILTER_USE_KEY,
+        );
+
+        foreach ($filtered as $property => $item) {
             $payload[$property] = $this->convertArrayItem($item);
         }
 
@@ -200,6 +175,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * Takes in the original data and converts it according to the protected
      * local property $this->casts
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
      * @param mixed[] $attributes The attributes to transform
      *
@@ -222,11 +199,11 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * Convert a single item
      *
-     * @param ImmutableObject|mixed[]|mixed $item The item
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
-     * @return mixed|mixed[]
+     * @param ImmutableObject|mixed[]|mixed $item The item
      */
-    private function convertArrayItem($item)
+    private function convertArrayItem(mixed $item): mixed
     {
         if ($item instanceof self) {
             return $item->toArray();
@@ -241,6 +218,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 
     /**
      * Convert recursively to an array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      *
      * @param mixed[] $items The items to convert
      *
@@ -258,13 +237,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 
     /**
      * Cast a specific value
-     *
-     * @param string|int $property The property being cast
-     * @param mixed      $value    The current value
-     *
-     * @return mixed
      */
-    private function doAttributeCast($property, $value)
+    private function doAttributeCast(string | int $property, mixed $value): mixed
     {
         if ($value === null) {
             return $value;
@@ -301,12 +275,8 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * Check if a value is both an array and likely just a numeric array,
      * as opposed to an object structure converted into an array
-     *
-     * @param mixed $value The value to inspect
-     *
-     * @return bool
      */
-    private function isNumericArray($value): bool
+    private function isNumericArray(mixed $value): bool
     {
         if (!is_array($value)) {
             return false;
@@ -323,15 +293,11 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
 
     /**
      * Check if a type is scalar or not
-     *
-     * @param string $value The value to inspect
-     *
-     * @return bool
      */
     private function isScalar(string $value): bool
     {
         return in_array($value, [
             'int', 'bool', 'string', 'float',
-        ]);
+        ], true);
     }
 }
