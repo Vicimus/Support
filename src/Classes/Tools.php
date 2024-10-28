@@ -170,6 +170,8 @@ class Tools
             '(acura|audi|bmw|buick|chevrolet|cadillac|gmc|chrysler|dodge|jeep|ford|honda)',
             '(hyundai|infiniti|jaguar|kia|(land|rover)|lexus|lincoln|mazda|(mercedes|benz))',
             '(mini|mitsubishi|nissan|porsche|smart|subaru|toyota|volkswagen|volvo|vw)',
+            '(voided|famil(y|ies)|trust)',
+            '(annulé|famille(s)|confiance)',
         ];
 
         if (preg_match('/\b(' . implode('|', $reg) . ')\b/i', $name)) {
