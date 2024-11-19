@@ -398,6 +398,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
         return true;
     }
 
+    public function hasDebugModeEnabled()
+    {
+        return true;
+    }
+
     /**
      * Determine if the application is currently down for maintenance.
      *
@@ -413,7 +418,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return string
      */
-    public function langPath(): string
+    public function langPath($path = ''): string
     {
         return $this->resourcePath().DIRECTORY_SEPARATOR.'lang';
     }
@@ -508,7 +513,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return string
      */
-    public function publicPath(): string
+    public function publicPath($path = ''): string
     {
         return $this->basePath.DIRECTORY_SEPARATOR.'public';
     }
