@@ -49,12 +49,11 @@ class BasicCache implements Repository
 
     /**
      * Wipes clean the entire cache's keys.
-     *
-     * @return bool|mixed True on success and false on failure.
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->cache = [];
+        return true;
     }
 
     /**
@@ -77,9 +76,10 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True if the item was successfully removed. False if there was an error.
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         unset($this->cache[$key]);
+        return true;
     }
 
     /**
@@ -89,9 +89,10 @@ class BasicCache implements Repository
      *
      * @return bool|mixed True if the items were successfully removed. False if there was an error.
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         // TODO: Implement deleteMultiple() method.
+        return true;
     }
 
     /**
@@ -128,7 +129,7 @@ class BasicCache implements Repository
      *
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return $this->cache[$key] ?? $default;
     }
@@ -142,9 +143,10 @@ class BasicCache implements Repository
      * @return mixed A list of key => value pairs. Cache keys that do not exist or
      *                        are stale will have $default as value.
      */
-    public function getMultiple($keys, $default = null)
+    public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
         // TODO: Implement getMultiple() method.
+        return [];
     }
 
     /**
@@ -164,7 +166,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed
      */
-    public function has($key)
+    public function has(string $key): bool
     {
         return isset($this->cache[$key]);
     }
@@ -257,10 +259,8 @@ class BasicCache implements Repository
      * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
-     *
-     * @return bool|mixed True on success and false on failure.
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
     {
         $this->cache[$key] = $value;
         return true;
@@ -268,16 +268,10 @@ class BasicCache implements Repository
 
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
-     *
-     * @param mixed                  $values A list of key => value pairs for a multiple-set operation.
-     * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
-     *                                       the driver supports TTL then the library may set a default value
-     *                                       for it or let the driver take care of that.
-     *
-     * @return bool|mixed True on success and false on failure.
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
     {
         // TODO: Implement setMultiple() method.
+        return true;
     }
 }

@@ -440,6 +440,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
         return $this;
     }
 
+    public function maintenanceMode()
+    {
+        // TODO: Implement maintenanceMode() method.
+    }
+
     /**
      * Call a method on the default request class.
      *
@@ -673,7 +678,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return string
      */
-    public function storagePath(): string
+    public function storagePath($path = ''): string
     {
         return ($this->storagePath) ?: $this->basePath.DIRECTORY_SEPARATOR.'storage';
     }
@@ -686,6 +691,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     public function terminate(): void
     {
         //
+    }
+
+    public function terminating($callback)
+    {
+        // TODO: Implement terminating() method.
     }
 
     /**
