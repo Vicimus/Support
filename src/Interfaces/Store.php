@@ -37,6 +37,8 @@ interface Store
      * @param string|mixed $value
      *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      */
     public function setAttribute($key, $value);
 
