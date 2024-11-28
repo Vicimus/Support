@@ -35,8 +35,12 @@ interface Store
      *
      * @param string|mixed $key
      * @param string|mixed $value
+     *
+     * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      */
-    public function setAttribute($key, $value): void;
+    public function setAttribute($key, $value);
 
     /**
      * Convert the store into an array of data
