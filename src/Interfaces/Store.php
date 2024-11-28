@@ -35,8 +35,10 @@ interface Store
      *
      * @param string|mixed $key
      * @param string|mixed $value
+     *
+     * @return mixed
      */
-    public function setAttribute($key, $value): void;
+    public function setAttribute($key, $value);
 
     /**
      * Convert the store into an array of data
