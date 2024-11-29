@@ -33,7 +33,7 @@ trait ConsoleOutputter
      *
      * @return $this
      */
-    public function bind(?ConsoleOutput $output)
+    public function bind(?ConsoleOutput $output): self
     {
         $this->output = $output;
         if ($this->onBind) {
