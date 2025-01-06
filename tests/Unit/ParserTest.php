@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit;
 
@@ -13,7 +15,6 @@ class ParserTest extends TestCase
     /**
      * Test parse sale classes function.
      *
-     * @return void
      */
     public function testParseVehicleSaleClass(): void
     {
@@ -40,7 +41,6 @@ class ParserTest extends TestCase
     /**
      * Test parse makes function.
      *
-     * @return void
      */
     public function testParseVehicleMake(): void
     {
@@ -74,7 +74,6 @@ class ParserTest extends TestCase
     /**
      * Test parse country function.
      *
-     * @return void
      */
     public function testParseCountry(): void
     {
@@ -106,7 +105,6 @@ class ParserTest extends TestCase
     /**
      * Test parse language function.
      *
-     * @return void
      */
     public function testParseLanguage(): void
     {
@@ -134,7 +132,6 @@ class ParserTest extends TestCase
     /**
      * Test parse mileage unit function.
      *
-     * @return void
      */
     public function testParseMileageUnit(): void
     {
@@ -159,7 +156,6 @@ class ParserTest extends TestCase
     /**
      * Test parse payment type function.
      *
-     * @return void
      */
     public function testParsePaymentType(): void
     {
@@ -187,7 +183,6 @@ class ParserTest extends TestCase
     /**
      * Test parse timezone function.
      *
-     * @return void
      */
     public function testParseTimezone(): void
     {
@@ -209,7 +204,6 @@ class ParserTest extends TestCase
     /**
      * Test parse state function.
      *
-     * @return void
      */
     public function testParseState(): void
     {

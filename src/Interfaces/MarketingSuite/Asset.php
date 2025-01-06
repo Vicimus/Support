@@ -1,9 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Vicimus\AssetBuilder\Classes\CallToAction;
-use Vicimus\AssetBuilder\Classes\Instruction;
+use Vicimus\Support\Interfaces\Marketingsuite\Assetes\CallToAction;
+use Vicimus\Support\Interfaces\MarketingSuite\Assets\Instruction;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\Validator;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 
@@ -11,6 +13,7 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
  * Interface Asset
  *
  * @property string $template
+ * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
  * @property mixed[] $tabs
  */
 interface Asset extends AssetContract
@@ -18,14 +21,12 @@ interface Asset extends AssetContract
     /**
      * Determine if an asset has been approved
      *
-     * @return bool
      */
     public function active(): bool;
 
     /**
      * Determine if an asset has been approved
      *
-     * @return bool
      */
     public function approved(): bool;
 
@@ -37,7 +38,6 @@ interface Asset extends AssetContract
 
     /**
      * Get the height
-     * @return int
      */
     public function height(): int;
 
@@ -52,35 +52,34 @@ interface Asset extends AssetContract
 
     /**
      * The intent of the Asset, conquest|retention
-     * @return string
      */
     public function intent(): string;
 
     /**
      * Get the rendered markup
-     * @return string
      */
     public function rendered(): string;
 
+    public function structureId(): string | int | null;
+
     /**
      * Convert the asset into an array that is easy to send over the network
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function toArray(): array;
 
     /**
      * Get the slug or type of asset this represents
-     * @return string
      */
     public function type(): string;
 
     /**
      * Validate an asset
      *
-     * @param string[]  $errors    The errors found
-     * @param Validator $validator Optionally provide a validator to use
-     *
-     * @return bool
+     * @param string[]       $errors    The errors found
+     * @param Validator|null $validator Optionally provide a validator to use
      *
      * @throws TemplateException
      */
@@ -88,7 +87,6 @@ interface Asset extends AssetContract
 
     /**
      * The width of this asset
-     * @return int
      */
     public function width(): int;
 }

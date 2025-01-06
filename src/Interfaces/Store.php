@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -21,40 +23,41 @@ interface Store
 
     /**
      * Get the primary identifier for the store
-     * @return string|int
      */
-    public function identifier();
+    public function identifier(): string | int;
 
     /**
      * Get the name of the store
-     * @return string
      */
     public function name(): string;
 
     /**
      * Get a custom property
-     *
-     * @param string $property The property
-     * @param mixed  $default  The property default
-     *
-     * @return mixed
      */
-    public function property(string $property, $default = null);
+    public function property(string $property, mixed $default = null): mixed;
 
     /**
      * Override set attribute
      *
-     * @param string|int|bool      $key   The key to set
-     * @param string|int|bool|null $value The value to set it to
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      *
-     * @return void
+     * @param string|mixed $key
+     * @param string|mixed $value
+     *
+     * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      */
     public function setAttribute($key, $value);
 
     /**
      * Convert the store into an array of data
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     *
      * @return mixed
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function toArray();
 }

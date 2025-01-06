@@ -1,13 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Tel;
 
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 
-/**
- * Customer list service contract
- */
 interface CustomerListsContract
 {
     /**
@@ -22,7 +21,6 @@ interface CustomerListsContract
      * @param int         $campaignId      The campaign id
      * @param int         $originalStoreId The store the campaign belongs to
      *
-     * @return CustomerListContract
      * @throws GuzzleException
      */
     public function create(
@@ -43,7 +41,6 @@ interface CustomerListsContract
      * @param int   $customerListId The id of the existing customer list
      * @param int[] $customers      The customers associated with the list
      *
-     * @return CustomerListContract
      * @throws GuzzleException
      */
     public function update(

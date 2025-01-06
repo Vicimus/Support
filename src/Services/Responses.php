@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
@@ -7,61 +9,24 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * Class Responses
- */
 class Responses
 {
-    /**
-     * The view factory
-     * @var Factory
-     */
-    private $view;
-
-    /**
-     * Responses constructor.
-     *
-     * @param Factory $view The view factory
-     */
-    public function __construct(Factory $view)
+    public function __construct(private readonly Factory $view)
     {
-        $this->view = $view;
+        //
     }
 
-    /**
-     * Download a file as a response
-     *
-     * @param string $path The path to the file
-     *
-     * @return BinaryFileResponse
-     */
     public function download(string $path): BinaryFileResponse
     {
         return new BinaryFileResponse($path);
     }
 
-    /**
-     * Generate a json response
-     *
-     * @param mixed $body The body of the response
-     * @param int   $code The response code
-     *
-     * @return JsonResponse
-     */
-    public function json($body = null, int $code = 200): JsonResponse
+    public function json(mixed $body = null, int $code = 200): JsonResponse
     {
         return new JsonResponse($body, $code);
     }
 
-    /**
-     * Generate a json response
-     *
-     * @param mixed $body The body of the response
-     * @param int   $code The response code
-     *
-     * @return Response
-     */
-    public function make($body = null, int $code = 200): Response
+    public function make(mixed $body = null, int $code = 200): Response
     {
         return new Response($body, $code);
     }
@@ -69,12 +34,10 @@ class Responses
     /**
      * Create a new response for a given view.
      *
-     * @param string  $view    The view to load
-     * @param mixed[] $data    The data to pass
-     * @param int     $status  The status
-     * @param mixed[] $headers Any headers
-     *
-     * @return Response
+     * @param string     $view    The view to load
+     * @param string[][] $data    The data to pass
+     * @param int        $status  The status
+     * @param string[][] $headers Any headers
      */
     public function view(string $view, array $data = [], int $status = 200, array $headers = []): Response
     {

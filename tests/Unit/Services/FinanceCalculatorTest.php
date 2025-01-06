@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
@@ -13,7 +15,6 @@ class FinanceCalculatorTest extends TestCase
     private FinanceCalculator $calculator;
 
     /**
-     * @return void
      */
     public function setup(): void
     {
@@ -23,7 +24,6 @@ class FinanceCalculatorTest extends TestCase
     }
 
     /**
-     * @return void
      */
     public function testPayment(): void
     {

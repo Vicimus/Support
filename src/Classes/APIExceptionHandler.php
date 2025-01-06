@@ -1,35 +1,25 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Vicimus\Support\Exceptions\RestException;
 
-/**
- * Class APIExceptionHandler
- */
 class APIExceptionHandler
 {
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param Request   $request   The request object
-     * @param Throwable $exception The exception to render
-     *
-     * @return mixed
-     *
-     * @codingStandardsIgnoreStart
-     */
-    public function handle(Request $request, Throwable $exception)
+    public function handle(Request $request, Throwable $exception): JsonResponse
     {
-        $class = get_class($exception);
-        if ($class == ModelNotFoundException::class) {
+        $class = $exception::class;
+        if ($class === ModelNotFoundException::class) {
             return response()->json([
-                'error' => 'The requested resource could not be found ('.
-                    $request->path().')',
+                'error' => 'The requested resource could not be found (' .
+                    $request->path() . ')',
             ], 404);
         }
 
@@ -46,10 +36,9 @@ class APIExceptionHandler
 
         return response()->json([
             'error' => $exception->getMessage(),
-            'type'  => get_class($exception),
+            'type'  => $exception::class,
             'line'  => $exception->getLine(),
             'file'  => $exception->getFile(),
         ], $code);
     }
-
 }

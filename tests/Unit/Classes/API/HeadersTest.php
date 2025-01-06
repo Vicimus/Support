@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -14,7 +16,6 @@ class HeadersTest extends TestCase
     /**
      * Get a header
      *
-     * @return void
      */
     public function testHeadersGet(): void
     {
