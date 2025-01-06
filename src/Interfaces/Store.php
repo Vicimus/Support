@@ -13,15 +13,6 @@ namespace Vicimus\Support\Interfaces;
 interface Store
 {
     /**
-     * Determine if a store has a property or not
-     *
-     * @param string $property The property to check
-     *
-     * @return bool
-     */
-    public function hasProperty(string $property): bool;
-
-    /**
      * Get the primary identifier for the store
      */
     public function identifier(): string | int;
