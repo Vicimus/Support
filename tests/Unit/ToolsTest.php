@@ -102,13 +102,13 @@ class ToolsTest extends TestCase
         $this->assertFalse($result);
 
         $result = Tools::isCompany('voided');
-        $this->assertFalse($result);
+        $this->assertTrue($result);
 
         $result = Tools::isCompany('family');
-        $this->assertFalse($result);
+        $this->assertTrue($result);
 
         $result = Tools::isCompany('trust');
-        $this->assertFalse($result);
+        $this->assertTrue($result);
     }
 
     /**

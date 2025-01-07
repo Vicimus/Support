@@ -2,6 +2,7 @@ name: Standard Build
 on:
   pull_request:
     branches:
+      - master
       - php74
 jobs:
   phpcs:
