@@ -9,6 +9,11 @@ interface Distribution
     /**
      * @return string
      */
+    public function getHttpAdfFormat(): string;
+
+    /**
+     * @return string
+     */
     public function getHttpProviderId(): string;
 
     /**
