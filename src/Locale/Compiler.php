@@ -66,11 +66,31 @@ class Compiler
     public function get(string $locale): array
     {
         if ($this->env !== 'production') {
-            return $this->getLocale($locale);
+            $data = $this->getLocale($locale);
+
+            if (config('vicimus.translation-mark')) {
+                $revised = [];
+                foreach ($data as $key => $value) {
+                    if (is_array($value)) {
+                        $inner = [];
+                        foreach ($value as $k => $v) {
+                            $inner[$k] = sprintf('[[%s]]', $v);
+                        }
+
+                        $revised[$key] = $inner;
+                        continue;
+                    }
+
+                    $revised[$key] = sprintf('[[%s]]', $value);
+                }
+                $data = $revised;
+            }
+
+            return $data;
         }
 
         $key = sprintf('i18n-%s', $locale);
-        return $this->cache->remember($key, 30, function () use ($locale) {
+        return $this->cache->remember($key, now()->addDay(), function () use ($locale) {
             return $this->getLocale($locale);
         });
     }
