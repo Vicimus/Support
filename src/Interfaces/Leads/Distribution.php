@@ -21,4 +21,9 @@ interface Distribution
      * @return string
      */
     public function getHttpVendorId(): string;
+
+    /**
+     * @return int
+     */
+    public function getStoreId(): int;
 }
