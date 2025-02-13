@@ -4,6 +4,9 @@ namespace Vicimus\Support\Interfaces\Leads;
 
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * An interface for Http callback Handlers related to leads, lead distributions and http adf content
+ */
 interface HttpCallbackHandler
 {
     /**
