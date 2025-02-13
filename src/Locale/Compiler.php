@@ -4,6 +4,7 @@ namespace Vicimus\Support\Locale;
 
 use Illuminate\Contracts\Cache\Repository;
 use Shared\Exceptions\LocaleException;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Class Compiler
@@ -69,10 +70,7 @@ class Compiler
             return $this->getLocale($locale);
         }
 
-        $key = sprintf('i18n-%s', $locale);
-        return $this->cache->remember($key, 30, function () use ($locale) {
-            return $this->getLocale($locale);
-        });
+        return $this->cache->rememberForever(sprintf('i18n-%s', $locale), fn () => $this->getLocale($locale));
     }
 
     /**
@@ -91,6 +89,47 @@ class Compiler
             throw new LocaleException(sprintf('Locale [%s] is not supported at this time', $locale));
         }
 
-        return include $path;
+        /** @var string[]|string[][] $uncategorized */
+        $uncategorized = require $path;
+        $main = $this->parseTranslationArray($uncategorized);
+
+        $filename = pathinfo($this->file)['filename'];
+        $searchPath = sprintf('%s/%s/%s', $this->pathToLang, $locale, $filename);
+
+        $finder = new Finder();
+        foreach ($finder->files()->ignoreDotFiles(true)->in($searchPath) as $file) {
+            $key = pathinfo($file->getFileInfo()->getFilename())['filename'];
+            if (array_key_exists($key, $main)) {
+                throw new LocaleException(sprintf(
+                    'Key for file [%s] already exists',
+                    $file->getFileInfo()->getFilename(),
+                ));
+            }
+
+            $category = require $file->getPathname();
+            $main[$key] = $this->parseTranslationArray($category);
+        }
+
+        return $main;
+    }
+
+    private function parseTranslationArray(array $translations): array
+    {
+        $revised = [];
+        foreach ($translations as $key => $value) {
+            if (!is_array($value)) {
+                $revised[$key] = $value;
+                continue;
+            }
+
+            if (!is_array($value[0])) {
+                $revised[$key] = $value[0];
+                continue;
+            }
+
+            $revised[$key] = $key;
+        }
+
+        return $revised;
     }
 }
