@@ -83,11 +83,16 @@ interface ADFLead
     public function vehicle(): ?ADFVehicle;
 
     /**
+     * @return ADFVehicle|null
+     */
+    public function vehicleOfInterest(): ?ADFVehicle;
+
+    /**
      * Attach a token
      *
      * @param string $token The token
      *
-     * @return mixed
+     * @return self|void
      */
     public function withToken(string $token);
 }
