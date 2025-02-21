@@ -10,6 +10,16 @@ interface Distribution
     /**
      * @return string
      */
+    public function debug(): string;
+
+    /**
+     * @return string
+     */
+    public function getHeaders(): string;
+
+    /**
+     * @return string
+     */
     public function getHttpAdfFormat(): string;
 
     /**
@@ -26,4 +36,9 @@ interface Distribution
      * @return int
      */
     public function getStoreId(): int;
+
+    /**
+     * @return string|null
+     */
+    public function http(): ?string;
 }
