@@ -22,9 +22,9 @@ interface SimpleProperties
      *
      * @param string $property The property to set
      * @param mixed  $value    If set, will record a property rather than get
-     * @param bool   $hidden   The hidden state of a property
+     * @param int    $hidden   The hidden state of a property
      *
      * @return void
      */
-    public function record(string $property, $value = null, bool $hidden = false): void;
+    public function record(string $property, $value = null, int $hidden = 0): void;
 }

@@ -82,11 +82,11 @@ interface Creatable
      *
      * @param string               $property The property to set
      * @param string|int|bool|null $value    The value to save
-     * @param bool                 $hidden   The hidden state of a property
+     * @param int                  $hidden   The hidden state of a property
      *
      * @return void
      */
-    public function record(string $property, $value = null, bool $hidden = false): void;
+    public function record(string $property, $value = null, int $hidden = 0): void;
 
     /**
      * Record a property value, maintaining the old value if one exists.
