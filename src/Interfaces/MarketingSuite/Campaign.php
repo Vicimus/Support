@@ -152,13 +152,13 @@ interface Campaign extends Eloquent
      *
      * @param string               $property The property to set
      * @param string|int|bool|null $value    If set, will record a property rather than get
-     * @param bool                 $hidden   The hidden state of a property
+     * @param int                  $hidden   The hidden state of a property
      *
      * @return void
      *
      * @throws JsonException
      */
-    public function record(string $property, $value = null, bool $hidden = false): void;
+    public function record(string $property, $value = null, int $hidden = 0): void;
 
     /**
      * A campaign can have one script
