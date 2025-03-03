@@ -2,55 +2,28 @@
 
 namespace Vicimus\Support\Locale;
 
-use Illuminate\Contracts\Cache\Repository;
+use RuntimeException;
 use Shared\Exceptions\LocaleException;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Class Compiler
  */
 class Compiler
 {
-    /**
-     * Cache repository
-     *
-     * @var Repository
-     */
-    private $cache;
+    private string $file;
 
-    /**
-     * The environment
-     *
-     * @var string
-     */
-    private $env;
-
-    /**
-     * The file to read
-     *
-     * @var string
-     */
-    private $file;
-
-    /**
-     * The path to the lang files
-     *
-     * @var string
-     */
-    private $pathToLang;
+    private string $pathToLang;
 
     /**
      * Compiler constructor.
      *
-     * @param Repository $cache      The cache repository
-     * @param string     $env        The current environment
-     * @param string     $pathToLang The path to the lang files
-     * @param string     $file       The file to read
+     * @param string $pathToLang The path to the lang files
+     * @param string $file       The file to read
      */
-    public function __construct(Repository $cache, string $env, string $pathToLang, string $file = 'i18n.php')
+    public function __construct(string $pathToLang, string $file = 'i18n.php')
     {
-        $this->cache = $cache;
         $this->file = $file;
-        $this->env = $env;
         $this->pathToLang = $pathToLang;
     }
 
@@ -65,14 +38,39 @@ class Compiler
      */
     public function get(string $locale): array
     {
-        if ($this->env !== 'production') {
-            return $this->getLocale($locale);
+        return $this->getLocale($locale);
+    }
+
+    /**
+     * @param string[]|string[][] $translations The translations
+     * @param string              $prefix       The prefix
+     *
+     * @return Translation[]|Translation[][]
+     *
+     * @throws RuntimeException
+     */
+    private function castToTranslations(array $translations, string $prefix = ''): array
+    {
+        $converted = [];
+        foreach ($translations as $key => $value) {
+            if (is_string($value)) {
+                $converted[$key] = new Translation($key, $value, $prefix ? sprintf('%s.%s', $prefix, $key) : $key);
+                continue;
+            }
+
+            if (!is_array($value)) {
+                throw new RuntimeException('Expected string or array but got something else');
+            }
+
+            if (!$this->isComplexTranslation($value)) {
+                $converted[$key] = $this->castToTranslations($value, $key);
+                continue;
+            }
+
+            $converted[$key] = new Translation($key, $value, $prefix ? sprintf('%s.%s', $prefix, $key) : $key);
         }
 
-        $key = sprintf('i18n-%s', $locale);
-        return $this->cache->remember($key, 30, function () use ($locale) {
-            return $this->getLocale($locale);
-        });
+        return $converted;
     }
 
     /**
@@ -91,6 +89,83 @@ class Compiler
             throw new LocaleException(sprintf('Locale [%s] is not supported at this time', $locale));
         }
 
-        return include $path;
+        return $this->read($path);
+    }
+
+    /**
+     * @param string[] $value The value to check
+     *
+     * @return bool
+     */
+    private function isComplexTranslation(array $value): bool
+    {
+        return array_keys($value) === range(0, count($value) - 1);
+    }
+
+    /**
+     * Dynamically read all the i18n files
+     *
+     * @param string $path            The path to the base i18n file
+     * @param bool   $dynamicallyLoad Should we dynamically load other files
+     *
+     * @return string[]|string[][]
+     *
+     * @throws RuntimeException
+     */
+    private function read(string $path, bool $dynamicallyLoad = true): array
+    {
+        $uncategorized = require $path;
+        if (!$dynamicallyLoad) {
+            return $this->transform($this->castToTranslations($uncategorized));
+        }
+
+        $main = $uncategorized;
+
+        $filename = pathinfo($path)['filename'];
+        $searchPath = sprintf('%s/%s', pathinfo($path)['dirname'], $filename);
+        $finder = new Finder();
+        foreach ($finder->files()->ignoreDotFiles(true)->in($searchPath) as $file) {
+            $key = pathinfo($file->getFileInfo()->getFilename())['filename'];
+            if (array_key_exists($key, $main)) {
+                throw new RuntimeException(sprintf(
+                    'Key for file [%s] already exists when building i18n master array',
+                    $file->getFileInfo()->getFilename(),
+                ));
+            }
+
+            $category = require $file->getPathname();
+            $main[$key] = $category;
+        }
+
+        return $this->transform($this->castToTranslations($main));
+    }
+
+    /**
+     * Convert the Translation instances to their values
+     *
+     * @param Translation[]|Translation[][] $translations The translations
+     *
+     * @return string[]|string[][]
+     *
+     * @throws RuntimeException
+     */
+    private function transform(array $translations): array
+    {
+        $result = [];
+
+        foreach ($translations as $key => $value) {
+            if (is_array($value)) {
+                $result[$key] = $this->transform($value);
+                continue;
+            }
+
+            if (!$value instanceof Translation) {
+                throw new RuntimeException(sprintf('Translation [%s] must be an instance of Translation', $key));
+            }
+
+            $result[$key] = $value->value;
+        }
+
+        return $result;
     }
 }
