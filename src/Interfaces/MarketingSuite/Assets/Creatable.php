@@ -78,6 +78,16 @@ interface Creatable
     public function property(string $name, $default = null);
 
     /**
+     * Get a property value
+     *
+     * @param string $name The name of the property to get
+     *
+     * @return bool|int|string|null
+     */
+    public function propertyWithoutFallback(string $name);
+
+
+    /**
      * Record a property value
      *
      * @param string               $property The property to set
