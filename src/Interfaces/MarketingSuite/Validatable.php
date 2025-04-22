@@ -8,6 +8,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  * Interface Validatable
  *
  * @property string $title
+ * @property string|int $id
  */
 interface Validatable
 {

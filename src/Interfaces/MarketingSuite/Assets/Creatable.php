@@ -54,6 +54,14 @@ interface Creatable
     public function property(string $name, mixed $default = null): mixed;
 
     /**
+     * Get a property value
+     *
+     * @param string $name The name of the property to get
+     *
+     */
+    public function propertyWithoutFallback(string $name): bool|int|string|null;
+
+    /**
      * Record a property value
      */
     public function record(string $property, mixed $value = null, bool $hidden = false): void;

@@ -69,7 +69,8 @@ interface ADFLead
     public function vehicle(): ?ADFVehicle;
 
     /**
-     * Attach a token
      */
+    public function vehicleOfInterest(): ?ADFVehicle;
+
     public function withToken(string $token): mixed;
 }
