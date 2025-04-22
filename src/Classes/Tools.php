@@ -40,7 +40,7 @@ class Tools
             foreach ($formatOccurs as $format => $count) {
                 unset($count);
                 $dt = DateTime::createFromFormat($format, $value);
-                $hasWarnings = DateTime::getLastErrors()['warning_count'] > 0;
+                $hasWarnings = (DateTime::getLastErrors()['warning_count'] ?? 0) > 0;
                 if ($dt === false || $hasWarnings || strpos($dt->format('Y'), '00') === 0) {
                     continue;
                 }
@@ -87,7 +87,7 @@ class Tools
             unset($count);
 
             $dt = DateTime::createFromFormat($format, $value);
-            $hasWarnings = DateTime::getLastErrors()['warning_count'] > 0;
+            $hasWarnings = (DateTime::getLastErrors()['warning_count'] ?? 0) > 0;
             if ($dt === false || $hasWarnings || strpos($dt->format('Y'), '00') === 0) {
                 continue;
             }
