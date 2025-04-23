@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Locale;
 
+use Exception;
 use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\LocaleException;
@@ -118,18 +119,21 @@ class Compiler
 
         $filename = pathinfo($path)['filename'];
         $searchPath = sprintf('%s/%s', pathinfo($path)['dirname'], $filename);
-        $finder = new Finder();
-        foreach ($finder->files()->ignoreDotFiles(true)->in($searchPath) as $file) {
-            $key = pathinfo($file->getFileInfo()->getFilename())['filename'];
-            if (array_key_exists($key, $main)) {
-                throw new RuntimeException(sprintf(
-                    'Key for file [%s] already exists when building i18n master array',
-                    $file->getFileInfo()->getFilename(),
-                ));
-            }
 
-            $category = require $file->getPathname();
-            $main[$key] = $category;
+        if (file_exists($searchPath) && is_dir($searchPath)) {
+            $finder = new Finder();
+            foreach ($finder->files()->ignoreDotFiles(true)->in($searchPath) as $file) {
+                $key = pathinfo($file->getFileInfo()->getFilename())['filename'];
+                if (array_key_exists($key, $main)) {
+                    throw new RuntimeException(sprintf(
+                        'Key for file [%s] already exists when building i18n master array',
+                        $file->getFileInfo()->getFilename(),
+                    ));
+                }
+
+                $category = require $file->getPathname();
+                $main[$key] = $category;
+            }
         }
 
         return $this->transform($this->castToTranslations($main));
