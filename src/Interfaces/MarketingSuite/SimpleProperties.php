@@ -20,14 +20,5 @@ interface SimpleProperties
      */
     public function property(string $name, mixed $default = null): mixed;
 
-    /**
-     * Check if there is a property value
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
-     *
-     * @param string $property The property to set
-     * @param mixed  $value    If set, will record a property rather than get
-     * @param bool   $hidden   The hidden state of a property
-     */
     public function record(string $property, mixed $value = null, bool $hidden = false): void;
 }

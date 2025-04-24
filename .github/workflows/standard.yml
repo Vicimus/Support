@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - master
+      - php74
 jobs:
   phpcs:
     runs-on: ubuntu-latest
