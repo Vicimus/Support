@@ -9,6 +9,8 @@ namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
  */
 interface Renderable
 {
+    public function cacheString(): string;
+
     /**
      * Get the content id used for this renderable
      */

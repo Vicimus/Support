@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
-use Vicimus\Support\Interfaces\Marketingsuite\Assetes\CallToAction;
+use Vicimus\Support\Interfaces\Marketingsuite\Assets\CallToAction;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\Instruction;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\Validator;
 use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;

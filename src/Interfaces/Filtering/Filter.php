@@ -108,5 +108,5 @@ interface Filter extends Eloquent
      *
      * @return string[]
      */
-    public function toArray(): array;
+    public function toArray();
 }
