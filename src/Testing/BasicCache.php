@@ -129,7 +129,7 @@ class BasicCache implements Repository
      *
      * @return mixed
      */
-    public function get(string $key, mixed $default = null): mixed
+    public function get($key, $default = null)
     {
         return $this->cache[$key] ?? $default;
     }
@@ -143,7 +143,7 @@ class BasicCache implements Repository
      * @return mixed A list of key => value pairs. Cache keys that do not exist or
      *                        are stale will have $default as value.
      */
-    public function getMultiple(iterable $keys, mixed $default = null): iterable
+    public function getMultiple($keys, $default = null)
     {
         // TODO: Implement getMultiple() method.
         return [];
@@ -166,7 +166,7 @@ class BasicCache implements Repository
      *
      * @return bool|mixed
      */
-    public function has(string $key): bool
+    public function has($key)
     {
         return isset($this->cache[$key]);
     }
@@ -260,7 +260,7 @@ class BasicCache implements Repository
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
      */
-    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
+    public function set($key, $value, $ttl = null)
     {
         $this->cache[$key] = $value;
         return true;
@@ -269,7 +269,7 @@ class BasicCache implements Repository
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      */
-    public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
+    public function setMultiple($values, $ttl = null)
     {
         // TODO: Implement setMultiple() method.
         return true;

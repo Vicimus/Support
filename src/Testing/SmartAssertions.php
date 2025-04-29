@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vicimus\Support\Testing;
 
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Testing\TestResponse;
 use stdClass;
 
 trait SmartAssertions
@@ -19,7 +20,7 @@ trait SmartAssertions
      * Assert successful response, and print the response if
      * it wasn't successful.
      */
-    public function assertStatusOk(IlluminateResponse $response): stdClass | array
+    public function assertStatusOk(IlluminateResponse | TestResponse $response): stdClass | array | string
     {
         $code = $response->getStatusCode();
         if ($code !== 200) {
