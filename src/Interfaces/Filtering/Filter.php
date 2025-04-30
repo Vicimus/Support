@@ -104,9 +104,11 @@ interface Filter extends Eloquent
     public function payload(): array;
 
     /**
-     * Get an array of all the filter attributes
+     * Get an array of all the filter attributes. This has no return type-hint to ensure
+     * it remains working with Eloquent, which does not have a return type-hint.
      *
      * @return string[]
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      */
-    public function toArray(): array;
+    public function toArray();
 }

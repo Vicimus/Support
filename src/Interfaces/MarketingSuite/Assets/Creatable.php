@@ -59,7 +59,7 @@ interface Creatable
      * @param string $name The name of the property to get
      *
      */
-    public function propertyWithoutFallback(string $name): bool|int|string|null;
+    public function propertyWithoutFallback(string $name): mixed;
 
     /**
      * Record a property value
