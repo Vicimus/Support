@@ -66,13 +66,23 @@ class AssetProperty extends ImmutableObject implements Property
     /**
      * Populate an asset property with data from the provided model
      *
-     * @param PropertyRecord $property  sset property record representing a database model
+     * @param PropertyRecord $property  Asset property record representing a database model
      * @param bool           $saveValue Should we save the value or just always set it to be blank
+     * @param string|null    $fallback  A value to fallback to
      *
      */
-    public function populate(PropertyRecord $property, bool $saveValue = true): void
+    public function populate(PropertyRecord $property, bool $saveValue = true, ?string $fallback = ''): void
     {
-        $this->set('value', $saveValue ? $property->getValue() : '');
+        $value = '';
+        if ($saveValue) {
+            $value = $property->getValue() ?? '';
+        }
+
+        if (!$value && $fallback) {
+            $value = $fallback;
+        }
+
+        $this->set('value', $saveValue ? $value : '');
         $this->set('id', $property->getId());
     }
 
