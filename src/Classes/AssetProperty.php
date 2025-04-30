@@ -82,7 +82,7 @@ class AssetProperty extends ImmutableObject implements Property
             $value = $fallback;
         }
 
-        $this->set('value', $saveValue ? $value : '');
+        $this->set('value', $value);
         $this->set('id', $property->getId());
     }
 
