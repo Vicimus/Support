@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
+use Shared\Contracts\Audienceable;
 
 /**
  * @property Collection|Audience[] $audiences
@@ -25,6 +26,11 @@ interface SourceRecord
      * A source has many audiences assigned to it
      */
     public function audiences(): MorphMany;
+
+    /**
+     * Get the sources associated campaign
+     */
+    public function campaign(): HasSource;
 
     /**
      * A source can have many custom audiences
