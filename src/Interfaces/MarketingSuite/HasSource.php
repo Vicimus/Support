@@ -53,6 +53,14 @@ interface HasSource
     public function contentId(): ?int;
 
     /**
+     *
+     * Retrieve the destination for the source placements
+     *
+     * i.e. Messenger/VDP/PURL
+     */
+    public function getDestination(): ?string;
+
+    /**
      * Retrieve the identifier of the has source instance
      */
     public function getId(): int;
