@@ -27,6 +27,11 @@ interface SourceRecord
     public function audiences(): MorphMany;
 
     /**
+     * Get the sources associated campaign
+     */
+    public function campaign(): HasSource;
+
+    /**
      * A source can have many custom audiences
      */
     public function customAudiences(): MorphMany;
