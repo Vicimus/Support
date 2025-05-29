@@ -12,8 +12,9 @@ namespace Vicimus\Support\Classes;
  */
 class ConquestBudget extends ImmutableObject
 {
-    public function __construct(mixed $original)
-    {
+    public function __construct(
+        mixed $original
+    ) {
         parent::__construct(array_merge(['spend' => null, 'total' => null], (array) $original));
     }
 

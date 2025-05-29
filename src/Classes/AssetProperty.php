@@ -35,8 +35,9 @@ class AssetProperty extends ImmutableObject implements Property
      *
      * @param string[]|object $data Property data
      */
-    public function __construct(array|object $data)
-    {
+    public function __construct(
+        array | object $data
+    ) {
         parent::__construct($data);
 
         $this->defaults();

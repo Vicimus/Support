@@ -18,8 +18,9 @@ class ConquestCompatibilityMatrix extends ImmutableObject
     /**
      * @param string[][]|string[] $matrix
      */
-    public function __construct(array $matrix = [])
-    {
+    public function __construct(
+        array $matrix = [],
+    ) {
         parent::__construct([
             'matrix' => [],
         ]);

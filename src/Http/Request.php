@@ -13,7 +13,7 @@ use function is_array;
 class Request
 {
     /** Used to detect complex queries */
-    private const COMPLEX_INDICATORS = ['gt:', 'in:', 'lt:'];
+    private const array COMPLEX_INDICATORS = ['gt:', 'in:', 'lt:'];
 
     /**
      * Handlers to execute against different operations
@@ -32,8 +32,9 @@ class Request
      *
      * @param IllRequest|mixed[][] $request Illuminate request instance
      */
-    public function __construct(IllRequest | array $request)
-    {
+    public function __construct(
+        IllRequest | array $request,
+    ) {
         if (is_array($request)) {
             $request = new IllRequest($request);
         }

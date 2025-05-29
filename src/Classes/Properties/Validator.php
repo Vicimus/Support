@@ -12,16 +12,14 @@ use Vicimus\Support\Interfaces\PropertyRecord;
 
 class Validator extends Finder
 {
-    private Factory $factory;
-
     /**
      * Validator constructor
      *
      * @param Factory $factory Illuminate validator
      */
-    public function __construct(Factory $factory)
-    {
-        $this->factory = $factory;
+    public function __construct(
+        private Factory $factory
+    ) {
     }
 
     /**

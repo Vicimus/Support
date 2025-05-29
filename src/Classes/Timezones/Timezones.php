@@ -12,16 +12,14 @@ use Vicimus\Support\Classes\DateTime;
 
 class Timezones
 {
-    private Repository $cache;
-
     /**
      * Timezones constructor.
      *
      * @param Repository $cache The cache repository
      */
-    public function __construct(Repository $cache)
-    {
-        $this->cache = $cache;
+    public function __construct(
+        private Repository $cache
+    ) {
     }
 
     public function all(): Collection

@@ -24,8 +24,10 @@ class BasicVideo implements Video
      * @param string $type  The type of video
      * @param string $value The video code or url
      */
-    public function __construct(string $type, string $value)
-    {
+    public function __construct(
+        string $type,
+        string $value
+    ) {
         $this->type = $type;
         $this->value = $value;
     }
