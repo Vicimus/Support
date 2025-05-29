@@ -16,11 +16,9 @@ class AsyncRequestPool
      */
     protected array $requests = [];
 
-    protected string $verb;
-
-    public function __construct(string $verb = 'GET')
-    {
-        $this->verb = $verb;
+    public function __construct(
+        protected string $verb = 'GET'
+    ) {
     }
 
     public function add(AsyncRequest $request): void

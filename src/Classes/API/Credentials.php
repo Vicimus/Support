@@ -13,8 +13,11 @@ use Vicimus\Support\Classes\ImmutableObject;
  */
 class Credentials extends ImmutableObject
 {
-    public function __construct(?string $url, ?string $id, ?string $secret)
-    {
+    public function __construct(
+        ?string $url,
+        ?string $id,
+        ?string $secret
+    ) {
         parent::__construct([
             'url' => $url,
             'id' => $id,

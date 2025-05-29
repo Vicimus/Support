@@ -13,8 +13,10 @@ use Vicimus\Support\Interfaces\Vehicle;
  */
 class Download extends ImmutableObject implements Downloadable
 {
-    public function __construct(Vehicle $vehicle, PhotoStatus $status)
-    {
+    public function __construct(
+        Vehicle $vehicle,
+        PhotoStatus $status
+    ) {
         parent::__construct([
             'vehicle' => $vehicle,
             'status' => $status,

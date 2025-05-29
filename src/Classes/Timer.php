@@ -34,8 +34,11 @@ class Timer
      */
     private float $seconds;
 
-    public function __construct(string $invoker, callable $closure, float $seconds)
-    {
+    public function __construct(
+        string $invoker,
+        callable $closure,
+        float $seconds
+    ) {
         $this->invoker = $invoker;
         $this->closure = $closure;
         $this->seconds = $seconds;

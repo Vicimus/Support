@@ -9,8 +9,10 @@ use DateTimeZone;
 
 class DateTime extends Date
 {
-    public function __construct(string $time = 'now', ?DateTimeZone $timezone = null)
-    {
+    public function __construct(
+        string $time = 'now',
+        ?DateTimeZone $timezone = null
+    ) {
         if ($time !== 'now') {
             $time = $this->replace($time);
         }

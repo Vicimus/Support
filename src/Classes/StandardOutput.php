@@ -12,11 +12,9 @@ class StandardOutput implements ConsoleOutput
     public const COLOR_NONE = "\033[0m";
     public const COLOR_YELLOW = "\033[33m";
 
-    protected int $lineLength;
-
-    public function __construct(int $lineLength = 80)
-    {
-        $this->lineLength = $lineLength;
+    public function __construct(
+        protected int $lineLength = 80
+    ) {
     }
 
     public function comment(string $output): void

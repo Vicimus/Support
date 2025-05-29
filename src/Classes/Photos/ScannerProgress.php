@@ -26,8 +26,9 @@ class ScannerProgress implements ConsoleOutput
 
     protected int $upToDate = 0;
 
-    public function __construct(protected int $total)
-    {
+    public function __construct(
+        protected int $total,
+    ) {
         if ($this->total) {
             return;
         }

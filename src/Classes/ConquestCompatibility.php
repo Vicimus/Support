@@ -19,8 +19,10 @@ class ConquestCompatibility extends ImmutableObject
      * ConquestCompatibility constructor.
      * @throws InvalidArgumentException
      */
-    public function __construct(string $class, string $description = '')
-    {
+    public function __construct(
+        string $class,
+        string $description = ''
+    ) {
         /** @var ConquestDataSource $instance */
         $instance = app($class);
         if (!$instance instanceof ConquestDataSource) {

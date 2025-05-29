@@ -22,13 +22,11 @@ class ProcessProgress implements ConsoleOutput
 
     protected int $skipped = 0;
 
-    protected int $total = 0;
-
     protected int $updated = 0;
 
-    public function __construct(int $total)
-    {
-        $this->total = $total;
+    public function __construct(
+        protected int $total = 0
+    ) {
         if ($this->total) {
             return;
         }
