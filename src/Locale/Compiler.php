@@ -11,14 +11,10 @@ use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\LocaleException;
 
 class Compiler
 {
-    private string $file;
-
-    private string $pathToLang;
-
-    public function __construct(string $pathToLang, string $file = 'i18n.php')
-    {
-        $this->file = $file;
-        $this->pathToLang = $pathToLang;
+    public function __construct(
+        private string $pathToLang,
+        private string $file = 'i18n.php'
+    ) {
     }
 
     /**

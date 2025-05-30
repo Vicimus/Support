@@ -10,17 +10,16 @@ use Vicimus\Support\Database\Model;
 
 use function is_array;
 
-/**
- * Class ImmutableObject
- */
 class ImmutableModel extends ImmutableObject
 {
     /**
      * ImmutableModel constructor.
      * @throws InvalidArgumentException
      */
-    public function __construct(stdClass | array $original = [], ?Model $model = null)
-    {
+    public function __construct(
+        stdClass | array $original = [],
+        ?Model $model = null,
+    ) {
         $this->merge($original, $model);
 
         parent::__construct($original);

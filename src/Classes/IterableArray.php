@@ -22,8 +22,9 @@ class IterableArray implements Iterator
      *
      * @param mixed[] $source The source array
      */
-    public function __construct(array $source)
-    {
+    public function __construct(
+        array $source
+    ) {
         $this->source = $source;
     }
 

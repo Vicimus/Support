@@ -56,8 +56,10 @@ class ImmutableObject implements ArrayAccess, JsonSerializable, WillValidate
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(object | array $original = [], ?Factory $validator = null)
-    {
+    public function __construct(
+        object | array $original = [],
+        ?Factory $validator = null
+    ) {
         if (!is_array($original) && !is_object($original)) {
             $type = gettype($original);
             throw new InvalidArgumentException(sprintf(

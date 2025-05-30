@@ -21,8 +21,11 @@ class Translation extends ImmutableObject
      * @param string|string[]|string[][] $translation The translation data
      * @param string|null                $path        The path (inventory-ads.banana))
      */
-    public function __construct(string $key, string|array $translation, ?string $path = null)
-    {
+    public function __construct(
+        string $key,
+        string | array $translation,
+        ?string $path = null
+    ) {
         $path ??= $key;
         $value = $translation;
         $context = '';

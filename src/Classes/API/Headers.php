@@ -15,8 +15,9 @@ use Vicimus\Support\Classes\ImmutableObject;
  */
 class Headers extends ImmutableObject
 {
-    public function __construct(Response $response)
-    {
+    public function __construct(
+        Response $response
+    ) {
         $headers = $response->getHeaders();
         $payload = [];
         foreach ($headers as $header => $contents) {

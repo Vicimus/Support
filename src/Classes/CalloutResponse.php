@@ -12,8 +12,10 @@ use Illuminate\Support\Collection;
  */
 class CalloutResponse extends ImmutableObject
 {
-    public function __construct(Collection $conquest, Collection $retention)
-    {
+    public function __construct(
+        Collection $conquest,
+        Collection $retention
+    ) {
         parent::__construct([
             'conquest' => $conquest,
             'retention' => $retention,
