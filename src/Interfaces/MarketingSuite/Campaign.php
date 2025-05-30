@@ -43,7 +43,7 @@ use Vicimus\Support\Interfaces\Eloquent;
  * @property Carbon $sms_at
  * @property bool|int $send_postcard
  */
-interface Campaign extends Eloquent
+interface Campaign extends Eloquent, Placeholderable
 {
     /**
      * A campaign has many acknowledgements
@@ -84,6 +84,8 @@ interface Campaign extends Eloquent
      * Is the campaign purl only
      */
     public function isPurlOnly(): bool;
+
+    public function leadTypeId(): ?int;
 
     /**
      * This method should return if the campaign is utilizing a specific
