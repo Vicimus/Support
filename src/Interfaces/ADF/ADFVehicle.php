@@ -24,6 +24,10 @@ interface ADFVehicle
      */
     public function interior(): string;
 
+    public function make(): string;
+
+    public function model(): string;
+
     /**
      * Get the number of kilometres on the odometer
      */
@@ -60,4 +64,6 @@ interface ADFVehicle
      * Retrieve the vehicle VIN
      */
     public function vin(): string;
+
+    public function year(): string;
 }
