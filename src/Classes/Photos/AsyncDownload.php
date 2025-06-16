@@ -9,11 +9,9 @@ use Vicimus\Support\Interfaces\Vehicle;
 
 class AsyncDownload implements DownloadRequest
 {
-    protected AsyncRequestPool $pool;
-
-    public function __construct(AsyncRequestPool $pool)
-    {
-        $this->pool = $pool;
+    public function __construct(
+        protected AsyncRequestPool $pool
+    ) {
     }
 
     public function getAsyncPool(): AsyncRequestPool

@@ -13,8 +13,11 @@ namespace Vicimus\Support\Classes;
  */
 class ComplexValue extends ImmutableObject
 {
-    public function __construct(string | int | null $value, string $label, ?string $additional = null)
-    {
+    public function __construct(
+        string | int | null $value,
+        string $label,
+        ?string $additional = null
+    ) {
         parent::__construct([
             'value' => $value,
             'label' => $label,

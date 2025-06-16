@@ -8,8 +8,11 @@ use Vicimus\Support\Interfaces\Vehicle;
 
 class UnauthorizedPhotoException extends PhotoException
 {
-    public function __construct(Vehicle $stock, string $url, ?string $specific = null)
-    {
+    public function __construct(
+        Vehicle $stock,
+        string $url,
+        ?string $specific = null,
+    ) {
         parent::__construct($stock, $url, $specific, 401);
     }
 }

@@ -13,20 +13,13 @@ use Vicimus\Support\Interfaces\Vehicle;
 
 class AsyncPhotoRequest implements AsyncRequest
 {
-    protected Photo $photo;
-
-    protected ?PhotoStatus $status;
-
-    protected Vehicle $vehicle;
-
-    protected string $verb;
-
-    public function __construct(Vehicle $vehicle, Photo $photo, ?PhotoStatus $status = null, string $verb = 'GET')
-    {
+    public function __construct(
+        protected readonly Vehicle $vehicle,
+        protected readonly Photo $photo,
+        protected readonly ?PhotoStatus $status = null,
+        protected string $verb = 'GET',
+    ) {
         $this->verb = strtoupper($verb);
-        $this->vehicle = $vehicle;
-        $this->status = $status;
-        $this->photo = $photo;
     }
 
     /**

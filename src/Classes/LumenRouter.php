@@ -11,11 +11,10 @@ use Laravel\Lumen\Routing\Router;
  */
 class LumenRouter
 {
-    protected Router $app;
-
-    public function __construct(Router $app)
-    {
-        $this->app = $app;
+    public function __construct(
+        protected readonly Router $app,
+    ) {
+        //
     }
 
     /**

@@ -15,14 +15,11 @@ class GenericUtility implements Utility
      */
     protected $call;
 
-    protected string $desc;
-
-    protected string $name;
-
-    public function __construct(string $name, string $desc, callable $call)
-    {
-        $this->name = $name;
-        $this->desc = $desc;
+    public function __construct(
+        protected string $name,
+        protected string $desc,
+        callable $call
+    ) {
         $this->call = $call;
     }
 

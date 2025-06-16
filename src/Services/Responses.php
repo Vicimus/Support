@@ -11,8 +11,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Responses
 {
-    public function __construct(private readonly Factory $view)
-    {
+    public function __construct(
+        private readonly Factory $view,
+    ) {
         //
     }
 

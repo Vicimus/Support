@@ -12,13 +12,12 @@ use Vicimus\Support\Interfaces\FileResolver;
 
 class GuzzleResolver implements FileResolver
 {
-    private Client $client;
-
     private string $path;
 
-    public function __construct(Client $client, ?string $path = null)
-    {
-        $this->client = $client;
+    public function __construct(
+        private Client $client,
+        ?string $path = null
+    ) {
         $this->path = $path ?? sys_get_temp_dir();
     }
 

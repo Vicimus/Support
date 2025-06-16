@@ -8,21 +8,12 @@ use Vicimus\Support\Interfaces\Vehicle;
 
 class PhotoException extends RestException
 {
-    /**
-     * The stock that threw the exception
-     */
-    protected Vehicle $stock;
-
-    /**
-     * THe url that threw the exception
-     */
-    protected string $url;
-
-    public function __construct(Vehicle $stock, ?string $url, ?string $specific = null, int $code = 500)
-    {
-        $this->stock = $stock;
-        $this->url = $url;
-
+    public function __construct(
+        protected readonly Vehicle $stock,
+        protected readonly ?string $url,
+        ?string $specific = null,
+        int $code = 500,
+    ) {
         $message = sprintf('Error with %s', $stock->getStockNumber());
         if ($specific) {
             $format = 'Error with %s: %s';
