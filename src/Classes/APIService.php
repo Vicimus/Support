@@ -170,6 +170,10 @@ class APIService
                 $message = $decoded['error'] ?? $message;
             }
 
+            if (!trim($message ?? '')) {
+                $message = $ex->getMessage();
+            }
+
             throw new RestException(is_string($message) ? $message : json_encode($message), $code);
         }
 
