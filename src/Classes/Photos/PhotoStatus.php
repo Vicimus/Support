@@ -15,12 +15,6 @@ use Vicimus\Support\Interfaces\Vehicle;
  */
 class PhotoStatus
 {
-    protected Headers $headers;
-
-    protected Photo $photo;
-
-    protected Vehicle $vehicle;
-
     /**
      * PhotoStatus constructor
      *
@@ -28,11 +22,11 @@ class PhotoStatus
      * @param Headers $headers The headers from the request
      * @param Vehicle $vehicle The vehicle related to this photo
      */
-    public function __construct(Photo $photo, Headers $headers, Vehicle $vehicle)
-    {
-        $this->headers = $headers;
-        $this->photo = $photo;
-        $this->vehicle = $vehicle;
+    public function __construct(
+        protected Photo $photo,
+        protected Headers $headers,
+        protected Vehicle $vehicle
+    ) {
     }
 
     /**

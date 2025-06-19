@@ -8,8 +8,10 @@ use InvalidArgumentException as InvalidArgument;
 
 class InvalidArgumentException extends InvalidArgument
 {
-    public function __construct(mixed $got, string ...$acceptable)
-    {
+    public function __construct(
+        mixed $got,
+        string ...$acceptable,
+    ) {
         $type = is_object($got) ? $got::class : gettype($got);
         $message = sprintf(
             'Invalid argument supplied. Received %s but expected %s',

@@ -6,7 +6,11 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 interface PurlFiredEvent
 {
-    public function __construct(int $campaign, int $customer, ?string $additional = null);
+    public function __construct(
+        int $campaign,
+        int $customer,
+        ?string $additional = null,
+    );
 
     /**
      * Get the additional details for the event

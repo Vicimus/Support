@@ -18,17 +18,14 @@ class ScriptCache implements ConsoleOutput
 
     private ?string $appName;
 
-    private Repository $cache;
-
-    private string $pathToFrontEnd;
-
     private string $relativeFrontEnd;
 
-    public function __construct(Repository $cache, string $pathToFrontEnd, ?string $appName = null)
-    {
+    public function __construct(
+        private Repository $cache,
+        private string $pathToFrontEnd,
+        ?string $appName = null
+    ) {
         $this->appName = $appName ?? md5($pathToFrontEnd);
-        $this->cache = $cache;
-        $this->pathToFrontEnd = $pathToFrontEnd;
         $this->relativeFrontEnd = str_replace(public_path() . '/', '', $pathToFrontEnd);
     }
 

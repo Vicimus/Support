@@ -21,10 +21,10 @@ interface Promotions
     /**
      * Return the promotion query
      */
-    public function query(): Builder|QBuilder;
+    public function query(): Builder | QBuilder;
 
     /**
      * Return the PromotionJoin query
      */
-    public function queryJoin(): Builder|QBuilder;
+    public function queryJoin(): Builder | QBuilder;
 }

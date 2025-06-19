@@ -10,8 +10,6 @@ use Vicimus\Support\FrontEnd\ScriptCache;
 
 class CacheScripts extends Command
 {
-    protected ScriptCache $cache;
-
     /**
      * @var string
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
@@ -24,10 +22,10 @@ class CacheScripts extends Command
      */
     protected $signature = 'scripts:cache';
 
-    public function __construct(ScriptCache $cache)
-    {
+    public function __construct(
+        protected readonly ScriptCache $cache,
+    ) {
         parent::__construct();
-        $this->cache = $cache;
     }
 
     public function handle(): void

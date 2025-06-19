@@ -20,15 +20,13 @@ class AsyncScanner implements Scanner
 {
     use ConsoleOutputter;
 
-    protected AsyncRequestPool $async;
-
     protected Client $client;
 
     protected ScannerProgress $progress;
 
-    public function __construct(AsyncRequestPool $async)
-    {
-        $this->async = $async;
+    public function __construct(
+        protected AsyncRequestPool $async
+    ) {
     }
 
     public function scan(Client $client): Collection

@@ -9,14 +9,10 @@ use Vicimus\Support\Interfaces\Vehicle;
 
 class SingleDownload implements DownloadRequest
 {
-    protected PhotoStatus $photo;
-
-    protected Vehicle $vehicle;
-
-    public function __construct(Vehicle $vehicle, PhotoStatus $photo)
-    {
-        $this->vehicle = $vehicle;
-        $this->photo = $photo;
+    public function __construct(
+        protected Vehicle $vehicle,
+        protected PhotoStatus $photo
+    ) {
     }
 
     /**

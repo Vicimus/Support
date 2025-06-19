@@ -22,8 +22,9 @@ class DownloadProgress implements ConsoleOutput
 
     protected int $successes = 0;
 
-    public function __construct(protected int $total)
-    {
+    public function __construct(
+        protected int $total,
+    ) {
         if ($this->total) {
             return;
         }

@@ -10,8 +10,10 @@ use Vicimus\Support\Interfaces\Utility;
 
 class UtilityException extends Exception
 {
-    public function __construct(Utility $utility, Throwable $original)
-    {
+    public function __construct(
+        Utility $utility,
+        Throwable $original,
+    ) {
         $message = sprintf(
             'Utility [%s] (%s) threw an exception during execution. The message: %s in file %s on line %s',
             $utility->name(),
