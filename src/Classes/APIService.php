@@ -139,7 +139,7 @@ class APIService
     public function request(string $method, string $path, mixed $payload = [], ?string $tag = null): mixed
     {
         $path = str_replace($this->url, '', $path);
-        if (strpos($path, '/') !== 0) {
+        if (!str_starts_with($path, '/')) {
             $path = '/' . $path;
         }
 
@@ -162,15 +162,7 @@ class APIService
                 $query => $this->payload($payload),
             ]);
         } catch (ClientException | GuzzleServerException $ex) {
-            $response = $ex->getResponse();
-            $code = $response->getStatusCode();
-            $message = (string) $response->getBody();
-            $decoded = json_decode($message, true);
-            if ($decoded) {
-                $message = $decoded['error'] ?? $message;
-            }
-
-            throw new RestException(is_string($message) ? $message : json_encode($message), $code);
+            throw $this->restException($ex);
         }
 
         $result = (string) $response->getBody();
@@ -237,5 +229,22 @@ class APIService
                 );
             }
         }
+    }
+
+    private function restException(ClientException | GuzzleServerException $ex): RestException
+    {
+        $response = $ex->getResponse();
+        $code = $response->getStatusCode();
+        $message = (string) $response->getBody();
+        $decoded = json_decode($message, true);
+        if ($decoded) {
+            $message = $decoded['error'] ?? $message;
+        }
+
+        if (!trim($message ?? '')) {
+            $message = $ex->getMessage();
+        }
+
+        return new RestException(is_string($message) ? $message : json_encode($message), $code);
     }
 }

@@ -52,6 +52,21 @@ class APIServiceTest extends GuzzleTestCase
         }
     }
 
+    public function testRequestExceptionEmpty(): void
+    {
+        $api = new APIService($this->guzzle([
+            new Response(500, [], ''),
+        ]), 'banana.com');
+
+        try {
+            $api->request('get', '');
+            $this->wasExpectingException(RestException::class);
+        } catch (RestException $ex) {
+            $this->assertEquals(500, $ex->getCode());
+            $this->assertStringContainsString('banana.com', $ex->getMessage());
+        }
+    }
+
     public function testMultiPartPatch(): void
     {
         $api = new APIService($this->guzzle([
