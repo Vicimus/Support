@@ -16,6 +16,8 @@ interface Placeholderable
      */
     public function campaignTitle(): string;
 
+    public function contentId(): ?int;
+
     /**
      * Retrieve the description of the selected form for the campaign
      */
@@ -26,7 +28,7 @@ interface Placeholderable
      */
     public function formTitle(): string;
 
-    public function getTitle(): string | null;
+    public function getTitle(): ?string;
 
     /**
      * Retrieve the oem name from the implementation
@@ -37,6 +39,8 @@ interface Placeholderable
      * Retrieve the purl domain id from the implementation
      */
     public function purlDomainId(): ?int;
+
+    public function storeId(): int;
 
     /**
      * Campaign version
