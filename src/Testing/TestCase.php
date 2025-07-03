@@ -25,6 +25,7 @@ abstract class TestCase extends PHPUnitTestCase
     /**
      * Fail a test because an expected exception wasn't thrown
      * @throws InvalidArgumentException
+     * @deprecated
      */
     public function wasExpectingException(string $exception): void
     {

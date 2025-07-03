@@ -103,7 +103,7 @@ trait TestSqliteDatabase
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
-        $output = $this->output();
+        $output = $this->initializeOutput();
         $bench = (new Benchmark())->init();
         if (!$this->isOutdated($database)) {
             copy(database_path('.cached'), $stub);
@@ -188,7 +188,7 @@ trait TestSqliteDatabase
         return $this->checksum($database) !== file_get_contents(base_path('.vicimus.test.cache'));
     }
 
-    private function output(): ConsoleOutput
+    private function initializeOutput(): ConsoleOutput
     {
         $output = new NullOutput();
         $quiet = (int) getenv('VICIMUS_TEST_NO_DATABASE_OUTPUT');

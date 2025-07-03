@@ -8,6 +8,7 @@ use Laravel\Lumen\Routing\Router;
 
 /**
  * Adds a bit of flavour to the boring ass Lumen router
+ * @deprecated
  */
 class LumenRouter
 {
