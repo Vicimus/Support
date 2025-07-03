@@ -6,20 +6,12 @@ namespace Vicimus\Support\Tests\Unit\Classes;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 use Vicimus\Support\Classes\ConquestCompatibility;
+use Vicimus\Support\Classes\ImmutableObject;
 use Vicimus\Support\Interfaces\MarketingSuite\ConquestDataSource;
 
-/**
- * Class ConquestCompatibilityTest
- */
 class ConquestCompatibilityTest extends TestCase
 {
-    /**
-     * Test constructor
-     *
-     * @throws Throwable
-     */
     public function testConstructor(): void
     {
         $class = $this->getMockBuilder(ConquestDataSource::class)
@@ -29,13 +21,9 @@ class ConquestCompatibilityTest extends TestCase
         $this->assertEquals($class::class, $info->class);
     }
 
-    /**
-     * Test failure
-     *
-     */
     public function testConstructorInvalid(): void
     {
-        $class = self::class;
+        $class = ImmutableObject::class;
 
         try {
             new ConquestCompatibility($class);

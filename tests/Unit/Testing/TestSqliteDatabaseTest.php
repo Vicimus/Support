@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vicimus\Support\Unit\Testing;
+namespace Vicimus\Support\Tests\Unit\Testing;
 
 use Illuminate\Support\Facades\Facade;
 use org\bovigo\vfs\vfsStream;
@@ -53,5 +53,20 @@ class TestSqliteDatabaseTest extends TestCase
         }
 
         $this->assertFileExists(vfsStream::url('root/stub.sqlite'));
+    }
+
+    public function testTestCaseExtending(): void
+    {
+        $instance = new class extends TestCase
+        {
+            use TestSqliteDatabase;
+
+            public function __construct()
+            {
+                parent::__construct('TestCaseExtending');
+            }
+        };
+
+        $this->assertNotNull($instance);
     }
 }
