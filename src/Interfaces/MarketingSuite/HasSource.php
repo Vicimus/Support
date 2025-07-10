@@ -60,6 +60,8 @@ interface HasSource
      */
     public function getDestination(): ?string;
 
+    public function getMessageTemplateId(): ?int;
+
     /**
      * Retrieve the identifier of the has source instance
      */
