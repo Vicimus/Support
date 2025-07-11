@@ -65,6 +65,8 @@ interface HasSource
      */
     public function getId(): int;
 
+    public function getMessageTemplateId(): ?int;
+
     /**
      * Retrieve the error code associated with the campaign being paused
      */
