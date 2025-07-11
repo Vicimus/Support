@@ -1,6 +1,6 @@
-name: Standard Build
+name: Master Build
 on:
-  pull_request:
+  push:
     branches:
       - master
 jobs:
