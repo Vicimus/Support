@@ -87,6 +87,8 @@ interface Campaign extends Eloquent, Placeholderable
 
     public function leadTypeId(): ?int;
 
+    public function logs(): MorphMany;
+
     /**
      * This method should return if the campaign is utilizing a specific
      * medium. Is it sending letters, sending emails, using facebook carousel,

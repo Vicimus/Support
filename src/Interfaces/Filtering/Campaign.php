@@ -99,7 +99,7 @@ interface Campaign extends BaseCampaign
     /**
      * The logs method
      */
-    public function logs(): HasMany;
+    public function logs(): MorphMany;
 
     /**
      * A campaign can have many notes associated with it
