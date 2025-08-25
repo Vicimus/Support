@@ -121,6 +121,9 @@ interface Campaign extends BaseCampaign
      */
     public function useCustomerPreference(): bool;
 
+
+    public function useExcludeEngaged(): bool;
+
     /**
      * Determine if bounced customers should be excluded
      *
