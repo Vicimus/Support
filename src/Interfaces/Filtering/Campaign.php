@@ -128,6 +128,8 @@ interface Campaign extends BaseCampaign
      */
     public function useExcludeBounced(bool $default): bool;
 
+    public function useExcludeEngaged(): bool;
+
     /**
      * Determine if the emails should only go to active customers
      */
