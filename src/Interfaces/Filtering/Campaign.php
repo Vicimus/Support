@@ -121,15 +121,14 @@ interface Campaign extends BaseCampaign
      */
     public function useCustomerPreference(): bool;
 
-
-    public function useExcludeEngaged(): bool;
-
     /**
      * Determine if bounced customers should be excluded
      *
      * @param bool $default The default value to use if explicitly set
      */
     public function useExcludeBounced(bool $default): bool;
+
+    public function useExcludeEngaged(): bool;
 
     /**
      * Determine if the emails should only go to active customers
