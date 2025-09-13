@@ -57,11 +57,6 @@ use Vicimus\Support\Interfaces\MarketingSuite\Campaign as BaseCampaign;
 interface Campaign extends BaseCampaign
 {
     /**
-     * A campaign can have many batches
-     */
-    public function batches(): HasMany;
-
-    /**
      * Departments
      */
     public function departments(): MorphToMany;
