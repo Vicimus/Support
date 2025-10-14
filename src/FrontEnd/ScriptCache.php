@@ -60,6 +60,7 @@ class ScriptCache implements ConsoleOutput
             $fileFinder->files()->in($locale->getRealPath())->name('*.js')->depth(0);
             foreach ($fileFinder as $file) {
                 $name = $this->extract($file->getRelativePathname());
+                dd($name);
                 if (is_numeric($name[0])) {
                     continue;
                 }
