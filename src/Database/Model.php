@@ -38,6 +38,7 @@ use Throwable;
  * @method static bool truncate()
  * @method static int count()
  * @method static static updateOrCreate(array $check, array $attributes)
+ * @method static static firstOrNew(array $unique)
  * @property int $id
  */
 class Model extends LaravelModel
