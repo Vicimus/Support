@@ -84,6 +84,8 @@ interface HasSource
      */
     public function getTitle(): string;
 
+    public function isExpired(): bool;
+
     /**
      * Retrieve the paused state
      */
