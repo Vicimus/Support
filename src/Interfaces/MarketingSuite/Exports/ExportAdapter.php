@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use League\Csv\Writer;
 use Vicimus\Support\Classes\Exports\ExportArtifact;
 
-interface DailyCustomersAdapter
+interface ExportAdapter
 {
     /**
      * @param Collection<int, ExportArtifact> $artifacts
@@ -20,7 +20,7 @@ interface DailyCustomersAdapter
 
     public function key(): string;
 
-    public function normalizer(): DailyCustomersNormalizer;
+    public function normalizer(): CustomerNormalizer;
 
     /**
      * @return int[]
@@ -28,7 +28,7 @@ interface DailyCustomersAdapter
     public function stores(): array;
 
     /**
-     * @param Collection<int, object> $customers
+     * @param Collection<int, object> $rows
      */
-    public function write(Writer $csv, Collection $customers): void;
+    public function write(Writer $csv, Collection $rows): void;
 }

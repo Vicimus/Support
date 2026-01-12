@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite\Exports;
 
-interface DailyCustomersNormalizer
+interface CustomerNormalizer
 {
     public function date(?string $value): ?string;
 
