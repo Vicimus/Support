@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vicimus\Support\Interfaces\MarketingSuite\Assets;
 
 use Vicimus\Support\Classes\Grouping;
+use Vicimus\Support\Interfaces\MarketingSuite\SimpleProperties;
 use Vicimus\Support\Interfaces\Property;
 
 interface PropertyProvider
@@ -28,5 +29,5 @@ interface PropertyProvider
      *
      * @return Property[]
      */
-    public function properties(?int $storeId = null): array;
+    public function properties(?int $storeId = null, ?SimpleProperties $campaign = null): array;
 }
