@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
  * @property bool $letter
  * @property bool $postcard
  * @property string $format
+ * @property string|null $expectSelector
  */
 class RenderSpecs extends ImmutableObject
 {
@@ -25,8 +26,9 @@ class RenderSpecs extends ImmutableObject
      * @param int|null         $scale    The scale to use
      * @param int|null         $pages    The number of pages
      * @param bool             $letter   The letter
-     * @param bool             $postcard The postcard toggle
-     * @param string|null      $format   The page format to use
+     * @param bool             $postcard       The postcard toggle
+     * @param string|null      $format         The page format to use
+     * @param string|null      $expectSelector CSS selector for image validation
      */
     public function __construct(
         $width,
@@ -35,7 +37,8 @@ class RenderSpecs extends ImmutableObject
         ?int $pages = null,
         bool $letter = true,
         bool $postcard = false,
-        ?string $format = null
+        ?string $format = null,
+        ?string $expectSelector = null
     ) {
         if ($width instanceof Request) {
             $pages = (int) $width->get('pages');
@@ -44,6 +47,7 @@ class RenderSpecs extends ImmutableObject
             $letter = $width->get('letter');
             $postcard = $width->get('postcard');
             $format = $width->get('pageType');
+            $expectSelector = $width->get('expectSelector');
             $width = (int) $width->get('width');
         }
 
@@ -55,6 +59,7 @@ class RenderSpecs extends ImmutableObject
             'letter' => $letter,
             'postcard' => $postcard,
             'format' => $format,
+            'expectSelector' => $expectSelector,
         ]);
     }
 }
