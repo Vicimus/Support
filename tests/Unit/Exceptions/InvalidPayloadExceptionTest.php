@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests;
 
@@ -13,7 +15,6 @@ class InvalidPayloadExceptionTest extends TestCase
     /**
      * Test message
      *
-     * @return void
      */
     public function testMessage(): void
     {

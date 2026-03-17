@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
@@ -7,8 +9,6 @@ use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Interfaces\Vehicle;
 
 /**
- * Class PhotoStatus
- *
  * @property Headers $headers
  * @property Photo $photo
  * @property Vehicle $vehicle
@@ -16,56 +16,29 @@ use Vicimus\Support\Interfaces\Vehicle;
 class PhotoStatus
 {
     /**
-     * The headers to determine status
-     *
-     * @var Headers
-     */
-    protected $headers;
-
-    /**
-     * The photo this status represents
-     *
-     * @var Photo
-     */
-    protected $photo;
-
-    /**
-     * The vehicle related to the photo status
-     *
-     * @var Vehicle
-     */
-    protected $vehicle;
-
-    /**
      * PhotoStatus constructor
      *
      * @param Photo   $photo   The stock
      * @param Headers $headers The headers from the request
      * @param Vehicle $vehicle The vehicle related to this photo
      */
-    public function __construct(Photo $photo, Headers $headers, Vehicle $vehicle)
-    {
-        $this->headers = $headers;
-        $this->photo = $photo;
-        $this->vehicle = $vehicle;
+    public function __construct(
+        protected Photo $photo,
+        protected Headers $headers,
+        protected Vehicle $vehicle
+    ) {
     }
 
     /**
      * Get a protected property for read only
-     *
-     * @param string $property The property to get
-     *
-     * @return mixed
      */
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
         return $this->$property;
     }
 
     /**
      * Get a download request for the photo this is about
-     *
-     * @return Downloadable
      */
     public function download(): Downloadable
     {
@@ -74,8 +47,6 @@ class PhotoStatus
 
     /**
      * Is the photo outdated
-     *
-     * @return bool
      */
     public function isOutdated(): bool
     {

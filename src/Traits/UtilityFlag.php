@@ -1,10 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
-/**
- * Trait for adding flags to a utilities command.
- */
 trait UtilityFlag
 {
     /**
@@ -12,12 +11,8 @@ trait UtilityFlag
      *
      * Used by the utility manager to allow specific flags to be triggered when
      * the command is run.
-     *
-     * @param string[]|mixed $flags The desired flags to add.
-     *
-     * @return string
      */
-    public function addFlags($flags): string
+    public function addFlags(mixed $flags): string
     {
         return view('utility.partials.flags')
             ->with([

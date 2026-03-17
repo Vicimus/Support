@@ -1,10 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Locale;
 
-/**
- * Class States
- */
 final class States
 {
     /** A mapping of countries and their states */

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Services;
 
@@ -6,16 +8,8 @@ use Illuminate\View\Factory;
 use Vicimus\Support\Services\Responses;
 use Vicimus\Support\Testing\TestCase;
 
-/**
- * Class ResponsesTest
- */
 class ResponsesTest extends TestCase
 {
-    /**
-     * Test json
-     *
-     * @return void
-     */
     public function testJson(): void
     {
         $factory = $this->basicMock(Factory::class);
@@ -25,11 +19,6 @@ class ResponsesTest extends TestCase
         $this->assertEquals(500, $json->getStatusCode());
     }
 
-    /**
-     * Test make
-     *
-     * @return void
-     */
     public function testMake(): void
     {
         $factory = $this->basicMock(Factory::class);

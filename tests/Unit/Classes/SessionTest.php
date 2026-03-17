@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -13,7 +15,6 @@ class SessionTest extends TestCase
     /**
      * Set up the test
      *
-     * @return void
      */
     public function setup(): void
     {
@@ -23,7 +24,6 @@ class SessionTest extends TestCase
     /**
      * Test put
      *
-     * @return void
      */
     public function testPutAndForgetAndGet(): void
     {

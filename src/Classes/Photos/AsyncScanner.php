@@ -1,9 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
@@ -12,53 +14,22 @@ use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
 /**
- * Class AsyncScanner
- *
  * Used to make async head requests
  */
 class AsyncScanner implements Scanner
 {
     use ConsoleOutputter;
 
-    /**
-     * The pool to use with the requests
-     *
-     * @var AsyncRequestPool
-     */
-    protected $async;
+    protected Client $client;
 
-    /**
-     * Client
-     *
-     * @var Client
-     */
-    protected $client;
+    protected ScannerProgress $progress;
 
-    /**
-     * Track progress and output it to the screen
-     *
-     * @var ScannerProgress
-     */
-    protected $progress;
-
-    /**
-     * AsyncScanner constructor.
-     *
-     * @param AsyncRequestPool $async The pool to scan through
-     */
-    public function __construct(AsyncRequestPool $async)
-    {
-        $this->async = $async;
+    public function __construct(
+        protected AsyncRequestPool $async
+    ) {
     }
 
-    /**
-     * Scan the photos for photo status
-     *
-     * @param Client $client The client to use for requests
-     *
-     * @return mixed|Collection|PhotoStatus[]
-     */
-    public function scan(Client $client)
+    public function scan(Client $client): Collection
     {
         $this->progress = (new ScannerProgress($this->async->total()))->bind($this->output);
 
@@ -80,7 +51,7 @@ class AsyncScanner implements Scanner
                     $this->progress->incUpToDate();
                 }
             },
-            'rejected' => function (RequestException $reason, $index): void {
+            'rejected' => function (GuzzleException $reason, $index): void {
                 $this->progress->incError();
                 $response = $reason->getResponse();
                 $status = 500;

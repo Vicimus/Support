@@ -1,38 +1,24 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Support\Facades\Auth;
-use Vicimus\Onyx\User;
+use Vicimus\Support\Interfaces\OnyxUser;
 
-/**
- * Class Authentication
- */
 class Authentication
 {
-    /**
-     * The auth manager
-     *
-     * @var Factory
-     */
-    protected $manager;
-
-    /**
-     * Authentication constructor.
-     *
-     * @param Factory $manager The auth manager
-     */
-    public function __construct(Factory $manager)
-    {
-        $this->manager = $manager;
+    public function __construct(
+        protected readonly Factory $manager,
+    ) {
+        //
     }
 
     /**
      * Forward the request on to the facade
-     *
-     * @return bool
      */
     public function check(): bool
     {
@@ -42,7 +28,7 @@ class Authentication
     /**
      * Get the current user
      *
-     * @return Authenticatable|User
+     * @return Authenticatable|OnyxUser
      */
     public function user(): ?Authenticatable
     {

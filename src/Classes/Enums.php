@@ -1,12 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
-use function key_exists;
-
-/**
- * Definitions that we can reuse for storing data or for display.
- */
 class Enums
 {
     public const STATES = [
@@ -104,6 +101,20 @@ class Enums
             'CA' => '/\b(ca|canada)\b/iu',
             'US' => '/\b(usa?|united[- ]states|[ée]tats[- ]unis)\b/iu',
             'UK' => '/\b(uk|united[- ]kingdom)\b/iu',
+        ];
+    }
+
+    /**
+     * Simplified payment type placeholders
+     *
+     * @return string[]
+     */
+    public static function getSimplePaymentTypes(): array
+    {
+        return [
+            'C' => 'cash',
+            'F' => 'finance',
+            'L' => 'lease',
         ];
     }
 
@@ -287,7 +298,7 @@ class Enums
             return $states;
         }
 
-        if (!key_exists($country, $states)) {
+        if (!array_key_exists($country, $states)) {
             return [];
         }
 

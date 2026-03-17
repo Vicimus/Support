@@ -1,10 +1,14 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Photos;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\API\Headers;
 use Vicimus\Support\Exceptions\PhotoException;
 use Vicimus\Support\Exceptions\UnauthorizedPhotoException;
@@ -12,50 +16,24 @@ use Vicimus\Support\Interfaces\Photo;
 use Vicimus\Support\Interfaces\Vehicle;
 use Vicimus\Support\Traits\ConsoleOutputter;
 
-/**
- * Scan a single photo for its status
- */
 class SingleScanner implements Scanner
 {
     use ConsoleOutputter;
 
-    /**
-     * The photo to scan
-     *
-     * @var Photo
-     */
-    protected $photo;
-
-    /**
-     * The vehicle related to the photo
-     *
-     * @var Vehicle
-     */
-    protected $stock;
-
-    /**
-     * SingleScanner constructor.
-     *
-     * @param Vehicle $vehicle The vehicle related to this photo
-     * @param Photo   $photo   The photo to scan
-     */
-    public function __construct(Vehicle $vehicle, Photo $photo)
-    {
-        $this->stock = $vehicle;
-        $this->photo = $photo;
+    public function __construct(
+        protected readonly Vehicle $stock,
+        protected readonly Photo $photo
+    ) {
+        //
     }
 
     /**
      * Scan the photo for its status
-     *
-     * @param Client $client A client to make requests with
-     *
-     * @return mixed
-     *
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
+     * @throws GuzzleException
      */
-    public function scan(Client $client)
+    public function scan(Client $client): PhotoStatus | Collection
     {
         $headers = $this->headers($client, $this->stock, $this->photo);
         return $this->photo->status($headers, $this->stock);
@@ -64,15 +42,9 @@ class SingleScanner implements Scanner
     /**
      * Get the headers for a given URL
      *
-     * @param Client  $client The client to use with scanning
-     * @param Vehicle $stock  The stock related to the request
-     * @param Photo   $photo  The url to send the HEAD request to
-     *
-     * @return Headers
-     *
      * @throws PhotoException
      * @throws UnauthorizedPhotoException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     protected function headers(Client $client, Vehicle $stock, Photo $photo): Headers
     {
@@ -95,10 +67,6 @@ class SingleScanner implements Scanner
 
     /**
      * Parse out the real message from curl
-     *
-     * @param ConnectException $ex The exception that occurred
-     *
-     * @return string
      */
     protected function parseCurlError(ConnectException $ex): string
     {

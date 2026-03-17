@@ -1,33 +1,22 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
 /**
- * Interface Property
+ * phpcs:disable
  *
  * @property int $id
  * @property mixed $value
  */
 interface PropertyRecord
 {
-    /**
-     * Get the value of the property
-     * @return mixed
-     */
-    public function getValue();
+    public function getId(): string | int | null;
 
-    /**
-     * Retrieve the name of the property
-     * @return string
-     */
+    public function getValue(): mixed;
+
     public function name(): string;
 
-    /**
-     * A property validates
-     *
-     * @param mixed $value The value to validate
-     *
-     * @return void
-     */
-    public function validate($value): void;
+    public function validate(mixed $value): void;
 }

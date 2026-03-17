@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Filtering;
 
@@ -12,17 +14,14 @@ use Vicimus\Support\Interfaces\MarketingSuite\Customer;
 interface CustomerInformation
 {
     /**
-     * @return Collection
+     * @return Collection<Customer>
      */
     public function collection(): Collection;
 
     /**
-     * @return LengthAwarePaginator|Collection|Customer[]
+     * @return LengthAwarePaginator<Customer>|Collection<Customer>
      */
-    public function customers();
+    public function customers(): LengthAwarePaginator | Collection;
 
-    /**
-     * @return LengthAwarePaginator
-     */
     public function paginator(): LengthAwarePaginator;
 }

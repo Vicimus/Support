@@ -1,32 +1,30 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QBuilder;
+use Vicimus\Support\Interfaces\Glovebox\Promotions\Promotion;
 use Vicimus\Support\Interfaces\Glovebox\Promotions\PromotionIncentive;
 
-/**
- * Class Promotions
- */
 interface Promotions
 {
     /**
-     * @param int $incentiveId The incentive id to find
-     *
-     * @return PromotionIncentive
+     * Get a promotion based on a vehicle id
      */
-    public function incentive(int $incentiveId): PromotionIncentive;
+    public function getByVehicleId(int $vehicleId, ?int $promotionId = null): ?Promotion;
+
+    public function incentive(int $incentiveId): ?PromotionIncentive;
 
     /**
      * Return the promotion query
-     * @return Builder|QBuilder
      */
-    public function query();
+    public function query(): Builder | QBuilder;
 
     /**
      * Return the PromotionJoin query
-     * @return Builder|QBuilder
      */
-    public function queryJoin();
+    public function queryJoin(): Builder | QBuilder;
 }

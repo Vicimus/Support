@@ -1,23 +1,18 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Files;
 
 use Vicimus\Support\Interfaces\FileResolver;
 
 /**
- * Class ResourceResolver
- *
  * This class was created to make things using fopen more testable
  */
 class ResourceResolver implements FileResolver
 {
     /**
-     * Resolve a file stream resource
-     *
-     * @param string $path The path to resolve
-     * @param string $mode The mode to open the resource with
-     *
-     * @return resource
+     * @return false|resource
      */
     public function file(string $path, string $mode = 'rb')
     {
@@ -26,11 +21,7 @@ class ResourceResolver implements FileResolver
 
     /**
      * Alias for file
-     *
-     * @param string $path The path
-     * @param string $mode The mode
-     *
-     * @return resource
+     * @return resource | false
      */
     public function open(string $path, string $mode = 'rb')
     {

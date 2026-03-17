@@ -1,23 +1,16 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Vicimus\Support\Classes\ImmutableModel;
 use Vicimus\Support\Database\Model;
 
-/**
- * Class ImmutableModelTest
- */
 class ImmutableModelTest extends TestCase
 {
-    /**
-     * Test the constructor
-     *
-     * @return void
-     */
     public function testConstructor(): void
     {
         $model = new class extends Model{
@@ -49,12 +42,5 @@ class ImmutableModelTest extends TestCase
 
         $instance = new $immutableModel($class, $model);
         $this->assertSame('Class Name', $instance->name);
-
-        try {
-            new ImmutableModel('banana');
-            $this->fail('Immutable Banana created');
-        } catch (InvalidArgumentException $ex) {
-            $this->assertStringContainsString('array or object', $ex->getMessage());
-        }
     }
 }

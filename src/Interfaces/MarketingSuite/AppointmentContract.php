@@ -1,10 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
+use Carbon\Carbon;
+
 /**
- * Interface AppointmentContract
- *
  * @property Carbon $date
  */
 interface AppointmentContract

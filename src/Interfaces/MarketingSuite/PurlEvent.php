@@ -1,9 +1,10 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 /**
- * Interface PurlEvent
  * @property int $event
  * @property int $campaign
  * @property int $customer
@@ -12,6 +13,7 @@ namespace Vicimus\Support\Interfaces\MarketingSuite;
  * @property string $referer
  * @property int $ctaId
  * @property string $customerType
+ * @property bool $persistent
  */
 interface PurlEvent
 {

@@ -2,13 +2,14 @@
     "name": "vicimus/support",
     "type": "library",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.3",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-dom": "*",
+        "illuminate/contracts": ">=9"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.8",
-        "guzzlehttp/guzzle": "~6",
+        "guzzlehttp/guzzle": "*",
         "illuminate/auth": "*",
         "illuminate/cache": "*",
         "illuminate/config": "*",
@@ -23,10 +24,10 @@
         "illuminate/validation": "*",
         "illuminate/view": "*",
         "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^9",
-        "symfony/browser-kit": "^4.3",
-        "symfony/var-dumper": "^4.2",
-        "vicimus/standard": "^4.1.2"
+        "phpunit/phpunit": "^10",
+        "symfony/browser-kit": "^6.0",
+        "symfony/var-dumper": "^6.0",
+        "vicimus/standard": "^6.0.2"
     },
     "suggest": {
         "laravel/lumen": "Required to use LumenRouter",

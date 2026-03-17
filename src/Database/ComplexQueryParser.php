@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Database;
 
@@ -6,21 +8,13 @@ use DateTime;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
-use Vicimus\Support\Exceptions\InvalidArgumentException;
 
-/**
- * Handles the more complex queries for the API
- */
 class ComplexQueryParser
 {
     /**
      * Check if a parameter value is considered a complex query or not
-     *
-     * @param mixed $value The value of the query property
-     *
-     * @return bool
      */
-    public function isComplexQuery($value): bool
+    public function isComplexQuery(mixed $value): bool
     {
         if (!is_string($value)) {
             return false;
@@ -35,7 +29,7 @@ class ComplexQueryParser
         ];
 
         foreach ($complex as $pattern) {
-            if (substr($value, 0, strlen($pattern)) === $pattern) {
+            if (str_starts_with($value, $pattern)) {
                 return true;
             }
         }
@@ -43,34 +37,21 @@ class ComplexQueryParser
         return false;
     }
 
-    /**
-     * Build a complex query based off of a submitted value
-     *
-     * @param Builder|Relation $query    The query to add on to
-     * @param string           $property The property being manipulated
-     * @param string           $value    The complex query string
-     *
-     * @return Builder|Relation
-     */
-    public function query($query, string $property, string $value)
-    {
-        $this->typeCheck($query);
-        list($type, $statement) = explode(':', $value);
+    public function query(
+        EloquentBuilder | Builder | Relation $query,
+        string $property,
+        string $value,
+    ): Builder | Relation | EloquentBuilder {
+        [$type, $statement] = explode(':', $value);
 
         return $this->$type($query, $property, $statement);
     }
 
-    /**
-     * Build a complex query based off of a 'gt' query
-     *
-     * @param Builder|Relation $query     The query to add on to
-     * @param string           $property  The property being manipulated
-     * @param string           $statement The complex query string
-     *
-     * @return Builder|Relation
-     */
-    protected function gt($query, string $property, string $statement)
-    {
+    protected function gt(
+        EloquentBuilder | Builder | Relation $query,
+        string $property,
+        string $statement,
+    ): EloquentBuilder | Builder | Relation {
         if ($statement === 'now') {
             $statement = new DateTime();
         }
@@ -78,17 +59,11 @@ class ComplexQueryParser
         return $query->where($property, '>', $statement);
     }
 
-    /**
-     * Build a complex query based off of a 'in' query
-     *
-     * @param Builder|Relation $query     The query to add on to
-     * @param string           $property  The property being manipulated
-     * @param string           $statement The complex query string
-     *
-     * @return Builder|Relation
-     */
-    protected function in($query, string $property, string $statement)
-    {
+    protected function in(
+        EloquentBuilder | Builder | Relation $query,
+        string $property,
+        string $statement,
+    ): EloquentBuilder | Builder | Relation {
         $hasNull = false;
         $possibilities = array_map(static function ($value) use (&$hasNull) {
             if ($value === 'null') {
@@ -109,51 +84,24 @@ class ComplexQueryParser
         });
     }
 
-    /**
-     * Build a complex query based off of a 'like' query
-     *
-     * @param Builder|Relation $query     The query to add on to
-     * @param string           $property  The property being manipulated
-     * @param string           $statement The complex query string
-     *
-     * @return Builder|Relation
-     */
-    protected function like($query, string $property, string $statement)
-    {
+    protected function like(
+        EloquentBuilder | Builder | Relation $query,
+        string $property,
+        string $statement,
+    ): EloquentBuilder | Builder | Relation {
         $query->where($property, 'LIKE', $statement);
         return $query;
     }
 
-    /**
-     * Build a complex query based off of a 'lt' query
-     *
-     * @param Builder|Relation $query     The query to add on to
-     * @param string           $property  The property being manipulated
-     * @param string           $statement The complex query string
-     *
-     * @return Builder|Relation
-     */
-    protected function lt($query, string $property, string $statement)
-    {
+    protected function lt(
+        EloquentBuilder | Builder | Relation $query,
+        string $property,
+        string $statement
+    ): EloquentBuilder | Builder | Relation {
         if ($statement === 'now') {
             $statement = new DateTime();
         }
 
         return $query->where($property, '<', $statement);
-    }
-
-    /**
-     * Check if the parameter was a valid type
-     *
-     * @param mixed $object The object to inspect
-     *
-     * @throws InvalidArgumentException if the object was not appropriate
-     * @return void
-     */
-    private function typeCheck($object): void
-    {
-        if (!$object instanceof Builder && !$object instanceof Relation && !$object instanceof EloquentBuilder) {
-            throw new InvalidArgumentException($object, EloquentBuilder::class, Builder::class, Relation::class);
-        }
     }
 }

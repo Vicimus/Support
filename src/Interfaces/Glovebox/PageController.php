@@ -1,12 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox;
 
 use Illuminate\Http\Response;
 
-/**
- * Interface PageController
- */
 interface PageController
 {
     /**
@@ -16,8 +15,6 @@ interface PageController
      * matched the URL, it tries to find a Page for it.
      *
      * @param string[] $args Arguments containing a page to show
-     *
-     * @return Response
      */
     public function show(array $args = []): Response;
 }

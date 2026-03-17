@@ -1,16 +1,15 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Glovebox\Leads;
 
-/**
- * Interface LeadsService
- */
 interface LeadsService
 {
     /**
      * Retrieve the dates of leads created associated with a vehicle
      *
-     * @return mixed[]
+     * @return string[][]
      */
     public function getLeadDatesPerVehicle(): array;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Services;
 
@@ -12,22 +14,13 @@ use Vicimus\Support\Interfaces\Financial\HasRate;
 use Vicimus\Support\Interfaces\Financial\HasTerm;
 use Vicimus\Support\Interfaces\Financial\LeaseItem;
 
-/**
- * Class Calculator
- */
 class LeaseCalculator
 {
     /**
      * Get the future value of a lease item
-     *
-     * @param float|HasPrice     $price    The price or a HasPrice instance
-     * @param float|HasLeaseRate $residual The residual or HasLeaseRate instance
-     *
-     * @return float
-     *
      * @throws InvalidArgumentException
      */
-    public function futureValue($price, $residual): float
+    public function futureValue(float | HasPrice $price, float | HasLeaseRate $residual): float
     {
         if (!($price instanceof HasPrice) && !is_float($price) && !is_int($price)) {
             throw new InvalidArgumentException(
@@ -54,15 +47,9 @@ class LeaseCalculator
 
     /**
      * Number of periods calculation (part of PMT)
-     *
-     * @param float|int|HasTerm $term      The term
-     * @param int               $frequency The number of payments per year
-     *
-     * @return int
-     *
      * @throws InvalidArgumentException
      */
-    public function nper($term, int $frequency): int
+    public function nper(float | int | HasTerm $term, int $frequency): int
     {
         if (!($term instanceof HasTerm) && !is_int($term) && !is_float($term)) {
             throw new InvalidArgumentException(
@@ -79,19 +66,10 @@ class LeaseCalculator
 
     /**
      * Calculate a payment
-     *
-     * @param float|LeaseItem $rate      A lease rate per payment or a LeaseItem instance
-     * @param int             $frequency The number of payments per year
-     * @param int             $nper      Number of payment periods (can be blank if LeaseItem provided)
-     * @param float           $pValue    The Present Value of the item (can be blank if LeaseItem provided)
-     * @param float           $fValue    The Future Value of the item (can be blank if LeaseItem provided)
-     *
-     * @return float
-     *
      * @throws CalculatorException
      */
     public function payment(
-        $rate,
+        float | LeaseItem $rate,
         int $frequency = 12,
         ?int $nper = null,
         ?float $pValue = null,
@@ -124,13 +102,8 @@ class LeaseCalculator
 
     /**
      * Calculates the rate value used in PMT calculations
-     *
-     * @param float|HasRate $rate      The source rate
-     * @param int           $frequency The frequency
-     *
-     * @return float
      */
-    public function rate($rate, int $frequency = 12): float
+    public function rate(float | HasRate $rate, int $frequency = 12): float
     {
         if ($rate instanceof HasRate) {
             $rate = $rate->rate();
@@ -139,15 +112,11 @@ class LeaseCalculator
         return round($rate / $frequency, 9);
     }
 
-    /**
-     * @param float|HasPrice       $price     The price
-     * @param float|HasDownpayment $down      The downpayment amount
-     * @param float|HasIncentive   $incentive The incentive amount
-     *
-     * @return float
-     */
-    protected function presentValue($price, $down = 0.0, $incentive = 0.0): float
-    {
+    protected function presentValue(
+        float | HasPrice $price,
+        float | HasDownpayment $down = 0.0,
+        float | HasIncentive $incentive = 0.0
+    ): float {
         $total = $price;
         if ($price instanceof HasPrice) {
             $total = $price->price();

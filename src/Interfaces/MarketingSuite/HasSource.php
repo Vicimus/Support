@@ -1,16 +1,17 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Interfaces\MarketingSuite\Assets\HasAssetDetails;
 
 /**
- * Interface HasSource
- *
  * @property Collection|Audience[] $audiences
  * @property SourceRecord $source
  * @property int $id
@@ -22,17 +23,17 @@ use Vicimus\Support\Interfaces\MarketingSuite\Assets\HasAssetDetails;
 interface HasSource
 {
     /**
+     * Retrieve the display ad stats relationship
+     */
+    public function adStats(): Relation;
+
+    /**
      * Retrieve the model which contains asset details
-     *
-     * @param string $remoteId The remote id of the placement
-     *
-     * @return HasAssetDetails|null
      */
     public function assetDetails(string $remoteId): ?HasAssetDetails;
 
     /**
      * Has many audiences
-     * @return MorphMany
      */
     public function audiences(): MorphMany;
 
@@ -48,22 +49,26 @@ interface HasSource
      * for it's assets, even though this interface
      * literally has nothing to do with assets. Things
      * using hasSource require the content id be there.
-     *
-     * @return int|null
      */
     public function contentId(): ?int;
 
     /**
-     * Retrieve the identifier of the has source instance
      *
-     * @return int
+     * Retrieve the destination for the source placements
+     *
+     * i.e. Messenger/VDP/PURL
+     */
+    public function getDestination(): ?string;
+
+    /**
+     * Retrieve the identifier of the has source instance
      */
     public function getId(): int;
 
+    public function getMessageTemplateId(): ?int;
+
     /**
      * Retrieve the error code associated with the campaign being paused
-     *
-     * @return int|null
      */
     public function getPausedErrorCode(): ?int;
 
@@ -76,31 +81,29 @@ interface HasSource
 
     /**
      * Retrieve the title of the has source instance
-     *
-     * @return string
      */
     public function getTitle(): string;
 
+    public function isExpired(): bool;
+
     /**
      * Retrieve the paused state
-     * @return bool
      */
     public function paused(): bool;
 
     /**
      * Retrieve the related source
-     * @return MorphOne|Source
      */
-    public function source();
+    public function source(): MorphOne;
 
     /**
      * Get the store id for this campaigns
-     * @return int
      */
     public function storeId(): int;
 
     /**
      * Update the models timestamp
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      * @return bool|void
      */
     public function touch();
@@ -111,6 +114,8 @@ interface HasSource
      * @param string[] $attributes The attribute updates
      * @param string[] $options    Additional options
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      * @return bool|mixed
      */
     public function update(array $attributes = [], array $options = []);

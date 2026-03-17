@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -6,10 +8,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\BrowserKit\Request as DomRequest;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Vicimus\Support\Exceptions\ValidationException;
 
 /**
  * Class Client
@@ -28,7 +28,7 @@ class Client extends HttpKernelBrowser
      *
      * @param callable            $onRequest On request callback
      * @param HttpKernelInterface $kernel    An instance of an http kernel
-     * @param mixed[]             $server    Server vars
+     * @param string[]            $server    Server vars
      * @param History|null        $history   History instance
      * @param CookieJar|null      $cookieJar Cookie jar if provided
      */
@@ -45,28 +45,7 @@ class Client extends HttpKernelBrowser
     }
 
     /**
-     * Get a response
-     *
-     * @noinspection PhpDocRedundantThrowsInspection
-     *
-     * @return Response|void
-     *
-     * @throws ValidationException
-     *
-     * phpcs:disable
-     */
-    public function getResponse(): Response
-    {
-        return parent::getResponse();
-        // phpcs:enable
-    }
-
-    /**
      * Convert a BrowserKit request into a Illuminate request.
-     *
-     * @param DomRequest $request The request
-     *
-     * @return Request
      */
     protected function filterRequest(DomRequest $request): Request
     {
@@ -80,10 +59,7 @@ class Client extends HttpKernelBrowser
 
     /**
      * Get the request parameters from a BrowserKit request.
-     *
-     * @param DomRequest $request The request instance
-     *
-     * @return mixed[]
+     * @return string[][]
      */
     protected function getRequestParameters(DomRequest $request): array
     {

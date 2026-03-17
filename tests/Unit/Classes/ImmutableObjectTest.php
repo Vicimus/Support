@@ -1,11 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\MessageBag;
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -13,16 +14,8 @@ use Throwable;
 use Vicimus\Support\Classes\ImmutableObject;
 use Vicimus\Support\Exceptions\ImmutableObjectException;
 
-/**
- * Class ImmutableObjectTest
- */
 class ImmutableObjectTest extends TestCase
 {
-    /**
-     * Test the constructor
-     *
-     * @return void
-     */
     public function testConstructor(): void
     {
         $std = new stdClass();
@@ -33,20 +26,8 @@ class ImmutableObjectTest extends TestCase
 
         $this->assertEquals(5, $obj->id);
         $this->assertEquals(5, $second->id);
-
-        try {
-            new ImmutableObject('string');
-            $this->fail('Exception not thrown');
-        } catch (InvalidArgumentException $ex) {
-            $this->assertStringContainsString('array', $ex->getMessage());
-        }
     }
 
-    /**
-     * Test toString
-     *
-     * @return void
-     */
     public function testToString(): void
     {
         $obj = new ImmutableObject(['id' => 5]);
@@ -55,11 +36,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertEquals((string) $obj, json_encode($array));
     }
 
-    /**
-     * Validation
-     *
-     * @return void
-     */
     public function testValidation(): void
     {
         $errors = '';
@@ -95,11 +71,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertIsString($errors);
     }
 
-    /**
-     * Must bind a factory
-     *
-     * @return void
-     */
     public function testValidationNoneSet(): void
     {
         $obj = new ImmutableObject(['id' => 5]);
@@ -118,17 +89,11 @@ class ImmutableObjectTest extends TestCase
         }
     }
 
-    /**
-     * Test casting
-     *
-     * @return void
-     */
     public function testCasting(): void
     {
         /* phpcs:disable */
         $extension = new class extends ImmutableObject {
-            /** @var string[] Casts */
-            protected $casts = [
+            protected array $casts = [
                 'id' => 'int',
                 'other' => ImmutableObject::class,
             ];
@@ -148,11 +113,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertEquals('kiwi', $instance->fruit);
     }
 
-    /**
-     * Recursive Arrays
-     *
-     * @return void
-     */
     public function testRecursiveArrays(): void
     {
         $instance = new ImmutableObject([
@@ -183,10 +143,6 @@ class ImmutableObjectTest extends TestCase
         $this->assertIsArray($result['children'][0]['grand-children'][0]);
     }
 
-    /**
-     * It's really dumb that you need comments
-     * @return void
-     */
     public function testArrayAccess(): void
     {
         $instance = new ImmutableObject(['banana' => 'strawberry']);

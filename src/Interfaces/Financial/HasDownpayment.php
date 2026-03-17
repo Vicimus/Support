@@ -1,16 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Financial;
 
-/**
- * Interface HasDownpayment
- */
 interface HasDownpayment
 {
     /**
-     * The downpayment amount
-     *
-     * @return float
+     * The down payment amount
      */
     public function downpayment(): float;
 }

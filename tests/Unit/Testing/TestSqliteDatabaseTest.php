@@ -1,6 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace Vicimus\Support\Unit\Testing;
+declare(strict_types=1);
+
+namespace Vicimus\Support\Tests\Unit\Testing;
 
 use Illuminate\Support\Facades\Facade;
 use org\bovigo\vfs\vfsStream;
@@ -18,7 +20,6 @@ class TestSqliteDatabaseTest extends TestCase
     /**
      * Set the test up
      *
-     * @return void
      */
     public function setup(): void
     {
@@ -26,20 +27,16 @@ class TestSqliteDatabaseTest extends TestCase
         $app = new Application();
         Facade::setFacadeApplication($app);
 
-        $app->bind('path.base', static function () {
-            return __DIR__ . '/../../../resources/testing';
-        });
+        $app->bind('path.base', static fn () => __DIR__ . '/../../../resources/testing');
 
-        $app->bind('path.database', static function () {
-            return __DIR__ . '/../../../resources/testing';
-        });
+        $app->bind('path.database', static fn () => __DIR__ . '/../../../resources/testing');
 
         putenv('VICIMUS_TEST_NO_DATABASE_OUTPUT=1');
     }
+
     /**
      * Test setup
      *
-     * @return void
      */
     public function testSetup(): void
     {
@@ -56,5 +53,20 @@ class TestSqliteDatabaseTest extends TestCase
         }
 
         $this->assertFileExists(vfsStream::url('root/stub.sqlite'));
+    }
+
+    public function testTestCaseExtending(): void
+    {
+        $instance = new class extends TestCase
+        {
+            use TestSqliteDatabase;
+
+            public function __construct()
+            {
+                parent::__construct('TestCaseExtending');
+            }
+        };
+
+        $this->assertNotNull($instance);
     }
 }

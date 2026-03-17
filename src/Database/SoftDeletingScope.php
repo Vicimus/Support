@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Database;
 
@@ -12,11 +14,6 @@ class SoftDeletingScope extends LaravelScope
 {
     /**
      * Extend the query builder with the needed functions.
-     *
-     * @param Builder $builder The builder instance
-     *
-     * @return void
-     *
      * phpcs:disable
      */
     public function extend(Builder $builder): void

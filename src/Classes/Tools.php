@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -12,17 +14,12 @@ use function implode;
 use function key;
 use function preg_match;
 
-/**
- * Generic util tools.
- */
 class Tools
 {
     /**
      * Attempt to detect the date format from a sample of values.
      *
      * @param string[] $values The date values to test.
-     *
-     * @return string|null
      */
     public static function detectDateFormat(array $values): ?string
     {
@@ -43,9 +40,8 @@ class Tools
             foreach ($formatOccurs as $format => $count) {
                 unset($count);
                 $dt = DateTime::createFromFormat($format, $value);
-                if ($dt === false ||
-                    DateTime::getLastErrors()['warning_count'] > 0 ||
-                    strpos($dt->format('Y'), '00') === 0) {
+                $hasWarnings = (DateTime::getLastErrors()['warning_count'] ?? 0) > 0;
+                if ($dt === false || $hasWarnings || strpos($dt->format('Y'), '00') === 0) {
                     continue;
                 }
 
@@ -69,8 +65,6 @@ class Tools
      *
      * @param string   $value        The value parsed
      * @param string[] $formatOccurs The occurrence map
-     *
-     * @return void
      */
     public static function detectSingleDateFormat(string $value, array &$formatOccurs): void
     {
@@ -93,9 +87,8 @@ class Tools
             unset($count);
 
             $dt = DateTime::createFromFormat($format, $value);
-            if ($dt === false ||
-                DateTime::getLastErrors()['warning_count'] > 0 ||
-                strpos($dt->format('Y'), '00') === 0) {
+            $hasWarnings = (DateTime::getLastErrors()['warning_count'] ?? 0) > 0;
+            if ($dt === false || $hasWarnings || strpos($dt->format('Y'), '00') === 0) {
                 continue;
             }
 
@@ -105,10 +98,6 @@ class Tools
 
     /**
      * Get country from state.
-     *
-     * @param string $input The state input
-     *
-     * @return null|string
      */
     public static function getCountryFromState(string $input): ?string
     {
@@ -125,10 +114,6 @@ class Tools
 
     /**
      * Tool for detecting company names.
-     *
-     * @param string $name The name to check.
-     *
-     * @return bool Flag for company.
      */
     public static function isCompany(string $name): bool
     {
@@ -170,6 +155,8 @@ class Tools
             '(acura|audi|bmw|buick|chevrolet|cadillac|gmc|chrysler|dodge|jeep|ford|honda)',
             '(hyundai|infiniti|jaguar|kia|(land|rover)|lexus|lincoln|mazda|(mercedes|benz))',
             '(mini|mitsubishi|nissan|porsche|smart|subaru|toyota|volkswagen|volvo|vw)',
+            '(voided|famil(y|ies)|trust)',
+            '(annulé|famille(s)|confiance)',
         ];
 
         if (preg_match('/\b(' . implode('|', $reg) . ')\b/i', $name)) {
@@ -182,10 +169,6 @@ class Tools
     /**
      * Return list of latest years starting from current + extra to max size
      * in descending order.
-     *
-     * @param int $overCurrent The extra years to get over current year.
-     * @param int $size        The size of years to return.
-     *
      * @return string[]
      */
     public static function latestYears(int $overCurrent = 1, int $size = 20): array

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes;
 
@@ -7,8 +9,6 @@ use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\ConquestDataSourceInfo as Info;
 
 /**
- * Class ConquestDataCategoryInfo
- *
  * @property string $name
  * @property string $description
  * @property string $image
@@ -18,17 +18,15 @@ use Vicimus\Support\Classes\ConquestDataSourceInfo as Info;
 class ConquestDataCategoryInfo extends ImmutableObject
 {
     /**
-     * ConquestDataCategoryInfo constructor.
-     *
-     * @param string            $name        The name
-     * @param View|string       $description The description
-     * @param string            $image       A full url to an image
-     * @param string            $class       The class
-     * @param Collection|Info[] $sources     Data sources that fall within the category
+     * @param string           $name        The name
+     * @param View|string      $description The description
+     * @param string           $image       A full url to an image
+     * @param string           $class       The class
+     * @param Collection<Info> $sources     Data sources that fall within the category
      */
     public function __construct(
         string $name,
-        $description,
+        View | string $description,
         string $image,
         string $class,
         Collection $sources

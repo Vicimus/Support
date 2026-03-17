@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -6,69 +8,43 @@ namespace Vicimus\Support\Interfaces;
  * Enforces similar behaviour between processors, generally implemented
  * in inventory, showroom and rates packages.
  */
-interface Processor
+interface Processor extends ConsoleOutput
 {
     /**
      * Bind a ConsoleOutput interface implementation to this class. This
      * enables the output.
-     *
-     * @param ConsoleOutput $output An object implementing ConsoleOutput
-     *
-     * @return $this
      */
-    public function bind(ConsoleOutput $output);
+    public function bind(ConsoleOutput $output): self;
 
     /**
      * Output a comment (yellow text)
-     *
-     * @param string $output The comment to output
-     *
-     * @return void
      */
     public function comment(string $output): void;
 
     /**
      * Output an error (red text)
-     *
-     * @param string $output The error to output
-     *
-     * @return void
      */
     public function error(string $output): void;
 
     /**
      * Output info
-     *
-     * @param string $output The info to output
-     *
-     * @return void
      */
     public function info(string $output): void;
 
     /**
      * Output text (grey text)
-     *
-     * @param string $output The text to output
-     *
-     * @return void
      */
     public function line(string $output): void;
 
     /**
      * Get an option
-     *
-     * @param string $name The name of the option to get
-     *
-     * @return mixed
      */
-    public function option(string $name);
+    public function option(string $name): mixed;
 
     /**
      * Set the options for this service
      *
-     * @param string[] $options The options to set
-     *
-     * @return $this
+     * @param string[]|string[][] $options
      */
     public function options(array $options): Processor;
 
@@ -78,15 +54,11 @@ interface Processor
      * after others.
      *
      * The scale should be 1 to 10.
-     *
-     * @return int
      */
     public function priority(): int;
 
     /**
      * Init the process
-     *
-     * @return bool
      */
     public function process(): bool;
 }

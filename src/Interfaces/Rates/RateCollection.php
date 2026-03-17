@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\Rates;
 
@@ -17,10 +19,6 @@ interface RateCollection
 
     /**
      * Get the rate for a specific term in financing rates
-     *
-     * @param int $term The term for the financing
-     *
-     * @return float
      */
     public function finance(int $term): ?float;
 
@@ -35,10 +33,6 @@ interface RateCollection
     /**
      * Get the rate for a specific term in lease rates. This method must
      * return an array of Rate instances.
-     *
-     * @param int $term The term for the lease
-     *
-     * @return float
      */
     public function lease(int $term): ?float;
 

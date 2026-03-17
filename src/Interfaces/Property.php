@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces;
 
@@ -9,20 +11,17 @@ interface Property
 {
     /**
      * Get the display string for the input
-     * @return string
      */
     public function display(): string;
 
     /**
      * Get the input type for the property
-     * @return string
      */
     public function input(): string;
 
     /**
      * Get the name of the property
      *
-     * @return string
      */
     public function property(): ?string;
 
@@ -31,26 +30,23 @@ interface Property
      *
      * ie. string|max:40|nullable
      *
-     * @return string|null
      */
     public function restrictions(): ?string;
 
     /**
      * The datatype expected for the property
-     * @return string
      */
     public function type(): string;
 
     /**
      * Get the value of the property
-     *
-     * @return mixed
      */
-    public function value();
+    public function value(): mixed;
 
     /**
      * Retrieves the possible values that the property can be
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @return mixed[]
      */
     public function values(): array;

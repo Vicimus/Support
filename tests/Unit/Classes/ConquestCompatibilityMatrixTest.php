@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -16,7 +18,6 @@ class ConquestCompatibilityMatrixTest extends TestCase
     /**
      * Constructor test
      *
-     * @return void
      */
     public function testConstructor(): void
     {
@@ -24,9 +25,7 @@ class ConquestCompatibilityMatrixTest extends TestCase
         $repo->method('isRegistered')
             ->willReturnOnConsecutiveCalls(true, false);
 
-        app()->bind(ConquestDataSourceRepository::class, static function () use ($repo) {
-            return $repo;
-        });
+        app()->bind(ConquestDataSourceRepository::class, static fn () => $repo);
 
         $matrix = new ConquestCompatibilityMatrix();
         $this->assertCount(0, $matrix->matrix);
@@ -38,10 +37,10 @@ class ConquestCompatibilityMatrixTest extends TestCase
         $mock = $this->basicMock(ConquestDataSource::class);
         $matrix = new ConquestCompatibilityMatrix([
             'not-valid' => 'not there',
-            get_class($mock) => $view,
+            $mock::class => $view,
         ]);
 
-        $matrix->add([get_class($mock) => 'another']);
+        $matrix->add([$mock::class => 'another']);
 
         $this->assertCount(1, $matrix->matrix);
 

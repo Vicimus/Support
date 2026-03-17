@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Traits;
 
@@ -15,7 +17,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testLine(): void
     {
@@ -37,7 +38,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testInfo(): void
     {
@@ -59,7 +59,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testComment(): void
     {
@@ -81,7 +80,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * Test line
      *
-     * @return void
      */
     public function testError(): void
     {
@@ -103,7 +101,6 @@ class ConsoleOutputterTest extends TestCase
     /**
      * On bind
      *
-     * @return void
      */
     public function testOnBind(): void
     {

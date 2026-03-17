@@ -1,50 +1,35 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Classes\Timezones;
 
 use DateTimeZone;
+use Exception;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Collection;
 use Vicimus\Support\Classes\DateTime;
 
-/**
- * Class Timezones
- */
 class Timezones
 {
-    /**
-     * The cache repository
-     *
-     * @var Repository
-     */
-    private $cache;
-
     /**
      * Timezones constructor.
      *
      * @param Repository $cache The cache repository
      */
-    public function __construct(Repository $cache)
-    {
-        $this->cache = $cache;
+    public function __construct(
+        private Repository $cache
+    ) {
     }
 
-    /**
-     * Get all timezones
-     *
-     * @return Collection
-     */
     public function all(): Collection
     {
-        return $this->cache->rememberForever('timezones', function () {
-            return $this->payload();
-        });
+        return $this->cache->rememberForever('timezones', fn () => $this->payload());
     }
 
     /**
-     * Get the timezone payload
-     *
-     * @return Collection|Timezone[]
+     * @return Collection<Timezone>
+     * @throws Exception
      */
     public function payload(): Collection
     {

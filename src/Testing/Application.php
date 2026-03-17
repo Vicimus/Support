@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Testing;
 
@@ -18,7 +20,11 @@ use Throwable;
 /**
  * Class Application
  *
- * @SuppressWarnings(PHPMD)
+ * This is phpcs disabled because it's an extension of Laravel's application which does
+ * not typehint properly, and it would just be a massive headache trying to make our implementation
+ * meet our coding standards while not breaking it.
+ *
+ * @phpcs:disable
  */
 class Application extends Container implements LaravelApp, HttpKernelInterface
 {
@@ -89,12 +95,9 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      * @param string $path Optionally, a path to append to the base path
      *
      * @return string
-     *
-     * @codingStandardsIgnoreStart
      */
     public function basePath($path = ''): string
     {
-        // @codingStandardsIgnoreEnd
         return realpath($this->basePath.(($path) ? DIRECTORY_SEPARATOR.$path : $path));
     }
 
@@ -151,7 +154,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return void
      */
-    public function bootstrapWith(array $classes): void
+    public function bootstrapWith(array $bootstrappers): void
     {
         // Implement bootstrapWith() method.
     }
@@ -395,6 +398,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
         return true;
     }
 
+    public function hasDebugModeEnabled()
+    {
+        return true;
+    }
+
     /**
      * Determine if the application is currently down for maintenance.
      *
@@ -410,7 +418,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return string
      */
-    public function langPath(): string
+    public function langPath($path = ''): string
     {
         return $this->resourcePath().DIRECTORY_SEPARATOR.'lang';
     }
@@ -435,6 +443,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     public function loadEnvironmentFrom($file): self
     {
         return $this;
+    }
+
+    public function maintenanceMode()
+    {
+        // TODO: Implement maintenanceMode() method.
     }
 
     /**
@@ -500,7 +513,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return string
      */
-    public function publicPath(): string
+    public function publicPath($path = ''): string
     {
         return $this->basePath.DIRECTORY_SEPARATOR.'public';
     }
@@ -670,7 +683,7 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
      *
      * @return string
      */
-    public function storagePath(): string
+    public function storagePath($path = ''): string
     {
         return ($this->storagePath) ?: $this->basePath.DIRECTORY_SEPARATOR.'storage';
     }
@@ -683,6 +696,11 @@ class Application extends Container implements LaravelApp, HttpKernelInterface
     public function terminate(): void
     {
         //
+    }
+
+    public function terminating($callback)
+    {
+        // TODO: Implement terminating() method.
     }
 
     /**

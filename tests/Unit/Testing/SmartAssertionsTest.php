@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Testing;
 
@@ -9,22 +11,14 @@ use Vicimus\Support\Exceptions\InvalidArgumentException;
 use Vicimus\Support\Testing\SmartAssertions;
 use Vicimus\Support\Testing\TestCase;
 
-/**
- * Class SmartAssertionsTest
- */
 class SmartAssertionsTest extends TestCase
 {
-    /**
-     * Test
-     *
-     * @return void
-     *
-     * @throws Throwable
-     */
     public function testResponseOk(): void
     {
         /** @var TestCase|SmartAssertions|MockObject $test */
-        $test = $this->getMockForAbstractClass(TestCase::class);
+        $test = $this->getMockBuilder(TestCase::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
 
         $this->assertNotNull($test->assertStatusOk(new Response(json_encode(['id' => 1]), 200)));
 
@@ -80,21 +74,14 @@ class SmartAssertionsTest extends TestCase
         $this->assertStringContainsString(json_encode(['id' => 1]), $result);
     }
 
-    /**
-     * Test filtering
-     *
-     * @return void
-     *
-     * @throws Throwable
-     */
     public function testFiltering(): void
     {
         /** @var TestCase|SmartAssertions|MockObject $test */
-        $test = $this->getMockForAbstractClass(TestCase::class);
+        $test = $this->getMockBuilder(TestCase::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
 
-        $test->filterFilePath(static function (string $file): string {
-            return str_replace('banana', 'strawberry', $file);
-        });
+        $test->filterFilePath(static fn (string $file): string => str_replace('banana', 'strawberry', $file));
 
         $result = '';
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Classes;
 
@@ -15,16 +17,13 @@ class GenericUtilityTest extends TestCase
     /**
      * Test calling the utility
      *
-     * @return void
      */
     public function testCall(): void
     {
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            static function (?array $flags): string {
-                return $flags['fruit'] ?? 'banana';
-            }
+            static fn (?array $flags): string => $flags['fruit'] ?? 'banana'
         );
 
         $this->assertEquals('banana', $utility->call());
@@ -34,16 +33,13 @@ class GenericUtilityTest extends TestCase
     /**
      * Test the name
      *
-     * @return void
      */
     public function testName(): void
     {
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            static function (?array $flags): string {
-                return $flags['fruit'] ?? 'banana';
-            }
+            static fn (?array $flags): string => $flags['fruit'] ?? 'banana'
         );
 
         $this->assertEquals('Test Utility', $utility->name());
@@ -52,16 +48,13 @@ class GenericUtilityTest extends TestCase
     /**
      * Test the description
      *
-     * @return void
      */
     public function testDescription(): void
     {
         $utility = new GenericUtility(
             'Test Utility',
             'This is used to test it\'s functionality',
-            static function (?array $flags): string {
-                return $flags['fruit'] ?? 'banana';
-            }
+            static fn (?array $flags): string => $flags['fruit'] ?? 'banana'
         );
 
         $this->assertEquals('This is used to test it\'s functionality', $utility->description());
@@ -70,7 +63,6 @@ class GenericUtilityTest extends TestCase
     /**
      * Ensure a crash is caught and thrown as expected
      *
-     * @return void
      */
     public function testStupidCall(): void
     {
@@ -91,7 +83,6 @@ class GenericUtilityTest extends TestCase
 
     /**
      * Test prompt
-     * @return void
      */
     public function testPrompt(): void
     {
@@ -99,5 +90,14 @@ class GenericUtilityTest extends TestCase
             //
         });
         $this->assertEquals('', $utility->prompt());
+    }
+
+    public function testOptions(): void
+    {
+        $utility = new GenericUtility('Test Utility', 'Testing', static function (): void {
+            //
+        });
+
+        $this->assertCount(0, $utility->options());
     }
 }

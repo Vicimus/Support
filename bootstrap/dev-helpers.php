@@ -323,6 +323,20 @@ if (!function_exists('storage_path')) {
     }
 }
 
+if (!function_exists('resource_path')) {
+    /**
+     * Get the storage path
+     *
+     * @param string|null $relative Add a relative path to it
+     *
+     * @return string
+     */
+    function resource_path(?string $relative = null): string
+    {
+        return app('path.resource') . DIRECTORY_SEPARATOR . $relative;
+    }
+}
+
 
 if (!function_exists('app_path')) {
     /**

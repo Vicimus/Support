@@ -1,11 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Interfaces\MarketingSuite;
 
 use Illuminate\Http\Request;
-use Retention\Exceptions\PurlException;
-use Retention\Exceptions\TemplateException;
-use Vicimus\Onyx\Exceptions\OnyxException;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\OnyxException;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\PurlException;
+use Vicimus\Support\Interfaces\MarketingSuite\Exceptions\TemplateException;
 use Vicimus\Support\Interfaces\Store;
 
 /**
@@ -15,31 +17,17 @@ interface PurlContract
 {
     /**
      * Retrieve the path to the background image for a campaign
-     *
-     * @param int $campaignId The campaign
-     * @return string
      */
     public function background(int $campaignId): string;
 
     /**
      * Pinging is a way to
-     *
-     * @param int $campaignId The campaign id
-     * @param int $customerId The customer id
-     * @param int $duration   The time between pings in milliseconds
-     *
-     * @return void
-     *
      * @throws PurlException
      */
     public function ping(int $campaignId, int $customerId, int $duration): void;
 
     /**
      * Generate a purl response based on the request
-     *
-     * @param Request $request The request
-     *
-     * @return PurlResponse
      *
      * @throws TemplateException
      * @throws PurlException
@@ -49,9 +37,6 @@ interface PurlContract
     /**
      * Get the store for the specified subdomain
      *
-     * @param string|null $subdomain The subdomain to use in the search
-     *
-     * @return Store
      * @throws OnyxException
      * @throws PurlException
      */

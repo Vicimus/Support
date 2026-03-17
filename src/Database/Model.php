@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Database;
 
@@ -8,14 +10,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 use Throwable;
 
 /**
  * Base class we can use in most of our projects
  *
  * @method static Builder orderBy($column, $ascending = true)
- * @method static static find($id)
+ * @method static static|null find($id)
  * @method static static findOrFail($id)
  * @method static Builder|static where($c, $v = null, $v = null, $b = 'and')
  * @method static Builder|static whereNotNull($c)
@@ -26,7 +27,7 @@ use Throwable;
  * @method static Builder|static whereNotIn($column, $items)
  * @method static Builder|static orWhereNotIn($column, $items)
  * @method static Builder|static withTrashed()
- * @method static LaravelModel|static firstOrCreate($attributes)
+ * @method static LaravelModel|static firstOrCreate(...$attributes)
  * @method static Builder|static query()
  * @method static LaravelModel|static firstOrFail()
  * @method static LaravelModel|static first()
@@ -36,14 +37,18 @@ use Throwable;
  * @method static Builder|static has(string $relationship)
  * @method static bool truncate()
  * @method static int count()
+ * @method static static updateOrCreate(array $check, array $attributes)
  * @property int $id
  */
 class Model extends LaravelModel
 {
+    public static bool $throwDeleteErrors = true;
+
     /**
      * Properties protected from mass assignment
      *
      * @var string[]
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $guarded = [
         'id', 'updated_at', 'created_at',
@@ -51,21 +56,24 @@ class Model extends LaravelModel
 
     /**
      * Should we cast or not
-     *
-     * @var bool
+     * @var bool[]
      */
-    private static $noCasts = [];
+    private static array $noCasts = [];
 
     /**
      * Store the columns
      * @var string[]
      */
-    private $columns = [];
+    private array $columns = [];
 
     /**
      * Respect no casts rule
      *
-     * @return mixed
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     *
+     * @return mixed[]
      */
     public function attributesToArray()
     {
@@ -79,21 +87,17 @@ class Model extends LaravelModel
     /**
      * Override the delete method so it stops making us try catch it
      *
-     * phpcs:disable
-     *
-     * @noinspection PhpDocMissingThrowsInspection
-     * @param bool $throw Optionally throw on error or ignore
-     *
-     * @return bool|null
+     * @throws Throwable
      */
-    public function delete(bool $throw = false): ?bool
+    public function delete(?bool $throw = null): ?bool
     {
+        $throw ??= self::$throwDeleteErrors;
+
         // phpcs:enable
         try {
             $result = parent::delete();
         } catch (Throwable $exception) {
             if ($throw) {
-                /** @noinspection PhpUnhandledExceptionInspection */
                 throw $exception;
             }
 
@@ -105,6 +109,10 @@ class Model extends LaravelModel
 
     /**
      * Get an attribute from the model.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      *
      * @param string|mixed $key The key to get
      *
@@ -151,35 +159,22 @@ class Model extends LaravelModel
 
     /**
      * Check if table column exists
-     *
-     * @param string $column The column
-     *
-     * @return bool
      */
     public function hasColumn(string $column): bool
     {
-        return in_array($column, $this->getTableColumns(), false);
+        return in_array($column, $this->getTableColumns(), true);
     }
 
     /**
      * Get a relative
      *
      * Mainly used for mocks
-     *
-     * @param string $relative The relative to get
-     *
-     * @return mixed
      */
-    public function relation(string $relative)
+    public function relation(string $relative): mixed
     {
         return $this->$relative;
     }
 
-    /**
-     * Reset all
-     *
-     * @return void
-     */
     public static function resetAll(): void
     {
         self::$noCasts = [];
@@ -188,10 +183,17 @@ class Model extends LaravelModel
     /**
      * Override set attribute
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     *
      * @param string|mixed $key   The key to set
      * @param mixed        $value The value to set it to
      *
      * @return mixed
+     *
+     * phpcs:disable
+     *
      */
     public function setAttribute($key, $value)
     {
@@ -202,35 +204,13 @@ class Model extends LaravelModel
         $this->attributes[$key] = $value;
     }
 
-    /**
-     * Turn off casting
-     *
-     * @return void
-     */
     public static function withoutCasts(): void
     {
         self::$noCasts[static::class] = true;
     }
 
     /**
-     * Remove the table name from a given key.
-     *
-     * Overrides Laravels version which broke between 7.20 and 7.25
-     *
-     * @param string|int $key The key to check
-     * @return string
-     */
-    protected function removeTableFromKey($key)
-    {
-        return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
-    }
-
-    /**
      * Serialize dates to how they should be formatted for JSON.
-     *
-     * @param DateTimeInterface $date The date object
-     *
-     * @return string|null
      */
     protected function serializeDate(DateTimeInterface $date): ?string
     {

@@ -1,23 +1,15 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vicimus\Support\Traits;
 
 /**
- * Trait CastsAttributes
- *
  * @property string[] $casts
  */
 trait CastsAttributes
 {
-    /**
-     * Cast a specific value
-     *
-     * @param string|int $property The property being cast
-     * @param mixed      $value    The current value
-     *
-     * @return mixed
-     */
-    protected function doAttributeCast($property, $value)
+    protected function doAttributeCast(string | int $property, mixed $value): mixed
     {
         if ($value === null) {
             return $value;
@@ -54,12 +46,8 @@ trait CastsAttributes
     /**
      * Check if a value is both an array and likely just a numeric array,
      * as opposed to an object structure converted into an array
-     *
-     * @param mixed $value The value to inspect
-     *
-     * @return bool
      */
-    private function isNumericArray($value): bool
+    private function isNumericArray(mixed $value): bool
     {
         if (!is_array($value)) {
             return false;
@@ -76,15 +64,11 @@ trait CastsAttributes
 
     /**
      * Check if a type is scalar or not
-     *
-     * @param string $value The value to inspect
-     *
-     * @return bool
      */
     private function isScalar(string $value): bool
     {
         return in_array($value, [
             'int', 'bool', 'string', 'float',
-        ]);
+        ], true);
     }
 }
