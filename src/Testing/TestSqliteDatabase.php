@@ -50,6 +50,8 @@ trait TestSqliteDatabase
     {
         $external['null'] = '';
         $external = array_reverse($external);
+        $testToken = getenv('TEST_TOKEN');
+        $suffix = $testToken !== false ? '_' . $testToken : '';
 
         foreach ($external as $code => $database) {
             if ($database) {
@@ -58,14 +60,11 @@ trait TestSqliteDatabase
 
             $stub = sprintf('%s/%sstub.sqlite', $path, $database);
             $secondStub = sprintf('%s/%sunsullied.sqlite', $path, $database);
-            $test = sprintf('%s/%stesting.sqlite', $path, $database);
+            $test = sprintf('%s/%stesting%s.sqlite', $path, $database, $suffix);
             if ($database) {
                 config()->set('database.connections.' . $code . '.database', $test);
             } else {
-                foreach ($aliases as $alias) {
-                    config()->set('database.connections.' . $alias . '.database', $test);
-                    config()->set('database.connections.' . $alias . '.driver', 'sqlite');
-                }
+                $this->configureDefaultConnection($test, $aliases);
             }
 
             if (!($GLOBALS['setupDatabase'] ?? false)) {
@@ -80,10 +79,28 @@ trait TestSqliteDatabase
                 continue;
             }
 
-            $attachment = sprintf('attach \'%s/%stesting.sqlite\' as %s', database_path(), $database, $code);
+            $attachment = sprintf('attach \'%s\' as %s', $test, $code);
             DB::select($attachment);
 
             $this->attached[$database] = $code;
+        }
+    }
+
+    /**
+     * Configure the default database connection and aliases
+     *
+     * @param string[] $aliases
+     */
+    private function configureDefaultConnection(string $test, array $aliases): void
+    {
+        $defaultConnection = config('database.default');
+        if ($defaultConnection) {
+            config()->set('database.connections.' . $defaultConnection . '.database', $test);
+        }
+
+        foreach ($aliases as $alias) {
+            config()->set('database.connections.' . $alias . '.database', $test);
+            config()->set('database.connections.' . $alias . '.driver', 'sqlite');
         }
     }
 
@@ -100,9 +117,36 @@ trait TestSqliteDatabase
      * Do the one time setup of the database
      *
      * @throws TestException
+     * @throws RuntimeException
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
+        $lockFile = $stub . '.lock';
+        $lock = fopen($lockFile, 'c');
+        if (!$lock) {
+            throw new RuntimeException('Unable to create lock file: ' . $lockFile);
+        }
+
+        flock($lock, LOCK_EX);
+
+        try {
+            $this->doOneTimeSetupWork($database, $secondStub, $stub);
+        } finally {
+            flock($lock, LOCK_UN);
+            fclose($lock);
+        }
+    }
+
+    /**
+     * @throws TestException
+     */
+    private function doOneTimeSetupWork(?string $database, string $secondStub, string $stub): void
+    {
+        if ($this->isSetupComplete($secondStub)) {
+            $GLOBALS['setupDatabase'] = !$database ? true : ($GLOBALS['setupDatabase'] ?? false);
+            return;
+        }
+
         $output = $this->initializeOutput();
         $bench = (new Benchmark())->init();
         if (!$this->isOutdated($database)) {
@@ -131,6 +175,18 @@ trait TestSqliteDatabase
         }
 
         $this->finish($database, $stub, $secondStub);
+    }
+
+    /**
+     * Check if setup was already completed by another process
+     */
+    private function isSetupComplete(string $secondStub): bool
+    {
+        if (getenv('TEST_TOKEN') === false) {
+            return false;
+        }
+
+        return file_exists($secondStub) && filesize($secondStub) > 0;
     }
 
     /**

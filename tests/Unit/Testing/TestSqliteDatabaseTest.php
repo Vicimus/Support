@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vicimus\Support\Tests\Unit\Testing;
 
+use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\Facade;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -30,6 +31,8 @@ class TestSqliteDatabaseTest extends TestCase
         $app->bind('path.base', static fn () => __DIR__ . '/../../../resources/testing');
 
         $app->bind('path.database', static fn () => __DIR__ . '/../../../resources/testing');
+
+        $app->instance('config', new Repository());
 
         putenv('VICIMUS_TEST_NO_DATABASE_OUTPUT=1');
     }
