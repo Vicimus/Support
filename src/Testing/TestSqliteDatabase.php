@@ -64,15 +64,7 @@ trait TestSqliteDatabase
             if ($database) {
                 config()->set('database.connections.' . $code . '.database', $test);
             } else {
-                $defaultConnection = config('database.default');
-                if ($defaultConnection) {
-                    config()->set('database.connections.' . $defaultConnection . '.database', $test);
-                }
-
-                foreach ($aliases as $alias) {
-                    config()->set('database.connections.' . $alias . '.database', $test);
-                    config()->set('database.connections.' . $alias . '.driver', 'sqlite');
-                }
+                $this->configureDefaultConnection($test, $aliases);
             }
 
             if (!($GLOBALS['setupDatabase'] ?? false)) {
@@ -95,6 +87,24 @@ trait TestSqliteDatabase
     }
 
     /**
+     * Configure the default database connection and aliases
+     *
+     * @param string[] $aliases
+     */
+    private function configureDefaultConnection(string $test, array $aliases): void
+    {
+        $defaultConnection = config('database.default');
+        if ($defaultConnection) {
+            config()->set('database.connections.' . $defaultConnection . '.database', $test);
+        }
+
+        foreach ($aliases as $alias) {
+            config()->set('database.connections.' . $alias . '.database', $test);
+            config()->set('database.connections.' . $alias . '.driver', 'sqlite');
+        }
+    }
+
+    /**
      * Execute the migration
      */
     protected function doMigration(): void
@@ -107,6 +117,7 @@ trait TestSqliteDatabase
      * Do the one time setup of the database
      *
      * @throws TestException
+     * @throws RuntimeException
      */
     private function doOneTimeSetup(?string $database, string $secondStub, string $stub): void
     {
