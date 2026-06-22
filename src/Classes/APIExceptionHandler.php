@@ -36,9 +36,9 @@ class APIExceptionHandler
 
         return response()->json([
             'error' => $exception->getMessage(),
-            'type'  => $exception::class,
-            'line'  => $exception->getLine(),
-            'file'  => $exception->getFile(),
+            'type' => $exception::class,
+            'line' => $exception->getLine(),
+            'file' => $exception->getFile(),
         ], $code);
     }
 }

@@ -51,9 +51,9 @@ class Benchmark
         }
 
         return [
-            'time'   => $time,
+            'time' => $time,
             'memory' => $memory,
-            'peak'   => $peak,
+            'peak' => $peak,
             'customs' => $customs,
         ];
     }
