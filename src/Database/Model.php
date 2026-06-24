@@ -67,6 +67,13 @@ class Model extends LaravelModel
     private array $columns = [];
 
     /**
+     * Memoized result of getDates() for the life of the instance.
+     *
+     * @var string[]|null
+     */
+    private ?array $cachedDates = null;
+
+    /**
      * Respect no casts rule
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
@@ -140,6 +147,17 @@ class Model extends LaravelModel
         }
 
         return $this->getRelationValue($key);
+    }
+
+    /**
+     * Get the attributes that should be converted to dates. Memoized for the
+     * life of the instance since the result is invariant at runtime.
+     *
+     * @return string[]
+     */
+    public function getDates(): array
+    {
+        return $this->cachedDates ??= parent::getDates();
     }
 
     /**
