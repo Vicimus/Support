@@ -35,6 +35,12 @@ interface PlaceholderData
     public function oem(): OemService;
 
     /**
+     * The OEM slug to render styling with, resolved for the recipient (for
+     * example from the sold vehicle). Null falls back to the campaign OEM.
+     */
+    public function renderOem(): ?string;
+
+    /**
      * Get the store to use
      */
     public function store(): ?Store;
