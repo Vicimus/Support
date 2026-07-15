@@ -267,6 +267,19 @@ class BasicCache implements Repository
     }
 
     /**
+     * Set the expiration of a cached item.
+     *
+     * @param string $key The key
+     * @param \DateTimeInterface|\DateInterval|int|null $ttl The TTL
+     *
+     * @return bool
+     */
+    public function touch($key, $ttl = null)
+    {
+        return $this->has($key);
+    }
+
+    /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      */
     public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
