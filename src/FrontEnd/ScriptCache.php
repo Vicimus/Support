@@ -60,7 +60,8 @@ class ScriptCache implements ConsoleOutput
             $fileFinder->files()->in($locale->getRealPath())->name('*.js')->depth(0);
             foreach ($fileFinder as $file) {
                 $name = $this->extract($file->getRelativePathname());
-                if (is_numeric($name[0]) || str_contains('chunk-', $name[0])) {
+                /* Numbered and chunk- files are lazy chunks the runtime fetches for itself. */
+                if (is_numeric($name[0]) || str_starts_with($name, 'chunk-')) {
                     continue;
                 }
 
