@@ -89,4 +89,39 @@ class ScriptCacheTest extends TestCase
 
         $scripts->forget();
     }
+
+    /**
+     * A named chunk such as Angular's common is loaded by tag like main, or the runtime asks for
+     * it relative to the base href, where it is not served. Only lazy chunks are left out.
+     */
+    public function testCacheKeepsNamedChunksAndSkipsLazyOnes(): void
+    {
+        $cached = [];
+        $cache = $this->basicMock(BasicCache::class);
+        $cache->expects($this->once())
+            ->method('forever')
+            ->with('support-tests-cache-en')
+            ->willReturnCallback(static function (string $key, array $value) use (&$cached): void {
+                $cached = $value;
+            });
+
+        $scripts = new ScriptCache(
+            $cache,
+            __DIR__ . '/../../../resources/testing/front-end-chunks',
+            'support-tests'
+        );
+
+        $scripts->cache();
+
+        [$js, $css] = $cached;
+        $names = array_map('basename', $js);
+        sort($names);
+
+        $this->assertSame(
+            ['common.2af1abbd.js', 'main.f551861c.js', 'polyfills.139662a6.js', 'runtime.8880d013.js'],
+            $names,
+        );
+        $this->assertSame('runtime.8880d013.js', basename($js[0]));
+        $this->assertSame(['styles.a7883e2f.css'], array_values(array_map('basename', $css)));
+    }
 }
