@@ -6,6 +6,7 @@ namespace Vicimus\Support\Traits;
 
 use ErrorException;
 use RuntimeException;
+use ValueError;
 use Vicimus\Support\Interfaces\ConsoleOutput;
 
 /**
@@ -96,16 +97,26 @@ trait ConsoleOutputter
     }
 
     /**
-     * Check the output for character mismatch
+     * Format the output with its arguments, falling back to the raw text
      *
-     * @param string   $output The output string
-     * @param string[] $args   The replacement arguments
+     * Most callers pass text that is already formatted (or an exception
+     * message, URL or product name) with no arguments. That text is printed
+     * as-is: running it through vsprintf would treat any "%" as a format
+     * directive, and on PHP 8 a directive without a matching argument throws
+     * ValueError, which used to kill whole inventory runs.
+     *
+     * @param string  $output The output string
+     * @param mixed[] $args   The replacement arguments
      */
     private function cleanOutput(string $output, array $args): string
     {
+        if ($args === []) {
+            return $output;
+        }
+
         try {
             return vsprintf($output, $args);
-        } catch (RuntimeException | ErrorException $ex) {
+        } catch (ValueError | RuntimeException | ErrorException $ex) {
             return $output;
         }
     }
